@@ -1,0 +1,7 @@
+.submitButton{
+  transition: transform .3s;
+}
+
+.submitButton:active{
+  scale: .98;
+}
