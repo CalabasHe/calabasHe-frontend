@@ -1,7 +1,7 @@
 li {
   position: relative;
   display: inline-block;
-  transition: transform 600ms;
+  transition: transform 300ms;
   cursor: pointer;
 }
 
@@ -16,7 +16,7 @@ li::after {
   background-color: white;
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 600ms;
+  transition: transform 300ms;
 }
 
 li:hover {
@@ -28,5 +28,6 @@ li:hover::after {
 }
 
 li:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
+  transition: transform 300ms;
 }
