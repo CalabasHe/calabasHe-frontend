@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         'helvetica': ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+        'poppins': ["Poppins", 'sans-serif']
       },
     },
   },
