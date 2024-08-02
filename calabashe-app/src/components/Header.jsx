@@ -1,9 +1,9 @@
 import '../stylesheets/header.css'
 import { Link } from 'react-router-dom';
-import Menu from './menuButton';
+import Menu from './MenuButton';
 const Header = () => {
   return ( 
-    <header className="subpixel-antialiased select-none fixed top-0 font-poppins w-full text-white/100 bg-black flex items-center justify-between items-center p-2 md:p-4 px-2 lg:px-40">
+    <header className="z-10 subpixel-antialiased select-none fixed top-0 font-poppins w-full text-white/100 bg-black flex items-center justify-between items-center p-2 md:p-4 px-2 lg:px-40">
       <h1 className="text-xl lg:text-4xl font-bold"><Link to="/home">Calabas<span className="text-[#04DA8D]">He</span></Link></h1>
       <nav>
         <Menu/>

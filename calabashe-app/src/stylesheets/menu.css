@@ -75,25 +75,6 @@ body{
   background-color: white;
 }
 
-/* Navmenu */
-
-.navmenu{
-  width: calc(30vw + 30px);
-  padding: 0px 5px 4px 5px;
-  position: absolute;
-  top: 100%;
-  right: .1%;
-  transform: translateX(150px);
-  transition: transform 400ms ease-in;
-}
-
-.navmenu > ul{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  text-align: center;
-}
-
 #hospitals-link ::after,
 #doctors-link ::after{
   content: "";
@@ -101,9 +82,35 @@ body{
   height: 2px;
 }
 
+/* Navmenu */
+
+.navmenu{
+  background-color: black;
+  width: calc(30vw + 10px);
+  max-width: 163px;
+  padding: 0px 5px 4px 5px;
+  position: absolute;
+  top: 100%;
+  right: .1px;
+  transform: translateX(calc(30vw + 20px));
+  transition: transform 400ms ease-in;
+}
+
+.navmenu > ul{
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+
+
 .hamburger-menu:has(input:checked) + .navmenu{
   flex-direction: column;
   background-color: black;
-  transform: translateX(-.1px);
+  transform: translateX(-.01rem);
+  color: white;
+  margin:0;
+  right: 0px;
 }
 
