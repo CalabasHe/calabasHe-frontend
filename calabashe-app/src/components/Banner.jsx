@@ -31,7 +31,7 @@ const Banner = () => {
             <div className="absolute -bottom-0  left-[15%] min-[420px]:left-[25%] max-[350px]:h-[180px] h-[200px] min-[350px]:w-[25%] w-[50%] rounded-xl bg-blue-300 rounded-b-none">
               {/* <img
                 src={doctorsAppointment}
-                className=" object-cover absolute -bottom-0   min-[420px]:left-[25%] w-[100%] h-[100%] rounded-[inherit] rounded-b-none "
+                className=" object-cover absolute -bottom-0   min-[420px]:left-[25%] w-[inherit] h-[inherit] rounded-[inherit] rounded-b-none "
                 alt="Patient in a dentist appointment"
               ></img> */}
             </div>

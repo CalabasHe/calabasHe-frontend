@@ -1,6 +1,6 @@
 import '../stylesheets/header.css'
 import { Link } from 'react-router-dom';
-import Menu from './MenuButton';
+import Menu from './menuButton';
 const Header = () => {
   return ( 
     <header className="z-10 subpixel-antialiased select-none fixed top-0 font-poppins w-full text-white/100 bg-black flex items-center justify-between items-center p-2 md:p-4 px-2 lg:px-40">
