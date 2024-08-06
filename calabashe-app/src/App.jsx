@@ -4,6 +4,7 @@ import Review from './pages/Reviews'
 import Hospitals from './pages/Hospitals'
 import Services from './pages/Services'
 import Doctors from './pages/Doctors'
+import SignUp from './pages/SignUp'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/hospitals' element={ <Hospitals/> } />
         <Route path='/services' element={ <Services/> } />
         <Route path='/doctors' element={ <Doctors/> } />
+        <Route path='/sign_up' element={ <SignUp/> } />
       </Routes>
    </Router>
   )

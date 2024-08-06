@@ -1,0 +1,29 @@
+input{
+  outline-color: #04da8d;
+  border: 1px solid black;
+}
+
+#google_sign-up{
+  border: 1px solid black;
+}
+
+#or::before,
+#or::after{
+  content: '';
+  border: 1px solid gray;
+  width: 45% ;
+  position: absolute;
+  top: 50%;
+}
+
+#or::before{
+  left: 0;
+}
+
+#or::after{
+  right: 0;
+}
+
+button:active{
+  scale: 0.98;
+}
