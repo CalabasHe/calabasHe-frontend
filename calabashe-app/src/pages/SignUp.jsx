@@ -82,7 +82,7 @@ const SignUp = () => {
                 <p className="text-sm md:text-base">Sign up with Google</p>
               </button>
 
-              <Link className="text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" to=''>Already have an account? Sign In</Link>
+              <Link className="text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" to='/sign_in'>Already have an account? Sign In</Link>
             </div>
           </form>
 
