@@ -7,8 +7,8 @@
 const Banner = () => {
   return (
     <>
-      <section className="bg-[#04DA8D] w-full pt-8 md:py-14 md:pt-16 space-y-[150px] md:space-y-0 md:flex flex-row  ">
-        <div className="md:w-[50%] px-4 md:px-5 space-y-3">
+      <section className="bg-[#04DA8D] w-full pt-8 md:py-14 md:pt-16 space-y-6 md:space-y-0 md:flex flex-row lg:pl-[3%] ">
+        <div className=" md:w-[50%] px-4 md:px-5 space-y-3">
           <p className=" text-xl font-bold md:text-2xl">
             The leading platform for doctors and hospital review in Ghana.
           </p>
@@ -25,55 +25,28 @@ const Banner = () => {
           </div>
         </div>
 
-        <div className="flex justify-end md:self-end grow-1">
-          <div className=" relative w-[80%] max-[350px]:h-20 h-24 bg-[#56EEAD] rounded-l-[9999px]">
-            
-            <div className="absolute -bottom-0  left-[15%] min-[420px]:left-[25%] max-[350px]:h-[180px] h-[200px] min-[350px]:w-[25%] w-[50%] rounded-xl bg-blue-300 rounded-b-none">
-              {/* <img
-                src={doctorsAppointment}
-                className=" object-cover absolute -bottom-0   min-[420px]:left-[25%] w-[inherit] h-[inherit] rounded-[inherit] rounded-b-none "
-                alt="Patient in a dentist appointment"
-              ></img> */}
+        <div className="relative flex flex-col gap-10 justify-end flex-grow ">
+          <div className='w-full flex justify-end items-end gap-[30%] md:gap-6'>
+            <div className=" flex bg-white/40 w-12 h-12 -translate-y-2 rounded-full" ></div>
+            <div className=" flex bg-white/40 w-[22%] h-10 translate-x-1 rounded-l-3xl" ></div> 
+          </div>
+
+          <div className="w-full flex justify-end items-end">
+            <div className="relative flex bg-white/40 w-[80%] h-16 md:h-20 lg:h-24 rounded-l-[2rem]" >
+              <div className="absolute  bottom-1 right-4 h-6 w-6 bg-[#03D68A] rounded-full hidden md:flex"></div>
+            </div> 
+          </div>
+
+          <div className="absolute botton-0 left-5  w-full h-[90%] flex max-md:gap-6 px-2">    
+            <div className="flex flex-col gap-3 max-w-[100px] self-start pl-2">
+              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
+              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
+              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg hidden "></div>
             </div>
-
-            <div className="space-y-3 absolute -top-16 -left-[18%]  min-[420px]:left-[28%]" id="left-images">
-              
-              <div className=" relative z-10 max-[350px]:h-12 h-16 max-[350px]:w-16 w-20 bg-blue-300 rounded-lg">
-
-                <div className=" absolute top-1 -left-[20%] z-0  bg-[#F75A91] h-5 w-5 rounded-full "></div>
-              
-                {/* <img
-                  src={microscope}
-                  className="relative z-10 object-cover w-[inherit] h-[inherit] rounded-[inherit]"
-                  alt="Patient in a dentist appointment"
-                /> */}
-              </div>
-
-              <div className="max-[350px]:h-12 h-16 max-[350px]:w-16 w-20 bg-blue-300 rounded-lg">
-
-                {/* <img
-                  src={specialist}
-                  className="object-cover object-top w-[inherit] h-[inherit] rounded-[inherit]"
-                  alt="Patient in a dentist appointment"
-                /> */}
-              </div>
-            </div>
-
-            <div className="space-y-3 absolute -top-28 right-[5%]" id="right-images">
-              <div className="max-[350px]:h-12 h-16 max-[350px]:w-16 w-20 bg-blue-300 rounded-lg">
-                {/* <img
-                  src={patron}
-                  className="object-cover w-[inherit] h-[inherit] rounded-[inherit]"
-                  alt="Patient in a dentist appointment"
-                /> */}
-              </div>
-              <div className="max-[350px]:h-12 h-16 max-[350px]:w-16 w-20 bg-blue-300 rounded-lg">
-                {/* <img
-                  src={doctorInScrubs}
-                  className="object-cover w-[inherit] h-[inherit] rounded-[inherit]"
-                  alt="Patient in a dentist appointment"
-                /> */}
-              </div>
+            <div className="flex h-[100%] w-[38%] rounded-t-md bg-white/40 justify-self-center"></div>
+            <div className="flex flex-col gap-3 max-w-[100px] self-start">
+              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
+              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
             </div>
           </div>
         </div>
