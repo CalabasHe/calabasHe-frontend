@@ -6,6 +6,7 @@ import Services from './pages/Services'
 import Doctors from './pages/Doctors'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
+import VerifyUser from './pages/Verification'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/doctors' element={ <Doctors/> } />
         <Route path='/sign_up' element={ <SignUp/> } />
         <Route path='/sign_in' element={ <SignIn/> } />
+        <Route path='/verification' element={ <VerifyUser/> } />
       </Routes>
    </Router>
   )
