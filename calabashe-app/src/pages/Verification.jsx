@@ -3,16 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { verifyCode } from "../api/authApi";
 import Countdown from "../components/verificationtimer";
 
+// eslint-disable-next-line react/prop-types
 const VerifyUser = ({ email, duration }) => {
-  const [verificationCode, setVerificationCode] = useState("");
+  const [verificationCode, setVerificationCode] = useState(new Array(6).fill(""));
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   const navigate = useNavigate();
   const inputRefs = useRef([]);
-  console.log(duration)
-
 
   useEffect(() => {
     if (inputRefs.current[0]) {
@@ -23,20 +22,25 @@ const VerifyUser = ({ email, duration }) => {
   const handleChange = (e, index) => {
     const { value } = e.target;
 
-    setVerificationCode((prevCode) => {
-      const newCode = [...prevCode];
-      newCode[index] = value;
-      const updatedCode = newCode.join("");
-      if (updatedCode.length === 6) {
-        handleVerify(updatedCode);
-      }
-      return updatedCode;
-    });
+    if (/^\d$/.test(value)) {  
+      setVerificationCode((prevCode) => {
+        const newCode = [...prevCode];
+        newCode[index] = value;
+        const updatedCode = newCode.join("");
+        if (updatedCode.length === 6) {
+          handleVerify(updatedCode);
+        }
+        return newCode;
+      });
 
-    if (value.length === 1 && index < inputRefs.current.length - 1) {
-      inputRefs.current[index + 1].focus();
-    } else if (value.length === 0 && index > 0) {
-      inputRefs.current[index - 1].focus();
+
+      if (index < inputRefs.current.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+    } else if (value === "") {
+      if (index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
     }
   };
 
@@ -45,7 +49,7 @@ const VerifyUser = ({ email, duration }) => {
       await verifyCode({ email, verification_code: code });
       setSuccess("Verification successful! Your account is now active.");
       setError("");
-      setVerificationCode("");
+      setVerificationCode(new Array(6).fill(""));
       setIsModalOpen(false);
       navigate('/home');
     } catch (error) {
@@ -65,16 +69,17 @@ const VerifyUser = ({ email, duration }) => {
             {[...Array(6)].map((_, index) => (
               <input
                 key={index}
-                type="text"
+                type="tel"
                 maxLength={1}
                 className="block w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] text-center border-gray-400 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                 placeholder="⚬"
                 ref={(ref) => (inputRefs.current[index] = ref)}
                 onChange={(e) => handleChange(e, index)}
+                value={verificationCode[index]}
               />
             ))}
           </div>
-          <Countdown duration={duration}/>
+          <Countdown duration={duration} />
           {error && <p className="text-xs text-red-500">{error}</p>}
           {success && <p className="text-xs text-green-700">{success}</p>}
         </form>
