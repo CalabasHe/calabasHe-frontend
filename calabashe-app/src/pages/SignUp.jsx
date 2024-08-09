@@ -103,9 +103,9 @@ const SignUp = () => {
           <p> Calabas<span className="text-[#04DA8D]">He</span> </p>
         </Link>     
         
-        <main className="flex-grow flex items-center justify-center">
+        <main className="h-[100vh] lg:flex-grow flex items-center justify-center">
           
-          <div className="bg-white w-[90%] sm:w-[80%] max-w-[350px] sm:max-w-[400px] flex flex-col grow border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
+          <div className="bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[80%] flex flex-col grow border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
             <section className="mb-2 lg:mb-3 flex flex-col items-center">
               <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">
                 Create Your Account
