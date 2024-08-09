@@ -80,32 +80,15 @@ const SignUp = () => {
       <header className="md:hidden">
         <Header/>
       </header>
-      <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
-        <VerifyUser email={email} duration={900}/>
-      </div>
-      <div className="hidden lg:flex absolute bottom-0 rounded-xl ">
-        <img 
-          className="object-fill h-[40vh] w-full rounded-[inherit] rounded-br-none"
-          src={doctors} />
-      </div>
-      <div className="hidden lg:flex absolute top-3 right-[5%] rounded-xl ">
-        <img 
-          className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
-          src={doctorPosing} />
-      </div>
-      <div className="hidden lg:flex absolute bottom-0 right-[3%] rounded-xl">
-          <img 
-            className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
-            src={womanUsingPhone} />
-      </div>
+     
       <div className="z-10 flex flex-col flex-grow px-1 sm:px-3 lg:px-5% mt-[50px] md:mt-0">
         <Link to='/home' className=" sticky top-2 hidden md:flex bg-white font-bold text-xl md:text-2xl lg:text-3xl mb-4  md:px-2 shadow-md rounded-md w-[fit-content]" >
           <p> Calabas<span className="text-[#04DA8D]">He</span> </p>
         </Link>     
         
-        <main className="h-[100vh] lg:flex-grow flex items-center justify-center">
+        <main className="flex-grow flex items-center justify-center">
           
-          <div className="bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:max-w[450] flex flex-col grow border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
+          <div className="bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col grow border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
             <section className="mb-2 lg:mb-3 flex flex-col items-center">
               <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">
                 Create Your Account
@@ -120,8 +103,8 @@ const SignUp = () => {
               {/* <p className="font-semibold text-center text-base md:text-lg lg:xl mb-4 tracking-wide">Create Your Account</p> */}
               <div className="flex flex-col gap-4">
                 <div>
-                  <label className="block  text-xs sm:text-sm" htmlFor="email">Email</label>
-                  <input className=" text-xs sm:text-sm p-1 px-2  rounded-md w-full" 
+                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="email">Email</label>
+                  <input className=" text-xs sm:text-sm lg:text-base p-1 px-2  rounded-md w-full" 
                     type="email" 
                     id="email"
                     value={email}
@@ -132,8 +115,8 @@ const SignUp = () => {
                   />
                 </div>
                 <div>
-                  <label className="block  text-xs sm:text-sm" htmlFor="username">Username</label>
-                  <input className=" text-xs sm:text-sm p-1 px-2 rounded-md w-full" 
+                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="username">Username</label>
+                  <input className=" text-xs sm:text-sm lg:text-base p-1 px-2 rounded-md w-full" 
                     type="text" 
                     id="username"
                     value={username}
@@ -144,9 +127,9 @@ const SignUp = () => {
                   />
                 </div>
                 <div>
-                  <label className="block  text-xs sm:text-sm" htmlFor="passwd">Password</label>
+                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="passwd">Password</label>
                   <div className="relative flex h-full">
-                    <input className=" text-xs sm:text-sm p-1 px-2 rounded-md w-full" 
+                    <input className=" text-xs sm:text-sm lg:text-base p-1 px-2 rounded-md w-full" 
                       type="password" 
                       id="passwd"
                       value={password}
@@ -183,9 +166,9 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block  text-xs sm:text-sm" htmlFor="confirm_passwd">Confirm Password</label>
+                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="confirm_passwd">Confirm Password</label>
                   <div className="relative flex">
-                    <input className=" text-xs sm:text-sm p-1 px-2 rounded-md w-full" 
+                    <input className=" text-xs sm:text-sm lg:text-base p-1 px-2 rounded-md w-full" 
                       type="password" 
                       id="confirm_passwd"
                       value={password2}
@@ -230,6 +213,26 @@ const SignUp = () => {
 
           </div>
         </main>
+      </div>
+
+      {/* Verification code */}
+      <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
+        <VerifyUser email={email} duration={900}/>
+      </div>
+      <div className="hidden lg:flex absolute bottom-0 rounded-xl ">
+        <img 
+          className="object-fill h-[40vh] w-full rounded-[inherit] rounded-br-none"
+          src={doctors} />
+      </div>
+      <div className="hidden lg:flex absolute top-3 right-[5%] rounded-xl ">
+        <img 
+          className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
+          src={doctorPosing} />
+      </div>
+      <div className="hidden lg:flex absolute bottom-0 right-[3%] rounded-xl">
+          <img 
+            className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
+            src={womanUsingPhone} />
       </div>
     </div>
    );
