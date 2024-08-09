@@ -21,28 +21,42 @@ const VerifyUser = ({ email, duration }) => {
 
   const handleChange = (e, index) => {
     const { value } = e.target;
-
+  
+    // checks if the user is entering a number
+    // concatenates the number inputs into one code
     if (/^\d$/.test(value)) {  
       setVerificationCode((prevCode) => {
         const newCode = [...prevCode];
         newCode[index] = value;
         const updatedCode = newCode.join("");
+  
+        // Automatically verify if all 6 digits are entered
         if (updatedCode.length === 6) {
           handleVerify(updatedCode);
         }
         return newCode;
       });
-
-
+  
+      // Move focus to the next input if not at the last one
       if (index < inputRefs.current.length - 1) {
         inputRefs.current[index + 1].focus();
       }
-    } else if (value === "") {
+    } 
+    // If the user is clearing the input (backspace)
+    else if (value === "") {
+      setVerificationCode((prevCode) => {
+        const newCode = [...prevCode];
+        newCode[index] = value;
+        return newCode;
+      });
+  
+      // Move focus to the previous input
       if (index > 0) {
         inputRefs.current[index - 1].focus();
       }
     }
   };
+  
 
   const handleVerify = async (code) => {
     try {
