@@ -80,7 +80,7 @@ const SignUp = () => {
       <header className="md:hidden">
         <Header/>
       </header>
-      <div className={`${isHidden ? "" : ""} z-20 h-[100vh]`}>
+      <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
         <VerifyUser email={email} duration={900}/>
       </div>
       <div className="hidden lg:flex absolute bottom-0 rounded-xl ">
