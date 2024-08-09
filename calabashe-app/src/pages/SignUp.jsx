@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../stylesheets/account.css"
+import { Link } from "react-router-dom";
+import "../stylesheets/account.css";
 import { signUp } from "../api/authApi";
 import Header from "../components/Header";
-import doctors from '../assets/images/cartoon-doctors-nurses-illustration.png'
-import doctorPosing from '../assets/images/cartoon-doctor-posing.png'
-import womanUsingPhone from '../assets/images/afro-woman-using-smartphone-isolated-design.png'
+import doctors from '../assets/images/cartoon-doctors-nurses-illustration.png';
+import doctorPosing from '../assets/images/cartoon-doctor-posing.png';
+import womanUsingPhone from '../assets/images/afro-woman-using-smartphone-isolated-design.png';
+import VerifyUser from "./Verification";
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -14,71 +15,88 @@ const SignUp = () => {
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  
-  const navigate = useNavigate();
+  const [buttonText, setButtonText] = useState('Sign Up');
+  const [isHidden, setIsHidden] = useState(true);
+  const [disableForm, setDisableForm] = useState(false);
 
   const password1 = document.getElementById('passwd');
   const confirm_password = document.getElementById('confirm_passwd');
 
-  const togglePassword = () =>{
-    if ((password1.type === 'password') || (confirm_password.type ==='password')){
+
+  const toggleHiddenClass = () => {
+    setIsHidden(!isHidden);
+  };
+
+  const togglePassword = () => {
+    if ((password1.type === 'password') || (confirm_password.type === 'password')) {
       password1.type = 'text';
-      confirm_password.type = 'text'
-      // document.getElementById('showpassword-icon').className = 'fill-red-500'
-    } else{
-        password1.type = 'password';
-        confirm_password.type = 'password'
+      confirm_password.type = 'text';
+    } else {
+      password1.type = 'password';
+      confirm_password.type = 'password';
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setButtonText('Creating Account');
 
     password1.type = 'password';
     confirm_password.type = 'password';
-  
+
     const passwordRegex = /^(?=.{8,}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W).+$/;
+
     if (password !== password2) {
       setError('Passwords do not match');
+      setButtonText('Sign Up');
       return;
     }
-  
+
     if (!passwordRegex.test(password)) {
       setError('Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, a digit, and a special character');
+      setButtonText('Sign Up');
       return;
     }
-  
+
+    setDisableForm(true)
+
     try {
       await signUp({ email, username, password, password2 });
-      navigate('/verification', { state: { email } });
+      setSuccess('Account created successfully');
+      toggleHiddenClass();
     } catch (error) {
-      console.log(error)
-      setError( error.response?.data?.detail || error.message || 'Signup failed');
+      setError(error.message || 'Signup failed');
+      setDisableForm(false)
+    } finally {
+      setButtonText('Sign Up');
     }
-  };  
+  };
 
 
   return (
     <div className="overflow-x-hidden relative bg-[#04DA8D] flex flex-col h-[100vh] py-3">
-      <div className="hidden lg:flex absolute bottom-0 rounded-xl skew-x-3">
+      <header className="md:hidden">
+        <Header/>
+      </header>
+      <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
+        <VerifyUser email={email} duration={900}/>
+      </div>
+      <div className="hidden lg:flex absolute bottom-0 rounded-xl ">
         <img 
           className="object-fill h-[40vh] w-full rounded-[inherit] rounded-br-none"
           src={doctors} />
       </div>
-      <div className="hidden lg:flex absolute top-3 right-[5%] rounded-xl skew-x-3">
+      <div className="hidden lg:flex absolute top-3 right-[5%] rounded-xl ">
         <img 
           className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
           src={doctorPosing} />
       </div>
-      <div className="hidden lg:flex absolute bottom-0 right-[5%] rounded-xl skew-x-3">
-        <img 
-          className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
-          src={womanUsingPhone} />
-      </div>
-      <div className="md:hidden">
-        <Header/>
+      <div className="hidden lg:flex absolute bottom-0 right-[3%] rounded-xl">
+          <img 
+            className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
+            src={womanUsingPhone} />
       </div>
       <div className="z-10 flex flex-col flex-grow px-1 sm:px-3 lg:px-5% mt-[50px] md:mt-0">
         <Link to='/home' className=" sticky top-2 hidden md:flex bg-white font-bold text-xl md:text-2xl lg:text-3xl mb-4  md:px-2 shadow-md rounded-md w-[fit-content]" >
@@ -97,7 +115,8 @@ const SignUp = () => {
                 <path d="M38 42C38.5523 42 39 41.5523 39 41C39 40.4477 38.5523 40 38 40C37.4477 40 37 40.4477 37 41C37 41.5523 37.4477 42 38 42Z" fill="white"/>
               </svg>
             </section>
-            <form onSubmit={handleSubmit} className=" font-semibold space-y-6 cursor-auto">
+            
+            <form onSubmit={handleSubmit} className='font-semibold space-y-6 cursor-auto'>
               {/* <p className="font-semibold text-center text-base md:text-lg lg:xl mb-4 tracking-wide">Create Your Account</p> */}
               <div className="flex flex-col gap-4">
                 <div>
@@ -108,6 +127,7 @@ const SignUp = () => {
                     value={email}
                     onChange={(e => setEmail(e.target.value))}
                     placeholder="example@email.com"
+                    disabled = {disableForm}
                     required
                   />
                 </div>
@@ -119,6 +139,7 @@ const SignUp = () => {
                     value={username}
                     onChange={(e => setUsername(e.target.value))}
                     placeholder="eg: jolly_rater"
+                    disabled = {disableForm}
                     required 
                   />
                 </div>
@@ -130,6 +151,7 @@ const SignUp = () => {
                       id="passwd"
                       value={password}
                       onChange={(e => setPassword(e.target.value))}
+                      disabled = {disableForm}
                       required
                     />
                     <button
@@ -169,6 +191,7 @@ const SignUp = () => {
                       value={password2}
                       onChange={(e => setPassword2(e.target.value))}
                       required
+                      disabled = {disableForm}
                       />
                   </div>
                     {error && <p className="error text-xs text-red-600 pt-1">{error}</p>}
@@ -181,8 +204,9 @@ const SignUp = () => {
                   className="bg-[#FEE330] text-center text-base font-bold w-full py-1 rounded-md lg:hover:scale-[1.01] active:scale-[0.90] lg:hover:bg-[#04DA8D] lg:hover:text-white transition ease-in-out"
                   type="submit"
                   id="sign_up"
+                  disabled = {disableForm}
                 >
-                  Sign Up
+                  {buttonText}
                 </button>
                 <p className="relative text-gray-600 w-full text-center" id='or'>or</p>
 
@@ -190,6 +214,7 @@ const SignUp = () => {
                   className="flex justify-center items-center gap-2 text-base font-bold w-full py-1 rounded-md lg:hover:scale-[1.01] active:scale-[0.90] transition-[1s] ease-in-out"
                   type="submit"
                   id="google_sign-up"
+                  disabled={disableForm}
                 >
                   <svg
                     className="w-5 h-3 md:w-6 md:h-4" 
