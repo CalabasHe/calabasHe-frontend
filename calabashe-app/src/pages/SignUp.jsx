@@ -103,8 +103,8 @@ const SignUp = () => {
               {/* <p className="font-semibold text-center text-base md:text-lg lg:xl mb-4 tracking-wide">Create Your Account</p> */}
               <div className="flex flex-col gap-4">
                 <div>
-                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="email">Email</label>
-                  <input className=" text-xs sm:text-sm lg:text-base p-1 px-2  rounded-md w-full" 
+                  <label className="block  text-sm lg:text-base" htmlFor="email">Email</label>
+                  <input className="text-base leading-3 p-1 px-2  rounded-md w-full" 
                     type="email" 
                     id="email"
                     value={email}
@@ -115,8 +115,8 @@ const SignUp = () => {
                   />
                 </div>
                 <div>
-                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="username">Username</label>
-                  <input className=" text-xs sm:text-sm lg:text-base p-1 px-2 rounded-md w-full" 
+                  <label className="block  text-sm lg:text-base" htmlFor="username">Username</label>
+                  <input className="text-base leading-3 p-1 px-2 rounded-md w-full" 
                     type="text" 
                     id="username"
                     value={username}
@@ -127,9 +127,9 @@ const SignUp = () => {
                   />
                 </div>
                 <div>
-                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="passwd">Password</label>
+                  <label className="block text-sm lg:text-base" htmlFor="passwd">Password</label>
                   <div className="relative flex h-full">
-                    <input className=" text-xs sm:text-sm lg:text-base p-1 px-2 rounded-md w-full" 
+                    <input className="leading-3 text-base p-1 px-2 rounded-md w-full" 
                       type="password" 
                       id="passwd"
                       value={password}
@@ -166,9 +166,9 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block  text-xs sm:text-sm lg:text-base" htmlFor="confirm_passwd">Confirm Password</label>
+                  <label className="block text-sm lg:text-base" htmlFor="confirm_passwd">Confirm Password</label>
                   <div className="relative flex">
-                    <input className=" text-xs sm:text-sm lg:text-base p-1 px-2 rounded-md w-full" 
+                    <input className="text-base leading-3 p-1 px-2 rounded-md w-full" 
                       type="password" 
                       id="confirm_passwd"
                       value={password2}

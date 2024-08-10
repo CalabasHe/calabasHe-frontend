@@ -18,8 +18,8 @@ const Banner = () => {
           </p>
           <div className="max-w-[455px]  text-xs font-medium">
             <input
-              type="text"
-              className="h-10 w-full border-[1px] border-black rounded-3xl placeholder:text-[#5E5E5E] caret-[#34c759] outline-none px-6"
+              type='search'
+              className="h-10 w-full border-[1px] border-black rounded-3xl text-base placeholder:text-[#5E5E5E] caret-[#34c759] outline-none px-6"
               placeholder="Doctors, Clinics or Services"
             />
           </div>
