@@ -37,7 +37,7 @@ const VerifyUser = ({ email, duration }) => {
         return newCode;
       });
   
-      // Move focus to the next input if not at the last one
+      // Moves focus to the next input if the box in focus not at the last one
       if (index < inputRefs.current.length - 1) {
         inputRefs.current[index + 1].focus();
       }
@@ -67,7 +67,7 @@ const VerifyUser = ({ email, duration }) => {
       setIsModalOpen(false);
       navigate('/home');
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       setError(error.message || "Failed to verify code");
     }
   };
@@ -85,7 +85,7 @@ const VerifyUser = ({ email, duration }) => {
                 key={index}
                 type="tel"
                 maxLength={1}
-                className="block w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] text-center border-gray-400 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                className="block w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] text-center border-gray-400 rounded-md text-base focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                 placeholder="⚬"
                 ref={(ref) => (inputRefs.current[index] = ref)}
                 onChange={(e) => handleChange(e, index)}
