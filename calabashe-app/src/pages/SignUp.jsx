@@ -51,12 +51,14 @@ const SignUp = () => {
     if (password !== password2) {
       setError('Passwords do not match');
       setButtonText('Sign Up');
+      setDisableForm(false)
       return;
     }
 
     if (!passwordRegex.test(password)) {
       setError('Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, a digit, and a special character');
       setButtonText('Sign Up');
+      setDisableForm(false)
       return;
     }
 
@@ -67,8 +69,8 @@ const SignUp = () => {
       setSuccess('Account created successfully');
       toggleHiddenClass();
     } catch (error) {
-      setError(error.message || 'Signup failed');
       setDisableForm(false)
+      setError(error.response.data || 'Signup failed');
     } finally {
       setButtonText('Sign Up');
     }
