@@ -5,7 +5,7 @@
 
 :root{
   --bar-width: 30px;
-  --bar-height: 4px;
+  --bar-height: 3px;
   --hamburger-gap: 3px;
   --background: #828282; 
   --hamburger-margin: 4px;
@@ -32,7 +32,7 @@ body{
 
 .hamburger-menu::before,
 .hamburger-menu::after,
-.hamburger-menu input{
+#button{
   content:"";
   width: var(--bar-width);
   height: var(--bar-height);
@@ -46,32 +46,31 @@ body{
   transform-origin: left;
 }
 
-.hamburger-menu input{
+#button{
   appearance: none;
-  outline: none;
   pointer-events: none;
-  width: var(--bar-width);
-  height: var(--bar-height);
+  outline: none;
+  border:  var(--background);
 }
-.hamburger-menu input:checked{
+.hamburger-menu #button:checked{
   opacity: 0;
   width: 0;
 }
 
-.hamburger-menu:has(input:checked)::before {
+.hamburger-menu:has(#button:checked)::before {
   rotate: 45deg;
   width: var(--x-width);
   translate: 0 calc(var(--bar-height) / -2);
 }
-.hamburger-menu:has(input:checked)::after {
+.hamburger-menu:has(#button:checked)::after {
   rotate: -45deg;
   width: var(--x-width);
   translate: 0 calc(var(--bar-height) / 2);
 
 }
 
-.hamburger-menu:has(input:checked)::before,
-.hamburger-menu:has(input:checked)::after{
+.hamburger-menu:has(#button:checked)::before,
+.hamburger-menu:has(#button:checked)::after{
   background-color: white;
 }
 
@@ -93,7 +92,7 @@ body{
   top: 100%;
   right: .1px;
   transform: translateX(calc(30vw + 20px));
-  transition: transform 400ms ease-in;
+  transition: transform 400ms ease-in-out;
 }
 
 .navmenu > ul{
@@ -105,7 +104,7 @@ body{
 }
 
 
-.hamburger-menu:has(input:checked) + .navmenu{
+.hamburger-menu:has(#button:checked) + .navmenu{
   flex-direction: column;
   background-color: black;
   transform: translateX(-.01rem);
