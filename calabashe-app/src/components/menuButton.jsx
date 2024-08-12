@@ -32,10 +32,11 @@ const Menu = () => {
     <nav className="md:hidden font-poppins text-lg" ref={menuRef}>
       <label className="hamburger-menu">
         <input 
-          type="checkbox" 
+          type="checkbox"
+          id='button'
           ref={checkboxRef}
           checked={isChecked}
-          onChange={handleCheckboxClick} // Handle checkbox state change
+          onChange={handleCheckboxClick}
         />
       </label>
       <aside className="navmenu antialiased font-bold rounded-bl-md">
