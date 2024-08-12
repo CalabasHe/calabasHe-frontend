@@ -30,7 +30,7 @@ const Menu = () => {
 
   return (
     <nav className="md:hidden font-poppins text-lg" ref={menuRef}>
-      <label className="hamburger-menu">
+      <label className="hamburger-menu" htmlFor='button'>
         <input 
           type="checkbox"
           id='button'
@@ -39,7 +39,7 @@ const Menu = () => {
           onChange={handleCheckboxClick}
         />
       </label>
-      <aside className="navmenu antialiased font-bold rounded-bl-md">
+      <aside className="navmenu antialiased font-semibold text-base rounded-bl-md">
         <ul>
           <li id="hospital-link"><Link to="/hospitals">Hospital</Link></li>
           <li id="doctors-link"><Link to="/doctors">Doctors</Link></li>
