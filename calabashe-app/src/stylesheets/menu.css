@@ -11,8 +11,8 @@
   --hamburger-margin: 4px;
   --animation-timing:350ms ease-in-out ;
   --hamburger-height: calc(var(--bar-height) * 3 + var(--hamburger-gap) * 2);
-  --width-navmenu: 50vw;
-  --max-width-navmenu: 250px
+  --width-navmenu: 55vw;
+  --max-width-navmenu: 350px
 }
 
 body{
