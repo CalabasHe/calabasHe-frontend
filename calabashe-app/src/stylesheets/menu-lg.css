@@ -6,13 +6,19 @@
   
     transition: transform 300ms;
     cursor: pointer;
+
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
   li::after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -4px;
     width: 100%;
     border-radius: 2px;
     height: 3px;
@@ -23,7 +29,7 @@
   }
   
   li:hover {
-    transform: scale(1.13);
+    transform: scale(1.02);
   }
   
   li:hover::after {
@@ -32,7 +38,6 @@
   
   li:active {
     transform: scale(0.99);
-    transition: transform 300ms;
   }
 
  }
