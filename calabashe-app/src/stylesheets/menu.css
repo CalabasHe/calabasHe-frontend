@@ -107,6 +107,7 @@ body{
 }
 
 
+
 .hamburger-menu:has(#button:checked) + .navmenu{
   flex-direction: column;
   background-color: black;
