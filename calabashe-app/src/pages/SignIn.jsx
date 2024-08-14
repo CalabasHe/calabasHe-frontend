@@ -39,8 +39,10 @@ const SignIn = () => {
       navigate('/home');
     }catch (error) {
       console.log(error)
-      if (error.non_field_errors && error.non_field_errors.length > 0) {
-        setError(error.non_field_errors[0]);
+      if (error.non_field_errors && (error.non_field_errors[0].includes('No account'))) {
+        setError("Account doesn't exist");
+      }if (error.non_field_errors && (error.non_field_errors[0].includes('Incorrect password'))) {
+        setError("Incorrect password. Try again");
       } else {
         setError(error.message || "An unexpected error occurred");
       }
