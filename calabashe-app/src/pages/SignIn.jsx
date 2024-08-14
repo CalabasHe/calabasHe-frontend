@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 import { useNavigate, Link } from "react-router-dom";
 import { logIn } from '../api/authApi.js'
 import AnimatePage from '../components/AnimatePage.jsx';
@@ -13,15 +13,19 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const navigate = useNavigate();
   const [buttonText, setButtonText] = useState('Sign In');
   const [disableForm, setDisableForm] = useState(false);
+  const [passwordHidden, setPasswordHidden] = useState(true);
+  const navigate = useNavigate();
+  const inputPassword = useRef(null)
   
   const togglePassword = () =>{
-    if (password.type === 'password'){
-      password.type = 'text';
+    if (inputPassword.current.type === 'password'){
+      inputPassword.current.type = 'text';
+      setPasswordHidden(false)
     } else{
-        password.type = 'password';
+        inputPassword.current.type = 'password';
+        setPasswordHidden(true)
     }
   }
 
@@ -38,12 +42,16 @@ const SignIn = () => {
       setSuccess('Sign in successful');
       navigate('/home');
     }catch (error) {
-      console.log(error)
-      if (error.non_field_errors && (error.non_field_errors[0].includes('No account'))) {
-        setError("Account doesn't exist");
-      }if (error.non_field_errors && (error.non_field_errors[0].includes('Incorrect password'))) {
-        setError("Incorrect password. Try again");
+      if (error.non_field_errors) {
+        if (error.non_field_errors[0].includes('No account')) {
+          setError("Account doesn't exist");
+        } else if (error.non_field_errors[0].includes('Incorrect password')) {
+          setError("Incorrect password. Try again");
+        } else {
+          setError(error.message || "An unexpected error occurred");
+        }
       } else {
+        console.log(error)
         setError(error.message || "An unexpected error occurred");
       }
     }finally{
@@ -59,7 +67,7 @@ const SignIn = () => {
           <div className="relative z-50 bg-[#1E4738] w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[400px] flex flex-col grow pointer-events-auto rounded-md py-6 pt-8 lg:py-8 p-4 px-[3%]">
             
             <div className="w-[60%] max-w-[250px] text-center z-30 absolute text-xl md:text-2xl text-white px-8 py-2 rounded-md font-bold bg-[#037F52] self-center -translate-y-14">
-              <h1>Calabas<span className="text-[#04DA8D]">He</span></h1>
+              <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">He</span></h1></Link>
             </div>
             
             <div className="absolute left-[20%] w-[60%] -top-[100px] md:-top-[150px] lg:hidden z-10">
@@ -96,7 +104,9 @@ const SignIn = () => {
                 <div className="space-y-1">
                   <label className="block text-sm" htmlFor="passwd">Password</label>
                   <div className="relative flex">
-                    <input className="border-0 text-base text-black p-1 px-2 rounded-md w-full" 
+                    <input
+                      ref={inputPassword} 
+                      className="border-0 text-base text-black p-1 px-2 rounded-md w-full" 
                       type="password" 
                       id="passwd"
                       value={password}
@@ -105,11 +115,12 @@ const SignIn = () => {
                       required
                     />
                     <button
-                        className=" cursor-pointer fill-green-600 w-8 h-[100%] absolute right-1 flex items-center justify-center"
-                        id="showPassword"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          togglePassword();}}
+                      className={` ${passwordHidden ? 'fill-green-600' : 'fill-red-500'} cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}
+                      id="passwordVisibility"
+                      tabIndex='-1'
+                      onClick={(e) => {
+                        e.preventDefault();
+                        togglePassword();}}
                       >
                         <svg
                         id="showpassword-icon"
@@ -120,8 +131,8 @@ const SignIn = () => {
                       </button>
                   </div>
                 </div>
-                {error && <p className="text-red-500 text-left">{error}</p>}
-                {success && <p className="text-green-500 text-left">{success}</p>}
+                {error && <p className="text-red-500 text-sm md:text-base text-semibold text-left">{error}</p>}
+                {success && <p className="text-green-500 text-sm md:text-base text-semibold text-left">{success}</p>}
               </div>
               {/* buttons */}
               <div className="flex flex-col gap-y-2" >
