@@ -16,21 +16,31 @@ export const signUp = async ({ email, username, password, password2 }) => {
 
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.detail);
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
   }
 };
 
 export const logIn = async ({ email, password }) => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await axios.post(LOGIN_URL, {
       email,
       password,
     });
-
+    
     return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.detail);
+  }catch (error) {
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
   }
+
 };
 
 export const verifyCode = async ({ email, verification_code }) => {
@@ -41,8 +51,12 @@ export const verifyCode = async ({ email, verification_code }) => {
     });
 
     return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.detail || 'Incorrect verification code');
+  }catch (error) {
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
   }
 };
 

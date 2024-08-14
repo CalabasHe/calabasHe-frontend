@@ -15,7 +15,7 @@ label{
 #or::before,
 #or::after{
   content: '';
-  border: 1px solid gray;
+  border: 1px solid rgb(87, 87, 87);
   width: 45% ;
   position: absolute;
   top: 50%;
