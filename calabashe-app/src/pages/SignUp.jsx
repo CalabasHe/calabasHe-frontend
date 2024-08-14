@@ -70,9 +70,18 @@ const SignUp = () => {
       setSuccess('Account created successfully');
       toggleHiddenClass();
     } catch (error) {
-      setDisableForm(false)
-      setError(error.response.data || 'Signup failed');
+      console.log(error)
+      if (error.email) {
+        setError('Account with this email already exists');
+      } if (error.username && error.email){
+        setError('Account with this email already exists');
+      } if (!(error.email) && error.username){
+        setError('Username has already been taken')
+      } else {
+        setError(error.message || "An unexpected error occurred");
+      }
     } finally {
+      setDisableForm(false)
       setButtonText('Sign Up');
     }
   };
@@ -183,8 +192,9 @@ const SignUp = () => {
                           disabled = {disableForm}
                           />
                       </div>
-                        {error && <p className="error text-xs text-red-600 pt-1">{error}</p>}
-                        {success && <p className="success">{success}</p>}
+                      {/* Error handling */}
+                        {error && <p className="error text-xs md:text-sm text-red-600 pt-2">{error}</p>}
+                        {success && <p className="success text-xs md:text-sm text-green-600 pt-2">{success}</p>}
                     </div>
                   </div>
                   {/* buttons */}

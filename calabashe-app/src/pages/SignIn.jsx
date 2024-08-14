@@ -44,24 +44,23 @@ const SignIn = () => {
       } else {
         setError(error.message || "An unexpected error occurred");
       }
-      setDisableForm(false);
-      
     }finally{
+      setDisableForm(false);
       setButtonText('Sign In')
     }
   }
   return ( 
     <>
       <AnimatePage>
-        <main className=" bg-[#04da8d] h-[100vh] pt-[15%] flex items-center justify-center text-white">
+        <main className="bg-[#04DA8D] min-h-screen py-4 pt-[15%] lg:pt-0 flex items-center justify-center text-white">
           
-          <div className="relative z-50 bg-[#1E4738] h-[fit-content] w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[400px] flex flex-col grow pointer-events-auto rounded-md py-6 pt-8 lg:py-8 p-4 px-[3%]">
+          <div className="relative z-50 bg-[#1E4738] w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[400px] flex flex-col grow pointer-events-auto rounded-md py-6 pt-8 lg:py-8 p-4 px-[3%]">
             
             <div className="w-[60%] max-w-[250px] text-center z-30 absolute text-xl md:text-2xl text-white px-8 py-2 rounded-md font-bold bg-[#037F52] self-center -translate-y-14">
               <h1>Calabas<span className="text-[#04DA8D]">He</span></h1>
             </div>
             
-            <div className="absolute left-[20%] w-[60%] -top-[100px] md:-top-[150px] z-10">
+            <div className="absolute left-[20%] w-[60%] -top-[100px] md:-top-[150px] lg:hidden z-10">
               <picture className="relative z-0 inset-0 object-fill">
                 <source className="z-0 object-fill" srcSet={docs1} type="image/webp" alt="animated picture of doctors posing"></source>
                 <img className="z-0 object-fill" src={docs1png} alt="animated picture of doctors posing"></img>
