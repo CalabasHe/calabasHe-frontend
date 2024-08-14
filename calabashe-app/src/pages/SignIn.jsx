@@ -70,7 +70,7 @@ const SignIn = () => {
               <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">He</span></h1></Link>
             </div>
             
-            <div className="absolute left-[20%] w-[60%] -top-[100px] md:-top-[150px] lg:hidden z-10">
+            <div className="absolute left-[20%] w-[180px] sm:w-[210px] md:w-[240px] -top-[100px] sm:-top-[120px]   md:-top-[150px] lg:hidden z-10">
               <picture className="relative z-0 inset-0 object-fill">
                 <source className="z-0 object-fill" srcSet={docs1} type="image/webp" alt="animated picture of doctors posing"></source>
                 <img className="z-0 object-fill" src={docs1png} alt="animated picture of doctors posing"></img>
@@ -118,6 +118,7 @@ const SignIn = () => {
                       className={` ${passwordHidden ? 'fill-green-600' : 'fill-red-500'} cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}
                       id="passwordVisibility"
                       tabIndex='-1'
+                      aria-label="Toggle Password Visibility"
                       onClick={(e) => {
                         e.preventDefault();
                         togglePassword();}}
@@ -140,6 +141,7 @@ const SignIn = () => {
                   className="bg-[#FEE330] text-center text-base font-semibold w-full py-1 rounded-md lg:hover:scale-[1.01] active:scale-[0.90] lg:hover:bg-[#04DA8D] text-black lg:hover:text-white transition ease-in-out"
                   type="submit"
                   id="sign_in"
+                  aria-label="User Account sign-in button"
                 >
                   {buttonText}
                   </button>
@@ -150,6 +152,7 @@ const SignIn = () => {
                   type="submit"
                   id="google_sign-in"
                   disabled={disableForm}
+                  aria-label="Google sign-in button"
                 >
                   <svg
                     className="w-5 h-3 md:w-6 md:h-4" 

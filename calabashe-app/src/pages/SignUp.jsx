@@ -158,6 +158,7 @@ const SignUp = () => {
                         <button
                             className={`${passwdHidden ? 'fill-green-600' : 'fill-red-500'}  cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}
                             tabIndex='-1'
+                            aria-label="Toggle Password Visibility"
                             onClick={(e) => {
                               e.preventDefault();
                               togglePassword();}}
@@ -184,6 +185,7 @@ const SignUp = () => {
                         <button
                             className={`${passwdHidden ? 'fill-green-600' : 'fill-red-500'}  cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}
                             tabIndex='-1'
+                            aria-label="Toggle Password Visibility"
                             onClick={(e) => {
                               e.preventDefault();
                               togglePassword();}}
@@ -206,6 +208,7 @@ const SignUp = () => {
                       className="bg-[#FEE330] text-center text-base font-bold w-full py-1 rounded-md lg:hover:scale-[1.01] active:scale-[0.90] lg:hover:bg-[#04DA8D] lg:hover:text-white transition ease-in-out"
                       type="submit"
                       id="sign_up"
+                      aria-label="User Account sign-up button"
                       disabled = {disableForm}
                     >
                       {buttonText}
@@ -216,6 +219,7 @@ const SignUp = () => {
                       className="flex justify-center items-center gap-2 text-base font-bold w-full py-1 rounded-md lg:hover:scale-[1.01] active:scale-[0.90] transition-[1s] ease-in-out"
                       type="submit"
                       id="google_sign-up"
+                      aria-label="Google sign-up button"
                       disabled={disableForm}
                     >
                       <svg
