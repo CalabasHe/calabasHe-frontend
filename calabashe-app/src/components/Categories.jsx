@@ -1,15 +1,37 @@
-import { fetchDoctors } from "../api/getData";
+import { useState } from "react";
+import { fetchDoctorsCount, fetchFacilitiesCount, fetchServicesCount } from "../api/getData";
 import { FadeInRight } from "./ComponentAnimations";
 
 const ExploreCategories = () => {
 
-  fetchDoctors()
+  const [doctorCount, setDoctorCount] = useState('0') 
+  const [reviewCount, setReviewCount] = useState('0') 
+  const [facilitiesCount, setFacilitiesCount] = useState('0') 
+  const [servicesCount, setServicesCount] = useState('0') 
+
+  fetchDoctorsCount()
   .then(data => {
-    console.log(data)
+    setDoctorCount(data)
   })
   .catch(error => {
     console.log(error)
   })
+  fetchServicesCount()
+  .then(data => {
+    setServicesCount(data)
+  })
+  .catch(error => {
+    console.log(error)
+  })
+  fetchFacilitiesCount()
+  .then(data => {
+   setFacilitiesCount(data)
+  })
+  .catch(error => {
+    console.log(error)
+  })
+
+
   return (
     <>
       <FadeInRight>
@@ -22,7 +44,7 @@ const ExploreCategories = () => {
                 role="link"
               >
                 <div className="flex flex-col gap-[1px]">
-                  <p className="font-semibold text-base">422,122,122</p>
+                  <p className="font-semibold text-base">{reviewCount}</p>
                   <p className="font-medium text-sm">Reviews</p>
                 </div>
                 <svg
@@ -37,7 +59,7 @@ const ExploreCategories = () => {
                 role="link"
               >
                 <div className="flex flex-col gap-[1px]">
-                  <p className="font-semibold text-base">422,122,122</p>
+                  <p className="font-semibold text-base">{doctorCount}</p>
                   <p className="font-medium text-sm">Doctors</p>
                 </div>
                 <svg
@@ -52,8 +74,8 @@ const ExploreCategories = () => {
                 role="link"
               >
                 <div className="flex flex-col gap-[1px]">
-                  <p className="font-semibold text-base">422,122,122</p>
-                  <p className="font-medium text-sm">Hospitals</p>
+                  <p className="font-semibold text-base">{facilitiesCount}</p>
+                  <p className="font-medium text-sm">Facilities</p>
                 </div>
                 <svg
                   className="absolute  bottom-0 right-0 fill-current text-gray-300"
@@ -67,7 +89,7 @@ const ExploreCategories = () => {
                 role="link"
               >
                 <div className="flex flex-col gap-[1px]">
-                  <p className="font-semibold text-base">422,122,122</p>
+                  <p className="font-semibold text-base">{servicesCount}</p>
                   <p className="font-medium text-sm">Services</p>
                 </div>
                 <svg
