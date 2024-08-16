@@ -2,12 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../stylesheets/account.css";
 import { signUp } from "../api/authApi";
-import Header from "../components/Header";
-import doctors from '../assets/images/cartoon-doctors-nurses-illustration.png';
-import doctorPosing from '../assets/images/cartoon-doctor-posing.png';
-import womanUsingPhone from '../assets/images/afro-woman-using-smartphone-isolated-design.png';
 import VerifyUser from "./Verification";
-import AnimatePage from "../components/AnimatePage";
+import { AnimateY } from "../components/ComponentAnimations";
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -91,22 +87,18 @@ const SignUp = () => {
 
 
   return (
-      <AnimatePage>
-        <div className="overflow-x-hidden relative bg-[#04DA8D] flex flex-col h-[100vh] py-3">
-          <header className="md:hidden z-20">
-            <Header/>
-          </header>
+    <div className=" overflow-y-auto bg-[#04DA8D] h-screen w-screen flex items-center justify-center py-1 ">
 
+        <AnimateY>
         
-          <div className="z-10 flex flex-col flex-grow px-1 sm:px-3 lg:px-5% mt-[50px] md:mt-0">
-            <Link to='/home' className=" sticky top-2 hidden md:flex bg-white font-bold text-xl md:text-2xl lg:text-3xl mb-4  md:px-2 shadow-md rounded-md w-[fit-content]" >
+            {/* <Link to='/home' className=" sticky top-2 hidden md:flex bg-white font-bold text-xl md:text-2xl lg:text-3xl mb-4  md:px-2 shadow-md rounded-md w-[fit-content]" >
               <p> Calabas<span className="text-[#04DA8D]">He</span> </p>
-            </Link>     
+            </Link>      */}
             
               
-            <main className="z-0 flex-grow flex items-center justify-center">
+            <main className="h-screen w-full flex items-center justify-center">
               
-              <div className="z-0 bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col grow border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
+              <div className=" bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col  border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
                 <section className="mb-2 lg:mb-3 flex flex-col items-center">
                   <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">
                     Create Your Account
@@ -236,29 +228,13 @@ const SignUp = () => {
 
               </div>
             </main>
-          </div>
 
           {/* Verification code */}
           <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
             <VerifyUser email={email} duration={900}/>
           </div>
-          <div className="hidden lg:flex absolute bottom-0 rounded-xl ">
-            <img 
-              className="object-fill h-[40vh] w-full rounded-[inherit] rounded-br-none"
-              src={doctors} />
-          </div>
-          <div className="hidden lg:flex absolute top-3 right-[5%] rounded-xl ">
-            <img 
-              className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
-              src={doctorPosing} />
-          </div>
-          <div className="hidden lg:flex absolute bottom-0 right-[3%] rounded-xl">
-              <img 
-                className="object-fill h-[60vh] w-full rounded-[inherit] rounded-br-none"
-                src={womanUsingPhone} />
-          </div>
-        </div>
-      </AnimatePage>
+      </AnimateY>
+    </div>
    );
 }
  

@@ -16,6 +16,7 @@ const Home = () => {
               {/* <p className="font-semibold text-2xl sm:text-4xl ">Heyy there!!👋😁</p>
               <p className="font-semibold text-2xl sm:text-4xl ">Welcome to:</p>
               <h1 className="z-1 mt-4 text-4xl sm:text-6xl font-black animate-bounce ">Calabas<span className="text-[#04DA8D]">He</span></h1>  */}
+              
               <ExploreCategories/>
             </main>
             <Footer/>
