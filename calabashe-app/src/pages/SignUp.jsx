@@ -230,10 +230,10 @@ const SignUp = () => {
             </main>
 
           {/* Verification code */}
+      </AnimateY>
           <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
             <VerifyUser email={email} duration={900}/>
           </div>
-      </AnimateY>
     </div>
    );
 }
