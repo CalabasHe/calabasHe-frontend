@@ -11,7 +11,7 @@ const CategoryItem = ({ count, label, to, icon }) => (
   >
     <div className="flex flex-col gap-[1px]">
       <p className="font-semibold text-sm md:text-base">
-        <AnimateCount end={parseInt(count, 10)} />
+        <AnimateCount end={parseInt(count, 30)} />
       </p>
       <p className="font-medium text-xs md:text-sm">{label}</p>
     </div>
