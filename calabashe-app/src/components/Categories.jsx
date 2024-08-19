@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { fetchDoctorsCount, fetchFacilitiesCount, fetchServicesCount } from "../api/getData";
+import { fetchDoctorsCount, fetchFacilitiesCount, fetchServicesCount, fetchReviewCount } from "../api/getData";
 import { FadeInRight } from "./ComponentAnimations";
 import AnimateCount from "./AnimateCount";
 
@@ -30,19 +30,28 @@ const ExploreCategories = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const [doctorsCount, facilitiesCount, servicesCount] = await Promise.all([
+        const cachedCounts = localStorage.getItem('categoryCounts');
+        if (cachedCounts) {
+          setCounts(JSON.parse(cachedCounts));
+          return;
+        }
+
+        const [doctorsCount, facilitiesCount, servicesCount, reviewsCount] = await Promise.all([
           fetchDoctorsCount(),
           fetchFacilitiesCount(),
-          fetchServicesCount()
+          fetchServicesCount(),
+          fetchReviewCount()
         ]);
 
-        setCounts(prevCounts => ({
-          ...prevCounts,
+        const newCounts = {
           doctors: doctorsCount,
           facilities: facilitiesCount,
           services: servicesCount,
-          reviews: 0
-        }));
+          reviews: reviewsCount
+        };
+
+        localStorage.setItem('categoryCounts', JSON.stringify(newCounts));
+        setCounts(newCounts);
       } catch (error) {
         console.error("Error fetching counts:", error);
       }
