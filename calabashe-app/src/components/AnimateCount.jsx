@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const AnimateCount = ({ end, duration = 2000 }) => {
+const AnimateCount = ({ end, duration = 500 }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
