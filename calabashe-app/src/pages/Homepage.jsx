@@ -1,6 +1,7 @@
 import AnimatePage from "../components/AnimatePage";
 import Banner from "../components/Banner";
 import ExploreCategories from "../components/Categories";
+import DoctorQuote from "../components/DoctorQuote";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
@@ -18,6 +19,7 @@ const Home = () => {
               <h1 className="z-1 mt-4 text-4xl sm:text-6xl font-black animate-bounce ">Calabas<span className="text-[#04DA8D]">He</span></h1>  */}
               
               <ExploreCategories/>
+              <DoctorQuote/>
             </main>
             <Footer/>
           </AnimatePage>
