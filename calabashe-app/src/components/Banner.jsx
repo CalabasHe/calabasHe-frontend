@@ -9,11 +9,13 @@ const Banner = () => {
     <>
       <section className="bg-[#04DA8D] w-full pt-8 md:py-14 md:pt-16 space-y-6 md:space-y-0 md:flex flex-row lg:pl-[3%] ">
         <div className=" md:w-[50%] px-4 md:px-5 space-y-3">
-          <p className=" text-xl font-bold md:text-2xl">
-            Find reviews on Ghanaian doctors,<br/>
-            <span className="py-4">Leave a review </span><br/>
-            Find Doctors and Clinics you can trust
-          </p>
+          <div className="text-lg sm:text-xl font-bold md:text-2xl">
+            <p className="pt-1">
+              Find reviews on Ghanaian doctors.
+            </p>
+            <p>Leave your review.</p>
+            <p className="pt-1 font-semibold text-base sm:text-lg italic">Find Doctors and Clinics you can trust.</p>
+          </div>
           {/* <p className="text-xs lg:text-sm hidden md:flex">
             Empowering Healthcare: <br />
             Trusted Reviews for Doctors and Hospitals in Ghana
