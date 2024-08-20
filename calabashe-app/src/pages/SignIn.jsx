@@ -67,7 +67,7 @@ const SignIn = () => {
             <div className="relative z-50 bg-[#1E4738] w-[90vw] sm:w-[80vw] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[400px] flex flex-col grow pointer-events-auto rounded-md py-6 pt-8 lg:py-8 p-4 px-[3%]">
               
               <div className="w-[60%] max-w-[250px] text-center z-30 absolute text-xl md:text-2xl text-white px-8 py-2 rounded-md font-bold bg-[#037F52] self-center -translate-y-14">
-                <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">He</span></h1></Link>
+                <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">he</span></h1></Link>
               </div>
               
               <div className="absolute left-[18%] w-[180px] sm:w-[210px] md:w-[240px] -top-[100px] sm:-top-[120px]   md:-top-[150px] lg:hidden z-10">
