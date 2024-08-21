@@ -30,12 +30,13 @@ const ExploreCategories = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
+        // Fetches the cached data from localStorage
         const cachedCounts = localStorage.getItem('categoryCounts');
         if (cachedCounts) {
           setCounts(JSON.parse(cachedCounts));
-          return;
         }
 
+        // Fetch the new data from the api
         const [doctorsCount, facilitiesCount, servicesCount, reviewsCount] = await Promise.all([
           fetchDoctorsCount(),
           fetchFacilitiesCount(),
@@ -50,6 +51,7 @@ const ExploreCategories = () => {
           reviews: reviewsCount
         };
 
+        // Updates the localStorage periodically(every 20 seconds) with new data
         localStorage.setItem('categoryCounts', JSON.stringify(newCounts));
         setCounts(newCounts);
       } catch (error) {
@@ -58,6 +60,10 @@ const ExploreCategories = () => {
     };
 
     fetchCounts();
+
+    const intervalId = setInterval(fetchCounts, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const categoryIcon = (
