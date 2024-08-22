@@ -61,7 +61,7 @@ const ExploreCategories = () => {
 
     fetchCounts();
 
-    const intervalId = setInterval(fetchCounts, 5000);
+    const intervalId = setInterval(fetchCounts, 600000);
 
     return () => clearInterval(intervalId);
   }, []);
