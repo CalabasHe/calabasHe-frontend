@@ -15,7 +15,7 @@ const DoctorCard = () => {
             <p className="text-xs sm:text-sm md:text-base font-thin">Surgeon</p>
           </div>
           <p className="px-1">Rating</p>
-          <Link to='' className="flex border grow text-sm sm:text-base font-bold w-full rounded-md ">
+          <Link to='' className="flex grow text-sm sm:text-base font-bold w-full rounded-md ">
             <button className="w-full text-center bg-[#D3D3B1] rounded-[inherit]">View Profile</button>
           </Link>
         </div>
