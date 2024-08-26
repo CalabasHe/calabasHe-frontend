@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import StarRating from "./rating";
 
 const DoctorCard = () => {
   return ( 
@@ -14,7 +15,9 @@ const DoctorCard = () => {
             <h2 className="text-sm sm:text-base md:text-lg font-bold ">Dr. Wayo Jessica</h2>
             <p className="text-xs sm:text-sm md:text-base font-thin">Surgeon</p>
           </div>
-          <p className="px-1">Rating</p>
+          <div className="pl-1">
+            <StarRating rating={4.5}/>
+          </div>
           <Link to='' className="flex grow text-sm sm:text-base font-bold w-full rounded-md ">
             <button className="w-full text-center bg-[#D3D3B1] rounded-[inherit]">View Profile</button>
           </Link>

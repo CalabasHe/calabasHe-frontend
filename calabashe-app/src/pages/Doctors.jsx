@@ -1,7 +1,7 @@
 import AnimatePage from "../components/AnimatePage";
 import { FadeInOut } from "../components/ComponentAnimations";
 import DoctorCard from "../components/doctorCard";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 const Doctors = () => {
