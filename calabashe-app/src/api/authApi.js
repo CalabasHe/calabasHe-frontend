@@ -13,7 +13,7 @@ export const signUp = async ({ email, username, password, password2 }) => {
       password,
       password2,
     });
-
+    console.log(response.data)
     return response.data;
   } catch (error) {
     if (error.response && error.response.data) {
@@ -31,7 +31,7 @@ export const logIn = async ({ email, password }) => {
       email,
       password,
     });
-    
+    console.log(response.data)
     return response.data;
   }catch (error) {
     if (error.response && error.response.data) {
@@ -49,7 +49,7 @@ export const verifyCode = async ({ email, verification_code }) => {
       email,
       verification_code,
     });
-
+    console.log(response.data)
     return response.data;
   }catch (error) {
     if (error.response && error.response.data) {

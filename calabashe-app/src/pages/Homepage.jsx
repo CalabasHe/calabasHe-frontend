@@ -2,6 +2,7 @@ import AnimatePage from "../components/AnimatePage";
 import Banner from "../components/Banner";
 import ExploreCategories from "../components/Categories";
 import DoctorQuote from "../components/DoctorQuote";
+import FaqSection from "../components/Faq";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
@@ -20,6 +21,7 @@ const Home = () => {
               
               <ExploreCategories/>
               <DoctorQuote/>
+              <FaqSection/>
             </main>
             <Footer/>
           </AnimatePage>
