@@ -30,7 +30,7 @@ export const fetchServicesCount = async () => {
 
 export const fetchReviewCount = async () => {
   try {
-    const response = await axios.get('https://calabashe-api.onrender.com/api/reviews/combined/');
+    const response = await axios.get('https://calabashe-api.onrender.com/api/reviews/combined-reviews/');
     return response.data.count;
   } catch (error) {
     console.error('Error fetching doctors:', error);
