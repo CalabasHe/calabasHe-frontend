@@ -14,7 +14,7 @@ const FaqSection = () => {
     </article>
     <article className="flex flex-col  md:col-span-2 lg:col-span-1 items-center gap-2 p-4 bg-white py-6 rounded-lg shadow-md">
       <h3 className="text-sm md:text-base text-center font-medium">Is this service really free?</h3>
-      <p className="text-xs md:text-sm text-center">{`Yes it is. Feel free to review health professionals, services as well as health facilities based on your experiences.`}</p>
+      <p className="text-xs md:text-sm text-center">{`Yes, it is! Feel free to review health professionals, services, as well as health facilities based on your experiences.`}</p>
     </article>
   </div>
 </section>
