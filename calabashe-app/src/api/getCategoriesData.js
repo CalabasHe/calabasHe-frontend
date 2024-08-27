@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const fetchDoctorsCount = async () => {
+export const fetchDoctors = async () => {
   try {
     const response = await axios.get('https://calabashe-api.onrender.com/api/doctors/');
-    return response.data.count;
+    return response.data;
   } catch (error) {
     throw new Error('Error fetching doctors:', error);
   }

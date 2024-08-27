@@ -33,7 +33,7 @@ const Menu = () => {
   };
 
   return (
-    <nav className="lg:hidden font-poppins text-lg" ref={menuRef}>
+    <nav className="md:hidden font-poppins text-lg" ref={menuRef}>
       <label className="hamburger-menu" htmlFor='button'>
         <input 
           type="checkbox"
