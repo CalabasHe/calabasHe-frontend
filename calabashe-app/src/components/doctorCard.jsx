@@ -20,7 +20,7 @@ const DoctorCard = () => {
             specialty: doc.specialty?.name,
             slug: doc.slug
           }));
-          // console.log(docData)
+          console.log(docData)
           // setIsLoading(false);
           setDoctors(doctorDetails);
         } else {
