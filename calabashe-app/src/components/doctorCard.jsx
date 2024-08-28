@@ -77,7 +77,7 @@ const DoctorCard = () => {
               </button>
             </Link> */}
             <Link to={``} className="block w-full">
-              <button className="w-full h-6 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
+              <button className="w-full h-[inherit] p-1 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
                 View Profile
               </button>
             </Link>
