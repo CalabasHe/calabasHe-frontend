@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { fetchDoctors, fetchFacilitiesCount, fetchServicesCount, fetchReviewCount } from "../api/getCategoriesData";
+import { fetchDoctors, fetchFacilitiesCount, fetchServices, fetchReviewCount } from "../api/getCategoriesData";
 import { FadeInRight } from "./ComponentAnimations";
 import AnimateCount from "./AnimateCount";
 
@@ -40,14 +40,14 @@ const ExploreCategories = () => {
         const [doctorsCount, facilitiesCount, servicesCount, reviewsCount] = await Promise.all([
           fetchDoctors(),
           fetchFacilitiesCount(),
-          fetchServicesCount(),
+          fetchServices(),
           fetchReviewCount()
         ]);
 
         const newCounts = {
           doctors: doctorsCount.count,
           facilities: facilitiesCount,
-          services: servicesCount,
+          services: servicesCount.count,
           reviews: reviewsCount
         };
 

@@ -52,7 +52,7 @@ const DoctorCard = () => {
             <h2 className="text-xs sm:text-sm md:text-base font-bold  overflow-hidden text-wrap line-clamp-1">
               Dr.&nbsp; {doctor.lastName} {doctor.firstName}
             </h2>
-            <p className="text-[10px] sm:text-sm md:text-base font-thin whitespace-nowrap overflow-hidden text-ellipsis">
+            <p className="text-[10px] sm:text-sm md:text-base font-medium whitespace-nowrap overflow-hidden text-ellipsis">
               {doctor.specialty}
             </p>
           </div>
