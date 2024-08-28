@@ -18,7 +18,7 @@ const Doctors = () => {
             </aside>
           </FadeInOut>
       <AnimatePage>
-        <main className="w-full mt-8 sm:mt-16 p-4 flex flex-col items-center ">
+        <main className="w-full mt-8 sm:mt-16 p-2 flex flex-col items-center ">
           <DoctorCard/>
         </main>
       </AnimatePage>
