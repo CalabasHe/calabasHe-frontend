@@ -5,7 +5,8 @@ import { fetchDoctors } from "../api/getCategoriesData";
 
 const DoctorCard = () => {
   const [doctors, setDoctors] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchDocData = async () => {
@@ -20,8 +21,8 @@ const DoctorCard = () => {
             specialty: doc.specialty?.name,
             slug: doc.slug
           }));
-          console.log('Processed doctor details:', doctorDetails);
-          console.log(docData)
+          // console.log('Processed doctor details:', doctorDetails);
+          // console.log(docData)
           // setIsLoading(false);
           setDoctors(doctorDetails);
         } else {
@@ -29,6 +30,9 @@ const DoctorCard = () => {
         }
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError(error.message);
+      } finally{
+        setIsLoading(false)
       }
     };
 
@@ -37,6 +41,13 @@ const DoctorCard = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  if (isLoading) return(
+    <div className="h-[50vh] w-full flex items-center justify-center"><h1 className="text-black text-2xl sm:text-4xl font-bold animate-bounce">Calabas<span className="text-[#04DA8D]">he</span></h1></div>
+  ) 
+    
+  if (error) return <div  className="h-[50vh] md:h-[40vh] w-full flex items-center justify-center">Error: {error}</div>;
+
 
   return ( 
     <>
@@ -60,7 +71,12 @@ const DoctorCard = () => {
             <div className="px-1 mb-1">
               <StarRating rating={doctor.rating}/>
             </div>
-            <Link to={`/doctor/${doctor.slug}`} className="block w-full">
+            {/* <Link to={`/doctor/${doctor.slug}`} className="block w-full">
+              <button className="w-full h-6 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
+                View Profile
+              </button>
+            </Link> */}
+            <Link to={``} className="block w-full">
               <button className="w-full h-6 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
                 View Profile
               </button>
