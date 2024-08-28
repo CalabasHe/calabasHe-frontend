@@ -12,7 +12,7 @@ const ServiceLink = () => {
     const fetchServiceData = async () => {
       try {
         setIsLoading(true);
-        // Check if services are already in the cookie
+        // Checks if services are already in the cookie
         const cachedServices = Cookies.get('services');
         if (cachedServices) {
           const parsedServices = JSON.parse(cachedServices);
@@ -22,12 +22,11 @@ const ServiceLink = () => {
             throw new Error('Cached data is not an array');
           }
         } else {
-          // If not in cookie, fetch from API
+          // fetch from API if servuce data is not in the cookie
           const fetchedServices = await fetchServices();
-          console.log('Fetched services:', fetchedServices); // Log the fetched data
           if (Array.isArray(fetchedServices.results)) {
             setServices(fetchedServices.results);
-            // Store in cookie (expires in 1 day)
+            // Store in cookie (expires in 1 day) *might have to increase this*
             Cookies.set('services', JSON.stringify(fetchedServices.results), { expires: 1 });
           } else {
             throw new Error('API did not return an array');
