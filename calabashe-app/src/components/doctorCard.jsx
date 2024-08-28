@@ -33,7 +33,7 @@ const DoctorCard = () => {
     };
 
     fetchDocData();
-    const intervalId = setInterval(fetchDocData, 30000); 
+    const intervalId = setInterval(fetchDocData, 120000); 
 
     return () => clearInterval(intervalId);
   }, []);
