@@ -56,7 +56,8 @@ const ServiceLink = () => {
           <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
             {services.map((service) => (
               <li key={service.id} className="font-medium text-xs md:text-sm truncate">
-                <Link to={`/service/${service.slug}`}>{service.name}</Link>
+                {/* <Link to={`/service/${service.slug}`}>{service.name}</Link> */}
+                <Link to={``}>{service.name}</Link>
               </li>
             ))}
           </ul>
