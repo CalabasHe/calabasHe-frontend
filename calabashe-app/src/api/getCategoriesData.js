@@ -21,7 +21,6 @@ export const fetchFacilitiesCount = async () => {
 export const fetchServices = async () => {
   try {
     const response = await axios.get('https://calabashe-api.onrender.com/api/services/');
-    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('Error fetching doctors:', error);
