@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import StarRating from "./rating";
 import { fetchDoctors } from "../api/getCategoriesData";
-import { FaBookMedical, FaFileMedical, FaFirstAid, FaLaptopMedical } from "react-icons/fa";
+import { FaFileMedical} from "react-icons/fa";
 
 const DoctorCard = () => {
   const [doctors, setDoctors] = useState([]);
@@ -26,7 +26,7 @@ const DoctorCard = () => {
             rating: doc.average_rating,
             specialty: doc.specialty?.name,
             slug: doc.slug,
-            patientsTellUs: doc.reviews?.title,
+            reviews: doc.reviews,
           }));
           // console.log('Processed doctor details:', doctorDetails);
           // console.log(docData)
@@ -101,7 +101,12 @@ const DoctorCard = () => {
               </div>
               <ul className="text-xs font-bold">
                 Patients tell us:
-                {/* <li>{patientsTellUs[0]}</li> */}
+                {doctor.reviews.slice(0,2).map((titles => (
+                      <li key={titles.id}
+                        className="font-thin text-xs ">
+                        &#8226; {titles.title}
+                      </li>
+                    )))}
               </ul>
             </div>
             <div className="mt-auto sm:hidden">

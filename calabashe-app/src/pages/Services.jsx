@@ -1,6 +1,5 @@
 import AnimatePage from "../components/AnimatePage";
 import { FadeInOut } from "../components/ComponentAnimations";
-import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ServiceLink from "../components/service";
 
