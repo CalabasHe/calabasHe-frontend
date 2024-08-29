@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StarRating from "./rating";
 import { fetchDoctors } from "../api/getCategoriesData";
-import { FaFileMedical } from "react-icons/fa";
+import { FaBookMedical, FaFileMedical, FaFirstAid, FaLaptopMedical } from "react-icons/fa";
 
 const DoctorCard = () => {
   const [doctors, setDoctors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const go = useNavigate();
+  const handleProfileClick = (slug) => {
+    go(`/doctors/${slug}`)
+  }
 
   useEffect(() => {
     const fetchDocData = async () => {
@@ -62,15 +67,16 @@ const DoctorCard = () => {
       </div>
     );
 
+
   return (
     <>
       {doctors.map((doctor) => (
         <div
           key={doctor.id}
-          className="cursor-pointer bg-white lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-40 sm:h-36 md:h-40 lg:h-44 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 flex gap-4 md:gap-6 min-[400px]:gap-6"
+          className="cursor-pointer bg-white lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-40 sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
-          <div className="h-full w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
+          <div className="h-full lg:self-center lg:h-[80%] w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
             <svg
               className="w-16 sm:w-18 md:w-20 fill-gray-700"
               xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +87,7 @@ const DoctorCard = () => {
           </div>
 
           {/* Profile Data */}
-          <div className="grow flex flex-col sm:flex-row justify-between py-1">
+          <div className="lg:self-center grow flex flex-col sm:flex-row justify-between py-1">
             <div className="px-1 mb-auto overflow-hidden">
               <h2 className="text-xs  md:text-base font-bold  overflow-hidden text-wrap line-clamp-1">
                 Dr.&nbsp; {doctor.lastName} {doctor.firstName}
@@ -106,7 +112,7 @@ const DoctorCard = () => {
             </Link> */}
 
               {/* View Profile button */}
-              <Link to={``} className="block w-full">
+              <Link to={`/doctors/${doctor.slug}`} className="block w-full">
                 <button className="w-full h-[inherit] p-1 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
                   View Profile
                 </button>
@@ -115,12 +121,17 @@ const DoctorCard = () => {
 
             <div className="h-full w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
               <FaFileMedical size={24} className="lg:h-8"/>
-              <p className="text-center font-semibold text-sm lg:text-base">Want to know more about <span className="font-bold"> Dr. {doctor.firstName.split(' ')[0]}?</span></p>
-              <Link to={``} className="block w-full ">
-                <button className="w-full h-[inherit] p-1 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
+              
+              {/* <p className="text-center font-semibold text-sm lg:text-base">Want to know more about <span className="font-bold"> Dr. {doctor.firstName.split(' ')[0]}?</span></p> */}
+              <p className="text-center font-semibold text-sm lg:text-base">You want to book an appointment?</p>
+              <div className="block w-full ">
+                <button 
+                  className="w-full h-[inherit] p-1 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold"
+                  onClick={() => handleProfileClick(doctor.slug)}
+                  >
                   View Profile
                 </button>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

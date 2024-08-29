@@ -1,11 +1,11 @@
 import { FaStar } from 'react-icons/fa';
 
-const StarRating = ({ rating }) => {
+const StarRating = ({ rating, profile=false }) => {
   // Convert rating to a number and ensure it's within 0-5 range
   const numericRating = Math.min(5, Math.max(0, Number(rating) || 0));
 
   const getColor = (rating) => {
-    if (rating === 0) return 'bg-gray-300';
+    if (rating === 0) return profile ? 'bg-gray-400' : 'bg-gray-300'
     if (rating < 2) return 'bg-red-500';
     if (rating < 3) return 'bg-orange-400';
     if (rating < 3.5) return 'bg-yellow-300';
@@ -18,13 +18,13 @@ const StarRating = ({ rating }) => {
   const ratingStar = Array.from({ length: 5 }, (_, index) => {
     return (
       <span key={index} className={`${index < Math.floor(numericRating) ? colorClass : 'bg-gray-300'} p-1`}>
-        <FaStar className="text-white" />
+        <FaStar size={profile ? 27 : 12} className={`${profile ? 'md:w-10 md:h-10' : 'md:w-6 md:h-6'} text-white `} />
       </span>
     );
   });
 
   return (
-    <div className="flex items-center gap-1">
+    <div className={`${profile ? 'gap-[4px]' : 'gap-[2px]'} flex items-center`}>
       {ratingStar}
       {/* <span className={`ml-2 ${rating === 0 ? 'text-gray-700' : `text-${colorClass.split('-')[1]}-700`} text-sm font-semibold`}>
         {numericRating.toFixed(1)}
