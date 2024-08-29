@@ -67,7 +67,7 @@ const DoctorCard = () => {
       {doctors.map((doctor) => (
         <div
           key={doctor.id}
-          className="cursor-pointer bg-white lg:hover:scale-[1.05] duration-300 mt-4 border border-black shadow-md h-40 sm:h-36 md:h-40 lg:h-44 rounded-md w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 flex gap-4 min-[400px]:gap-6"
+          className="cursor-pointer bg-white lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-40 sm:h-36 md:h-40 lg:h-44 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
           <div className="h-full w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
@@ -113,10 +113,10 @@ const DoctorCard = () => {
               </Link>
             </div>
 
-            <div className="h-full w-[150px] p-2 rounded-md hidden sm:flex flex-col gap-2 bg-[#E9E9D8]">
-              <FaFileMedical size={24} className=""/>
-              <p className="font-semibold text-sm ">Want to know more about <br/> <span className="font-bold"> Dr. {doctor.firstName.split(' ')[0]}?</span></p>
-              <Link to={``} className="block w-full">
+            <div className="h-full w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
+              <FaFileMedical size={24} className="lg:h-8"/>
+              <p className="text-center font-semibold text-sm lg:text-base">Want to know more about <span className="font-bold"> Dr. {doctor.firstName.split(' ')[0]}?</span></p>
+              <Link to={``} className="block w-full ">
                 <button className="w-full h-[inherit] p-1 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
                   View Profile
                 </button>
