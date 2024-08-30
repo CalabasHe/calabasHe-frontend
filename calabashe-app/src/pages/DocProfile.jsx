@@ -8,6 +8,7 @@ import { MdLocationOn } from 'react-icons/md'
 import Footer from "../components/Footer";
 import '../stylesheets/profile.css'
 import AnimatePage from "../components/AnimatePage";
+import formatDate from "../functions/dateConversion";
 
 const DocProfile = () => {
   const { slug } = useParams();
@@ -192,7 +193,7 @@ const DocProfile = () => {
                 <StarRating rating={review.rating}/>
                 <p className="text-sm ">{review.description}</p>
                 <div>
-                  <p className="text-xs text-[#333333]">{review.created_at.split('T')[0].split('-').reverse(0,3).join('-')}</p>
+                  <p className="text-xs text-[#333333]">{formatDate(review.created_at.split('T')[0])}</p>
                 </div>
                 </div>
               )

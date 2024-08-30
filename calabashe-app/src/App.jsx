@@ -1,5 +1,5 @@
 import { Route, Routes, ScrollRestoration, useLocation } from 'react-router-dom';
-import ScrollToTopRoute from './components/scrollToTop';
+import ScrollToTopRoute from './functions/scrollToTop';
 import { AnimatePresence } from 'framer-motion';
 import Home from './pages/Homepage';
 import Review from './pages/Reviews';
