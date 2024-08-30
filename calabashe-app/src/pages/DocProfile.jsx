@@ -124,12 +124,12 @@ const DocProfile = () => {
             </section>
 
             {/* About Section */}
-            <section className="w-full space-y-3 md:w-[80%] md:max-w-[700px]">
-              <h3 className="text-xl font-bold ">About Dr. {doctor.firstName} </h3>
-              <p className="text-sm sm:text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, rem ex error nulla dolorem, deserunt maiores fugiat autem quasi non, saepe qui eligendi molestias laborum delectus aspernatur sunt. Consectetur, sit?</p>
+            <section className="w-full space-y-1 md:w-[80%] md:max-w-[700px]">
+              <h3 className="text-lg md:text-xl font-bold ">About Dr. {doctor.firstName} </h3>
+              <p className="text-sm sm:text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, maxime modi sequi, sed vel perferendis, labore at beatae ea ut non rem perspiciatis! Omnis dolorum minus nisi quisquam voluptatum dicta vero sit soluta cum quas, neque odit dolor asperiores maxime, fugit molestias excepturi, tempora repellendus quae nobis rem architecto aperiam. Suscipit, ad debitis dolores delectus quisquam architecto mollitia unde possimus.</p>
             </section>
             <section className="w-full space-y-4 md:w-[80%] md:max-w-[700px]">
-              <h3 className="text-xl font-bold ">Contact Details</h3>
+              <h3 className="text-lg md:text-xl font-bold ">Contact Details</h3>
               <ul className="space-y-2">
                 <li>
                   
@@ -143,34 +143,34 @@ const DocProfile = () => {
 
             {/* Ratings */}
             <section className="w-full space-y-4 md:w-[80%] max-w-[700px]">
-              <h3 className="text-xl font-bold"> Ratings</h3>
+              <h3 className="text-lg md:text-xl font-bold"> Ratings</h3>
               <div className="bg-[#E8EDF1] py-12 px-4 md:px-8 rounded-lg space-y-6">
                 <div className="space-y-2">
                   <p className="text-4xl md:text-5xl font-black">{doctor.rating}<span className="text-lg font-thin text-[#A0AAB3]">({doctor.totalReviews})</span></p>
-                  <StarRating profile={true} rating={doctor.rating}/>
+                  <StarRating profile={true} rating={parseFloat(doctor.rating)}/>
                 </div>
               <ul className="pr-6 space-y-3">
-                <li className="text-base md:text-lg lg:text-xl md:text-lg font-semibold flex justify-between items-center">
+                <li className="text-base md:text-lg lg:text-xl md:text-lg font-medium flex justify-between items-center">
                   <label htmlFor="5star"> 5 star</label>
                   <progress id="5star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
                 <p className="text-[#A0AAB3]">0%</p>
                 </li>
-                <li className="text-base md:text-lg lg:text-xl font-semibold flex justify-between items-center">
+                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
                   <label htmlFor="4star"> 4 star</label>
                   <progress id="4star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
                 <p className="text-[#A0AAB3]">0%</p>
                 </li>
-                <li className="text-base md:text-lg lg:text-xl font-semibold flex justify-between items-center">
+                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
                   <label htmlFor="3star"> 3 star</label>
                   <progress id="3star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
                 <p className="text-[#A0AAB3]">0%</p>
                 </li>
-                <li className="text-base md:text-lg lg:text-xl font-semibold flex justify-between items-center">
+                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
                   <label htmlFor="2star"> 2 star</label>
                   <progress id="2star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
                 <p className="text-[#A0AAB3]">0%</p>
                 </li>
-                <li className="text-base md:text-lg lg:text-xl font-semibold flex justify-between items-center">
+                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
                   <label htmlFor="1star"> 1 star</label>
                   <progress id="1star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
                 <p className="text-[#A0AAB3]">0%</p>
@@ -181,11 +181,11 @@ const DocProfile = () => {
 
             {/* Reviews */}
             <section className="w-full space-y-4 md:w-[80%] md:max-w-[700px]">
-              <h3 className="text-xl font-bold ">Reviews</h3>
+              <h3 className="text-lg md:text-xl font-bold ">Reviews</h3>
               {!doctor.reviews.length > 0 ? <p className="text-base text-[#A0AAB3]  border-b border-[#D0D0D0] pb-4">No reviews yet</p> :
-              <p  className="text-sm md:text-base text-[#A0AAB3] border-b border-[#D0D0D0] pb-4">All reviews have been left by actual patients.</p>}
+              <p  className="text-sm md:text-base border-b border-[#D0D0D0] pb-4">All reviews have been left by actual patients.</p>}
               <div className="flex flex-col gap-4 md:gap-8">
-                {doctor.reviews.map((review) => (
+                {doctor.reviews.slice(0,4).map((review) => (
                   <div
                     key={review.id}
                     className="w-full space-y-2 "
@@ -203,8 +203,8 @@ const DocProfile = () => {
 
 
             <section className="w-full space-y-2 md:w-[80%] md:max-w-[700px]">
-            <h3 className="text-xl font-bold ">Share your experience</h3>
-            <p className="text-sm sm:text-base font-medium max-w-[85%]">
+            <h3 className="text-lg md:text-xl font-bold ">Share your experience</h3>
+            <p className="text-xs sm:text-sm font-medium max-w-[85%]">
             We value your feedback and look forward to hearing about your experiences with our services. 
             Your insights help us improve and provide the best care possible.
             </p>
@@ -217,7 +217,7 @@ const DocProfile = () => {
                   className="w-full flex items-center justify-center gap-4 md:gap-8 p-2 bg-[#FEE330] rounded-xl"
                   aria-label={`Leave a review for Dr. ${doctor.slug}`}
                   >
-                  <p className="text-center text-lg md:text-2xl font-bold">Leave a Review</p>
+                  <p className="text-center text-lg md:text-xl font-bold">Leave a Review</p>
                   <svg width="25" height="26" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M27 0.968994H3C1.35 0.968994 0 2.31899 0 3.96899V30.969L6 24.969H27C28.65 24.969 30 23.619 30 21.969V3.96899C30 2.31899 28.65 0.968994 27 0.968994ZM6 18.969V15.264L16.32 4.94399C16.62 4.64399 17.085 4.64399 17.385 4.94399L20.04 7.59899C20.34 7.89899 20.34 8.36399 20.04 8.66399L9.705 18.969H6ZM22.5 18.969H12.75L15.75 15.969H22.5C23.325 15.969 24 16.644 24 17.469C24 18.294 23.325 18.969 22.5 18.969Z" fill="black"/>
                   </svg>
