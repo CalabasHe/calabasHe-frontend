@@ -1,5 +1,5 @@
 import { Route, Routes, ScrollRestoration, useLocation } from 'react-router-dom';
-import ScrollToTopRoute from './functions/scrollToTop';
+import { AuthProvider } from './context/authContext';
 import { AnimatePresence } from 'framer-motion';
 import Home from './pages/Homepage';
 import Review from './pages/Reviews';
@@ -12,10 +12,12 @@ import VerifyUser from './pages/Verification';
 import DocProfile from './pages/DocProfile';
 
 function App() {
-  const location = useLocation()
+  const location = useLocation();
+
   return (
+    <AuthProvider>
       <AnimatePresence mode='wait'>
-        {/* <ScrollRestoration/> */}
+        {/* <ScrollRestoration /> */}
         <Routes location={location} key={location.pathname}>
           <Route index element={<Home />} />
           <Route path='/home' element={<Home />} />
@@ -29,6 +31,7 @@ function App() {
           <Route path='/verification' element={<VerifyUser />} />
         </Routes>
       </AnimatePresence>
+    </AuthProvider>
   );
 }
 

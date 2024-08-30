@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { verifyCode } from "../api/authApi";
 import Countdown from "../components/verificationtimer";
+import { useAuth } from "../hooks/useAuth";
 
 // eslint-disable-next-line react/prop-types
 const VerifyUser = ({ email, duration }) => {
@@ -12,6 +13,7 @@ const VerifyUser = ({ email, duration }) => {
 
   const navigate = useNavigate();
   const inputRefs = useRef([]);
+  const { login } = useAuth()
 
   useEffect(() => {
     if (inputRefs.current[0]) {
@@ -60,11 +62,12 @@ const VerifyUser = ({ email, duration }) => {
 
   const handleVerify = async (code) => {
     try {
-      await verifyCode({ email, verification_code: code });
+      const response = await verifyCode({ email, verification_code: code });
       setSuccess("Verification successful! Your account is now active.");
       setError("");
       setVerificationCode(new Array(6).fill(""));
       setIsModalOpen(false);
+      login(response.accessToken, response.refreshToken);
       navigate('/home');
     } catch (error) {
       // console.error(error);

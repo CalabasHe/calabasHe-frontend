@@ -1,6 +1,7 @@
 import {useState, useRef} from 'react'
 import { useNavigate, Link } from "react-router-dom";
 import { logIn } from '../api/authApi.js'
+import { useAuth } from "../hooks/useAuth";
 import AnimatePage from '../components/AnimatePage.jsx';
 import "../stylesheets/account.css"
 import docs1 from '../assets/images/healthworkers_form.webp'
@@ -8,7 +9,7 @@ import docs1png from '../assets/images/healthworkers_form.png'
 
 
 const SignIn = () => {
-
+  const { login } = useAuth()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -38,8 +39,9 @@ const SignIn = () => {
     setDisableForm(true)
     
     try {
-      await logIn({ email, password});
+      const response = await logIn({ email, password});
       setSuccess('Sign in successful');
+      login(response.accessToken, response.refreshToken);
       navigate('/home');
     }catch (error) {
       if (error.non_field_errors) {

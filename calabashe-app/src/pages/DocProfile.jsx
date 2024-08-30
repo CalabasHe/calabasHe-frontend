@@ -8,7 +8,7 @@ import { MdLocationOn } from 'react-icons/md'
 import Footer from "../components/Footer";
 import '../stylesheets/profile.css'
 import AnimatePage from "../components/AnimatePage";
-import formatDate from "../functions/dateConversion";
+import formatDate from "../utils/dateConversion";
 
 const DocProfile = () => {
   const { slug } = useParams();

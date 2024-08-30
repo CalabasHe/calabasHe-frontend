@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../stylesheets/menu.css';
+import { useAuth } from '../hooks/useAuth';
 
 const Menu = () => {
+  const { isLoggedIn, logout } = useAuth();
   const [isChecked, setIsChecked] = useState(false);
   const menuRef = useRef(null);
   const checkboxRef = useRef(null);
@@ -46,9 +48,8 @@ const Menu = () => {
       <aside className="navmenu antialiased font-semibold text-sm rounded-bl-md">
         <ul>
           <li id="sign-in link">
-            <div className='flex gap-2'>
-              <Link to="/sign_in" onClick={handleLinkClick}>Sign In</Link>
-            </div>
+            {isLoggedIn ? 
+            <span aria-label="logout" onClick={logout}> Logout</span> : <Link to='/sign_in'>Sign In</Link>}
           </li>
           <li id="hospital-link">
             <Link to="/hospitals" onClick={handleLinkClick}>Hospitals</Link>
