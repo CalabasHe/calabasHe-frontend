@@ -184,20 +184,21 @@ const DocProfile = () => {
               <h3 className="text-xl font-bold ">Reviews</h3>
               {!doctor.reviews.length > 0 ? <p className="text-base text-[#A0AAB3]  border-b border-[#D0D0D0] pb-4">No reviews yet</p> :
               <p  className="text-sm md:text-base text-[#A0AAB3] border-b border-[#D0D0D0] pb-4">All reviews have been left by actual patients.</p>}
-
-              {doctor.reviews.map((review) => (
-                <div
-                  key={review.id}
-                  className="w-full space-y-1"
-                >
-                <StarRating rating={review.rating}/>
-                <p className="text-sm ">{review.description}</p>
-                <div>
-                  <p className="text-xs text-[#333333]">{formatDate(review.created_at.split('T')[0])}</p>
-                </div>
-                </div>
-              )
-            )}
+              <div className="flex flex-col gap-4 md:gap-8">
+                {doctor.reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className="w-full space-y-2 "
+                  >
+                  <StarRating rating={review.rating}/>
+                  <div>
+                  <p className="text-sm md:text-base ">{review.description}</p>
+                    <p className="text-xs md:text-sn text-[#333333] opacity-50">{formatDate(review.created_at.split('T')[0])}</p>
+                  </div>
+                  </div>
+                )
+              )}
+              </div>
             </section>
 
 
