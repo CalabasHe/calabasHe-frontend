@@ -5,3 +5,28 @@
 .submitButton:active{
   scale: .98;
 }
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+.carousel{
+  animation: slide 40s linear infinite; 
+}
+
+.carousel:hover {
+  animation-play-state: paused;
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

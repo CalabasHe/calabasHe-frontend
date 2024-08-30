@@ -21,7 +21,7 @@ const DocProfile = () => {
     const fetchDoctor = async () => {
       try {
         const data = await fetchDoctorBySlug(slug);
-         console.log('API Response:', data);
+        //  console.log('API Response:', data);
           const doctorDetails = {
             id: data.id,
             firstName: data.first_name,
@@ -35,7 +35,7 @@ const DocProfile = () => {
             reviews: data.reviews,
             totalReviews: data.total_reviews
           };
-          // console.log('Processed doctor details:', doctorDetails);
+          console.log('Processed doctor details:', doctorDetails);
           // console.log('Processed doctor details:', doctor.reviews);
           setDoctor(doctorDetails);
       } catch (err) {
@@ -149,33 +149,22 @@ const DocProfile = () => {
                   <p className="text-4xl md:text-5xl font-black">{doctor.rating}<span className="text-lg font-thin text-[#A0AAB3]">({doctor.totalReviews})</span></p>
                   <StarRating profile={true} rating={parseFloat(doctor.rating)}/>
                 </div>
-              <ul className="pr-6 space-y-3">
-                <li className="text-base md:text-lg lg:text-xl md:text-lg font-medium flex justify-between items-center">
-                  <label htmlFor="5star"> 5 star</label>
-                  <progress id="5star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
-                <p className="text-[#A0AAB3]">0%</p>
-                </li>
-                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
-                  <label htmlFor="4star"> 4 star</label>
-                  <progress id="4star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
-                <p className="text-[#A0AAB3]">0%</p>
-                </li>
-                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
-                  <label htmlFor="3star"> 3 star</label>
-                  <progress id="3star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
-                <p className="text-[#A0AAB3]">0%</p>
-                </li>
-                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
-                  <label htmlFor="2star"> 2 star</label>
-                  <progress id="2star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
-                <p className="text-[#A0AAB3]">0%</p>
-                </li>
-                <li className="text-base md:text-lg lg:text-xl font-medium flex justify-between items-center">
-                  <label htmlFor="1star"> 1 star</label>
-                  <progress id="1star" value='0' max='100' className="w-[65%] md:w-[80%] md:h-5"></progress>
-                <p className="text-[#A0AAB3]">0%</p>
-                </li>
-              </ul>
+                <ul className="pr-6 space-y-3">
+  {[5, 4, 3, 2, 1].map((star, index) => (
+    <li key={star} className="text-base md:text-lg lg:text-xl font-medium grid grid-cols-[2.5rem_1fr_3rem] items-center gap-2">
+      <label htmlFor={`${star}star`} className="whitespace-nowrap">{star} star</label>
+      <div className="w-full pl-1 flex items-center justify-center ">
+        <progress 
+          id={`${star}star`} 
+          value={doctor.ratingPercentages[index].percentage} 
+          max='100' 
+          className=" max-w-[430px] h-4 md:h-5"
+        ></progress>
+      </div>
+      <p className="text-[#A0AAB3] text-right">{doctor.ratingPercentages[index].percentage}%</p>
+    </li>
+  ))}
+</ul>
               </div>
             </section>
 
