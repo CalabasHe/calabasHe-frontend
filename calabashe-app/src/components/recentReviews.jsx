@@ -56,24 +56,24 @@ if (error) return <div>{error}</div>;
   return ( 
     <>
       <FadeInOut>
-        <div className="w-full mt-2 space-y-4 pb-2">
-          <h1 className=" pl-4 text-lg font-bold">Recent Reviews</h1>
+        <div className="w-full mt-2  lg:mt-6 space-y-4 lg:space-y-6  pb-2 lg:pb-6">
+          <h1 className=" pl-4 lg:text-center  md:text-2xl text-lg font-bold">Recent Reviews</h1>
 
           <section className="w-full overflow-hidden flex">
             
-            <div className="flex gap-2 relative carousel ">
+            <div className="flex gap-2 lg:gap-6 relative carousel ">
               {reviews.map( (review) => (
-                <div key={review.id} className="select-none  h-[fit-content] space-y-2 rounded-lg w-[250px] bg-white border px-3 py-4 ">
+                <div key={review.id} className="cursor-pointer select-none   space-y-2 rounded-lg w-[250px] md:w-[350px] bg-white border px-3 md:px-5 py-4 ">
                   <div className="flex gap-4 items-center">
                     <div className="w-[fit-content] p-1 pb-[1px] rounded-full border-2 border-black">
-                      <FaUser className=" rounded-[50%] w-6 h-6 "/>
+                      <FaUser className=" rounded-[50%] w-6 h-6 md:w-8 md:h-8 "/>
                     </div>
                     <StarRating rating={review.rating} />
                   </div>
                   
-                    <p className="font-medium text-sm">{review.user.slice(0,8)} reviewed <span className="font-bold ">{`${review.type === "doctor" ? 'Dr. ' + review.subject.split(' ')[0] : review.subject}`}</span></p>
+                    <p className="font-medium text-sm md:text-lg">{review.user.slice(0,8)} reviewed <span className="font-bold ">{`${review.type === "doctor" ? 'Dr. ' + review.subject.split(' ')[0] : review.subject}`}</span></p>
 
-                    <p className="text-xs">&quot;{review.description}&quot;</p>
+                    <p className="text-xs md:text-base">&quot;{review.description}&quot;</p>
                 </div>
               )
               )}

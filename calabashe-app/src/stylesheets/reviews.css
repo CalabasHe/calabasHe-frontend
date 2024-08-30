@@ -8,7 +8,7 @@
 
 .carousel-container {
   position: relative;
-  width: 100%;
+  width: 200%;
   overflow: hidden;
 }
 
@@ -17,9 +17,9 @@
   animation: slide 40s linear infinite; 
 }
 
-.carousel:hover {
+/* .carousel > div:hover + .carousel {
   animation-play-state: paused;
-}
+} */
 
 
 @keyframes slide {
