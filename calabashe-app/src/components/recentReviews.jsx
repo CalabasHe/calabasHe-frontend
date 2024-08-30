@@ -59,9 +59,9 @@ if (error) return <div>{error}</div>;
         <div className="w-full mt-2 space-y-4 pb-2">
           <h1 className=" pl-4 text-lg font-bold">Recent Reviews</h1>
 
-          <section className="w-full overflow-hidden flex gap-2">
+          <section className="w-full overflow-hidden flex">
             
-            <div className="flex relative carousel transform-gpu ">
+            <div className="flex gap-2 relative carousel transform-gpu ">
               {reviews.map( (review) => (
                 <div key={review.id} className=" h-[fit-content] space-y-2 rounded-lg w-[250px] bg-white border px-3 py-4 ">
                   <div className="flex gap-4 items-center">
