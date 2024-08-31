@@ -35,8 +35,7 @@ const DocProfile = () => {
             reviews: data.reviews,
             totalReviews: data.total_reviews
           };
-          console.log('Processed doctor details:', doctorDetails);
-          // console.log('Processed doctor details:', doctor.reviews);
+          // console.log('Processed doctor details:', doctorDetails);
           setDoctor(doctorDetails);
       } catch (err) {
         console.error('Error fetching doctor:', err);

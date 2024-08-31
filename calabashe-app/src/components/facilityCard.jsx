@@ -18,7 +18,7 @@ const FacilityCard = () => {
     const fetchFacilityData = async () => {
       try {
         const facilityData = await fetchFacilities();
-         console.log(facilityData)
+        //  console.log(facilityData)
         if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
           const facilityDetails = facilityData.results.map((facility) => ({
             id: facility.id,

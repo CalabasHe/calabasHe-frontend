@@ -15,7 +15,7 @@ const RecentReviews = () => {
   const fetchReview = async () => {
     try {
       const data = await fetchCurrentReviews();
-      console.log('API Response:', data);
+      // console.log('API Response:', data);
       if (Array.isArray(data) && data.length > 0) {
         const reviewDetails = data.map((review) => ({
           id: review.id, 
@@ -27,7 +27,7 @@ const RecentReviews = () => {
           user: review.user
         }));
         setReviews(reviewDetails);
-        console.log(reviews)  
+        // console.log(reviews)
       } else {
         setReviews([]); 
       }
