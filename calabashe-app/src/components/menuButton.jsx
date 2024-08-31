@@ -52,7 +52,7 @@ const Menu = () => {
             <span aria-label="logout" onClick={logout}> Logout</span> : <Link to='/sign_in'>Sign In</Link>}
           </li>
           <li id="hospital-link">
-            <Link to="/hospitals" onClick={handleLinkClick}>Hospitals</Link>
+            <Link to="/facilities" onClick={handleLinkClick}>Facilities</Link>
           </li>
           <li id="doctors-link">
             <Link to="/doctors" onClick={handleLinkClick}>Doctors</Link>

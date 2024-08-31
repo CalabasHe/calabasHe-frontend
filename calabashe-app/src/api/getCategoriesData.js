@@ -9,10 +9,10 @@ export const fetchDoctors = async () => {
   }
 };
 
-export const fetchFacilitiesCount = async () => {
+export const fetchFacilities = async () => {
   try {
     const response = await axios.get('https://calabashe-api.onrender.com/api/facilities/');
-    return response.data.count;
+    return response.data;
   } catch (error) {
     throw new Error('Error fetching facilities:', error);
   }

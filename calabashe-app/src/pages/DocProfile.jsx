@@ -2,7 +2,7 @@ import { FadeInOut } from "../components/ComponentAnimations";
 import Header from "../components/Header";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchDoctorBySlug } from "../api/getProfileData"; // Assume this function exists
+import { fetchDoctorBySlug } from "../api/getProfileData";
 import StarRating from "../components/rating";
 import { MdLocationOn } from 'react-icons/md'
 import Footer from "../components/Footer";

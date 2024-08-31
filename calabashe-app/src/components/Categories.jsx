@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { fetchDoctors, fetchFacilitiesCount, fetchServices, fetchReviewCount } from "../api/getCategoriesData";
+import { fetchDoctors, fetchFacilities, fetchServices, fetchReviewCount } from "../api/getCategoriesData";
 import { FadeInRight } from "./ComponentAnimations";
 import AnimateCount from "./AnimateCount";
 
@@ -39,14 +39,14 @@ const ExploreCategories = () => {
         // Fetch the new data from the api
         const [doctorsCount, facilitiesCount, servicesCount, reviewsCount] = await Promise.all([
           fetchDoctors(),
-          fetchFacilitiesCount(),
+          fetchFacilities(),
           fetchServices(),
           fetchReviewCount()
         ]);
 
         const newCounts = {
           doctors: doctorsCount.count,
-          facilities: facilitiesCount,
+          facilities: facilitiesCount.count,
           services: servicesCount.count,
           reviews: reviewsCount
         };
@@ -83,7 +83,7 @@ const ExploreCategories = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 px-2 lg:px-6">
             <CategoryItem count={counts.reviews} label="Reviews" to="#" icon={categoryIcon} />
             <CategoryItem count={counts.doctors} label="Doctors" to="/doctors" icon={categoryIcon} />
-            <CategoryItem count={counts.facilities} label="Facilities" to="/hospitals" icon={categoryIcon} />
+            <CategoryItem count={counts.facilities} label="Facilities" to="/facilities" icon={categoryIcon} />
             <CategoryItem count={counts.services} label="Services" to="/services" icon={categoryIcon} />
           </div>
         </div>

@@ -1,3 +1,4 @@
+/* Progress bar */
 progress {
   -webkit-appearance: none; 
   appearance: none;
@@ -27,4 +28,7 @@ progress:hover{
   transition: none;
 }
 
+address{
+  all:unset
+}
 
