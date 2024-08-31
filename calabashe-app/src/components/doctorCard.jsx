@@ -73,7 +73,7 @@ const DoctorCard = () => {
       {doctors.slice(0,6).map((doctor) => (
         <div
           key={doctor.id}
-          className="cursor-pointer lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-40 sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
+          className="cursor-pointer lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
           <div className="h-full lg:self-center lg:h-[80%] w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
@@ -103,7 +103,7 @@ const DoctorCard = () => {
                 <span  className="mb-[1px]">Patients Tell Us:</span>
                 {doctor.reviews.slice(0,2).map((titles => (
                       <li key={titles.id}
-                        className="font-normal md:font-medium text-xs md:pl-2 ">
+                        className="font-medium text-[10px] sm:text-xs md:pl-2 ">
                         &#8226; {titles.title.charAt(0).toUpperCase()+ titles.title.slice(1).toLowerCase()}
                       </li>
                     )))}
