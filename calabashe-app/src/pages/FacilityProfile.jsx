@@ -9,7 +9,6 @@ import Footer from "../components/Footer";
 import "../stylesheets/profile.css";
 import AnimatePage from "../components/AnimatePage";
 import formatDate from "../utils/dateConversion";
-import { FaHouseMedical } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 
 const FacilityProfile = () => {
@@ -96,7 +95,7 @@ const FacilityProfile = () => {
                   <h2 className="text-sm md:text-lg lg:text-xl font-semibold">
                     {facility.name}
                   </h2>
-                  <p className="text-xs md:text-sm ">{facility.type}</p>
+                  <p className="text-xs md:text-sm font-light ">{facility.type}</p>
                 </div>
                 <StarRating rating={facility.rating} />
 
@@ -104,7 +103,7 @@ const FacilityProfile = () => {
                 <ul className="text-xs md:text-sm font-bold">
                   Patients tell us:
                   {facility.reviews.slice(0, 3).map((titles) => (
-                    <li key={titles.id} className="font-thin text-xs ">
+                    <li key={titles.id} className="font-light text-xs ">
                       &#8226; {titles.title}
                     </li>
                   ))}

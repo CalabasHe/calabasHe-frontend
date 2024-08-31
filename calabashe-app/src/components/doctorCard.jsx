@@ -70,10 +70,10 @@ const DoctorCard = () => {
 
   return (
     <>
-      {doctors.map((doctor) => (
+      {doctors.slice(0,6).map((doctor) => (
         <div
           key={doctor.id}
-          className="cursor-pointer bg-white lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-40 sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
+          className="cursor-pointer lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-40 sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
           <div className="h-full lg:self-center lg:h-[80%] w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
@@ -87,24 +87,24 @@ const DoctorCard = () => {
           </div>
 
           {/* Profile Data */}
-          <div className="lg:self-center grow flex flex-col sm:flex-row justify-between py-1">
+          <div className="antialiased lg:self-center grow flex flex-col sm:flex-row justify-between py-1">
             <div className="px-1 mb-auto overflow-hidden">
-              <h2 className="text-xs  md:text-base font-bold  overflow-hidden text-wrap line-clamp-1">
+              <h2 className="text-xs  md:text-base lg:text-lg font-black  overflow-hidden text-wrap line-clamp-1">
                 Dr.&nbsp; {doctor.lastName} {doctor.firstName}
               </h2>
-              <p className="text-[10px]  md:text-base font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+              <p className="text-[10px]  md:text-xs font-[400] whitespace-nowrap overflow-hidden text-ellipsis">
                 {doctor.specialty}
               </p>
 
-              <div className="mt-1">
+              <div className="mt-2">
                 <StarRating rating={doctor.rating} />
               </div>
-              <ul className="text-xs font-bold">
-                Patients tell us:
+              <ul className="text-xs font-semibold mt-1">
+                <span  className="mb-[1px]">Patients Tell Us:</span>
                 {doctor.reviews.slice(0,2).map((titles => (
                       <li key={titles.id}
-                        className="font-thin text-xs ">
-                        &#8226; {titles.title}
+                        className="font-normal md:font-medium text-xs md:pl-2 ">
+                        &#8226; {titles.title.charAt(0).toUpperCase()+ titles.title.slice(1).toLowerCase()}
                       </li>
                     )))}
               </ul>
@@ -124,7 +124,7 @@ const DoctorCard = () => {
               </Link>
             </div>
 
-            <div className="h-full w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
+            <div className="w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
               <FaFileMedical size={24} className="lg:h-8"/>
               
               {/* <p className="text-center font-semibold text-sm lg:text-base">Want to know more about <span className="font-bold"> Dr. {doctor.firstName.split(' ')[0]}?</span></p> */}

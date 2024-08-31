@@ -88,18 +88,18 @@ const DocProfile = () => {
                 </div>
               <div className="w-full grid grid-cols-5">
                 <div className="pt-4 space-y-2 col-span-3">
-                  <div>
+                  <div className="md:mb-3 lg:mb-4">
                     <h2 className="text-sm md:text-lg lg:text-xl font-semibold">Dr. {doctor.firstName} {doctor.lastName}</h2> 
                     <p className="text-xs md:text-sm ">{doctor.specialty}</p>
                   </div>
                   <StarRating rating={doctor.rating}/>
                   
                   {/* Patients tell us */}
-                  <ul className="text-xs md:text-sm font-bold">
+                  <ul className="text-xs md:text-sm font-semibold">
                     Patients tell us:
                     {doctor.reviews.slice(0,3).map((titles => (
                       <li key={titles.id}
-                        className="font-thin text-xs ">
+                        className="font-medium text-xs ">
                         &#8226; {titles.title}
                       </li>
                     )))}
