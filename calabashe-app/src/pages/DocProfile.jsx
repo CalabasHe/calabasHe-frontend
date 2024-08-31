@@ -100,7 +100,7 @@ const DocProfile = () => {
                     {doctor.reviews.slice(0,3).map((titles => (
                       <li key={titles.id}
                         className="font-medium text-xs ">
-                        &#8226; {titles.title}
+                        &#8226; {titles.title.charAt(0).toUpperCase()+ titles.title.slice(1).toLowerCase()}
                       </li>
                     )))}
                     {/* <li>{patientsTellUs[0]}</li> */}
