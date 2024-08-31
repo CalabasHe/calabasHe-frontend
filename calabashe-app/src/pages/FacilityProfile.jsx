@@ -41,7 +41,6 @@ const FacilityProfile = () => {
         // console.log('Processed facility details:', FacilityDetails);
         setFacility(FacilityDetails);
       } catch (err) {
-        console.error("Error fetching facility:", err);
         setError(err.message);
       } finally {
         setIsLoading(false);
@@ -165,7 +164,7 @@ const FacilityProfile = () => {
           {/* About Section */}
           <section className="w-full space-y-1 md:w-[80%] md:max-w-[700px]">
             <h3 className="text-lg md:text-xl font-bold ">
-              About Dr. {facility.firstName}{" "}
+              About {facility.name}
             </h3>
             <p className="text-sm sm:text-base">{facility.description}</p>
           </section>
