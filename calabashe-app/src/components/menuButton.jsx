@@ -49,7 +49,7 @@ const Menu = () => {
         <ul>
           <li id="sign-in link">
             {isLoggedIn ? 
-            <span aria-label="logout" onClick={logout}> Logout</span> : <Link to='/sign_in'>Sign In</Link>}
+            <span aria-label="logout" onClick={logout}> Logout</span> : <Link to='/sign_in' onClick={handleLinkClickgit }>Sign In</Link>}
           </li>
           <li id="hospital-link">
             <Link to="/facilities" onClick={handleLinkClick}>Facilities</Link>
