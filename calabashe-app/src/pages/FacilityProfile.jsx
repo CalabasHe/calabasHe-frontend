@@ -202,7 +202,7 @@ const FacilityProfile = () => {
               <div className="space-y-2">
                 <p className="text-4xl md:text-5xl font-black">
                   {facility.rating}
-                  <span className="text-lg font-thin text-[#A0AAB3]">
+                  <span className="text-lg font-light md:font-normal text-[#A0AAB3]">
                     ({facility.totalReviews})
                   </span>
                 </p>
