@@ -43,16 +43,16 @@ const Review = () => {
                 <Stars/>
               </div>
               <div className="mt-2 space-y-3">
-                <label className="text-[20px] font-medium" htmlFor="title">Give your review a title</label>
-                <input className="w-[95%] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="title" required></input>
+                <label className="text-[18px] font-medium" htmlFor="title">Give your review a title</label>
+                <input className="w-[90%] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="title" required></input>
               </div>
 
               <div className="mt-2 space-y-3">
-                <label className="text-[20px] font-medium" htmlFor="review">Tell us more about your visit</label>
+                <label className="text-[18px] font-medium" htmlFor="review">Tell us more about your visit</label>
                 <textarea className="w-full h-[80px] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="review" required></textarea>
               </div>
 
-              <button id="submitButton" className="w-full flex items-center justify-center gap-2 md:px-6 md:w-[250px] text-lg font-bold bg-[#FEE330] py-3 rounded-md" type="submit" onClick={(e) => {e.preventDefault}}> 
+              <button id="submitButton" className="w-full mt-4 flex items-center justify-center gap-2 md:px-6 md:w-[250px] text-lg font-bold bg-[#FEE330] py-3 rounded-md" type="submit" onClick={(e) => {e.preventDefault}}> 
                 <p className="text-center">Submit Review</p>
                 <div className="hidden md:flex">
                   <svg className="h-6 w-6" width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
