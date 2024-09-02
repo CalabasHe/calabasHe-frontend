@@ -18,7 +18,7 @@ const Stars = ( ) => {
   const currentValue = hover || rating;
 
   return (
-    <div className='flex gap-[1px]'>
+    <div className='flex gap-[2px]'>
       {[...Array(5)].map((star, index) => {
         const ratingValue = index + 1;
 
@@ -28,13 +28,13 @@ const Stars = ( ) => {
             onMouseEnter={() => setHover(ratingValue)}
             onMouseLeave={() => setHover(0)}
             onClick={() => setRating(ratingValue)}
-            className={`w-8 h-8 flex justify-center items-center cursor-pointer transition-colors duration-200 
+            className={`w-9 h-9 flex justify-center items-center cursor-pointer transition-colors duration-200 
               ${ratingValue <= currentValue ? getColor(currentValue) : 'bg-gray-300'}`}
           >
             <input
               required
               type="radio"
-              name="rating"
+              id="rating"
               value={ratingValue}
               style={{ display: 'none' }}
             />
@@ -44,7 +44,7 @@ const Stars = ( ) => {
               width="45"
               viewBox="0 0 43 37"
               xmlns="http://www.w3.org/2000/svg"
-              className="star h-6 w-6"
+              className="star h-8 w-8"
             >
               <path d="M21.5 0.820068L26.4574 14.5708H42.5L21.5 28.3216L30.6863 23.764L34.4787 36.8201L21.5 28.3216L8.52129 36.8201L13.4787 23.0693L0.5 14.5708H16.5426L21.5 0.820068Z"/>
             </svg>
