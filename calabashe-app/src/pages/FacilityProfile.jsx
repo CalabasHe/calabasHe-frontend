@@ -103,7 +103,7 @@ const FacilityProfile = () => {
                 <ul className="text-xs md:text-sm font-bold">
                   Patients tell us:
                   {facility.reviews.slice(0, 3).map((titles) => (
-                    <li key={titles.id} className="font-light text-xs ">
+                    <li key={titles.id} className="font-light md:font-normal text-xs ">
                       &#8226; {titles.title}
                     </li>
                   ))}
@@ -150,7 +150,7 @@ const FacilityProfile = () => {
                 <ul className="hidden sm:flex flex-col text-xs md:text-sm font-bold">
                   Services offered:
                   {facility.services.slice(0, 3).map((services) => (
-                    <li key={services.id} className="font-thin text-xs ">
+                    <li key={services.id} className="font-light md:font-normal text-xs ">
                       &#8226; {services.name}
                     </li>
                   ))}
