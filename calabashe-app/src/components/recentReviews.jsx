@@ -71,7 +71,7 @@ if (error) return <div>{error}</div>;
                     <StarRating rating={review.rating} />
                   </div>
                   
-                    <p className="font-medium text-sm md:text-lg">{review.user.slice(0,8)} reviewed <span className="font-bold ">{`${review.type === "doctor" ? 'Dr. ' + review.subject.split(' ')[0] : review.subject}`}</span></p>
+                    <p className="font-medium text-sm md:text-lg">{review.user} reviewed <span className="font-bold ">{`${review.type === "doctor" ? 'Dr. ' + review.subject.split(' ')[0] : review.subject}`}</span></p>
 
                     <p className="text-xs md:text-base">&quot;{review.description}&quot;</p>
                 </div>
