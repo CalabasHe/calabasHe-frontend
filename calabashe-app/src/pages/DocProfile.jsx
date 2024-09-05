@@ -269,7 +269,7 @@ const DocProfile = () => {
             className="w-full md:w-[80%] md:max-w-[700px] lg:hover:scale-[1.01] duration-100"
           >
             <button
-              className="w-full flex items-center justify-center gap-4 md:gap-8 p-2 bg-[#FEE330] rounded-xl"
+              className="w-full mt-4 flex items-center justify-center gap-2 md:px-6 md:w-[250px] text-lg font-bold bg-[#FEE330] py-3 rounded-md"
               aria-label={`Leave a review for Dr. ${doctor.slug}`}
             >
               <p className="text-center text-lg md:text-xl font-bold">
