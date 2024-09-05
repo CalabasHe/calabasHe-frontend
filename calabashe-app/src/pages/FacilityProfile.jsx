@@ -283,11 +283,12 @@ const FacilityProfile = () => {
           {/* Leave a Review */}
           <Link
             to={`/review/${slug}`}
+            state={{message:[facility.name, 'facility', facility.id]}}
             className="w-full md:w-[80%] md:max-w-[700px] lg:hover:scale-[1.01] duration-100"
           >
             <button
               className="w-full flex items-center justify-center gap-4 md:gap-8 p-2 bg-[#FEE330] rounded-xl"
-              aria-label={`Leave a review for Dr. ${facility.slug}`}
+              aria-label={`Leave a review for ${facility.name}`}
             >
               <p className="text-center text-lg md:text-xl font-bold">
                 Leave a Review

@@ -5,6 +5,7 @@ const VERIFY_URL = 'https://calabashe-api.onrender.com/api/auth/verify-code/';
 const LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/login/';
 const GOOGLE_LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/google/';
 
+
 export const signUp = async ({ email, username, password, password2 }) => {
   try {
     const response = await axios.post(SIGNUP_URL, {
@@ -31,7 +32,6 @@ export const logIn = async ({ email, password }) => {
       email,
       password,
     });
-    console.log(response.data)
     return response.data;
   }catch (error) {
     if (error.response && error.response.data) {
@@ -49,7 +49,6 @@ export const verifyCode = async ({ email, verification_code }) => {
       email,
       verification_code,
     });
-    console.log(response.data)
     return response.data;
   }catch (error) {
     if (error.response && error.response.data) {
@@ -59,6 +58,8 @@ export const verifyCode = async ({ email, verification_code }) => {
     }
   }
 };
+
+
 
 
 export const authenticateUser = async (accessToken) => {
@@ -73,3 +74,4 @@ export const authenticateUser = async (accessToken) => {
     throw error;
   }
 };
+

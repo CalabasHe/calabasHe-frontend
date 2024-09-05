@@ -265,6 +265,7 @@ const DocProfile = () => {
           {/* Leave a Review */}
           <Link
             to={`/review/${slug}`}
+            state={{message:[doctor.lastName, 'doctor', doctor.id]}}
             className="w-full md:w-[80%] md:max-w-[700px] lg:hover:scale-[1.01] duration-100"
           >
             <button
