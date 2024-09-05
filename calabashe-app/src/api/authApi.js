@@ -14,7 +14,7 @@ export const signUp = async ({ email, username, password, password2 }) => {
       password,
       password2,
     });
-    console.log(response.data)
+    // console.log(response.data)
     return response.data;
   } catch (error) {
     if (error.response && error.response.data) {
@@ -67,7 +67,7 @@ export const authenticateUser = async (accessToken) => {
     const res = await axios.post(GOOGLE_LOGIN_URL, {
       access_token: accessToken,
     });
-    console.log("User authenticated", res.data);
+    // console.log("User authenticated", res.data);
     return res.data;
   } catch (error) {
     console.error("Authentication failed", error);
