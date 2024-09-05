@@ -3,7 +3,7 @@
 // import specialist from "../assets/images/doctor-2.jpg";
 // import patron from "../assets/images/excited-patron.jpg";
 // import doctorInScrubs from "../assets/images/doctor-in-scrubs.jpg";
-
+import Picture from '../assets/images/picture bubbles.png';
 import SearchButton from "./searchButton";
 
 const Banner = () => {
@@ -30,30 +30,16 @@ const Banner = () => {
           <SearchButton/>
         </div>
 
-        <div className="relative flex flex-col gap-10 justify-end flex-grow ">
-          <div className='w-full flex justify-end items-end gap-[30%] md:gap-6'>
-            <div className=" flex bg-white/40 w-12 h-12 -translate-y-2 rounded-full" ></div>
-            <div className=" flex bg-white/40 w-[22%] h-10 translate-x-1 rounded-l-3xl" ></div> 
-          </div>
+        <div className="relative flex  gap-10 justify-end flex-grow ">
+        {/* <img className="" src={Picture} alt=""></img> */}
+        <svg  width="603" height="290" viewBox="0 0 603 290" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M419.431 47.0328C419.431 25.1208 437.194 7.35767 459.106 7.35767H603V86.7079H459.106C437.194 86.7079 419.431 68.9447 419.431 47.0328V47.0328Z" fill="#56EEAD"/>
+<path d="M60.8978 199.805C60.8978 150.44 100.916 110.422 150.281 110.422H603V289.188H150.281C100.916 289.188 60.8978 249.17 60.8978 199.805V199.805Z" fill="#56EEAD"/>
+<ellipse cx="350.593" cy="46.5767" rx="48.7605" ry="46.5156" fill="#56EEAD"/>
+<ellipse cx="538.942" cy="257.265" rx="22.9461" ry="21.8897" fill="#03D68A"/>
+<ellipse cx="16.4398" cy="61.6258" rx="15.7755" ry="15.0492" fill="#F75A91"/>
+</svg>
 
-          <div className="w-full flex justify-end items-end">
-            <div className="relative flex bg-white/40 w-[80%] h-16 md:h-20 lg:h-24 rounded-l-[2rem]" >
-              <div className="absolute  bottom-1 right-4 h-6 w-6 bg-[#03D68A] rounded-full hidden md:flex"></div>
-            </div> 
-          </div>
-
-          <div className="absolute botton-0 left-5  w-full h-[90%] flex max-md:gap-6 px-2">    
-            <div className="flex flex-col gap-3 max-w-[100px] self-start pl-2">
-              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
-              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
-              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg hidden "></div>
-            </div>
-            <div className="flex h-[100%] w-[38%] rounded-t-md bg-white/40 justify-self-center"></div>
-            <div className="flex flex-col gap-3 max-w-[100px] self-start">
-              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
-              <div className="bg-white/40 w-[55px] h-[50px] rounded-lg "></div>
-            </div>
-          </div>
         </div>
       </section>
     </>

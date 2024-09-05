@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import StarRating from "./rating";
 import { fetchDoctors } from "../api/getCategoriesData";
-import { FaFileMedical} from "react-icons/fa";
+// import { FaFileMedical } from "react-icons/fa";
 
 const DoctorCard = () => {
   const [doctors, setDoctors] = useState([]);
@@ -11,8 +11,8 @@ const DoctorCard = () => {
 
   const go = useNavigate();
   const handleProfileClick = (slug) => {
-    go(`/doctors/${slug}`)
-  }
+    go(`/doctors/${slug}`);
+  };
 
   useEffect(() => {
     const fetchDocData = async () => {
@@ -67,10 +67,9 @@ const DoctorCard = () => {
       </div>
     );
 
-
   return (
     <>
-      {doctors.slice(0,6).map((doctor) => (
+      {doctors.slice(0, 6).map((doctor) => (
         <div
           key={doctor.id}
           className="cursor-pointer lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
@@ -100,13 +99,17 @@ const DoctorCard = () => {
                 <StarRating rating={doctor.rating} />
               </div>
               <ul className="text-xs font-semibold mt-1">
-                <span  className="mb-[1px]">Patients Tell Us:</span>
-                {doctor.reviews.slice(0,2).map((titles => (
-                      <li key={titles.id}
-                        className="font-medium text-[10px] sm:text-xs md:pl-2 ">
-                        &#8226; {titles.title.charAt(0).toUpperCase()+ titles.title.slice(1).toLowerCase()}
-                      </li>
-                    )))}
+                <span className="mb-[1px]">Patients Tell Us:</span>
+                {doctor.reviews.slice(0, 2).map((titles) => (
+                  <li
+                    key={titles.id}
+                    className="font-medium text-[10px] sm:text-xs md:pl-2 "
+                  >
+                    &#8226;{" "}
+                    {titles.title.charAt(0).toUpperCase() +
+                      titles.title.slice(1).toLowerCase()}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="mt-auto sm:hidden">
@@ -125,15 +128,31 @@ const DoctorCard = () => {
             </div>
 
             <div className="w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
-              <FaFileMedical size={24} className="lg:h-8"/>
-              
+              <svg
+                className="p-1"
+                width="41"
+                height="40"
+                viewBox="0 0 41 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M13.3571 2.85714C13.3571 2.09938 13.0561 1.37266 12.5203 0.836838C11.9845 0.30102 11.2578 0 10.5 0C9.74224 0 9.01551 0.30102 8.47969 0.836838C7.94388 1.37266 7.64286 2.09938 7.64286 2.85714V5.71429H4.78571C3.64907 5.71429 2.55898 6.16582 1.75526 6.96954C0.951529 7.77327 0.5 8.86336 0.5 10L0.5 35.7143C0.5 36.8509 0.951529 37.941 1.75526 38.7447C2.55898 39.5485 3.64907 40 4.78571 40H36.2143C37.3509 40 38.441 39.5485 39.2447 38.7447C40.0485 37.941 40.5 36.8509 40.5 35.7143V10C40.5 8.86336 40.0485 7.77327 39.2447 6.96954C38.441 6.16582 37.3509 5.71429 36.2143 5.71429H33.3571V2.85714C33.3571 2.09938 33.0561 1.37266 32.5203 0.836838C31.9845 0.30102 31.2578 0 30.5 0C29.7422 0 29.0155 0.30102 28.4797 0.836838C27.9439 1.37266 27.6429 2.09938 27.6429 2.85714V5.71429H13.3571V2.85714ZM17.5571 15.5086C17.5571 14.8886 18.06 14.3886 18.68 14.3886H22.3229C22.94 14.3886 23.4429 14.8886 23.4429 15.5086V19.9657H27.9C28.52 19.9657 29.02 20.4686 29.02 21.0857V24.7286C29.0204 24.8759 28.9917 25.0218 28.9356 25.1581C28.8794 25.2943 28.797 25.4181 28.693 25.5224C28.5889 25.6267 28.4653 25.7094 28.3293 25.7659C28.1932 25.8224 28.0473 25.8514 27.9 25.8514H23.4429V30.3086C23.4429 30.6056 23.3249 30.8905 23.1148 31.1005C22.9048 31.3106 22.6199 31.4286 22.3229 31.4286H18.6771C18.3801 31.4286 18.0952 31.3106 17.8852 31.1005C17.6751 30.8905 17.5571 30.6056 17.5571 30.3086V25.8514H13.1C12.9527 25.8514 12.8068 25.8224 12.6707 25.7659C12.5347 25.7094 12.4111 25.6267 12.307 25.5224C12.203 25.4181 12.1206 25.2943 12.0644 25.1581C12.0083 25.0218 11.9796 24.8759 11.98 24.7286V21.0857C11.98 20.4686 12.48 19.9657 13.1 19.9657H17.5571V15.5086Z"
+                  fill="black"
+                />
+              </svg>
+
               {/* <p className="text-center font-semibold text-sm lg:text-base">Want to know more about <span className="font-bold"> Dr. {doctor.firstName.split(' ')[0]}?</span></p> */}
-              <p className="text-center font-semibold text-sm lg:text-base">You want to book an appointment?</p>
+              <p className="font-regular p-2 text-sm lg:text-base">
+                You want to book an appointment?
+              </p>
               <div className="block w-full ">
-                <button 
+                <button
                   className="w-full h-[inherit] p-1 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold"
                   onClick={() => handleProfileClick(doctor.slug)}
-                  >
+                >
                   View Profile
                 </button>
               </div>
