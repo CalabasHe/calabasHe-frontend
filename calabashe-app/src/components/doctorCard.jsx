@@ -69,13 +69,9 @@ const DoctorCard = () => {
 
   return (
     <>
-<<<<<<< HEAD
       {doctors.slice(0, 6).map((doctor) => (
-        <div
-=======
-      {doctors.slice(0,6).map((doctor) => (
-        <Link to={`/doctors/${doctor.slug}`}
->>>>>>> 6d2ca696db8dbf931a112d9839207b743a51e8d8
+        <Link
+          to={`/doctors/${doctor.slug}`}
           key={doctor.id}
           className="cursor-pointer lg:hover:scale-[1.01] duration-300 mt-4 border border-black shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
