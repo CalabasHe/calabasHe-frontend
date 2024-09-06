@@ -49,7 +49,7 @@ export const verifyCode = async ({ email, verification_code }) => {
       email,
       verification_code,
     });
-    return response.data;
+    return response.data.tokens;
   }catch (error) {
     if (error.response && error.response.data) {
       throw error.response.data;
