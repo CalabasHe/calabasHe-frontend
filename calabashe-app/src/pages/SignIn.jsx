@@ -41,7 +41,7 @@ const SignIn = () => {
     try {
       const response = await logIn({ email, password});
       setSuccess('Sign in successful');
-      login(response.accessToken, response.refreshToken);
+      login(response.access, response.refresh);
       navigate('/home');
     }catch (error) {
       if (error.non_field_errors) {

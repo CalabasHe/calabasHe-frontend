@@ -1,9 +1,69 @@
+import { useState, useEffect, useRef } from "react";
 import { FadeInOut } from "../components/ComponentAnimations";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Stars from "../components/Star";
+import { getUserId } from "../utils/getUserId";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createDoctorReview, createFacilityReview } from "../api/review";
 
 const Review = () => {
+  const [title, setTitle] = useState('');
+  const [user, setUser] = useState('');
+  const [reviewee, setReviewee] = useState('');
+  const [description, setDescription] = useState('');
+  const [rating, setRating] = useState(0);
+  const [sucess, setSuccess] = useState('');
+  const [error, setError] = useState('')
+  const location = useLocation()
+  const go = useNavigate()
+  
+
+  const prevLocationState = useRef(null);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const userId = await getUserId();
+      setUser(userId);
+
+      // Update reviewee state if location state has changed
+      if (
+        prevLocationState.current?.message !== location.state?.message
+      ) {
+        const [revieweeName, revieweeType, revieweeId] =
+          location.state?.message || [];
+        setReviewee({ name: revieweeName, type: revieweeType, id: revieweeId });
+        prevLocationState.current = location.state;
+      }
+    };
+    fetchUserId();
+  }, [location.state]);
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      if (reviewee.type === 'doctor') {
+        await createDoctorReview({ user, rating, title, description, doctor: reviewee.id });
+      } else {
+        await createFacilityReview({ user, rating, title, description, facility: reviewee.id });
+      }
+      
+      // console.log('API Response:', result);
+      setSuccess('Review successful');
+      alert('Review successful');
+      go('/home')
+    } catch (error) {
+      console.error(`Error creating ${reviewee.type} review:`, error);
+      setError(`Failed to submit review: ${error.message || 'Unknown error'}`);
+      alert(`Failed to submit review: ${error.message || 'Unknown error'}`);
+    }
+  };
 
 
   return ( 
@@ -31,25 +91,25 @@ const Review = () => {
                 <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
               </svg>
             </div>
-            <h2 className="md:text-left text-center text-[22px] font-semibold border-b-[1px] border-gray-400 pb-3 md:pb-6 lg:pb-8">Your review of ....</h2>
+            <h2 className="md:text-left text-center text-[22px] font-semibold border-b-[1px] border-gray-400 pb-3 md:pb-6 lg:pb-8">Your review of {reviewee.type === 'doctor' ? 'Dr. ' + reviewee.name: reviewee.name}</h2>
 
-            <form className="mt-2 md:mt-3 lg:mt-4 flex flex-col gap-4 md:gap-6 lg:gap-8">
+            <form onSubmit={handleSubmit}  className="mt-2 md:mt-3 lg:mt-4 flex flex-col gap-4 md:gap-6 lg:gap-8">
               <p className="font-[400] text-[18px] md:text-[15px] md:font-[600]">
                 <span className="md:hidden">How likely are you to <br/> recommend provider?</span>
                 <span className="hidden md:flex"> How likely are you to recommend provider?</span>
               </p>
               <div className="space-y-2">
                 <p className="text-gray-500 ">Select Rating</p>
-                <Stars/>
+                <Stars rating={rating} onRatingChange={handleRatingChange}/>
               </div>
               <div className="mt-2 space-y-3">
                 <label className="text-[18px] md:text-[20px] font-medium" htmlFor="title">Give your review a title</label>
-                <input className="w-[90%] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="title" required></input>
+                <input onChange={(e => setTitle(e.target.value))} className="w-[90%] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="title" required></input>
               </div>
 
               <div className="mt-2 space-y-3">
                 <label className="text-[18px] md:text-[20px] font-medium" htmlFor="review">Tell us more about your visit</label>
-                <textarea className="w-full h-[80px] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="review" required></textarea>
+                <textarea onChange={(e => setDescription(e.target.value))} className="w-full h-[80px] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="review" required></textarea>
               </div>
 
               <button id="submitButton" className="w-full mt-4 flex items-center justify-center gap-2 md:px-6 md:w-[250px] text-lg font-bold bg-[#FEE330] py-3 rounded-md" type="submit" onClick={(e) => {e.preventDefault}}> 

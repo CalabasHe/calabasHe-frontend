@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import '../stylesheets/stars.css'
+import '../stylesheets/stars.css';
 
 // eslint-disable-next-line react/prop-types
-const Stars = ( ) => {
-  const [rating, setRating] = useState(0);
+const Stars = ({ rating, onRatingChange }) => {
   const [hover, setHover] = useState(0);
 
   const getColor = (value) => {
-    if (value === 0) return 'bg-gray-300'
+    if (value === 0) return 'bg-gray-300';
     if (value <= 1) return 'bg-red-500';
     if (value <= 2) return 'bg-orange-400';
     if (value <= 3) return 'bg-yellow-300';
@@ -27,14 +26,14 @@ const Stars = ( ) => {
             key={index}
             onMouseEnter={() => setHover(ratingValue)}
             onMouseLeave={() => setHover(0)}
-            onClick={() => setRating(ratingValue)}
+            onClick={() => onRatingChange(ratingValue)}
             className={`w-9 h-9 flex justify-center items-center cursor-pointer transition-colors duration-200 
               ${ratingValue <= currentValue ? getColor(currentValue) : 'bg-gray-300'}`}
           >
             <input
               required
               type="radio"
-              id="rating"
+              id={`rating-${ratingValue}`} // Changed ID to be unique for each star
               value={ratingValue}
               style={{ display: 'none' }}
             />

@@ -5,6 +5,7 @@ const VERIFY_URL = 'https://calabashe-api.onrender.com/api/auth/verify-code/';
 const LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/login/';
 const GOOGLE_LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/google/';
 
+
 export const signUp = async ({ email, username, password, password2 }) => {
   try {
     const response = await axios.post(SIGNUP_URL, {
@@ -13,7 +14,7 @@ export const signUp = async ({ email, username, password, password2 }) => {
       password,
       password2,
     });
-    console.log(response.data)
+    // console.log(response.data)
     return response.data;
   } catch (error) {
     if (error.response && error.response.data) {
@@ -31,7 +32,6 @@ export const logIn = async ({ email, password }) => {
       email,
       password,
     });
-    console.log(response.data)
     return response.data;
   }catch (error) {
     if (error.response && error.response.data) {
@@ -49,7 +49,6 @@ export const verifyCode = async ({ email, verification_code }) => {
       email,
       verification_code,
     });
-    console.log(response.data)
     return response.data;
   }catch (error) {
     if (error.response && error.response.data) {
@@ -61,15 +60,18 @@ export const verifyCode = async ({ email, verification_code }) => {
 };
 
 
+
+
 export const authenticateUser = async (accessToken) => {
   try {
     const res = await axios.post(GOOGLE_LOGIN_URL, {
       access_token: accessToken,
     });
-    console.log("User authenticated", res.data);
+    // console.log("User authenticated", res.data);
     return res.data;
   } catch (error) {
     console.error("Authentication failed", error);
     throw error;
   }
 };
+

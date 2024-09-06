@@ -69,10 +69,15 @@ const DoctorCard = () => {
 
   return (
     <>
+<<<<<<< HEAD
       {doctors.slice(0, 6).map((doctor) => (
         <div
+=======
+      {doctors.slice(0,6).map((doctor) => (
+        <Link to={`/doctors/${doctor.slug}`}
+>>>>>>> 6d2ca696db8dbf931a112d9839207b743a51e8d8
           key={doctor.id}
-          className="cursor-pointer lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
+          className="cursor-pointer lg:hover:scale-[1.01] duration-300 mt-4 border border-black shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
           <div className="h-full lg:self-center lg:h-[80%] w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
@@ -120,11 +125,11 @@ const DoctorCard = () => {
             </Link> */}
 
               {/* View Profile button */}
-              <Link to={`/doctors/${doctor.slug}`} className="block w-full">
+              <div className="block w-full">
                 <button className="w-full h-[inherit] p-1 text-center bg-[#D3D3B1] rounded-md text-sm sm:text-base font-bold">
                   View Profile
                 </button>
-              </Link>
+              </div>
             </div>
 
             <div className="w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
@@ -158,7 +163,7 @@ const DoctorCard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   );

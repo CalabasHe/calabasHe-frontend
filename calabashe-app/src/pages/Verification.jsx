@@ -67,7 +67,7 @@ const VerifyUser = ({ email, duration }) => {
       setError("");
       setVerificationCode(new Array(6).fill(""));
       setIsModalOpen(false);
-      login(response.accessToken, response.refreshToken);
+      login(response.access, response.refresh);
       navigate('/home');
     } catch (error) {
       // console.error(error);
