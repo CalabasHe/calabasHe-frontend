@@ -117,6 +117,7 @@ const SignUp = () => {
                       <input className="text-base leading-3 p-1 px-2  rounded-md w-full" 
                         type="email" 
                         id="email"
+                        aria-label="enter a valid email address"
                         value={email}
                         onChange={(e => setEmail(e.target.value))}
                         placeholder="example@email.com"
@@ -128,6 +129,7 @@ const SignUp = () => {
                       <label className="block  text-sm lg:text-base" htmlFor="username">Username</label>
                       <input className="text-base leading-3 p-1 px-2 rounded-md w-full" 
                         type="text" 
+                        aria-label="enter preferred username"
                         id="username"
                         value={username}
                         onChange={(e => setUsername(e.target.value))}
@@ -142,12 +144,14 @@ const SignUp = () => {
                         <input className="leading-3 text-base p-1 px-2 rounded-md w-full" 
                           type="password" 
                           id="passwd"
+                          aria-label="enter password"
                           value={password}
                           onChange={(e => setPassword(e.target.value))}
                           disabled = {disableForm}
                           required
                         />
                         <button
+                            id="togglepasswdvisibility1"
                             className={`${passwdHidden ? 'fill-green-600' : 'fill-red-500'}  cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}
                             tabIndex='-1'
                             aria-label="Toggle Password Visibility"
@@ -169,12 +173,14 @@ const SignUp = () => {
                         <input className="text-base leading-3 p-1 px-2 rounded-md w-full" 
                           type="password" 
                           id="confirm_passwd"
+                          aria-label="confirm password"
                           value={password2}
                           onChange={(e => setPassword2(e.target.value))}
                           required
                           disabled = {disableForm}
                           />
                         <button
+                            id='togglepasswdvisibility2'
                             className={`${passwdHidden ? 'fill-green-600' : 'fill-red-500'}  cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}
                             tabIndex='-1'
                             aria-label="Toggle Password Visibility"
