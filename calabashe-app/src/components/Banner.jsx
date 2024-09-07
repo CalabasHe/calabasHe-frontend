@@ -5,7 +5,7 @@
 // import doctorInScrubs from "../assets/images/doctor-in-scrubs.jpg";
 import Picture from "../assets/images/picture bubbles.png";
 import SearchButton from "./searchButton";
-
+import PictureWEBP from "../assets/images/picture bubbles.webp";
 const Banner = () => {
   return (
     <>
@@ -31,7 +31,15 @@ const Banner = () => {
         </div>
 
         <div className="relative flex  gap-10 justify-end flex-grow ">
-          <img className="" src={Picture} alt=""></img>
+          <picture>
+            <source
+              className=""
+              srcSet={PictureWEBP}
+              type="image/webp"
+              alt=""
+            ></source>
+            <img className="" src={Picture} alt=""></img>
+          </picture>
         </div>
       </section>
     </>
