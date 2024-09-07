@@ -34,6 +34,7 @@ const DoctorQuote = () => {
               className=""
               src={Doctor}
               alt="Doctor wearing a stethoscope"
+              loading="lazy"
             ></img>
           </picture>
         </div>
