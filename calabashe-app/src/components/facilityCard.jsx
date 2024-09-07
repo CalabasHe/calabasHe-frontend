@@ -89,7 +89,7 @@ const FacilityCard = () => {
           </div>
 
           {/* Profile Data */}
-          <div className="lg:self-center grow flex flex-col sm:flex-row justify-between py-1">
+          <section className="lg:self-center grow flex flex-col sm:flex-row justify-between py-1">
             <div className="px-1 mb-auto overflow-hidden">
               <h2 className="text-sm  md:text-base font-[900]  overflow-hidden text-wrap line-clamp-1">
                 {facility.name}
@@ -101,16 +101,16 @@ const FacilityCard = () => {
               <div className="mt-2">
                 <StarRating rating={facility.rating} />
               </div>
-              <ul className="text-xs font-bold mt-1">
+              <div className="text-xs font-bold mt-1">
                 Patients tell us:
                 {facility.reviews.slice(0, 2).map((titles) => (
-                  <li key={titles.id} className="font-normal text-xs ">
+                  <p key={titles.id} className="font-normal text-xs ">
                     &#8226;{" "}
                     {titles.title.charAt(0).toUpperCase() +
                       titles.title.slice(1).toLowerCase()}
-                  </li>
+                  </p>
                 ))}
-              </ul>
+              </div>
             </div>
             <div className="mt-auto sm:hidden">
               {/* <Link to={`/facility/${facility.slug}`} className="block w-full">
@@ -166,7 +166,7 @@ const FacilityCard = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       ))}
     </>
