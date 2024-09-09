@@ -128,7 +128,7 @@ const SearchBarSm = ({ display, setDisplay }) => {
             placeholder="Search for Doctors, Hospitals or Services"
             spellCheck="false"
           />
-          <button className="w-[fit-content]" onClick={handleClose}>
+          <button className="bg-red-500 w-[fit-content]" onClick={handleClose}>
             <FaTimes
               size={20}
               className="text-[#205CD4]"
