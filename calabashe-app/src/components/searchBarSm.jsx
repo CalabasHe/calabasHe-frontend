@@ -97,7 +97,6 @@ const SearchBarSm = ({ display, setDisplay }) => {
           }`}
         >
           <svg
-            role="button"
             tabIndex="0"
             aria-label="Search Button"
             className="w-[18px] h-[18px]"
