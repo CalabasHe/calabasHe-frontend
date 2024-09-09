@@ -59,11 +59,11 @@ if (error) return <div>{error}</div>;
         <div className="w-full mt-2  lg:mt-6 space-y-4 lg:space-y-6  pb-2 lg:pb-6">
           <h1 className="text-center  md:text-2xl text-xl font-bold">Recent Reviews</h1>
 
-          <section className="w-full overflow-hidden flex px-4">
+          <section className="overflow-hidden flex">
             
-            <div className="flex gap-2 lg:gap-6 relative carousel ">
-              {reviews.map( (review) => (
-                <div key={review.id} className="cursor-pointer select-none   space-y-2 rounded-lg w-[250px] md:w-[280px] bg-white border px-3 md:px-5 py-4 ">
+            <div className="carousel flex ">
+              {reviews && [...reviews, ...reviews].map((review, index) => (
+                <div key={`${review.id}-${index}`} className="card cursor-pointer  mx-2 lg:mx-6 select-none  rounded-lg w-[250px] md:w-[280px] bg-white border px-3 md:px-5 py-4 ">
                   <div className="flex gap-4 items-center">
                     <div className="w-[fit-content] p-1 pb-[1px] rounded-full border-2 border-black">
                       <FaUser className=" rounded-[50%] w-6 h-6 md:w-8 md:h-8 "/>

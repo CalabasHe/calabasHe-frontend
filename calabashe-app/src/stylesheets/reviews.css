@@ -6,15 +6,13 @@
   scale: .98;
 }
 
-.carousel-container {
-  position: relative;
-  width: 200%;
-  overflow: hidden;
-}
-
 
 .carousel{
-  animation: slide 40s linear infinite; 
+  animation: slide 20s linear infinite; 
+}
+
+.card{
+  margin: 0 10px;
 }
 
 /* .carousel > div:hover + .carousel {
@@ -23,10 +21,10 @@
 
 
 @keyframes slide {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
-    transform: translateX(-100%);
+  to {
+    transform: translateX(-50%);
   }
 }
