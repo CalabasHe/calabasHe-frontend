@@ -1,19 +1,23 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { verifyCode } from "../api/authApi";
 import Countdown from "../components/verificationtimer";
 import { useAuth } from "../hooks/useAuth";
 
 // eslint-disable-next-line react/prop-types
-const VerifyUser = ({ email, duration }) => {
+const VerifyUser = ({ locationState=[] ,email, duration }) => {
   const [verificationCode, setVerificationCode] = useState(new Array(6).fill(""));
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(true);
+  
+ 
 
   const navigate = useNavigate();
   const inputRefs = useRef([]);
   const { login } = useAuth()
+
+  
 
   useEffect(() => {
     if (inputRefs.current[0]) {
@@ -68,7 +72,8 @@ const VerifyUser = ({ email, duration }) => {
       setVerificationCode(new Array(6).fill(""));
       setIsModalOpen(false);
       login(response.access, response.refresh);
-      navigate('/home');
+      const destination = locationState?.from || '/';
+      navigate(destination, { state: locationState });
     } catch (error) {
       // console.error(error);
       setError(error.message || "Failed to verify code");

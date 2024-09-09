@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createDoctorReview, createFacilityReview } from "../api/review";
 import { FadeInOut } from "../components/ComponentAnimations";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Stars from "../components/Star";
 import { getUserId } from "../utils/getUserId";
-import { useLocation, useNavigate } from "react-router-dom";
-import { createDoctorReview, createFacilityReview } from "../api/review";
 
 const Review = () => {
   const [title, setTitle] = useState('');

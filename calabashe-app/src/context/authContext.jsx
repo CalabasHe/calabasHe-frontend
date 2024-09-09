@@ -21,9 +21,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    // window.location.reload()
     removeCookie('accessToken');
     removeCookie('refreshToken');
-    window.location.reload()
     setIsLoggedIn(false);
   };
 

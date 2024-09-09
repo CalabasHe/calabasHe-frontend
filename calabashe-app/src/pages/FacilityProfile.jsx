@@ -1,5 +1,6 @@
 import { FadeInOut } from "../components/ComponentAnimations";
 import Header from "../components/Header";
+import { useAuth } from "../hooks/useAuth";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFacilityBySlug } from "../api/getProfileData";
@@ -16,6 +17,7 @@ const FacilityProfile = () => {
   const [facility, setFacility] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isLoggedIn } = useAuth()
 
   useEffect(() => {
     const fetchFacility = async () => {
@@ -282,8 +284,8 @@ const FacilityProfile = () => {
 
           {/* Leave a Review */}
           <Link
-            to={`/review/${slug}`}
-            state={{message:[facility.name, 'facility', facility.id]}}
+            to={ isLoggedIn ? `/review/${slug}` : '/sign_in'}
+            state={{message:[facility.name, 'facility', facility.id], from : `/review/${slug}`}}
             className="w-full md:w-[80%] md:max-w-[700px] lg:hover:scale-[1.01] duration-100"
           >
             <button

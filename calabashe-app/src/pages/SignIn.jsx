@@ -1,5 +1,5 @@
-import {useState, useRef} from 'react'
-import { useNavigate, Link } from "react-router-dom";
+import {useState, useRef, useEffect} from 'react'
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { logIn } from '../api/authApi.js'
 import { useAuth } from "../hooks/useAuth";
 import AnimatePage from '../components/AnimatePage.jsx';
@@ -19,6 +19,15 @@ const SignIn = () => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
   const inputPassword = useRef(null)
+  const location = useLocation();
+  const [fullState, setFullState] = useState(location.state);
+
+  useEffect(() => {
+    if (location.state) {
+      setFullState(location.state);
+    }
+  }, [location.state]);
+  console.log(fullState)
   
   const togglePassword = () =>{
     if (inputPassword.current.type === 'password'){
@@ -42,7 +51,8 @@ const SignIn = () => {
       const response = await logIn({ email, password});
       setSuccess('Sign in successful');
       login(response.access, response.refresh);
-      navigate('/home');
+      const destination = fullState?.from || '/';
+      navigate(destination, { state: fullState });
     }catch (error) {
       if (error.non_field_errors) {
         if (error.non_field_errors[0].includes('No account')) {
@@ -164,7 +174,7 @@ const SignIn = () => {
                       <p className="text-sm md:text-base font-medium">Continue with Google</p>
                     </button>
 
-                    <Link className="w-[fit-content] self-center text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" to='/sign_up'>Don&apos;t have an account? Sign Up</Link>
+                    <Link className="w-[fit-content] self-center text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" to='/sign_up' state={{ message: fullState.message, from:fullState.from }}>Don&apos;t have an account? Sign Up</Link>
                   </div>
                 </form>
 

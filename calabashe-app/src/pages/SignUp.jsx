@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../stylesheets/account.css";
 import { signUp } from "../api/authApi";
 import VerifyUser from "./Verification";
@@ -16,7 +16,17 @@ const SignUp = () => {
   const [isHidden, setIsHidden] = useState(true);
   const [disableForm, setDisableForm] = useState(false);
   const [passwdHidden, setPasswdHidden] = useState(true)
- 
+  const location = useLocation();
+  const [fullState, setFullState] = useState('');
+
+  useEffect(() => {
+    if (location.state) {
+      setFullState(location.state);
+    }
+  }, [location.state]);
+  
+  console.log(fullState)
+
   const password1 = document.getElementById('passwd');
   const confirm_password = document.getElementById('confirm_passwd');
 
@@ -228,7 +238,7 @@ const SignUp = () => {
                       <p className="text-sm md:text-base">Sign up with Google</p>
                     </button>
 
-                    <Link className="text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" to='/sign_in'>Already have an account? Sign In</Link>
+                    <Link className="text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" state={{ message: fullState.message, from:fullState.from  }}  to='/sign_in'>Already have an account? Sign In</Link>
                   </div>
                 </form>
 
@@ -238,7 +248,7 @@ const SignUp = () => {
           {/* Verification code */}
       </AnimateY>
           <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
-            <VerifyUser email={email} duration={900}/>
+            <VerifyUser locationState={fullState} email={email} duration={900}/>
           </div>
     </div>
    );

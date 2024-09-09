@@ -2,6 +2,7 @@ import { FadeInOut } from "../components/ComponentAnimations";
 import Header from "../components/Header";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 import { fetchDoctorBySlug } from "../api/getProfileData";
 import StarRating from "../components/rating";
 import { MdLocationOn } from "react-icons/md";
@@ -15,6 +16,7 @@ const DocProfile = () => {
   const [doctor, setDoctor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     const fetchDoctor = async () => {
@@ -264,8 +266,8 @@ const DocProfile = () => {
 
           {/* Leave a Review */}
           <Link
-            to={`/review/${slug}`}
-            state={{ message: [doctor.lastName, "doctor", doctor.id] }}
+            to={isLoggedIn ? `/review/${slug}` : '/sign_in'}
+            state={{ message: [doctor.lastName, "doctor", doctor.id], from : `/review/${slug}`}}
             className="w-full md:w-[80%] md:max-w-[700px] lg:hover:scale-[1.01] duration-100"
           >
             <button
