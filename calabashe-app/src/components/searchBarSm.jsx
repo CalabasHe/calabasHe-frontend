@@ -117,6 +117,7 @@ const SearchBarSm = ({ display, setDisplay }) => {
             </svg>
 
           </button>
+          
           <input
             value={searchParam}
             onChange={handleInputChange}
@@ -128,10 +129,10 @@ const SearchBarSm = ({ display, setDisplay }) => {
             placeholder="Search for Doctors, Hospitals or Services"
             spellCheck="false"
           />
-          <button className="bg-red-500 w-[fit-content]" onClick={handleClose}>
+          <button className="max-md-flex w-[fit-content]" onClick={handleClose}>
             <FaTimes
               size={20}
-              className="text-[#205CD4]"
+              className="fill-current text-[#205CD4]"
             />
           </button>
         </div>
