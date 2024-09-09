@@ -79,7 +79,7 @@ const SignUp = () => {
       setSuccess('Account created successfully');
       toggleHiddenClass();
     } catch (error) {
-      // console.log(error)
+      console.log(error)
       if (error.email) {
         setError('Account with this email already exists');
       } if (error.username && error.email){

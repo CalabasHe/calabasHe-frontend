@@ -20,7 +20,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const inputPassword = useRef(null)
   const location = useLocation();
-  const [fullState, setFullState] = useState(location.state);
+  const [fullState, setFullState] = useState(location.state || {});
 
   useEffect(() => {
     if (location.state) {
