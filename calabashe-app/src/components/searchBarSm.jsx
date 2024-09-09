@@ -130,7 +130,11 @@ const SearchBarSm = ({ display, setDisplay }) => {
             spellCheck="false"
           />
           <button>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg 
+             tabIndex="0"
+             aria-label="Search Button"
+             className="w-[18px] h-[18px]"
+              width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 20L0 18L8 10L0 2L2 0L10 8L18 0L20 2L12 10L20 18L18 20L10 12L2 20Z" fill="#205CD4"/>
             </svg>
           </button>
