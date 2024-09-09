@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import "../stylesheets/account.css";
 import { signUp } from "../api/authApi";
 import VerifyUser from "./Verification";

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import StarRating from "./rating";
 import { fetchFacilities } from "../api/getCategoriesData";
-import { FaHouseMedical } from "react-icons/fa6";
 
 const FacilityCard = () => {
   const [facilities, setFacilities] = useState([]);
