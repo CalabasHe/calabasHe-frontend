@@ -27,7 +27,7 @@ const SignIn = () => {
       setFullState(location.state);
     }
   }, [location.state]);
-  console.log(fullState)
+  // console.log(fullState)
   
   const togglePassword = () =>{
     if (inputPassword.current.type === 'password'){
@@ -63,7 +63,7 @@ const SignIn = () => {
           setError(error.message || "An unexpected error occurred");
         }
       } else {
-        console.log(error)
+        // console.log(error)
         setError(error.message || "An unexpected error occurred");
       }
     }finally{

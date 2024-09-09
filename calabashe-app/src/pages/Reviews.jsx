@@ -59,9 +59,9 @@ const Review = () => {
       alert('Review successful');
       go('/home')
     } catch (error) {
-      console.error(`Error creating ${reviewee.type} review:`, error);
-      setError(`Failed to submit review: ${error.message || 'Unknown error'}`);
-      alert(`Failed to submit review: ${error.message || 'Unknown error'}`);
+      // console.error(`Error creating ${reviewee.type} review:`, error);
+      // setError(`Failed to submit review: ${error.message || 'Unknown error'}`);
+      alert(`Failed to submit review: Try again`);
     }
   };
 

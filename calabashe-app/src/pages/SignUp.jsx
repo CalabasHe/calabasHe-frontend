@@ -25,7 +25,7 @@ const SignUp = () => {
     }
   }, [location.state]);
   
-  console.log(fullState)
+  // console.log(fullState)
 
   const password1 = document.getElementById('passwd');
   const confirm_password = document.getElementById('confirm_passwd');
@@ -79,7 +79,7 @@ const SignUp = () => {
       setSuccess('Account created successfully');
       toggleHiddenClass();
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       if (error.email) {
         setError('Account with this email already exists');
       } if (error.username && error.email){
