@@ -25,11 +25,11 @@ const SearchBarSm = ({ display, setDisplay }) => {
     setError("");
   };
 
-  useEffect(() => {
-    if (display === "block" && searchRef.current) {
-      searchRef.current.focus();
-    }
-  }, [display]);
+  // useEffect(() => {
+  //   if (display === "block" && searchRef.current) {
+  //     searchRef.current.focus();
+  //   }
+  // }, [display]);
 
   const debouncedSetSearch = useCallback(
     debounce((value) => {
@@ -129,15 +129,26 @@ const SearchBarSm = ({ display, setDisplay }) => {
             placeholder="Search for Doctors, Hospitals or Services"
             spellCheck="false"
           />
-          <button>
+          <button
+            onClick={handleClose}
+            tabIndex="0"
+            aria-label="Close search bar"
+          >
             <svg 
-             tabIndex="0"
-             aria-label="Search Button"
-             className="w-[18px] h-[18px]"
-              width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 20L0 18L8 10L0 2L2 0L10 8L18 0L20 2L12 10L20 18L18 20L10 12L2 20Z" fill="#205CD4"/>
+              className="w-[18px] h-[18px]"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 20L0 18L8 10L0 2L2 0L10 8L18 0L20 2L12 10L20 18L18 20L10 12L2 20Z"
+                fill="#205CD4"
+              />
             </svg>
           </button>
+
         </div>
         <div
           id="resultsCard"
