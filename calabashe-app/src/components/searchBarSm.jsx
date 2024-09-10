@@ -96,9 +96,11 @@ const SearchBarSm = ({ display, setDisplay }) => {
             display === "block" ? "translate-y-0" : "-translate-y-full"
           }`}
         >
-          <button>
+          <button
+          className="focus:outline-none focus:border-none"
+          >
             <svg
-              tabIndex="0"
+              // tabIndex="0"
               aria-label="Search Button"
               className="w-[18px] h-[18px]"
               width="20"
@@ -131,7 +133,7 @@ const SearchBarSm = ({ display, setDisplay }) => {
           />
           <button
             onClick={handleClose}
-            tabIndex="0"
+            // tabIndex="0"
             aria-label="Close search bar"
           >
             <svg 
