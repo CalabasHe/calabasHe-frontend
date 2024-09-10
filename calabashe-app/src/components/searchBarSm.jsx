@@ -14,6 +14,12 @@ const SearchBarSm = ({ display, setDisplay }) => {
   const searchRef = useRef(null);
   const searchBarRef = useRef(null);
 
+  useEffect(() => {
+    if (display === "block" && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [display]);
+
   const handleInputChange = (e) => {
     setSearchParam(e.target.value);
   };
@@ -77,6 +83,7 @@ const SearchBarSm = ({ display, setDisplay }) => {
     searchSomething();
   }, [debouncedSearchParam]);
 
+
   const handleLinkClick = () => {
     setTimeout(() => {
       handleClose();
@@ -124,7 +131,6 @@ const SearchBarSm = ({ display, setDisplay }) => {
             value={searchParam}
             onChange={handleInputChange}
             ref={searchRef}
-            autoFocus
             id="sm-search"
             className="flex grow placeholder:text-xs text-base text-black px-3 py-1 outline-none border-none"
             type="text"
