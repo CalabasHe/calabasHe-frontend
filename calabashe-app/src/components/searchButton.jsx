@@ -31,4 +31,4 @@ const SearchButtonSm = ({ onSearchClick }) => {
   );
 };
 
-export default SearchButton;
+export default SearchButtonSm;
