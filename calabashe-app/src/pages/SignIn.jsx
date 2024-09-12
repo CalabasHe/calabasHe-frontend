@@ -111,6 +111,7 @@ const SignIn = () => {
                         placeholder="example@site.com"
                         disabled={disableForm}
                         required
+                        spellCheck='false'
                       />
                     </div>
                     <div className="space-y-1">
@@ -125,6 +126,7 @@ const SignIn = () => {
                           onChange={(e => setPassword(e.target.value))}
                           disabled={disableForm}
                           required
+                          spellCheck='false'
                         />
                         <button
                           className={` ${passwordHidden ? 'fill-green-600' : 'fill-red-500'} cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}

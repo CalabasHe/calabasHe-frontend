@@ -1,5 +1,6 @@
 //import { FaStar } from 'react-icons/fa';
 
+// eslint-disable-next-line react/prop-types
 const StarRating = ({ rating, profile=false }) => {
   // Convert rating to a number and ensure it's within 0-5 range
   const numericRating = Math.min(5, Math.max(0, Number(rating) || 0));
@@ -10,7 +11,7 @@ const StarRating = ({ rating, profile=false }) => {
     if (rating <= 2) return 'bg-orange-400';
     if (rating <= 3) return 'bg-yellow-300';
     if (rating <= 4) return 'bg-[#04DA33]';
-    return 'bg-green-600';
+    return 'bg-green-500';
   };
 
   const colorClass = getColor(numericRating);
@@ -19,7 +20,7 @@ const StarRating = ({ rating, profile=false }) => {
     return (
       <span key={index} className={`${index < Math.floor(numericRating) ? colorClass : 'bg-gray-300'} p-1`}>
         <svg
-              className={`${profile ? 'w-6 h-6 md:w-10 md:h-10' : 'w-4 h-4 md:w-6 md:h-6'} text-white `}
+              className={`${profile ? 'w-6 h-6 md:w-10 md:h-10' : 'w-4 h-4 md:w-6 md:h-6 lg:w-4 lg:h-4'} text-white `}
               fill="white"
               height="45"
               width="45"

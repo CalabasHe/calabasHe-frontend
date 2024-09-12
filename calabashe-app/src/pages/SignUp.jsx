@@ -133,6 +133,7 @@ const SignUp = () => {
                         placeholder="example@email.com"
                         disabled = {disableForm}
                         required
+                        spellCheck='false'
                       />
                     </div>
                     <div>
@@ -146,6 +147,7 @@ const SignUp = () => {
                         placeholder="eg: jolly_rater"
                         disabled = {disableForm}
                         required 
+                        spellCheck='false'
                       />
                     </div>
                     <div>
@@ -159,6 +161,7 @@ const SignUp = () => {
                           onChange={(e => setPassword(e.target.value))}
                           disabled = {disableForm}
                           required
+                          spellCheck='false'
                         />
                         <button
                             id="togglepasswdvisibility1"
@@ -188,6 +191,7 @@ const SignUp = () => {
                           onChange={(e => setPassword2(e.target.value))}
                           required
                           disabled = {disableForm}
+                          spellCheck='false'
                           />
                         <button
                             id='togglepasswdvisibility2'

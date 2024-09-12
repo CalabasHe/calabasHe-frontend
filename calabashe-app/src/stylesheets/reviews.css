@@ -15,9 +15,9 @@
   margin: 0 10px;
 }
 
-/* .carousel > div:hover + .carousel {
+.carousel:hover{
   animation-play-state: paused;
-} */
+}
 
 
 @keyframes slide {

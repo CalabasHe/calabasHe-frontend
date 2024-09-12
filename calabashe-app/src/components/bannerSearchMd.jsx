@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 import SearchData from "../api/search";
-import StarRating from "./rating";
 
 
 const BannerSearch = () => {
