@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+// eslint-disable-next-line react/prop-types
 const ScrollToTop = ({ delay = 100 }) => {
   const location = useLocation();
 
