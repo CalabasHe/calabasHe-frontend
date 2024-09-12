@@ -33,7 +33,7 @@ button:active{
   scale: 0.98;
 }
 
-@media (min-width: 768px) { 
+/* @media (min-width: 768px) { 
   .moving-design {
     position: absolute;
     border-radius:50%;
@@ -64,4 +64,4 @@ button:active{
       transform: translate(-100%, -100%);
       opacity: 0;
   }
-}
+} */

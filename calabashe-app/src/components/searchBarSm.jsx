@@ -113,7 +113,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
         <div className="w-full flex justify-between">
           
           <button
-          className="focus:outline-none focus:border-none"
+          className="focus:outline-none focus:border-none mr-1"
           >
             <svg
               // tabIndex="0"
@@ -141,7 +141,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
             onChange={handleInputChange}
             ref={searchRef}
             id="sm-search"
-            className="flex w-[90%] placeholder:text-xs text-base text-black px-3 py-1 outline-none border-none"
+            className=" rounded-3xl appearance-none flex w-[90%] placeholder:text-xs text-base text-black px-3 py-1 outline-none border-none"
             type="text"
             placeholder="Search for Doctors, Hospitals or Services"
             spellCheck="false"
@@ -167,7 +167,9 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               to={
                 result.type
                   ? `/facilities/${result.type}s/${result.slug}`
-                  : `/doctors/${result.slug}`
+                  : result.specialty 
+                  ? `/doctors/${result.slug}`
+                  : `/services`
               }
               key={result.id}
               className=""
@@ -181,17 +183,19 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
                 <p className="leading-none font-[300] text-[12px] ">
                   {result.type ? result.type : result.specialty}
                 </p>
-                <div className="mt-3">
-                  <p className="text-0 font-semibold">
-                    {result.reviews.length} reviews
-                  </p>
-                  <div className="flex gap-1 items-end ">
-                    <StarRating rating={result.rating} />
-                    <p className="text-xs font-semibold">
-                      {result.rating > 0 ? result.rating : ""}
+                { (result.type || result.specialty) && 
+                  <div className="mt-3">
+                    <p className="text-0 font-semibold">
+                      {result.reviews ? result.reviews.length : 'No'} reviews
                     </p>
+                    <div className="flex gap-1 items-end ">
+                      <StarRating rating={result.rating} />
+                      <p className="text-xs font-semibold">
+                        {result.rating > 0 ? result.rating.toFixed(1) : ""}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                }
               </div>
             </Link>
           ))}

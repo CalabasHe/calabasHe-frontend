@@ -4,8 +4,8 @@
 }
 
 :root{
-  --bar-width: 30px;
-  --bar-height: 3px;
+  --bar-width: 23px;
+  --bar-height: 2px;
   --hamburger-gap: 3px;
   --background: #828282; 
   --hamburger-margin: 4px;
@@ -19,7 +19,7 @@ body{
   margin:0
 }
 
-/* hamburger menu button */
+/* hamburger menu menubutton */
 
 .hamburger-menu{
   --x-width: calc(var(--hamburger-height) * 1.41421356237);
@@ -33,7 +33,7 @@ body{
 
 .hamburger-menu::before,
 .hamburger-menu::after,
-#button{
+#menubutton{
   content:"";
   width: var(--bar-width);
   height: var(--bar-height);
@@ -47,31 +47,31 @@ body{
   transform-origin: left;
 }
 
-#button{
+#menubutton{
   appearance: none;
   pointer-events: none;
   outline: none;
   border:  var(--background);
 }
-.hamburger-menu #button:checked{
+.hamburger-menu #menubutton:checked{
   opacity: 0;
   width: 0;
 }
 
-.hamburger-menu:has(#button:checked)::before {
+.hamburger-menu:has(#menubutton:checked)::before {
   rotate: 45deg;
   width: var(--x-width);
   translate: 0 calc(var(--bar-height) / -2);
 }
-.hamburger-menu:has(#button:checked)::after {
+.hamburger-menu:has(#menubutton:checked)::after {
   rotate: -45deg;
   width: var(--x-width);
   translate: 0 calc(var(--bar-height) / 2);
 
 }
 
-.hamburger-menu:has(#button:checked)::before,
-.hamburger-menu:has(#button:checked)::after{
+.hamburger-menu:has(#menubutton:checked)::before,
+.hamburger-menu:has(#menubutton:checked)::after{
   background-color: white;
 }
 
@@ -108,7 +108,7 @@ body{
 
 
 
-.hamburger-menu:has(#button:checked) + .navmenu{
+.hamburger-menu:has(#menubutton:checked) + .navmenu{
   flex-direction: column;
   background-color: black;
   transform: translateX(-(var(--width-navmenu)));
