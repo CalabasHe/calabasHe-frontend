@@ -208,7 +208,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
               >
                 <button
                   className="w-full mt-4 flex items-center justify-center gap-2 text-lg font-bold bg-[#FEE330] px-2 py-3 rounded-md"
-                  aria-label={`Leave a review for Dr. ${facility.slug}`}
+                  aria-label={`Leave a review for ${facility.slug}`}
                 >
                   <p className="text-center text-lg lg:text-xl font-bold">
                     Leave a Review
