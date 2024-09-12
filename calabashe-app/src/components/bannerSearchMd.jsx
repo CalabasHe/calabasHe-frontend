@@ -64,7 +64,7 @@ const BannerSearch = () => {
 
   return ( 
     <div className="relative z-30 ">
-      <div className={`hidden md:flex cursor-auto w-full items-center justify-between  bg-white relative max-w-[100%] md:rounded-2xl rounded-3xl ${bottomRadius ? 'rounded-bl-none rounded-br-none lg:rounded-bl-none lg:rounded-br-none' : 'rounded-b-[inherit] border-1px'} lg:rounded-[999999px] font-medium border-black p-1`}>
+      <div className={`hidden md:flex cursor-auto w-full items-center justify-between  bg-white relative max-w-[100%] rounded-3xl lg:rounded-[999999px] font-medium border-black p-1`}>
         <input
           // value={searchParams}
           id="search_field"
