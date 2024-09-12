@@ -4,7 +4,7 @@
 // import patron from "../assets/images/excited-patron.jpg";
 // import doctorInScrubs from "../assets/images/doctor-in-scrubs.jpg";
 import Picture from "../assets/images/picture bubbles.png";
-import SearchButton from "./searchButton";
+import SearchContainer from "./searchContainer";
 import PictureWEBP from "../assets/images/picture bubbles.webp";
 const Banner = () => {
   return (
@@ -27,7 +27,7 @@ const Banner = () => {
             Empowering Healthcare: <br />
             Trusted Reviews for Doctors and Hospitals in Ghana
           </p> */}
-          <SearchButton />
+          <SearchContainer />
         </div>
 
         <div className="relative flex  gap-10 justify-end flex-grow ">

@@ -1,31 +1,31 @@
-import { useState } from "react";
-
-const SearchButton = () => {
-  const [searchParams, setSearchParams] = useState('');
-
-  const handleSearch = (e) => {
-    e.preventDefault()
-
-    
-
-  }
-
+const SearchButton = ({ onSearchClick }) => {
   return (
-    <form role="search" onSubmit={handleSearch}>
-      <div  className="cursor-auto  bg-white relative max-w-[455px] lg:max-w-[100%] rounded-3xl lg:rounded-[999999px] font-medium border-[1px] border-black ">
-        <input
-          value={searchParams}
-          type="search"
-          spellCheck='false'
-          className="h-10  md:h-[50px] lg:h-[70px] w-[71%] border-none rounded-[inherit] text-base placeholder:text-[#5E5E5E] placeholder:text-xs md:placeholder:text-base caret-[#34c759] outline-none px-4 lg:pl-6"
-          placeholder="Doctors, Clinics or Services"
-          onChange={(e => setSearchParams(e.target.value))}
-        />
-        <button className=" absolute w-[30%] h-8 md:h-[40px] lg:h-[60px] right-1 top-1 md:top-[5px] text-white text-xs md:text-base lg:text-lg font-semibold p-2 lg:p-1 bg-[#204CD4]  rounded-[inherit]">
-          Search
-        </button>
+    <div
+      onClick={onSearchClick}
+      className="w-full flex justify-between bg-white md:hidden h-12 text-white text-xs md:text-base lg:text-lg font-semibold p-1 rounded-3xl"
+    >
+      <input className=" placeholder:font-normal rounded-[inherit]  w-[80%] h-full p-2 border-none" type="text" placeholder="Search for doctors and facilities"></input>
+      <div className="bg-[#007AFF] h-full flex items-center justify-center w-[60px]  rounded-3xl ">
+      <svg
+              // tabIndex="0"
+              aria-label="Search Button"
+              className="w-[18px] h-[18px]"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 19L14.65 14.65M17 9C17 13.4183 13.4183 17 9 17C4.58172 17 1 13.4183 1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9Z"
+                stroke="#FFFFFF"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
       </div>
-    </form>
+    </div>
   );
 };
 

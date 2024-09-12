@@ -6,26 +6,33 @@ import SearchData from "../api/search";
 import StarRating from "./rating";
 
 // eslint-disable-next-line react/prop-types
-const SearchBarSm = ({ display, setDisplay }) => {
+const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
   const [searchParam, setSearchParam] = useState("");
   const [debouncedSearchParam, setDebouncedSearchParam] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
   const searchRef = useRef(null);
-  const searchBarRef = useRef(null);
+
+  // Determine visibility based on props
+  const isShown = display === "block" || isVisible;
 
   useEffect(() => {
-    if (display === "block" && searchRef.current) {
+    if (isShown && searchRef.current) {
       searchRef.current.focus();
     }
-  }, [display]);
+  }, [isShown]);
 
   const handleInputChange = (e) => {
     setSearchParam(e.target.value);
   };
 
   const handleClose = () => {
-    setDisplay("hidden");
+    if (setDisplay) {
+      setDisplay("hidden");
+    }
+    if (onClose) {
+      onClose();
+    }
     setSearchParam("");
     setResults([]);
     setError("");
@@ -92,17 +99,16 @@ const SearchBarSm = ({ display, setDisplay }) => {
 
   return (
     <>
+ <div
+      className={`min-h-screen flex flex-col gap-2 fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ease-in-out ${
+        isShown ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
       <div
-        className={`min-h-screen flex flex-col gap-2 fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ease-in-out ${
-          display === "block" ? "opacity-100" : "opacity-0 pointer-events-none"
+        className={`w-full bg-white px-3 py-4 pb-1 flex items-center gap-2 min-h-[60px] h-[60px] transform transition-transform duration-300 ease-in-out ${
+          isShown ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div
-          ref={searchBarRef}
-          className={`w-full bg-white px-3 py-4 pb-1 flex items-center gap-2 min-h-[60px] h-[60px] transform transition-transform duration-300 ease-in-out ${
-            display === "block" ? "translate-y-0" : "-translate-y-full"
-          }`}
-        >
           <button
           className="focus:outline-none focus:border-none"
           >
@@ -138,23 +144,12 @@ const SearchBarSm = ({ display, setDisplay }) => {
             spellCheck="false"
           />
           <button
+            className=" h-[fit-content] pt-1"
             onClick={handleClose}
             // tabIndex="0"
             aria-label="Close search bar"
           >
-            <svg 
-              className="w-[18px] h-[18px]"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2 20L0 18L8 10L0 2L2 0L10 8L18 0L20 2L12 10L20 18L18 20L10 12L2 20Z"
-                fill="#205CD4"
-              />
-            </svg>
+            <span className="text-[#205CD4] text-4xl">&times;</span>
           </button>
 
         </div>
