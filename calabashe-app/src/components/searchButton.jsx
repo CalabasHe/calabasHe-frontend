@@ -1,5 +1,4 @@
-
-// 
+// eslint-disable-next-line react/prop-types
 const SearchButtonSm = ({ onSearchClick }) => {
   return (
     <div

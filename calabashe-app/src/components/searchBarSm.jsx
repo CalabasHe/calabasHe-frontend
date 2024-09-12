@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { FaTimes } from "react-icons/fa";
 import debounce from "lodash/debounce";
 import SearchData from "../api/search";
 import StarRating from "./rating";
