@@ -1,4 +1,6 @@
-const SearchButton = ({ onSearchClick }) => {
+
+// 
+const SearchButtonSm = ({ onSearchClick }) => {
   return (
     <div
       onClick={onSearchClick}
