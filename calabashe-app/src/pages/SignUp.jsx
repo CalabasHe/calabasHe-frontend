@@ -4,6 +4,8 @@ import "../stylesheets/account.css";
 import { signUp } from "../api/authApi";
 import VerifyUser from "./Verification";
 import { AnimateY } from "../components/ComponentAnimations";
+import docs1 from '../assets/images/healthworkers_form.webp'
+import docs1png from '../assets/images/healthworkers_form.png'
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -97,7 +99,7 @@ const SignUp = () => {
 
 
   return (
-    <div className=" overflow-y-auto bg-[#04DA8D] h-screen w-screen flex items-center justify-center py-1 ">
+    <div className=" overflow-y-auto bg-[#04DA8D] h-screen w-screen flex items-center justify-center pt-8 ">
 
         <AnimateY>
         
@@ -106,10 +108,20 @@ const SignUp = () => {
             </Link>      */}
             
               
-            <main className="h-screen w-full flex items-center justify-center">
+            <main className=" h-[100%] w-full flex items-center justify-center">
               
-              <div className=" bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col  border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
-                <section className="mb-2 lg:mb-3 flex flex-col items-center">
+              <div className="relative z-50 bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col  border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
+                <div className="w-[60%] max-w-[250px] text-center z-30 absolute text-xl md:text-2xl text-white px-8 py-2 rounded-md font-bold bg-[#037F52] self-center -translate-y-10">
+                  <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">he</span></h1></Link>
+                </div>
+                
+                <div className="absolute z-10 left-[18%] w-[180px] sm:w-[210px] md:w-[240px] -top-[100px] sm:-top-[120px] md:hidden  md:-top-[150px] lg:hidden z-10">
+                  <picture className="relative z-0 inset-0 object-fill">
+                    <source className="z-0 object-fill" srcSet={docs1} type="image/webp" alt="animated picture of doctors posing"></source>
+                    <img className="z-0 object-fill" src={docs1png} alt="animated picture of doctors posing"></img>
+                  </picture>
+                </div>
+                <section className="mb-2 pt-4 lg:mb-3 flex flex-col items-center">
                   <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">
                     Create Your Account
                   </h2>
@@ -134,6 +146,7 @@ const SignUp = () => {
                         disabled = {disableForm}
                         required
                         spellCheck='false'
+                        autoComplete="on"
                       />
                     </div>
                     <div>
@@ -148,6 +161,7 @@ const SignUp = () => {
                         disabled = {disableForm}
                         required 
                         spellCheck='false'
+                        autoComplete="off"
                       />
                     </div>
                     <div>
@@ -162,6 +176,7 @@ const SignUp = () => {
                           disabled = {disableForm}
                           required
                           spellCheck='false'
+                          autoComplete="off"
                         />
                         <button
                             id="togglepasswdvisibility1"
@@ -176,7 +191,7 @@ const SignUp = () => {
                             className="w-6 h-4" 
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                             <path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z"/>
-                          `</svg>
+                          </svg>
                         </button>
                       </div>
                     </div>
@@ -193,7 +208,7 @@ const SignUp = () => {
                           disabled = {disableForm}
                           spellCheck='false'
                           />
-                        <button
+                        {/* <button
                             id='togglepasswdvisibility2'
                             className={`${passwdHidden ? 'fill-green-600' : 'fill-red-500'}  cursor-pointer w-8 h-[100%] absolute right-1 flex items-center justify-center`}
                             tabIndex='-1'
@@ -207,7 +222,7 @@ const SignUp = () => {
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                             <path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z"/>
                           `</svg>
-                        </button>
+                        </button> */}
                       </div>
                       {/* Error handling */}
                         {error && <p className="error text-xs md:text-sm text-red-600 pt-2">{error}</p>}
@@ -225,9 +240,11 @@ const SignUp = () => {
                     >
                       {buttonText}
                     </button>
+
+                    {/*
                     <p className="relative text-gray-600 w-full text-center" id='or'>or</p>
 
-                    <button
+                     <button
                       className="flex justify-center items-center gap-2 text-base font-bold w-full py-1 rounded-md lg:hover:scale-[1.01] active:scale-[0.90] transition-[1s] ease-in-out"
                       type="submit"
                       id="google_sign-up"
@@ -240,9 +257,9 @@ const SignUp = () => {
                         <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path><path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path><path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path><path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
                       </svg>
                       <p className="text-sm md:text-base">Sign up with Google</p>
-                    </button>
+                    </button> */}
 
-                    <Link className="text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" state={{ message: fullState.message, from:fullState.from  }}  to='/sign_in'>Already have an account? Sign In</Link>
+                    <Link  className="text-sm  lg:text-base font-semibold text-center mt-2 text-blue-700 hover:underline" state={{ message: fullState.message, from:fullState.from  }}  to='/sign_in'>Already have an account? Sign In</Link>
                   </div>
                 </form>
 
