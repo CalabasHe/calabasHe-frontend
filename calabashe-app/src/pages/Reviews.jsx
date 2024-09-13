@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Stars from "../components/Star";
 import { getUserId } from "../utils/getUserId";
+import { toast } from "sonner";
 
 const Review = () => {
   const [title, setTitle] = useState('');
@@ -13,8 +14,6 @@ const Review = () => {
   const [reviewee, setReviewee] = useState('');
   const [description, setDescription] = useState('');
   const [rating, setRating] = useState(0);
-  const [sucess, setSuccess] = useState('');
-  const [error, setError] = useState('')
   const location = useLocation()
   const go = useNavigate()
   
@@ -55,13 +54,12 @@ const Review = () => {
       }
       
       // console.log('API Response:', result);
-      setSuccess('Review successful');
-      alert('Review successful');
+      toast.success('Review successful')
       go('/home')
     } catch (error) {
       // console.error(`Error creating ${reviewee.type} review:`, error);
       // setError(`Failed to submit review: ${error.message || 'Unknown error'}`);
-      alert(`Failed to submit review: Try again`);
+      toast.error(`Failed to submit review! Try again`);
     }
   };
 

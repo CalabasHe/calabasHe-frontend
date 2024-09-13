@@ -6,6 +6,7 @@ import VerifyUser from "./Verification";
 import { AnimateY } from "../components/ComponentAnimations";
 import docs1 from '../assets/images/healthworkers_form.webp'
 import docs1png from '../assets/images/healthworkers_form.png'
+import { toast } from "sonner";
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +21,7 @@ const SignUp = () => {
   const [passwdHidden, setPasswdHidden] = useState(true)
   const location = useLocation();
   const [fullState, setFullState] = useState('');
+  const [startTimer, setStartTimer] = useState(false)
 
   useEffect(() => {
     if (location.state) {
@@ -32,10 +34,6 @@ const SignUp = () => {
   const password1 = document.getElementById('passwd');
   const confirm_password = document.getElementById('confirm_passwd');
 
-
-  const toggleHiddenClass = () => {
-    setIsHidden(!isHidden);
-  };
 
   const togglePassword = () => {
     if ((password1.type === 'password') || (confirm_password.type === 'password')) {
@@ -62,6 +60,7 @@ const SignUp = () => {
 
     if (password !== password2) {
       setError('Passwords do not match');
+      toast.error(error)
       setButtonText('Sign Up');
       setDisableForm(false)
       return;
@@ -69,6 +68,7 @@ const SignUp = () => {
 
     if (!passwordRegex.test(password)) {
       setError('Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, a digit, and a special character');
+      toast.error(error, {duration: 8000})
       setButtonText('Sign Up');
       setDisableForm(false)
       return;
@@ -76,26 +76,39 @@ const SignUp = () => {
 
     setDisableForm(true)
 
-    try {
-      await signUp({ email, username, password, password2 });
-      setSuccess('Account created successfully');
-      toggleHiddenClass();
-    } catch (error) {
-      console.log(error)
-      if (error.email) {
-        setError('Account with this email already exists');
-      } if (error.username && error.email){
-        setError('Account with this email already exists');
-      } if (!(error.email) && error.username){
-        setError('Username has already been taken')
-      } else {
-        setError(error.message || "An unexpected error occurred");
+    return toast.promise(
+      async () => {
+        const response = await signUp({ email, username, password, password2 });
+        return response;
+      },
+      {
+        loading: 'Creating your account...',
+        success: () => {
+          setSuccess('Account created successfully');
+          setIsHidden(false)
+          setStartTimer(true)
+          toast.info('Please enter the 6 digit code sent to your email')
+          return 'Account created successfully!';
+        },
+        error: (error) => {
+          let errorMessage = "An unexpected error occurred";
+          if (error.email) {
+            errorMessage = 'Account with this email already exists';
+          } else if (error.username) {
+            errorMessage = 'Username has already been taken';
+          } else if (error.message) {
+            errorMessage = error.message;
+          }
+          setError(errorMessage);
+          return errorMessage;
+        },
+        finally: () => {
+          setDisableForm(false);
+          setButtonText('Sign Up');
+        }
       }
-    } finally {
-      setDisableForm(false)
-      setButtonText('Sign Up');
-    }
-  };
+    );
+  }
 
 
   return (
@@ -110,7 +123,7 @@ const SignUp = () => {
               
             <main className=" h-[100%] w-full flex items-center justify-center">
               
-              <div className="relative z-50 bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col  border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
+              <div className="relative z-20 bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col  border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
                 <div className="w-[60%] max-w-[250px] text-center z-30 absolute text-xl md:text-2xl text-white px-8 py-2 rounded-md font-bold bg-[#037F52] self-center -translate-y-10">
                   <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">he</span></h1></Link>
                 </div>
@@ -225,8 +238,8 @@ const SignUp = () => {
                         </button> */}
                       </div>
                       {/* Error handling */}
-                        {error && <p className="error text-xs md:text-sm text-red-600 pt-2">{error}</p>}
-                        {success && <p className="success text-xs md:text-sm text-green-600 pt-2">{success}</p>}
+                        {/* {error && <p className="error text-xs md:text-sm text-red-600 pt-2">{error}</p>}
+                        {success && <p className="success text-xs md:text-sm text-green-600 pt-2">{success}</p>} */}
                     </div>
                   </div>
                   {/* buttons */}
@@ -269,7 +282,7 @@ const SignUp = () => {
           {/* Verification code */}
       </AnimateY>
           <div className={`${isHidden ? "hidden" : ""} z-20 h-[100vh]`}>
-            <VerifyUser locationState={fullState} email={email} duration={900}/>
+            <VerifyUser locationState={fullState} email={email} duration={900} startTimer={startTimer}/>
           </div>
     </div>
    );

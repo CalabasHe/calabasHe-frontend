@@ -5,11 +5,18 @@ import StarRating from "../components/rating";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import Stars from "./Star";
+import { toast } from "sonner";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileMd = ({ doctor = [] }) => {
   const [rating, setRating] = useState();
   const { isLoggedIn } = useAuth();
+
+  const handleLinkClick = () => {
+    if (!isLoggedIn) {
+      toast.info('Sign in to leave a review')
+    }
+  }
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -55,6 +62,7 @@ const DocProfileMd = ({ doctor = [] }) => {
 
                 <Link
                   to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                  onClick={handleLinkClick}
                   state={{
                     message: [doctor.lastName, "doctor", doctor.id],
                     from: `/review/${doctor.slug}`,
@@ -66,6 +74,7 @@ const DocProfileMd = ({ doctor = [] }) => {
               </div>
               <Link
                 to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                onClick={handleLinkClick}
                 state={{
                   message: [doctor.lastName, "doctor", doctor.id],
                   from: `/review/${doctor.slug}`,
@@ -197,6 +206,7 @@ const DocProfileMd = ({ doctor = [] }) => {
 
               <Link
                 to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                onClick={handleLinkClick}
                 state={{
                   message: [doctor.lastName, "doctor", doctor.id],
                   from: `/review/${doctor.slug}`,

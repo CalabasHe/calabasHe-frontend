@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 
-
 // eslint-disable-next-line react/prop-types
-const Countdown = ({ duration }) => {
+const Countdown = ({ duration, start = false }) => {
   const [timeRemaining, setTimeRemaining] = useState(duration);
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
+    if (!start) {
+      // If start is false, reset the timer and don't set up the interval
+      setTimeRemaining(duration);
+      setIsFinished(false);
+      return;
+    }
+
     if (timeRemaining <= 0) {
       setIsFinished(true);
       return;
@@ -24,7 +30,7 @@ const Countdown = ({ duration }) => {
     }, 1000);
 
     return () => clearInterval(intervalId); 
-  }, [timeRemaining]);
+  }, [timeRemaining, start, duration]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
