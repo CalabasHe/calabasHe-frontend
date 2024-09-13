@@ -59,16 +59,15 @@ const SignUp = () => {
     const passwordRegex = /^(?=.{8,}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W).+$/;
 
     if (password !== password2) {
-      setError('Passwords do not match');
-      toast.error(error)
+      toast.error('Passwords do not match')
       setButtonText('Sign Up');
       setDisableForm(false)
       return;
     }
 
     if (!passwordRegex.test(password)) {
-      setError('Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, a digit, and a special character');
-      toast.error(error, {duration: 8000})
+      toast.error('Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, a digit, and a special character', 
+        {duration: 8000})
       setButtonText('Sign Up');
       setDisableForm(false)
       return;
