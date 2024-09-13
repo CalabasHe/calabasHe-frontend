@@ -9,8 +9,8 @@ const companyInfo = {
   country: 'Ghana',
   streetNumber:'No.1 MVP ST',
   officeAddress: 'Google Street, 0nline',
-  phoneNumber: '+233244567890',
-  email: 'calabashe@gmail.com'
+  phoneNumber: '+233244572085',
+  email: 'help@calabashe.com'
 }
 
 function Footer() {
@@ -27,10 +27,8 @@ function Footer() {
 
             <section className="subpixel-antialiased flex flex-col gap-6 leading-relaxed  md:grid md:grid-cols-3 md:gap-7 lg:gap-8 ">
               <article>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto
-                voluptatem distinctio modi ad facere recusandae quos est cupiditate.
-                Unde consectetur enim labore numquam veniam ab itaque, tempora
-                magnam recusandae delectus?
+              Calabashe is a platform where everyone can share their experiences with doctors and clinics. 
+              By sharing your reviews, you help others make informed healthcare choices and encourage better service from medical professionals. 
               </article>
               <article>
                 The founder is {companyInfo.founder}. Editorial Address: {companyInfo.editorialAddress},
@@ -40,9 +38,9 @@ function Footer() {
               </article>
 
               <address className="">
-                <a href={`tel:${companyInfo.phoneNumber}`} target="_blank" title="calabashe phone number" >Telephone: {companyInfo.phoneNumber}</a>
+                <a href={`tel:${companyInfo.phoneNumber}`} target="_blank" title="calabashe phone number" >Telephone: <span className="text-xs lg:text-sm"> {companyInfo.phoneNumber}</span></a>
                   <br/>
-                <a href={`mailto:${companyInfo.email}`} target="_blank" title="calabashe email" >E-mail: example@example.com</a>
+                <a href={`mailto:${companyInfo.email}`} target="_blank" title="calabashe email" >E-mail: <span className="text-xs lg:text-sm">{companyInfo.email}</span></a>
               </address>
             </section>
 

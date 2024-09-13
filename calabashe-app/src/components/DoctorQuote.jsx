@@ -16,9 +16,8 @@ const DoctorQuote = () => {
             </svg>
             <p className="text-lg text-center md:text-left text-white font-normal px-4 md:pl-4">
               <em>
-                Your health is our top priority. Trust us to provide the best
-                care and service, tailored to your needs. Your feedback helps us
-                ensure we meet and exceed your expectations every day.
+              By sharing your experience of my care as your doctor, 
+              you help other patients make informed decisions about me and the clinic or hospital where I treated you.
               </em>
             </p>
           </blockquote>
