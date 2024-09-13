@@ -1,0 +1,7 @@
+#headerSearchIcon{
+  transition: stroke 0.2s ease;
+}
+
+#headerSearchIcon.focused{
+  stroke: white;
+}
