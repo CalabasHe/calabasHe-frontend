@@ -4,9 +4,16 @@ import StarRating from "../components/rating";
 import { MdLocationOn } from "react-icons/md";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
+import { toast } from "sonner";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileSm = ({ doctor = [] }) => {
+
+  const handleLinkClick = () => {
+    if (!isLoggedIn) {
+      toast.info('Sign in to leave a review')
+    }
+  }
   const { isLoggedIn } = useAuth();
   return (
     <>
@@ -84,6 +91,34 @@ const DocProfileSm = ({ doctor = [] }) => {
             </div>
           </div>
         </section>
+
+        <div className="bg-white w-full p-2  pl-4 flex items-center justify-between rounded-lg">
+              <div className=" flex grow items-center gap-3 mr-1 ">
+                <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
+
+                <Link
+                  to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                  onClick={handleLinkClick}
+                  state={{
+                    message: [doctor.lastName, "doctor", doctor.id],
+                    from: `/review/${doctor.slug}`,
+                  }}
+                  className="text-xs lg:text-sm font-[600] text-[#205CD4]"
+                >
+                  <p className="">Write a review</p>
+                </Link>
+              </div>
+              <Link
+                to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                onClick={handleLinkClick}
+                state={{
+                  message: [doctor.lastName, "doctor", doctor.id],
+                  from: `/review/${doctor.slug}`,
+                }}
+              >
+                <StarRating rating={0} />
+              </Link>
+            </div>
 
         {/* About Section */}
         <section className="w-full space-y-1 md:w-[80%] md:max-w-[700px]">
@@ -193,6 +228,7 @@ const DocProfileSm = ({ doctor = [] }) => {
         {/* Leave a Review */}
         <Link
           to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+          onClick={handleLinkClick}
           state={{
             message: [doctor.lastName, "doctor", doctor.id],
             from: `/review/${doctor.slug}`,

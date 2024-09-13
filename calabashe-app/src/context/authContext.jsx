@@ -1,7 +1,7 @@
 // src/context/AuthContext.js
 import { createContext, useState, useEffect } from 'react';
 import { getCookie, setCookie, removeCookie } from '../utils/cookies';
-
+import { toast } from 'sonner';
 export const AuthContext = createContext(null);
 
 
@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     // window.location.reload()
     removeCookie('accessToken');
     removeCookie('refreshToken');
+    toast.info('Logged out! Log in again to leave a review', {position:'top-right'})
     setIsLoggedIn(false);
   };
 
