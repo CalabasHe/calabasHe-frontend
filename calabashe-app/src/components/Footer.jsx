@@ -1,3 +1,4 @@
+import { FaLocationArrow, FaMailBulk, FaMapPin, FaPhoneAlt } from "react-icons/fa";
 import { AnimateY } from "./ComponentAnimations";
 
 const getCurrentYear = () => new Date().getFullYear();
@@ -25,22 +26,16 @@ function Footer() {
               ©{currentYear}, <span className="text-xl font-bold">CalabasHe</span>{" "}
             </p>
 
-            <section className="subpixel-antialiased flex flex-col gap-6 leading-relaxed  md:grid md:grid-cols-3 md:gap-7 lg:gap-8 ">
+            <section className="subpixel-antialiased flex flex-col gap-6 leading-relaxed  md:grid md:grid-cols-2 md:gap-7 lg:gap-8 ">
               <article>
               Calabashe is a platform where everyone can share their experiences with doctors and clinics. 
               By sharing your reviews, you help others make informed healthcare choices and encourage better service from medical professionals. 
               </article>
-              <article>
-                The founder is {companyInfo.founder}. Editorial Address: {companyInfo.editorialAddress},
-                {" "} {companyInfo.city}, {companyInfo.country}, 
-                <br/>
-                {companyInfo.streetNumber}, {companyInfo.officeAddress} 
-              </article>
 
-              <address className="">
-                <a href={`tel:${companyInfo.phoneNumber}`} target="_blank" title="calabashe phone number" >Telephone: <span className="text-xs lg:text-sm"> {companyInfo.phoneNumber}</span></a>
-                  <br/>
-                <a href={`mailto:${companyInfo.email}`} target="_blank" title="calabashe email" >E-mail: <span className="text-xs lg:text-sm">{companyInfo.email}</span></a>
+              <address className="flex flex-col gap-4 text-xs lg:text-sm">
+                <a className="flex items-center gap-2 "  href={`tel:${companyInfo.phoneNumber}`} target="_blank" title="calabashe phone number" ><FaPhoneAlt/> <span> {companyInfo.phoneNumber}</span></a>
+                <a className="flex items-center gap-2 " href={`mailto:${companyInfo.email}`} target="_blank" title="calabashe email" ><FaMailBulk/> <span>{companyInfo.email}</span></a>
+                <p className="flex items-center gap-2 "><FaMapPin/> <span>{companyInfo.city}, {companyInfo.country}</span> </p>
               </address>
             </section>
 
