@@ -6,11 +6,18 @@ import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import Stars from "./Star";
 import { FaPhoneAlt } from "react-icons/fa";
+import { toast } from "sonner";
 
 // eslint-disable-next-line react/prop-types
 const FacilityProfileMd = ({ facility = [] }) => {
   const [rating, setRating] = useState();
   const { isLoggedIn } = useAuth();
+
+  const handleLinkClick = () => {
+    if (!isLoggedIn) {
+      toast.info('Sign in to leave a review')
+    }
+  }
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -54,6 +61,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
                 <Link
                   to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
+                  onClick={handleLinkClick}
                   state={{
                     message: [facility.lastName, "facility", facility.id],
                     from: `/review/${facility.slug}`,
@@ -65,6 +73,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
               </div>
               <Link
                 to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
+                onClick={handleLinkClick}
                 state={{
                   message: [facility.lastName, "facility", facility.id],
                   from: `/review/${facility.slug}`,
@@ -200,6 +209,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
               <Link
                 to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
+                onClick={handleLinkClick}
                 state={{
                   message: [facility.name, "facility", facility.id],
                   from: `/review/${facility.slug}`,

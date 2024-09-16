@@ -5,10 +5,16 @@ import { MdLocationOn } from "react-icons/md";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import { FaPhoneAlt } from "react-icons/fa";
+import { toast } from "sonner";
 
 // eslint-disable-next-line react/prop-types
 const FacilityProfileSm = ({ facility = [] }) => {
   const { isLoggedIn } = useAuth();
+  const handleLinkClick = () => {
+    if (!isLoggedIn) {
+      toast.info('Sign in to leave a review')
+    }
+  }
   return (
     <>
       <main className="md:hidden w-full mt-12 sm:mt-[80px] px-4  pb-8 flex flex-col gap-12 items-center ">
@@ -94,6 +100,34 @@ const FacilityProfileSm = ({ facility = [] }) => {
             </div>
           </div>
         </section>
+
+        <div className="bg-white w-full p-2  pl-4 flex items-center justify-between rounded-lg">
+              <div className=" flex grow items-center gap-3 mr-1 ">
+                <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
+
+                <Link
+                  to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
+                  onClick={handleLinkClick}
+                  state={{
+                    message: [facility.lastName, "facility", facility.id],
+                    from: `/review/${facility.slug}`,
+                  }}
+                  className="text-xs lg:text-sm font-[600] text-[#205CD4]"
+                >
+                  <p className="">Write a review</p>
+                </Link>
+              </div>
+              <Link
+                to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
+                onClick={handleLinkClick}
+                state={{
+                  message: [facility.lastName, "facility", facility.id],
+                  from: `/review/${facility.slug}`,
+                }}
+              >
+                <StarRating rating={0} />
+              </Link>
+            </div>
 
         {/* About Section */}
         <section className="w-full space-y-1 ">
@@ -204,6 +238,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
         {/* Leave a Review */}
         <Link
           to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
+          onClick={handleLinkClick}
           state={{
             message: [facility.name, "facility", facility.id],
             from: `/review/${facility.slug}`,

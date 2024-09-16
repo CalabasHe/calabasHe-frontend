@@ -2,10 +2,12 @@ import {useState, useRef, useEffect} from 'react'
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { logIn } from '../api/authApi.js'
 import { useAuth } from "../hooks/useAuth";
+import { toast } from 'sonner';
 import AnimatePage from '../components/AnimatePage.jsx';
 import "../stylesheets/account.css"
 import docs1 from '../assets/images/healthworkers_form.webp'
 import docs1png from '../assets/images/healthworkers_form.png'
+
 
 
 const SignIn = () => {
@@ -47,36 +49,44 @@ const SignIn = () => {
 
     setDisableForm(true)
     
-    try {
-      const response = await logIn({ email, password});
-      setSuccess('Sign in successful');
-      login(response.access, response.refresh);
-      const destination = fullState?.from || '/';
-      navigate(destination, { state: fullState });
-    }catch (error) {
-      if (error.non_field_errors) {
-        if (error.non_field_errors[0].includes('No account')) {
-          setError("Account doesn't exist");
-        } else if (error.non_field_errors[0].includes('Incorrect password')) {
-          setError("Incorrect password. Try again");
-        } else {
-          setError(error.message || "An unexpected error occurred");
+    return toast.promise(
+      async () => {
+        const response = await logIn({ email, password });
+        login(response.access, response.refresh);
+        const destination = fullState?.from || '/';
+        navigate(destination, { state: fullState });
+        return 'Sign in successful';
+      },
+      {
+        loading: 'Signing in...',
+        success: (message) => {
+          setSuccess(message);
+          return 'Welcome Back!';
+        },
+        error: (error) => {
+          let errorMessage = "An unexpected error occurred";
+          if (error.non_field_errors) {
+            if (error.non_field_errors[0].includes('No account')) {
+              errorMessage = "Account doesn't exist";
+            } else if (error.non_field_errors[0].includes('Incorrect password')) {
+              errorMessage = "Incorrect password. Try again";
+            }
+          }
+          setError(errorMessage);
+          return errorMessage;
+        },
+        finally: () => {
+          setDisableForm(false);
+          setButtonText('Sign In');
         }
-      } else {
-        // console.log(error)
-        setError(error.message || "An unexpected error occurred");
-      }
-    }finally{
-      setDisableForm(false);
-      setButtonText('Sign In')
-    }
+      })
   }
   return ( 
     <>
         <main className="bg-[#04DA8D] min-h-screen py-4 pt-[15%] lg:pt-0 flex items-center justify-center text-white">
           
           <AnimatePage>
-            <div className="relative z-50 bg-[#1E4738] w-[90vw] sm:w-[80vw] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[400px] flex flex-col grow pointer-events-auto rounded-md py-6 pt-8 lg:py-8 p-4 px-[3%]">
+            <div className="relative z-50 bg-[#1E4738] w-[90vw] sm:w-[80vw] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] lg:min-w-[30vw] md:max-w-[400px] flex flex-col grow pointer-events-auto rounded-md py-6 pt-8 lg:py-8 p-4 px-[3%]">
               
               <div className="w-[60%] max-w-[250px] text-center z-30 absolute text-xl md:text-2xl text-white px-8 py-2 rounded-md font-bold bg-[#037F52] self-center -translate-y-14">
                 <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">he</span></h1></Link>
@@ -103,7 +113,8 @@ const SignIn = () => {
                   <div className="flex flex-col gap-5">
                     <div className="space-y-1">
                       <label className="block text-sm" htmlFor="email">Email</label>
-                      <input className="border-0 text-base text-black p-1 px-2  rounded-md w-full" 
+                      <input className="border-0 text-base lg:p-2 placeholder:text-xs  text-black p-1 px-2  rounded-md w-full" 
+                        aria-label='enter account email'
                         type="email" 
                         id="email"
                         value={email}
@@ -112,14 +123,16 @@ const SignIn = () => {
                         disabled={disableForm}
                         required
                         spellCheck='false'
+                        autoComplete='on'
                       />
                     </div>
                     <div className="space-y-1">
                       <label className="block text-sm" htmlFor="passwd">Password</label>
                       <div className="relative flex">
                         <input
+                          aria-label='enter account password'
                           ref={inputPassword} 
-                          className="border-0 text-base text-black p-1 px-2 rounded-md w-full" 
+                          className="border-0 text-base text-black lg:p-2 p-1 px-2 rounded-md w-full" 
                           type="password" 
                           id="passwd"
                           value={password}
@@ -146,8 +159,8 @@ const SignIn = () => {
                           </button>
                       </div>
                     </div>
-                    {error && <p className="text-red-500 text-sm md:text-base text-semibold text-left">{error}</p>}
-                    {success && <p className="text-green-500 text-sm md:text-base text-semibold text-left">{success}</p>}
+                    {/* {error && <p className="text-red-500 text-sm md:text-base text-semibold text-left">{error}</p>}
+                    {success && <p className="text-green-500 text-sm md:text-base text-semibold text-left">{success}</p>} */}
                   </div>
                   {/* buttons */}
                   <div className="flex flex-col gap-y-2" >
@@ -159,7 +172,7 @@ const SignIn = () => {
                     >
                       {buttonText}
                       </button>
-                    <p className="relative text-white w-full text-center" id='or'>or</p>
+                    {/* <p className="relative text-white w-full text-center" id='or'>or</p>
 
                     <button
                       className=" bg-white/20 flex justify-center items-center gap-2 text-base font-bold w-full py-1 rounded-md active:scale-[0.90] transition-[1s] ease-in-out"
@@ -174,9 +187,9 @@ const SignIn = () => {
                         <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path><path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path><path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path><path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
                       </svg>
                       <p className="text-sm md:text-base font-medium">Continue with Google</p>
-                    </button>
+                    </button> */}
 
-                    <Link className="w-[fit-content] self-center text-xs  lg:text-sm text-center mt-2 text-blue-500 hover:underline" to='/sign_up' state={{ message: fullState.message, from:fullState.from }}>Don&apos;t have an account? Sign Up</Link>
+                    <Link className="w-[fit-content] self-center text-sm font-medium  lg:text-base text-center mt-2 text-blue-500 hover:underline" to='/sign_up' state={{ message: fullState.message, from:fullState.from }}>Don&apos;t have an account? Sign Up</Link>
                   </div>
                 </form>
 
