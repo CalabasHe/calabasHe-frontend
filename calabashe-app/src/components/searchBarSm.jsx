@@ -159,7 +159,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
         </div>
         <div
           id="resultsCard"
-          className="w-full pb-8 flex flex-col gap-2 px-2 overflow-y-auto"
+          className="w-full pb-12 flex flex-col gap-2 px-2 overflow-y-auto"
         >
           {results.slice(0, 20).map((result) => (
             <Link
