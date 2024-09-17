@@ -11,27 +11,30 @@ import SignIn from './pages/SignIn';
 import VerifyUser from './pages/Verification';
 import DocProfile from './pages/DocProfile';
 import FacilityProfile from './pages/FacilityProfile';
+import { BannerVisibilityProvider } from './context/BannerVisibilityContext';
 
 function App() {
   const location = useLocation();
 
   return (
     <AuthProvider>
-      <AnimatePresence mode='wait'>
-        <Routes location={location} key={location.pathname}>
-          <Route index element={<Home />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/review/:slug' element={<Review />} />
-          <Route path='/facilities' element={<Facilities />} />
-          <Route path='/facilities/:type/:slug' element={<FacilityProfile />} />
-          <Route path='/services' element={<Services />} />
-          <Route path='/doctors' element={<Doctors />} />
-          <Route path='/doctors/:slug' element={<DocProfile />} />
-          <Route path='/sign_up' element={<SignUp />} />
-          <Route path='/sign_in' element={<SignIn />} />
-          <Route path='/verification' element={<VerifyUser />} />
-        </Routes>
-      </AnimatePresence>
+      <BannerVisibilityProvider>
+        <AnimatePresence mode='wait'>
+          <Routes location={location} key={location.pathname}>
+            <Route index element={<Home />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/review/:slug' element={<Review />} />
+            <Route path='/facilities' element={<Facilities />} />
+            <Route path='/facilities/:type/:slug' element={<FacilityProfile />} />
+            <Route path='/services' element={<Services />} />
+            <Route path='/doctors' element={<Doctors />} />
+            <Route path='/doctors/:slug' element={<DocProfile />} />
+            <Route path='/sign_up' element={<SignUp />} />
+            <Route path='/sign_in' element={<SignIn />} />
+            <Route path='/verification' element={<VerifyUser />} />
+          </Routes>
+        </AnimatePresence>
+      </BannerVisibilityProvider>
     </AuthProvider>
   );
 }

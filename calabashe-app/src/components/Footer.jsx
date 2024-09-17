@@ -1,4 +1,4 @@
-import { FaLocationArrow, FaMailBulk, FaMapPin, FaPhoneAlt } from "react-icons/fa";
+import { FaMailBulk, FaMapPin, FaPhoneAlt } from "react-icons/fa";
 import { AnimateY } from "./ComponentAnimations";
 
 const getCurrentYear = () => new Date().getFullYear();
@@ -19,7 +19,7 @@ function Footer() {
     <>
       <AnimateY>
 
-        <footer className="flex grow-1 m-0 w-full bg-black px-6 py-12 md:px-14 lg:px-[10%]">
+        <footer className="flex grow m-0 w-full bg-black px-6 py-12 md:px-14 lg:px-[10%]">
           <div className="flex flex-col gap-10 text-sm text-white">
             <p className="text-lg font-semibold">
               {" "}
