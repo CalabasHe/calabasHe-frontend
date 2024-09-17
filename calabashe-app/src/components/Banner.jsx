@@ -1,13 +1,9 @@
-// import doctorsAppointment from "../assets/images/dentist-appointment.jpg";
-// import microscope from "../assets/images/microscope.jpg";
-// import specialist from "../assets/images/doctor-2.jpg";
-// import patron from "../assets/images/excited-patron.jpg";
-// import doctorInScrubs from "../assets/images/doctor-in-scrubs.jpg";
 import Picture from "../assets/images/picture bubbles.png";
 import SearchContainer from "./searchContainer";
 import PictureWEBP from "../assets/images/picture bubbles.webp";
 import BannerSearch from "./bannerSearchMd";
 const Banner = () => {
+
   return (
     <>
       <section className="bg-[#04DA8D] w-full pt-8 md:py-14 md:pt-16 space-y-6 md:space-y-0 md:flex flex-row lg:pl-[3%] lg:py-24 ">
