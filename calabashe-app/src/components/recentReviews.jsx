@@ -53,17 +53,19 @@ if (isLoading) return (
 </div>
 )
 if (error) return <div>{error}</div>;
+const displayCount = reviews ? (window.innerWidth >= 1280 ? 10 : 8) : 0;
   return ( 
     <>
       <FadeInOut>
-        <div className="w-full mt-2  lg:mt-6 space-y-4 lg:space-y-6  pb-2 lg:pb-6">
+        <div className="w-full mt-2  lg:mt-6 lg:mr-2 space-y-4 lg:space-y-6  pb-2 lg:pb-6">
           <h1 className="text-center  md:text-2xl text-xl font-bold">Recent Reviews</h1>
 
-          <section className="overflow-hidden flex">
+          <section className="overflow-hidden flex lg:hidden">
             
-            <div className="carousel flex ">
+            
+            <div className="carousel flex">
               {reviews && [...reviews, ...reviews].map((review, index) => (
-                <div key={`${review.id}-${index}`} className="card cursor-pointer  mx-2 lg:mx-6 select-none  rounded-lg w-[250px] md:w-[280px] bg-white border px-3 md:px-5 py-4 ">
+                <div key={`${review.id}-${index}`} className="card cursor-pointer h-[fit-content] mx-2 lg:mx-6 select-none  rounded-lg w-[250px] md:w-[280px] bg-white border px-3 md:px-5 py-4 ">
                   <div className="flex gap-4 items-center">
                     <div className="w-[fit-content] p-1 pb-[1px] rounded-full border-2 border-black">
                       <FaUser className=" rounded-[50%] w-6 h-6 md:w-8 md:h-8 "/>
@@ -80,6 +82,23 @@ if (error) return <div>{error}</div>;
               
             </div>
           </section>
+
+          <section className="w-full hidden lg:grid grid-cols-4 xl:grid-cols-5 gap-4 content-evenly mr-4">
+      {reviews && reviews.slice(0, displayCount).map((review, index) => (
+        <div key={`${review.id}-${index}`} className="cursor-pointer h-[260px] overflow-hidden mx-2 lg:mx-3 select-none rounded-lg bg-white border px-3 md:px-4 py-4">
+          <div className="flex gap-4 items-center">
+            <div className="w-[fit-content] p-1 pb-[1px] rounded-full border-2 border-black">
+              <FaUser className="rounded-[50%] w-6 h-6 md:w-8 md:h-8" />
+            </div>
+            <StarRating rating={review.rating} />
+          </div>
+          
+          <p className="font-medium text-sm md:text-base mt-2">{review.user} reviewed <span className="font-bold">{`${review.type === "doctor" ? 'Dr. ' + review.subject.split(' ')[0] : review.subject}`}</span></p>
+
+          <p className="text-xs md:text-sm mt-2">&quot;{review.description.slice(0, 80)}&quot;</p>
+        </div>
+      ))}
+    </section>
         </div>
       </FadeInOut>
     </>
