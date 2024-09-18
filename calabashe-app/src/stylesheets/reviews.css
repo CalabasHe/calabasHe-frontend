@@ -28,3 +28,18 @@
     transform: translateX(-50%);
   }
 }
+
+/* @keyframes slide-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel:nth-child(even) {
+    animation: slide-reverse 30s linear infinite
+  }
+} */
