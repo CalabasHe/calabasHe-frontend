@@ -95,7 +95,7 @@ const displayCount = reviews ? (window.innerWidth >= 1280 ? 10 : 8) : 0;
           
           <p className="font-medium text-sm md:text-base mt-2">{review.user} reviewed <span className="font-bold">{`${review.type === "doctor" ? 'Dr. ' + review.subject.split(' ')[0] : review.subject}`}</span></p>
 
-          <p className="text-xs md:text-sm mt-2">&quot;{review.description.slice(0, 80)}&quot;</p>
+          <p className="text-xs md:text-sm mt-2">&quot;{review.description}&quot;</p>
         </div>
       ))}
     </section>
