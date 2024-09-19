@@ -128,7 +128,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
                 {facility.reviews.slice(0, 4).map((review) => (
                   <div
                     key={review.id}
-                    className="w-full bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
+                    className="w-full bg-white border shadow-md px-4 py-6 flex flex-col gap-4 rounded-lg "
                   >
                     <div className="flex justify-between items-center ">
                       <StarRating rating={review.rating} />
