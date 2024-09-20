@@ -17,8 +17,8 @@ const DocProfileSm = ({ doctor = [] }) => {
   const { isLoggedIn } = useAuth();
   return (
     <>
-      <main className="md:hidden w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-4  pb-8 flex flex-col gap-12 items-center ">
-        <section className="p-4 px-6 border space-y-2 border-black rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] ">
+      <main className="md:hidden w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-4  pb-8 flex flex-col gap-6 items-center ">
+        <section className="p-4 px-6 space-y-2 border shadow rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] bg-white ">
           <div className="w-full h-[130px] md:h-[160px] lg:h-[180px] flex items-center justify-center border rounded-lg">
             <svg
               className="w-16 sm:w-18 md:w-20 fill-gray-700"
@@ -85,14 +85,18 @@ const DocProfileSm = ({ doctor = [] }) => {
                 />
               </svg>
 
-              <p className="text-sm md:text-base lg:text-lg ">
-                Highest Category PhD
+              <p>
+                Highest Honours PhD
               </p>
+
+             {/* <div className="">
+                <img src={doctor.qrCode}></img>
+             </div> */}
             </div>
           </div>
         </section>
 
-        <div className="bg-white w-full p-2  pl-4 flex items-center justify-between rounded-lg">
+        <div className="bg-white w-full p-2  pl-4 mb-4 flex items-center justify-between rounded-lg border">
               <div className=" flex grow items-center gap-3 mr-1 ">
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
 
@@ -151,7 +155,7 @@ const DocProfileSm = ({ doctor = [] }) => {
         {/* Ratings */}
         <section className="w-full space-y-4 md:w-[80%] max-w-[700px]">
           <h3 className="text-lg md:text-xl font-bold"> Ratings</h3>
-          <div className="bg-white py-12 px-4 md:px-8 rounded-lg space-y-6">
+          <div className="bg-white border py-12 px-4 md:px-8 rounded-lg space-y-6">
             <div className="space-y-2">
               <p className="text-4xl md:text-5xl font-black">
                 {doctor.rating}

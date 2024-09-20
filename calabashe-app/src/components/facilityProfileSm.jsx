@@ -17,8 +17,8 @@ const FacilityProfileSm = ({ facility = [] }) => {
   }
   return (
     <>
-      <main className="md:hidden w-full mt-12 sm:mt-[80px] px-4  pb-8 flex flex-col gap-12 items-center ">
-        <section className="bg-white p-4 px-6 border space-y-2 rounded-2xl w-full max-sm:max-w-[500px]  ">
+      <main className="md:hidden w-full mt-12 sm:mt-[80px] px-4  pb-8 flex flex-col gap-6 items-center ">
+        <section className="bg-white shadow-md p-4 px-6 border space-y-2 rounded-2xl w-full max-sm:max-w-[500px]  ">
           <div className="w-full h-[130px] flex items-center justify-center border rounded-lg">
             <svg
               className="w-16 sm:w-18  fill-gray-700"
@@ -101,7 +101,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
           </div>
         </section>
 
-        <div className="bg-white w-full p-2  pl-4 flex items-center justify-between rounded-lg">
+        <div className="bg-white mb-4 w-full p-2  pl-4 flex items-center justify-between border rounded-lg">
               <div className=" flex grow items-center gap-3 mr-1 ">
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
 
@@ -163,7 +163,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
         {/* Ratings */}
         <section className="w-full space-y-4 max-w-[700px]">
           <h3 className="text-lg font-bold"> Ratings</h3>
-          <div className="bg-white py-12 px-4 md:px-8 rounded-lg space-y-6">
+          <div className="bg-white py-12 px-4 md:px-8 rounded-lg border space-y-6">
             <div className="space-y-2">
               <p className="text-4xl font-black">
                 {facility.rating}

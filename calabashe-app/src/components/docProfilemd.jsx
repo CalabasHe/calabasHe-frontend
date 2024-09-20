@@ -24,7 +24,7 @@ const DocProfileMd = ({ doctor = [] }) => {
   return (
     <>
       <main className="w-full hidden md:block py-12">
-        <section className="px-16 lg:px-[100px] pt-12 pb-6 flex gap-6 lg:gap-8 items-center bg-white">
+        <section className="px-16 lg:px-[100px] pt-12 pb-6 flex gap-6 lg:gap-8 items-center bg-white border-b">
           <div className="w-44 lg:w-56 h-44 lg:h-56 rounded-full bg-gray-300/40 flex items-center justify-center">
             <svg
               className="w-24 lg:28 fill-gray-700"
@@ -56,7 +56,7 @@ const DocProfileMd = ({ doctor = [] }) => {
 
         <section className="w-full px-16 lg:px-[100px] pt-12 lg:pt-24 flex gap-2 lg:gap-4">
           <section className="flex flex-col gap-4 grow">
-            <div className="mb-4 bg-white w-full p-2 lg:p-4 pl-4 flex items-center justify-between rounded-lg">
+            <div className="mb-4 bg-white w-full p-2 lg:p-4 pl-4 flex items-center justify-between rounded-lg border">
               <div className="flex items-center gap-2 lg:gap-4">
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
 
@@ -84,7 +84,7 @@ const DocProfileMd = ({ doctor = [] }) => {
               </Link>
             </div>
 
-            <section className="w-full py-4 lg:py-6 pb-6 lg:pb-8 px-4 rounded-lg bg-white space-y-4 lg:space-y-6">
+            <section className="w-full py-4 lg:py-6 pb-6 lg:pb-8 px-4 rounded-lg border bg-white space-y-4 lg:space-y-6">
               <h3 className="text-base lg:text-lg font-bold"> Ratings</h3>
               <div className="space-y-6">
                 <p className="text-4xl md:text-5xl font-black">
@@ -148,7 +148,7 @@ const DocProfileMd = ({ doctor = [] }) => {
           {/* Right Side */}
 
           <section className="w-[46%] space-y-3 lg:space-y-4">
-            <div className="space-y-3 bg-white pt-8 lg:py-12 pb-4 px-4 lg:px-8 rounded-xl">
+            <div className="border space-y-3 bg-white pt-8 lg:py-12 pb-4 px-4 lg:px-8 rounded-xl">
               <section className="pb-8 lg:pb-14  border-b-2 space-y-3 lg:space-y-5">
                 <h3 className="text-lg lg:text-xl font-[800] ">
                   About Dr. {doctor.firstName}{" "}
@@ -192,7 +192,7 @@ const DocProfileMd = ({ doctor = [] }) => {
               </section>
             </div>
 
-            <div className="bg-white flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 rounded-xl">
+            <div className="bg-white  flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 border rounded-xl">
               <div className="space-y-3 lg:space-y-4">
                 <h3 className="text-xl lg:2xl font-bold font-black">
                   Share your experience

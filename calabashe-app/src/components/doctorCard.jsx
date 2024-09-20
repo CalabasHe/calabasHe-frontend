@@ -1,56 +1,78 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import StarRating from "./rating";
 import { fetchDoctors } from "../api/getCategoriesData";
-// import { FaFileMedical } from "react-icons/fa";
 
 const DoctorCard = () => {
   const [doctors, setDoctors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hasPreviousPage, setHasPreviousPage] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
-  const go = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get the current page from URL params or default to 1
+  const getCurrentPage = () => {
+    const searchParams = new URLSearchParams(location.search);
+    return parseInt(searchParams.get('page') || '1', 10);
+  };
+
+  const [pagination, setPagination] = useState(getCurrentPage());
+
   const handleProfileClick = (slug) => {
-    go(`/doctors/${slug}`);
+    navigate(`/doctors/${slug}`);
+  };
+
+  const fetchDocData = async (page) => {
+    try {
+      setIsLoading(true);
+      const docData = await fetchDoctors(page);
+      
+      setHasPreviousPage(!!docData.previous);
+      setHasNextPage(!!docData.next);
+      if (Array.isArray(docData.results) && docData.results.length > 0) {
+        const doctorDetails = docData.results.map((doc) => ({
+          id: doc.id,
+          firstName: doc.first_name,
+          lastName: doc.last_name,
+          rating: doc.average_rating,
+          specialty: doc.specialty?.name,
+          slug: doc.slug,
+          reviews: doc.reviews,
+        }));
+        setDoctors(doctorDetails);
+      } else {
+        console.log("No results found");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    const fetchDocData = async () => {
-      try {
-        const docData = await fetchDoctors();
-        if (Array.isArray(docData.results) && docData.results.length > 0) {
-          const doctorDetails = docData.results.map((doc) => ({
-            id: doc.id,
-            firstName: doc.first_name,
-            lastName: doc.last_name,
-            rating: doc.average_rating,
-            specialty: doc.specialty?.name,
-            slug: doc.slug,
-            reviews: doc.reviews,
-          }));
-          // console.log('Processed doctor details:', doctorDetails);
-          // console.log(docData)
-          // setIsLoading(false);
-          // console.log(docData)
-          // console.log(docData.patientsTellUs)
-          setDoctors(doctorDetails);
-        } else {
-          console.log("No results found");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    fetchDocData(pagination);
+    // Update URL when pagination changes
+    navigate(`?page=${pagination}`, { replace: true });
+  }, [pagination, navigate]);
 
-    fetchDocData();
-    const intervalId = setInterval(fetchDocData, 120000);
+  const handleNextPage = () => {
+    if (hasNextPage) {
+      setPagination(prev => prev + 1);
+      window.scrollTo(0, 0);
+    }
+  };
 
-    return () => clearInterval(intervalId);
-  }, []);
-
+  const handlePreviousPage = () => {
+    if (hasPreviousPage) {
+      setPagination(prev => prev - 1);
+      window.scrollTo(0, 0);
+    }
+  };
   if (isLoading)
     return (
       <div className="h-[50vh] w-full flex items-center justify-center">
@@ -69,7 +91,7 @@ const DoctorCard = () => {
 
   return (
     <>
-      {doctors.slice(0, 6).map((doctor) => (
+      {doctors.map((doctor) => (
         <Link
           to={`/doctors/${doctor.slug}`}
           key={doctor.id}
@@ -100,17 +122,23 @@ const DoctorCard = () => {
                 <StarRating rating={doctor.rating} />
               </div>
               <div className="text-xs font-semibold mt-1">
-                <span className="mb-[1px]">Patients Tell Us:</span>
-                {doctor.reviews.slice(0, 2).map((titles) => (
-                  <p
-                    key={titles.id}
-                    className=" font-medium text-[10px] sm:text-xs md:pl-2 "
-                  >
-                    &#8226;{" "}
-                    {titles.title.charAt(0).toUpperCase() +
-                      titles.title.slice(1).toLowerCase()}
-                  </p>
-                ))}
+                { doctor.reviews.length !== 0  ?
+                  <>
+                    <span className="mb-[1px]">Patients Tell Us:</span>
+                    {doctor.reviews.slice(0, 2).map((titles) => (
+                      <p
+                        key={titles.id}
+                        className=" font-medium text-[10px] sm:text-xs md:pl-2 "
+                      >
+                        &#8226;{" "}
+                        {titles.title.charAt(0).toUpperCase() +
+                          titles.title.slice(1).toLowerCase()}
+                      </p>
+                    ))}
+                  </>
+                :
+                <div className="mt-[1px] font-light">No reviews yet</div>
+              }
               </div>
             </div>
             <div className="mt-auto sm:hidden">
@@ -161,6 +189,11 @@ const DoctorCard = () => {
           </section>
         </Link>
       ))}
+
+      <div className="flex mt-4 md:mt-8">
+        <button onClick={handlePreviousPage} className={`${ hasPreviousPage ? 'flex border-r-2' : 'hidden'} md:text-lg border-2 border-black border-r-0 px-4 md:px-8 font-semibold`}> &lt;&lt; Previous</button>
+        <button onClick={handleNextPage} className={`${hasNextPage ? 'flex' : 'hidden'} md:text-lg border-2 border-black md:px-8  font-semibold text-[#0066FF]`}>Next Page &gt;&gt;</button>
+      </div>
     </>
   );
 };

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const fetchDoctors = async () => {
+export const fetchDoctors = async (page=1) => {
   try {
-    const response = await axios.get('https://calabashe-api.onrender.com/api/doctors/');
+    const response = await axios.get(`https://calabashe-api.onrender.com/api/doctors/?page=${page}`);
     return response.data;
   } catch (error) {
     throw new Error('Error fetching doctors:', error);
