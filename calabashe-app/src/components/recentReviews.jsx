@@ -73,7 +73,7 @@ const RecentReviews = () => {
           // Reset to 0 if we reach the end, but we want to keep the animation going
           return newOffset >= reviews.length ? 0 : newOffset;
         });
-      }, 3000);
+      }, 7000);
 
       return () => clearInterval(reviewIntervalRef.current);
     }

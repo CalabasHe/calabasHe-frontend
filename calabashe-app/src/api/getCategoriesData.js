@@ -41,6 +41,7 @@ export const fetchReviewCount = async () => {
 export const fetchCurrentReviews = async () => {
   try {
     const response = await axios.get('https://calabashe-api.onrender.com/api/reviews/combined-reviews/');
+    console.log(response)
     return response.data.results.reviews;
   } catch (error) {
     console.error('Error fetching doctors:', error);

@@ -205,7 +205,7 @@ const FacilityCard = () => {
 
       <div className="flex mt-4 md:mt-8">
         <button onClick={handlePreviousPage} className={`${ hasPreviousPage ? 'flex border-r-2' : 'hidden'} md:text-lg border-2 border-black border-r-0 px-4 md:px-8 font-semibold`}> &lt;&lt; Previous</button>
-        <button onClick={handleNextPage} className={`${hasNextPage ? 'flex' : 'hidden'} md:text-lg border-2 border-black md:px-8  font-semibold text-[#0066FF]`}>Next Page &gt;&gt;</button>
+        <button onClick={handleNextPage} className={`${hasNextPage ? 'flex' : 'hidden'} md:text-lg border-2 border-black px-4 md:px-8  font-semibold text-[#0066FF]`}>Next Page &gt;&gt;</button>
       </div>
     </>
   );
