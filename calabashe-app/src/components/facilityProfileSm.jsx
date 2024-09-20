@@ -17,7 +17,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
   };
   return (
     <>
-      <main className="md:hidden w-full mt-12 sm:mt-[80px] px-4  pb-8 flex flex-col gap-12 items-center ">
+      <main className="md:hidden w-full mt-12 sm:mt-[80px] px-4  pb-8 flex flex-col gap-14 items-center ">
         <div className="flex flex-col gap-4">
         <section className="bg-white shadow-md p-4 px-6 border space-y-2 rounded-2xl w-full max-sm:max-w-[500px]  ">
 
@@ -133,7 +133,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
           </div>
 
         {/* About Section */}
-        <section className="w-full space-y-1 ">
+        <section className="w-full space-y-3 ">
           <h3 className="text-lg font-bold ">About {facility.name}</h3>
           <p className="text-sm sm:text-base">{facility.description}</p>
         </section>

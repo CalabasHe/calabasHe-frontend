@@ -128,7 +128,7 @@ const DocProfileSm = ({ doctor = [] }) => {
         </div>
 
         {/* About Section */}
-        <section className="w-full space-y-1 md:w-[80%] md:max-w-[700px]">
+        <section className="w-full flex flex-col gap-3 md:w-[80%] md:max-w-[700px]">
           <h3 className="text-lg md:text-xl font-bold ">
             About Dr. {doctor.firstName}{" "}
           </h3>

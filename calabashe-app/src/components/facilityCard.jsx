@@ -33,7 +33,7 @@ const FacilityCard = () => {
         setIsLoading(true);
         const facilityData = await fetchFacilities();
         setHasPreviousPage(!!facilityData.previous);
-        console.log(hasPreviousPage)
+        // console.log(hasPreviousPage)
         setHasNextPage(!!facilityData.next);
         if (
           Array.isArray(facilityData.results) &&
