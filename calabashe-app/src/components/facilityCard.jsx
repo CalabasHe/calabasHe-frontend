@@ -142,7 +142,7 @@ const FacilityCard = () => {
                       </p>
                     ))}
                   </>
-                : <span className="font-thin">No reviews yet</span>
+                : <span className="font-light ">No reviews yet</span>
               }
               </div>
             </div>
