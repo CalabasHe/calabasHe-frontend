@@ -101,8 +101,8 @@ const RecentReviews = () => {
           <div 
             className="grid grid-rows-2 auto-cols-[260px] grid-flow-col gap-4 transition-transform duration-1000 ease-in-out"
             style={{ 
-              transform: `translateX(-${offset * 120}px)`, // Adjust based on your card width
-              width: `${duplicatedReviews.length * 268}px`, // Adjust based on card width
+              transform: `translateX(-${offset * 120}px)`, 
+              width: `${duplicatedReviews.length * 268}px`,
             }}
           >
             {duplicatedReviews.map((review, index) => (
