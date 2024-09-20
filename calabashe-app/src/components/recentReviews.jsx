@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchCurrentReviews } from "../api/getCategoriesData";
 import formatDate from "../utils/dateConversion";
 import StarRating from "./rating";

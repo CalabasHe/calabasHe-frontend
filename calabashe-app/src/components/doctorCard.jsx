@@ -56,21 +56,18 @@ const DoctorCard = () => {
 
   useEffect(() => {
     fetchDocData(pagination);
-    // Update URL when pagination changes
     navigate(`?page=${pagination}`, { replace: true });
   }, [pagination, navigate]);
 
   const handleNextPage = () => {
     if (hasNextPage) {
       setPagination(prev => prev + 1);
-      window.scrollTo(0, 0);
     }
   };
 
   const handlePreviousPage = () => {
     if (hasPreviousPage) {
       setPagination(prev => prev - 1);
-      window.scrollTo(0, 0);
     }
   };
   if (isLoading)

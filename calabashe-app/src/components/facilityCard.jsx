@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import StarRating from "./rating";
 import { fetchFacilities } from "../api/getCategoriesData";
 
@@ -7,6 +7,20 @@ const FacilityCard = () => {
   const [facilities, setFacilities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hasPreviousPage, setHasPreviousPage] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get the current page from URL params or default to 1
+  const getCurrentPage = () => {
+    const searchParams = new URLSearchParams(location.search);
+    return parseInt(searchParams.get('page') || '1', 10);
+  };
+
+  const [pagination, setPagination] = useState(getCurrentPage());
+
 
   const go = useNavigate();
   const handleProfileClick = (type, slug) => {
@@ -16,8 +30,10 @@ const FacilityCard = () => {
   useEffect(() => {
     const fetchFacilityData = async () => {
       try {
+        setIsLoading(true);
         const facilityData = await fetchFacilities();
-        //  console.log(facilityData)
+        setHasPreviousPage(!!facilityData.previous);
+        setHasNextPage(!!facilityData.next);
         if (
           Array.isArray(facilityData.results) &&
           facilityData.results.length > 0
@@ -48,10 +64,23 @@ const FacilityCard = () => {
     };
 
     fetchFacilityData();
+    navigate(`?page=${pagination}`, { replace: true });
     const intervalId = setInterval(fetchFacilityData, 120000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [pagination, navigate]);
+
+  const handleNextPage = () => {
+    if (hasNextPage) {
+      setPagination(prev => prev + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (hasPreviousPage) {
+      setPagination(prev => prev - 1);
+    }
+  };
 
   if (isLoading)
     return (
@@ -101,14 +130,19 @@ const FacilityCard = () => {
                 <StarRating rating={facility.rating} />
               </div>
               <div className="text-xs font-bold mt-1">
-                Patients tell us:
-                {facility.reviews.slice(0, 2).map((titles) => (
-                  <p key={titles.id} className="font-normal text-xs ">
-                    &#8226;{" "}
-                    {titles.title.charAt(0).toUpperCase() +
-                      titles.title.slice(1).toLowerCase()}
-                  </p>
-                ))}
+                {facility.reviews > 0 ?
+                  <>
+                    Patients tell us:
+                    {facility.reviews.slice(0, 2).map((titles) => (
+                      <p key={titles.id} className="font-normal text-xs ">
+                        &#8226;{" "}
+                        {titles.title.charAt(0).toUpperCase() +
+                          titles.title.slice(1).toLowerCase()}
+                      </p>
+                    ))}
+                  </>
+                : <span>No reviews yet</span>
+              }
               </div>
             </div>
             <div className="mt-auto sm:hidden">
@@ -168,6 +202,11 @@ const FacilityCard = () => {
           </section>
         </div>
       ))}
+
+      <div className="flex mt-4 md:mt-8">
+        <button onClick={handlePreviousPage} className={`${ hasPreviousPage ? 'flex border-r-2' : 'hidden'} md:text-lg border-2 border-black border-r-0 px-4 md:px-8 font-semibold`}> &lt;&lt; Previous</button>
+        <button onClick={handleNextPage} className={`${hasNextPage ? 'flex' : 'hidden'} md:text-lg border-2 border-black md:px-8  font-semibold text-[#0066FF]`}>Next Page &gt;&gt;</button>
+      </div>
     </>
   );
 };
