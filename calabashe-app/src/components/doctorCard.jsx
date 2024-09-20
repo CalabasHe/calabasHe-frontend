@@ -188,9 +188,9 @@ const DoctorCard = () => {
         </Link>
       ))}
 
-      <div className="flex border-r-2 border-black mt-4 md:mt-8">
-        <button onClick={handlePreviousPage} className={`${ hasPreviousPage ? 'flex border-r-0' : !hasNextPage ? 'border-r-2': 'hidden'} md:text-lg border-2 border-black px-4 md:px-8 font-semibold`}> &lt;&lt; Previous</button>
-        <button onClick={handleNextPage} className={`${hasNextPage ? 'flex border-r-0' : 'hidden'} md:text-lg border-2 border-black md:px-8 px-4 font-semibold text-[#0066FF]`}>Next Page &gt;&gt;</button>
+      <div className="flex border-r border-black my-8 md:my-12">
+        <button onClick={handlePreviousPage} className={`${ hasPreviousPage ? 'flex border-r-0' : !hasNextPage ? 'border-r': 'hidden'} text-xs md:text-sm border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold`}> Previous</button>
+        <button onClick={handleNextPage} className={`${hasNextPage ? 'flex border-r-0' : 'hidden'} text-xs  md:text-sm border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}>Next Page</button>
       </div>
     </>
   );
