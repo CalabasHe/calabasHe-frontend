@@ -131,7 +131,7 @@ const FacilityCard = () => {
                 <StarRating rating={facility.rating} />
               </div>
               <div className="text-xs font-bold mt-1">
-                {facility.reviews > 0 ?
+                {facility.reviews ?
                   <>
                     Patients tell us:
                     {facility.reviews.slice(0, 2).map((titles) => (
