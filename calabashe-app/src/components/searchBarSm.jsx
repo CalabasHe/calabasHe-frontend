@@ -4,20 +4,26 @@ import debounce from "lodash/debounce";
 import SearchData from "../api/search";
 import StarRating from "./rating";
 
-// eslint-disable-next-line react/prop-types
 const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
   const [searchParam, setSearchParam] = useState("");
   const [debouncedSearchParam, setDebouncedSearchParam] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
   const searchRef = useRef(null);
+  const abortControllerRef = useRef(null);
+  const isComponentVisible = useRef(false);
 
-  // Determine visibility based on props
   const isShown = display === "block" || isVisible;
 
   useEffect(() => {
-    if (isShown && searchRef.current) {
-      searchRef.current.focus();
+    if (isShown) {
+      if (searchRef.current) {
+        searchRef.current.focus();
+      }
+      isComponentVisible.current = true;
+    } else {
+      isComponentVisible.current = false;
+      resetSearchState();
     }
   }, [isShown]);
 
@@ -32,72 +38,90 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
     if (onClose) {
       onClose();
     }
-    setSearchParam("");
-    setResults([]);
-    setError("");
+    resetSearchState();
   };
 
-  // useEffect(() => {
-  //   if (display === "block" && searchRef.current) {
-  //     searchRef.current.focus();
-  //   }
-  // }, [display]);
+  const resetSearchState = () => {
+    setSearchParam("");
+    setDebouncedSearchParam("");
+    setResults([]);
+    setError("");
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+  };
 
-  
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearch = useCallback(
     debounce((value) => {
-      setDebouncedSearchParam(value);
-    }, 300),
+      if (isComponentVisible.current) {
+        setDebouncedSearchParam(value);
+      }
+    }, 500),
     []
   );
 
   useEffect(() => {
     debouncedSetSearch(searchParam);
-
     return () => debouncedSetSearch.cancel();
   }, [searchParam, debouncedSetSearch]);
 
   useEffect(() => {
     const searchSomething = async () => {
-      if (!debouncedSearchParam) return;
+      if (!debouncedSearchParam || !isComponentVisible.current) {
+        setResults([]);
+        setError("");
+        return;
+      }
+
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      abortControllerRef.current = new AbortController();
 
       try {
-        const data = await SearchData(debouncedSearchParam);
-        if (Array.isArray(data) && data.length > 0) {
-          const resultDetails = data.map((result) => ({
-            id: result.id,
-            firstName: result.first_name,
-            lastName: result.last_name,
-            rating: result.average_rating,
-            specialty: result.specialty?.name,
-            type: result.facility_type?.name,
-            name: result.name,
-            slug: result.slug,
-            reviews: result.reviews,
-          }));
-          setResults(resultDetails);
-          setError("");
-        } else {
-          setResults([]);
-          setError("No results found");
+        const data = await SearchData(debouncedSearchParam, abortControllerRef.current.signal);
+        if (isComponentVisible.current) {
+          if (Array.isArray(data) && data.length > 0) {
+            const resultDetails = data.map((result) => ({
+              id: result.id,
+              firstName: result.first_name,
+              lastName: result.last_name,
+              rating: result.average_rating,
+              specialty: result.specialty?.name,
+              type: result.facility_type?.name,
+              name: result.name,
+              slug: result.slug,
+              reviews: result.reviews,
+            }));
+            setResults(resultDetails);
+            setError("");
+          } else {
+            setResults([]);
+            setError("No results found");
+          }
         }
       } catch (error) {
-        console.error(error);
-        setError("An error occurred while searching");
+        if (error.name !== 'AbortError' && isComponentVisible.current) {
+          console.error(error);
+          setError("An error occurred while searching");
+        }
       }
     };
 
     searchSomething();
-  }, [debouncedSearchParam]);
 
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [debouncedSearchParam]);
 
   const handleLinkClick = () => {
     setTimeout(() => {
       handleClose();
     }, 0);
   };
-
   return (
     <>
  <div
