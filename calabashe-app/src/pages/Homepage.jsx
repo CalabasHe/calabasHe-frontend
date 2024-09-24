@@ -13,7 +13,7 @@ const Home = () => {
         <div className="overflow-hidden">
           <Header/>
           <AnimatePage>
-            <main className='bg-[#FCFBF2] w-full mt-8 flex flex-col gap-3 items-center'>
+            <main className='bg-[#FCFBF2] w-full mt-8 flex flex-col gap-3 md:gap-5 items-center'>
               <Banner />
 
               {/* <Review/>        */}
