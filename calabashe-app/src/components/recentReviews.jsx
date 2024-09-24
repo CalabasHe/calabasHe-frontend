@@ -8,7 +8,7 @@ import '../stylesheets/reviews.css';
 import { FadeInOut } from "./ComponentAnimations";
 
 const ReviewCard = ({ review }) => (
-  <div className="cursor-pointer h-fit min-w-[260px] overflow-hidden select-none rounded-lg bg-white border px-3 md:px-4 py-4">
+  <div className="hover:scale-105 duration-200 cursor-pointer h-fit min-w-[260px] overflow-hidden select-none rounded-lg bg-white border px-3 md:px-4 py-4">
     <div className="flex gap-4 items-center">
       <div className="p-1 pb-[1px] rounded-full border-2 border-black">
         <FaUser className="rounded-[50%] w-6 h-6 md:w-8 md:h-8" />
@@ -17,7 +17,7 @@ const ReviewCard = ({ review }) => (
     </div>
     
     <p className="font-medium text-sm md:text-base mt-2">
-      {review.user} reviewed <Link  to={review.type === 'doctor' ? '/doctors/'+ review.slug : '/facilities/'+review.facilityType+'s/'+review.slug} className="font-bold">
+      {review.user} reviewed <Link  to={review.type === 'doctor' ? '/doctors/'+ review.slug : '/facilities/'+review.facilityType+'s/'+review.slug} className="hover:underline font-bold">
         {review.type === "doctor" ? `Dr. ${review.subject.split(' ')[0]}` : review.subject}
       </Link>
     </p>
