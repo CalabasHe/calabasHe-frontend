@@ -41,7 +41,7 @@ const RecentReviews = () => {
     const fetchReview = async () => {
       try {
         const data = await fetchCurrentReviews();
-        console.log(data)
+        // console.log(data)
         if (Array.isArray(data) && data.length > 0) {
           const reviewDetails = data.map((review) => ({
             id: review.id, 
