@@ -13,7 +13,9 @@ const SearchBarMd = () => {
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const searchRef = useRef(null);
+  const latestSearchPromise = useRef(null);
 
   const navigate = useNavigate();
 
@@ -30,41 +32,61 @@ const SearchBarMd = () => {
     };
   }, []);
 
-  const debouncedSearch = useCallback(
-    debounce(async (value) => {
-      if (!value) {
-        setResults([]);
-        setError("");
-        return;
+  const performSearch = async (value) => {
+    if (!value) {
+      setResults([]);
+      setError("");
+      return [];
+    }
+
+    setIsLoading(true);
+    const currentPromise = SearchData(value);
+    latestSearchPromise.current = currentPromise;
+
+    try {
+      const data = await currentPromise;
+      if (currentPromise !== latestSearchPromise.current) {
+        // A newer search has started, discard this result
+        return [];
       }
 
-      try {
-        const data = await SearchData(value);
-        if (Array.isArray(data) && data.length > 0) {
-          const resultDetails = data.map((result) => ({
-            id: result.id,
-            firstName: result.first_name,
-            lastName: result.last_name,
-            rating: result.average_rating && result.average_rating.toFixed(1),
-            specialty: result.specialty?.name,
-            type: result.facility_type?.name,
-            name: result.name,
-            slug: result.slug,
-            reviews: result.reviews,
-            reviewCount: result.total_reviews,
-          }));
-          setResults(resultDetails);
-          setShowResults(true);
-          setError("");
-        } else {
-          setResults([]);
-          setError("No results found");
-        }
-      } catch (error) {
+      if (Array.isArray(data) && data.length > 0) {
+        const resultDetails = data.map((result) => ({
+          id: result.id,
+          firstName: result.first_name,
+          lastName: result.last_name,
+          rating: result.average_rating && result.average_rating.toFixed(1),
+          specialty: result.specialty?.name,
+          type: result.facility_type?.name,
+          name: result.name,
+          slug: result.slug,
+          reviews: result.reviews,
+          reviewCount: result.total_reviews,
+        }));
+        setResults(resultDetails);
+        setShowResults(true);
+        setError("");
+        return resultDetails;
+      } else {
+        setResults([]);
+        setError("No results found");
+        return [];
+      }
+    } catch (error) {
+      if (currentPromise === latestSearchPromise.current) {
         console.error(error);
         setError("An error occurred while searching");
       }
-    }, 500),
+      return [];
+    } finally {
+      if (currentPromise === latestSearchPromise.current) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const debouncedSearch = useCallback(
+    debounce((value) => performSearch(value), 300),
     []
   );
 
@@ -74,20 +96,30 @@ const SearchBarMd = () => {
   }, [searchParam, debouncedSearch]);
 
   const handleLinkClick = (result) => {
-    navigate(
-      result.type
-        ? `/facilities/${result.type}s/${result.slug}`
-        : result.specialty
-        ? `/doctors/${result.slug}`
-        : `/services`
-    );
+    setShowResults(false); // Hide results immediately
+    const path = result.type
+      ? `/facilities/${result.type}s/${result.slug}`
+      : result.specialty
+      ? `/doctors/${result.slug}`
+      : `/services`;
+    navigate(path);
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      navigate('/results', { state: { searchParam, results } });
+      setShowResults(false); // Hide results immediately
+      const searchResults = await performSearch(searchParam);
+      navigate('/results', { state: { searchParam, results: searchResults } });
     }
+  };
+
+  const handleSearchClick = async (e) => {
+    e.preventDefault();
+    if (!searchParam) return;
+    setShowResults(false); // Hide results immediately
+    const searchResults = await performSearch(searchParam);
+    navigate('/results', { state: { searchParam, results: searchResults } });
   };
 
   const handleFocus = () => setIsFocused(true);
@@ -117,12 +149,12 @@ const SearchBarMd = () => {
         autoComplete="off"
         value={searchParam}
       />
-      <Link to={searchParam ? '/results' : '#'} state={{ searchParam, results }} onClick={(e) => !searchParam && e.preventDefault()}>
+      <Link to="#" onClick={handleSearchClick}>
         <svg
           id="headerSearchIcon"
           className={`${
             isFocused ? "focused" : "stroke-[#828282]"
-          } w-5 lg:w-6 h-5 lg:h-6 mt-2 `}
+          } w-5 lg:w-6 h-5 lg:h-6 mt-2 ${isLoading ? 'animate-spin' : ''}`}
           width="32"
           height="32"
           viewBox="0 0 32 32"
@@ -177,7 +209,7 @@ const SearchBarMd = () => {
               </div>
             ))}
           </div>
-          <Link to="/results" state={{ searchParam, results }}>
+          <Link to="#" onClick={handleSearchClick}>
             <div className="w-full py-2 text-white text-center bg-[#0070FF]">
               Show all results <span className="ml-2">&rarr;</span>
             </div>
