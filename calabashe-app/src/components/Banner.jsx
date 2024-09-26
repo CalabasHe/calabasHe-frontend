@@ -36,13 +36,11 @@ const Banner = () => {
 
         <div className="relative flex  gap-10 justify-end w-full md:w-[50%] min-md:max-w-[450px] lg:w-[50%] h-full">
           <picture>
-            <source
-              className=""
+            < source
               srcSet={PictureWEBP}
               type="image/webp"
-              alt=""
-            ></source>
-            <img className="" src={Picture} alt="" loading="eager"></img>
+            />
+            <img className="" src={Picture} alt="banner image" loading="eager"></img>
           </picture>
         </div>
       </section>
