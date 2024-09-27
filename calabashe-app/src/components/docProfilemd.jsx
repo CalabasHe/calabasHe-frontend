@@ -155,7 +155,9 @@ const DocProfileMd = ({ doctor = [] }) => {
                 </h3>
                 <p className="text-sm lg:text-base ">
                   Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
-                  medical doctor practicing General Medicine. In Ghana, General
+                  medical doctor practicing General Medicine.
+                  <br/>
+                  In Ghana, General
                   Practitioners (GPs) provide primary healthcare, handling a
                   wide range of conditions and referring patients to specialists
                   when needed. GPs complete six years of medical school and a
