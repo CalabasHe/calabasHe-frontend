@@ -14,9 +14,9 @@ const DocProfileMd = ({ doctor = [] }) => {
 
   const handleLinkClick = () => {
     if (!isLoggedIn) {
-      toast.info('Sign in to leave a review')
+      toast.info("Sign in to leave a review");
     }
-  }
+  };
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -154,21 +154,19 @@ const DocProfileMd = ({ doctor = [] }) => {
                   About Dr. {doctor.firstName}{" "}
                 </h3>
                 <p className="text-sm lg:text-base ">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam, maxime modi sequi, sed vel perferendis, labore at
-                  beatae ea ut non rem perspiciatis! Omnis dolorum minus nisi
-                  quisquam voluptatum dicta vero sit soluta cum quas, neque odit
-                  dolor asperiores maxime, fugit molestias excepturi, tempora
-                  repellendus quae nobis rem architecto aperiam. Suscipit, ad
-                  debitis dolores delectus quisquam architecto mollitia unde
-                  possimus.
+                  Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
+                  medical doctor practicing General Medicine. In Ghana, General
+                  Practitioners (GPs) provide primary healthcare, handling a
+                  wide range of conditions and referring patients to specialists
+                  when needed. GPs complete six years of medical school and a
+                  two-year housemanship, gaining practical experience before
+                  receiving full licensing from the Medical and Dental Council
+                  of Ghana.
                 </p>
               </section>
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">
-                <h3 className="text-xl lg:2xl font-bold font-black">
-                  Contact Details
-                </h3>
+                <h3 className="text-xl lg:2xl font-bold">Contact Details</h3>
                 <ul className="space-y-2">
                   <li></li>
                   <li className="flex gap-3">

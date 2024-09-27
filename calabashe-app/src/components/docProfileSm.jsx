@@ -8,12 +8,11 @@ import { toast } from "sonner";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileSm = ({ doctor = [] }) => {
-
   const handleLinkClick = () => {
     if (!isLoggedIn) {
-      toast.info('Sign in to leave a review')
+      toast.info("Sign in to leave a review");
     }
-  }
+  };
   const { isLoggedIn } = useAuth();
   return (
     <>
@@ -86,11 +85,9 @@ const DocProfileSm = ({ doctor = [] }) => {
                   />
                 </svg>
 
-                <p>
-                  Highest Honours PhD
-                </p>
+                <p>Highest Honours PhD</p>
 
-              {/* <div className="">
+                {/* <div className="">
                   <img src={doctor.qrCode}></img>
               </div> */}
               </div>
@@ -98,33 +95,32 @@ const DocProfileSm = ({ doctor = [] }) => {
           </section>
 
           <div className="bg-white w-full p-2  pl-4 mb-4 flex items-center justify-between rounded-lg border">
-                <div className=" flex grow items-center gap-3 mr-1 ">
-                  <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
+            <div className=" flex grow items-center gap-3 mr-1 ">
+              <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
 
-                  <Link
-                    to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-                    onClick={handleLinkClick}
-                    state={{
-                      message: [doctor.lastName, "doctor", doctor.id],
-                      from: `/review/${doctor.slug}`,
-                    }}
-                    className="text-xs lg:text-sm font-[600] text-[#205CD4]"
-                  >
-                    <p className="">Write a review</p>
-                  </Link>
-                </div>
-                <Link
-                  to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-                  onClick={handleLinkClick}
-                  state={{
-                    message: [doctor.lastName, "doctor", doctor.id],
-                    from: `/review/${doctor.slug}`,
-                  }}
-                >
-                  <StarRating rating={0} />
-                </Link>
-              </div>
-
+              <Link
+                to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                onClick={handleLinkClick}
+                state={{
+                  message: [doctor.lastName, "doctor", doctor.id],
+                  from: `/review/${doctor.slug}`,
+                }}
+                className="text-xs lg:text-sm font-[600] text-[#205CD4]"
+              >
+                <p className="">Write a review</p>
+              </Link>
+            </div>
+            <Link
+              to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+              onClick={handleLinkClick}
+              state={{
+                message: [doctor.lastName, "doctor", doctor.id],
+                from: `/review/${doctor.slug}`,
+              }}
+            >
+              <StarRating rating={0} />
+            </Link>
+          </div>
         </div>
 
         {/* About Section */}
@@ -133,13 +129,13 @@ const DocProfileSm = ({ doctor = [] }) => {
             About Dr. {doctor.firstName}{" "}
           </h3>
           <p className="text-sm sm:text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
-            maxime modi sequi, sed vel perferendis, labore at beatae ea ut non
-            rem perspiciatis! Omnis dolorum minus nisi quisquam voluptatum dicta
-            vero sit soluta cum quas, neque odit dolor asperiores maxime, fugit
-            molestias excepturi, tempora repellendus quae nobis rem architecto
-            aperiam. Suscipit, ad debitis dolores delectus quisquam architecto
-            mollitia unde possimus.
+            Dr. {doctor.firstName + " " + doctor.lastName} is a licensed medical
+            doctor practicing General Medicine. In Ghana, General Practitioners
+            (GPs) provide primary healthcare, handling a wide range of
+            conditions and referring patients to specialists when needed. GPs
+            complete six years of medical school and a two-year housemanship,
+            gaining practical experience before receiving full licensing from
+            the Medical and Dental Council of Ghana.
           </p>
         </section>
         <section className="w-full space-y-4 md:w-[80%] md:max-w-[700px]">
