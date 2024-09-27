@@ -55,7 +55,7 @@ const DocProfileMd = ({ doctor = [] }) => {
         </section>
 
         <section className="w-full px-16 lg:px-[100px] pt-12 lg:pt-24 flex gap-2 lg:gap-4">
-          <section className="flex flex-col gap-4 grow">
+          <section className="w-[54%] flex flex-col gap-4">
             <div className="mb-4 bg-white w-full p-2 lg:p-4 pl-4 flex items-center justify-between rounded-lg border">
               <div className="flex items-center gap-2 lg:gap-4">
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
