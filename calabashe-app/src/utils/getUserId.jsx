@@ -22,7 +22,7 @@ export const getUserId = () => {
       // console.log('User ID:', userId);
       return userId;
     } else {
-      console.log('No refresh token found');
+      // console.log('No refresh token found');
       return undefined;
     }
   } catch (error) {

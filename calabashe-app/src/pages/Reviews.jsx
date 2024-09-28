@@ -14,10 +14,10 @@ const Review = () => {
   const [reviewee, setReviewee] = useState('');
   const [description, setDescription] = useState('');
   const [rating, setRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const location = useLocation()
   const go = useNavigate()
   
-
   const prevLocationState = useRef(null);
 
   useEffect(() => {
@@ -25,12 +25,8 @@ const Review = () => {
       const userId = await getUserId();
       setUser(userId);
 
-      // Update reviewee state if location state has changed
-      if (
-        prevLocationState.current?.message !== location.state?.message
-      ) {
-        const [revieweeName, revieweeType, revieweeId] =
-          location.state?.message || [];
+      if (prevLocationState.current?.message !== location.state?.message) {
+        const [revieweeName, revieweeType, revieweeId] = location.state?.message || [];
         setReviewee({ name: revieweeName, type: revieweeType, id: revieweeId });
         prevLocationState.current = location.state;
       }
@@ -42,9 +38,20 @@ const Review = () => {
     setRating(newRating);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
+    if (rating === 0) {
+      toast.error('Kindly rate the doctor');
+      setIsSubmitting(false);
+      return;
+    } else if (!user) {
+      toast.error('Sign in to leave a review')
+      go('/sign_in')
+      setIsSubmitting(false);
+      return;
+    }
     
     try {
       if (reviewee.type === 'doctor') {
@@ -53,16 +60,25 @@ const Review = () => {
         await createFacilityReview({ user, rating, title, description, facility: reviewee.id });
       }
       
-      // console.log('API Response:', result);
       toast.success('Review successful')
       go('/home')
     } catch (error) {
-      // console.error(`Error creating ${reviewee.type} review:`, error);
-      // setError(`Failed to submit review: ${error.message || 'Unknown error'}`);
-      toast.error(`Failed to submit review! Try again`);
+      setIsSubmitting(false)
+      let errorMessage = 'Failed to submit review. Please try again.';
+
+      if (error.non_field_errors && Array.isArray(error.non_field_errors)) {
+        const maxReviewsError = error.non_field_errors.find(err => 
+          err.toLowerCase().includes('maximum number of reviews')
+        );
+        
+        if (maxReviewsError) {
+          errorMessage = "You've reached your daily limit for reviews.";
+        }
+      }
+      toast.info(errorMessage)
+      go('/')
     }
   };
-
 
   return ( 
     <div className="">
@@ -107,16 +123,18 @@ const Review = () => {
 
               <div className="mt-2 space-y-3">
                 <label className="text-[18px] md:text-[20px] font-medium" htmlFor="review">Tell us more about your visit</label>
-                <textarea onChange={(e => setDescription(e.target.value))} className="w-full h-[80px] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={5} id="review" required></textarea>
+                <textarea onChange={(e => setDescription(e.target.value))} className="w-full h-[80px] border-none bg-[#ECECCF] text-base p-2 rounded-lg" type="text" min={10} id="review" required></textarea>
               </div>
 
-              <button id="submitButton" className="w-full mt-4 flex items-center justify-center gap-2 md:px-6 md:w-[250px] text-lg font-bold bg-[#FEE330] py-3 rounded-md" type="submit" onClick={(e) => {e.preventDefault}}> 
-                <p className="text-center">Submit Review</p>
-                <div className="hidden md:flex">
-                  <svg className="h-6 w-6" width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M31.2249 18.35L8.5999 6.17498C6.6999 5.14998 4.4999 6.92499 5.0999 8.99998L8.1999 19.85C8.3249 20.3 8.3249 20.75 8.1999 21.2L5.0999 32.05C4.4999 34.125 6.6999 35.9 8.5999 34.875L31.2249 22.7C31.6109 22.4891 31.933 22.1782 32.1574 21.7999C32.3818 21.4216 32.5002 20.9898 32.5002 20.55C32.5002 20.1101 32.3818 19.6784 32.1574 19.3001C31.933 18.9218 31.6109 18.6109 31.2249 18.4V18.35Z" fill="black"/>
-                  </svg>
-                </div>
+              <button id="submitButton" className="w-full mt-4 flex items-center justify-center gap-2 md:px-6 md:w-[250px] text-lg font-bold bg-[#FEE330] py-3 rounded-md" type="submit"  disabled={isSubmitting} onClick={(e) => {e.preventDefault}}> 
+              <p className="text-center">{isSubmitting ? 'Submitting...' : 'Submit Review'}</p>
+          {!isSubmitting && (
+            <div className="hidden md:flex">
+              <svg className="h-6 w-6" width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M31.2249 18.35L8.5999 6.17498C6.6999 5.14998 4.4999 6.92499 5.0999 8.99998L8.1999 19.85C8.3249 20.3 8.3249 20.75 8.1999 21.2L5.0999 32.05C4.4999 34.125 6.6999 35.9 8.5999 34.875L31.2249 22.7C31.6109 22.4891 31.933 22.1782 32.1574 21.7999C32.3818 21.4216 32.5002 20.9898 32.5002 20.55C32.5002 20.1101 32.3818 19.6784 32.1574 19.3001C31.933 18.9218 31.6109 18.6109 31.2249 18.4V18.35Z" fill="black"/>
+              </svg>
+            </div>
+          )}
               </button>
             </form>
           </div>

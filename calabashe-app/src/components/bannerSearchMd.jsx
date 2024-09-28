@@ -166,7 +166,7 @@ const BannerSearch = () => {
       {showResults && (
         <div
           ref={resultsRef}
-          className={`absolute z-50 rounded-b-3xl py-4 space-y-6 shadow-lg bg-white w-full overflow-scroll`}
+          className={`absolute z-50 rounded-b-3xl py-4 space-y-6 shadow-lg bg-white w-full`}
         >
           {results.length > 0 && (
             <>
@@ -207,7 +207,7 @@ const BannerSearch = () => {
                 <div className="space-y-2">
                   <p className="px-4 text-lg font-medium">Facilities</p>
                   {results
-                    .filter((result) => !result.specialty)
+                    .filter((result) => !result.specialty && result.type)
                     .slice(0, 4)
                     .map((result) => (
                       <div
