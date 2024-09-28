@@ -40,20 +40,26 @@ const Review = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
+    if (title.length < 5) {
+      toast.error('Title must be at least 5 characters long')      
+      return;
+    }else if(description.length < 10){
+      toast.error('Review must be at least 10 characters long')      
+      return;
+    }
+
     if (rating === 0) {
       toast.error('Kindly rate the doctor');
-      setIsSubmitting(false);
       return;
     } else if (!user) {
       toast.error('Sign in to leave a review')
       go('/sign_in')
-      setIsSubmitting(false);
       return;
     }
     
     try {
+      setIsSubmitting(true);
       if (reviewee.type === 'doctor') {
         await createDoctorReview({ user, rating, title, description, doctor: reviewee.id });
       } else {
