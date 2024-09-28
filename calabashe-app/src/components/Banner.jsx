@@ -7,8 +7,8 @@ const Banner = () => {
   return (
     <>
       <Helmet>
-        <link rel="preload" as="image" href={Picture} />
         <link rel="preload" as="image" href={PictureWEBP} />
+        {/* <link rel="preload" as="image" href={Picture} /> */}
       </Helmet>
       <section className="bg-[#04DA8D] w-full pt-8 md:py-14 md:pt-16 space-y-6 md:space-y-0 md:flex flex-row lg:pl-[3%] lg:py-24 ">
         <div className=" flex flex-col md:w-[60%] px-4 md:px-5 space-y-3 lg:justify-between  lg:pb-4">
