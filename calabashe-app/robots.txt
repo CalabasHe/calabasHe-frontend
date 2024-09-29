@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /home
+Allow: /facilities
+Allow: /services
+Allow: /doctors
+Allow: /review
+
+Disallow: /sign_up
+Disallow: /sign_in
+Disallow: /verification
