@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import Pill from '../assets/icons/pill.svg'
+import { accountClaims } from "../api/authApi";
 
 const AccountClaimForm = () => {
+  const [disableForm, setDisableForm] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -17,11 +22,47 @@ const AccountClaimForm = () => {
       [name]: value,
     }));
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setDisableForm(true)
+    
+    return toast.promise(
+      async () => {
+        await accountClaims({first_name:formData.firstName, last_name:formData.lastName, phone:formData.phoneNumber, specialty:formData.specialty, form_email:formData.email});
+        return 'Claim sent';
+      },
+      {
+        loading: 'Making claim...',
+        success: (message) => {
+          setSuccess(message);
+          return 'Claim sent successfully';
+        },
+        error: (error) => {
+          console.log(error)
+          let errorMessage = "Claim failed";
+          if (Array.isArray.error) {
+            if (error.includes('form_email')) {
+              errorMessage = "Account doesn't exist";
+            } else if (error.non_field_errors[0].includes('Incorrect password')) {
+              errorMessage = "Incorrect password. Try again";
+            }
+          }
+          setError(errorMessage);
+          return errorMessage;
+        },
+        finally: () => {
+          setDisableForm(false);
+        }
+      })
+    }
+
   return (
     <div className=" z-50 overflow-hidden relative w-full min-h-screen flex flex-col gap-6 sm:gap-8 md:gap-16 items-center justify-center">
        <svg
         id="md-yellow"
-        className="hidden lg:block absolute z-0 -top-6 xl:top-[60px] size-[300px] -right-[40px] xl:right-0"
+        className="hidden lg:block absolute z-0 -top-6 xl:-top-[0px] 2xl:top-[150px] size-[300px] 2xl:size-[350px] -right-[40px] xl:right-0 2xl:right-[100px]"
         width="420"
         height="446"
         viewBox="0 0 420 446"
@@ -41,11 +82,11 @@ const AccountClaimForm = () => {
       </section>
       <form
         className="relative z-20  bg-white shadow-2xl px-4 pt-8 pb-14 lg:pb-10 w-full flex flex-col gap-6 rounded-lg max-w-[360px] lg:max-w-[400px]"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         <h2 className="text-lg font-semibold mb-1">Are you a doctor?</h2>
         <section className="space-y-3 relative text-base placeholder:text-[#ABABAB] placeholder:text-xs">
-          <div className="flex justify-evenly gap-5 h-12 sm:h-14">
+          <div className="flex justify-evenly gap-5 h-12 sm:h-14 2xl:h-16">
             <input
               onChange={handleChange}
               value={formData.firstName}

@@ -3,6 +3,7 @@ import axios from 'axios';
 const SIGNUP_URL = 'https://calabashe-api.onrender.com/api/auth/signup/';
 const VERIFY_URL = 'https://calabashe-api.onrender.com/api/auth/verify-code/';
 const LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/login/';
+const CLAIMS_URL = 'https://calabashe-api.onrender.com/api/forms/';
 const GOOGLE_LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/google/';
 
 
@@ -72,12 +73,15 @@ export const authenticateUser = async (accessToken) => {
   }
 };
 
-export const doctor_claims = async ({ email, password }) => {
+export const accountClaims = async ({ first_name, last_name, phone, specialty, form_email }) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const response = await axios.post(LOGIN_URL, {
-      email,
-      password,
+    const response = await axios.post(CLAIMS_URL, {
+      first_name,
+      last_name,
+      specialty,
+      phone,
+      form_email
     });
     return response.data;
   }catch (error) {
