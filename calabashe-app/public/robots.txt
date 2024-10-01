@@ -8,6 +8,7 @@ Allow: /doctors
 Disallow: /review
 Disallow: /sign_up
 Disallow: /sign_in
+Disallow: /account_claim
 Disallow: /verification
 
 Sitemap: https://calabashe.com/sitemap.xml

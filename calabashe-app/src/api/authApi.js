@@ -59,9 +59,6 @@ export const verifyCode = async ({ email, verification_code }) => {
   }
 };
 
-
-
-
 export const authenticateUser = async (accessToken) => {
   try {
     const res = await axios.post(GOOGLE_LOGIN_URL, {
@@ -75,3 +72,20 @@ export const authenticateUser = async (accessToken) => {
   }
 };
 
+export const doctor_claims = async ({ email, password }) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.post(LOGIN_URL, {
+      email,
+      password,
+    });
+    return response.data;
+  }catch (error) {
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
+  }
+
+};
