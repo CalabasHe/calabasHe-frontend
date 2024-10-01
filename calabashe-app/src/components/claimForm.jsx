@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Pill from '../assets/icons/pill.svg'
 import { accountClaims } from "../api/authApi";
+import { useNavigate } from "react-router-dom";
 
 const AccountClaimForm = () => {
   const [disableForm, setDisableForm] = useState(false)
@@ -15,6 +16,7 @@ const AccountClaimForm = () => {
     email: "",
   });
 
+  const go = useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -27,6 +29,12 @@ const AccountClaimForm = () => {
     e.preventDefault();
 
     setDisableForm(true)
+
+    if (formData.phoneNumber.length < 10){
+      toast.warning('Phone number must be at least 10 digits long')
+      setDisableForm(false)
+      return
+    }
     
     return toast.promise(
       async () => {
@@ -37,18 +45,17 @@ const AccountClaimForm = () => {
         loading: 'Making claim...',
         success: (message) => {
           setSuccess(message);
+          go('/')
           return 'Claim sent successfully';
         },
         error: (error) => {
           console.log(error)
           let errorMessage = "Claim failed";
-          if (Array.isArray.error) {
-            if (error.includes('form_email')) {
-              errorMessage = "Account doesn't exist";
-            } else if (error.non_field_errors[0].includes('Incorrect password')) {
-              errorMessage = "Incorrect password. Try again";
+            if (error.form_email && error.form_email[0].includes('form email already exists')) {
+              errorMessage = "An initial form with this email already exists";
+            } else if (error.phone && error.phone[0].includes('form with this phone already exists')) {
+              errorMessage = "A form with this phone number already exists";
             }
-          }
           setError(errorMessage);
           return errorMessage;
         },
@@ -98,6 +105,7 @@ const AccountClaimForm = () => {
               aria-required
               aria-label="Enter first name"
               spellCheck="false"
+              disabled={disableForm}
             />
             <input
               onChange={handleChange}
@@ -110,6 +118,7 @@ const AccountClaimForm = () => {
               aria-required
               aria-label="Enter last name"
               spellCheck="false"
+              disabled={disableForm}
             />
           </div>
           <input
@@ -121,6 +130,7 @@ const AccountClaimForm = () => {
             placeholder="Mobile phone *"
             required
             aria-label="Enter phone number"
+            disabled={disableForm}
           />
           <input
             onChange={handleChange}
@@ -132,6 +142,7 @@ const AccountClaimForm = () => {
             required
             aria-label="Enter your specialty"
             spellCheck="false"
+            disabled={disableForm}
           />
           <input
             onChange={handleChange}
@@ -144,11 +155,13 @@ const AccountClaimForm = () => {
             aria-label="Enter your email address"
             autoComplete="off"
             spellCheck="false"
+            disabled={disableForm}
           />
         </section>
         <button
           className="text-sm border bg-[#FEE330] w-2/3 max-w-[215px] rounded-lg font-semibold p-2 self-start"
           type="submit"
+          disabled={disableForm}
         >
           Submit for validation
         </button>
