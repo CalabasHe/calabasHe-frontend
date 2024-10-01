@@ -13,10 +13,23 @@ const SearchResultsPageLG = () => {
   // State to manage the open accordion item
   const [openAccordion, setOpenAccordion] = useState(null);
 
+  // State to manage selected rating filter
+  const [selectedRating, setSelectedRating] = useState("Any");
+
   // Function to toggle the accordion
   const toggleAccordion = (id) => {
     setOpenAccordion(openAccordion === id ? null : id);
   };
+
+  // Filter results based on selected rating
+  const filteredResults = results.filter((result) => {
+    if (selectedRating === "Any") {
+      return true;
+    }
+    return (
+      result.rating && parseFloat(result.rating) >= parseFloat(selectedRating)
+    );
+  });
 
   return (
     <main className="hidden lg:block md:block">
@@ -31,9 +44,50 @@ const SearchResultsPageLG = () => {
         {/* First column for the rating card */}
         <div className="lg:w-1/4 w-full max-w-[350px]">
           {/* Rating card */}
-          <div className="w-full h-auto bg-[#fff] rounded-[8px] border-solid border border-[#d9d9d9] p-4">
-            <p>Rating</p>
-            <div>({results.rating})</div>
+          <div className="w-full h-auto bg-[#fff] rounded-[8px] border-solid border p-5 border-[#d9d9d9] p-4">
+            <p className="font-semibold">Rating</p>
+            <div className="flex mt-4">
+              <button
+                className={`border-[#000000] px-4 py-2 text-[#205CD4] font-semibold rounded-tl-lg rounded-bl-lg  ${
+                  selectedRating === "Any"
+                    ? "bg-[#d7e3fa] border-[#000000] "
+                    : "border-t-2 border-l-2 border-b-2 rounded-tl-lg rounded-bl-lg"
+                }`}
+                onClick={() => setSelectedRating("Any")}
+              >
+                Any
+              </button>
+              <button
+                className={`border-[#000000] font-semibold text-[#205CD4] px-4 py-2 ${
+                  selectedRating === "3.0"
+                    ? "bg-[#d7e3fa] "
+                    : "border-t-2 border-b-2 border-l-2"
+                }`}
+                onClick={() => setSelectedRating("3.0")}
+              >
+                3.0 ★
+              </button>
+              <button
+                className={`border-[#000000] px-4 py-2 font-semibold text-[#205CD4]  ${
+                  selectedRating === "4.0"
+                    ? "bg-[#d7e3fa] "
+                    : "border-t-2 border-b-2 border-l-2"
+                }`}
+                onClick={() => setSelectedRating("4.0")}
+              >
+                4.0 ★
+              </button>
+              <button
+                className={`border-[#000000] font-semibold text-[#205CD4] px-4 py-2 rounded-tr-lg rounded-br-lg ${
+                  selectedRating === "4.5"
+                    ? "bg-[#d7e3fa]  rounded-tr-lg rounded-br-lg"
+                    : "border-t-2 border-r-2 border-b-2 border-l-2"
+                }`}
+                onClick={() => setSelectedRating("4.5")}
+              >
+                4.5 ★
+              </button>
+            </div>
           </div>
         </div>
 
@@ -41,11 +95,11 @@ const SearchResultsPageLG = () => {
         <div className="lg:w-3/4 w-full max-w-[900px]">
           {/* Displaying total count of results as Companies */}
           <div className="mb-4">
-            {results.length > 0 ? (
+            {filteredResults.length > 0 ? (
               <h2 className="text-lg font-semibold">
                 Companies{" "}
                 <span className="font-normal text-[#6a6a67]">
-                  ({results.length})
+                  ({filteredResults.length})
                 </span>
               </h2>
             ) : (
@@ -55,8 +109,8 @@ const SearchResultsPageLG = () => {
 
           {/* Results list */}
           <div className="grid gap-4">
-            {results.length > 0 ? (
-              results.map((result) => (
+            {filteredResults.length > 0 ? (
+              filteredResults.map((result) => (
                 <div
                   key={result.id}
                   className="w-full max-w-[800px] h-auto bg-white rounded-[8px] border border-[#d9d9d9] p-4 flex flex-col lg:flex-row gap-4 items-start mx-auto"
