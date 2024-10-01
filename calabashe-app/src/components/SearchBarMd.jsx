@@ -21,11 +21,15 @@ const SearchBarMd = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target) && !event.target.closest('#headerSearchBar')) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target) &&
+        !event.target.closest("#headerSearchBar")
+      ) {
         setShowResults(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -106,11 +110,11 @@ const SearchBarMd = () => {
   };
 
   const handleKeyDown = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       setShowResults(false); // Hide results immediately
       const searchResults = await performSearch(searchParam);
-      navigate('/results', { state: { searchParam, results: searchResults } });
+      navigate("/results", { state: { searchParam, results: searchResults } });
     }
   };
 
@@ -119,7 +123,7 @@ const SearchBarMd = () => {
     if (!searchParam) return;
     setShowResults(false); // Hide results immediately
     const searchResults = await performSearch(searchParam);
-    navigate('/results', { state: { searchParam, results: searchResults } });
+    navigate("/results", { state: { searchParam, results: searchResults } });
   };
 
   const handleFocus = () => setIsFocused(true);
@@ -154,7 +158,7 @@ const SearchBarMd = () => {
           id="headerSearchIcon"
           className={`${
             isFocused ? "focused" : "stroke-[#828282]"
-          } w-5 lg:w-6 h-5 lg:h-6 mt-2 ${isLoading ? 'animate-spin' : ''}`}
+          } w-5 lg:w-6 h-5 lg:h-6 mt-2 ${isLoading ? "animate-ping" : ""}`}
           width="32"
           height="32"
           viewBox="0 0 32 32"

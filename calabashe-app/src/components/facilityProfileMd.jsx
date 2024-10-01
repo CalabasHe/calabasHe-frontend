@@ -15,9 +15,9 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
   const handleLinkClick = () => {
     if (!isLoggedIn) {
-      toast.info('Sign in to leave a review')
+      toast.info("Sign in to leave a review");
     }
-  }
+  };
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
