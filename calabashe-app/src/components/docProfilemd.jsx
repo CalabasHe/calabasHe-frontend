@@ -58,7 +58,7 @@ const DocProfileMd = ({ doctor = [] }) => {
             state={{ message: [doctor.firstName, doctor.lastName] }}
             className={`${
               !doctor.verified ? "flex" : "hidden"
-            } border ml-5 -translate-y-10 w-fit gap-12 items-center px-5 py-2 font-semibold rounded-md border-[#205CD4]`}
+            } border ml-5 lg:ml-12 xl:translate-x-[100px] -translate-y-10 w-fit gap-2 lg:gap-6 items-center md:text-xs px-5 py-2 font-semibold rounded-md border-[#205CD4]`}
           >
             <div className="space-y-1">
               <div className="flex items-center gap-4">

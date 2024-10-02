@@ -121,7 +121,7 @@ const AccountClaimForm = () => {
                 placeholder={formData.firstName}
                 aria-label="Enter first name"
                 spellCheck="false"
-                disabled='true'
+                disabled={true}
               />
               <span className="firstNameBubble absolute shadow-xl text-lg font-semibold border-2 rounded-md top-0 w-full">{formData.firstName}</span>
             </div>
@@ -136,7 +136,7 @@ const AccountClaimForm = () => {
                 placeholder="Last name *"
                 aria-label="Enter last name"
                 spellCheck="false"
-                disabled='true'
+                disabled={true}
               />
 
 <span className="lastNameBubble absolute z-30 shadow-xl border-2 font-semibold  text-lg rounded-md top-0 w-full">{formData.lastName}</span>
