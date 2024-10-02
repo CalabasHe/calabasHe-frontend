@@ -12,6 +12,7 @@ import VerifyUser from './pages/Verification';
 import DocProfile from './pages/DocProfile';
 import FacilityProfile from './pages/FacilityProfile';
 import { BannerVisibilityProvider } from './context/BannerVisibilityContext';
+import AccountClaim from './pages/AccountClaim';
 
 function App() {
   const location = useLocation();
@@ -32,6 +33,7 @@ function App() {
             <Route path='/sign_up' element={<SignUp />} />
             <Route path='/sign_in' element={<SignIn />} />
             <Route path='/verification' element={<VerifyUser />} />
+            <Route path='/initial_form' element={<AccountClaim />} />
           </Routes>
         </AnimatePresence>
       </BannerVisibilityProvider>

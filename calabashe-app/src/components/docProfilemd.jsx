@@ -24,7 +24,7 @@ const DocProfileMd = ({ doctor = [] }) => {
   return (
     <>
       <main className="w-full hidden md:block py-12">
-        <section className="px-16 lg:px-[100px] pt-12 pb-6 flex gap-6 lg:gap-8 items-center bg-white border-b">
+        <section className="px-16 lg:px-[100px] pt-12 pb-6 flex gap-6  items-center bg-white border-b">
           <div className="w-44 lg:w-56 h-44 lg:h-56 rounded-full bg-gray-300/40 flex items-center justify-center">
             <svg
               className="w-24 lg:28 fill-gray-700"
@@ -52,6 +52,50 @@ const DocProfileMd = ({ doctor = [] }) => {
               <p className="text-[#6A6A67]">{doctor.rating.toFixed(1)}</p>
             </div>
           </div>
+
+          <Link
+            to="/initial_form"
+            state={{ message: [doctor.firstName, doctor.lastName] }}
+            className={`${
+              !doctor.verified ? "flex" : "hidden"
+            } border ml-5 lg:ml-12 xl:translate-x-[100px] -translate-y-10 w-fit gap-2 lg:gap-6 items-center md:text-xs px-5 py-2 font-semibold rounded-md border-[#205CD4]`}
+          >
+            <div className="space-y-1">
+              <div className="flex items-center gap-4">
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 17 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 2L4.2 2C3.08 2 2.52 2 2.092 2.218C1.71569 2.40974 1.40974 2.71569 1.218 3.092C1 3.52 1 4.08 1 5.2L1 12.8C1 13.92 1 14.48 1.218 14.908C1.40974 15.2843 1.71569 15.5903 2.092 15.782C2.519 16 3.079 16 4.197 16H11.803C12.921 16 13.48 16 13.907 15.782C14.284 15.59 14.59 15.284 14.782 14.908C15 14.48 15 13.921 15 12.803L15 11M16 6L16 1M16 1L11 1M16 1L9 8"
+                    stroke="#1F44FF"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <p className="pt-1">
+                  Are you Dr. {doctor.firstName.split(" ")[0]}?
+                </p>
+              </div>
+              <p className="font-light">Verify your account</p>
+            </div>
+            <svg
+              width="18"
+              height="16"
+              viewBox="0 0 18 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18 8L10.5 0.5L9.4425 1.5575L15.1275 7.25L0 7.25V8.75L15.1275 8.75L9.4425 14.4425L10.5 15.5L18 8Z"
+                fill="#1F44FF"
+              />
+            </svg>
+          </Link>
         </section>
 
         <section className="w-full px-16 lg:px-[100px] pt-12 lg:pt-24 flex gap-2 lg:gap-4">
@@ -138,7 +182,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                       </p>
                     </div>
 
-                    <p className="text-sm text-base ">{review.description}</p>
+                    <p className="text-base ">{review.description}</p>
                   </div>
                 ))}
               </div>
@@ -156,14 +200,13 @@ const DocProfileMd = ({ doctor = [] }) => {
                 <p className="text-sm lg:text-base ">
                   Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
                   medical doctor practicing General Medicine.
-                  <br/>
-                  In Ghana, General
-                  Practitioners (GPs) provide primary healthcare, handling a
-                  wide range of conditions and referring patients to specialists
-                  when needed. GPs complete six years of medical school and a
-                  two-year housemanship, gaining practical experience before
-                  receiving full licensing from the Medical and Dental Council
-                  of Ghana.
+                  <br />
+                  In Ghana, General Practitioners (GPs) provide primary
+                  healthcare, handling a wide range of conditions and referring
+                  patients to specialists when needed. GPs complete six years of
+                  medical school and a two-year housemanship, gaining practical
+                  experience before receiving full licensing from the Medical
+                  and Dental Council of Ghana.
                 </p>
               </section>
 
@@ -194,7 +237,7 @@ const DocProfileMd = ({ doctor = [] }) => {
 
             <div className="bg-white  flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 border rounded-xl">
               <div className="space-y-3 lg:space-y-4">
-                <h3 className="text-xl lg:2xl font-bold font-black">
+                <h3 className="text-xl lg:2xl font-bold">
                   Share your experience
                 </h3>
                 <p className="text-sm lg:text-base">

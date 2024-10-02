@@ -126,6 +126,7 @@ const BannerSearch = () => {
 
     return () => {
       if (bannerRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(bannerRef.current);
       }
     };
@@ -138,7 +139,7 @@ const BannerSearch = () => {
       ref={bannerRef}
     >
       <div
-        className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white relative max-w-[100%] ${
+        className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white max-w-[100%] ${
           showResults
             ? "rounded-b-none border-b border-gray-200 rounded-t-3xl py-4"
             : "rounded-3xl lg:rounded-[999999px]"

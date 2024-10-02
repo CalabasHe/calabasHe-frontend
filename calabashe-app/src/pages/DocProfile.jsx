@@ -33,6 +33,7 @@ const DocProfile = () => {
           ratingPercentages: data.rating_percentages,
           reviews: data.reviews,
           totalReviews: data.total_reviews,
+          verified: data.is_verified
         };
         // console.log('Processed doctor details:', doctorDetails);
         setDoctor(doctorDetails);
