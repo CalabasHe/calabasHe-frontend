@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AccountClaimForm from "../components/claimForm";
 import Header from "../components/Header";
-import { AnimateUp, AnimateY, FadeInOut } from '../components/ComponentAnimations';
+import { FadeInOut } from '../components/ComponentAnimations';
 
 const AccountClaim = () => {
   const [isLandscape, setIsLandscape] = useState(false);
