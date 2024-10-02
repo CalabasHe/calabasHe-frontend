@@ -19,7 +19,7 @@ const DocProfile = () => {
     const fetchDoctor = async () => {
       try {
         const data = await fetchDoctorBySlug(slug);
-        // console.log('API Response:', data);
+        console.log('API Response:', data);
         const doctorDetails = {
           qrCode: data.qr_code,
           id: data.id,
@@ -33,6 +33,7 @@ const DocProfile = () => {
           ratingPercentages: data.rating_percentages,
           reviews: data.reviews,
           totalReviews: data.total_reviews,
+          verified: data.is_verified
         };
         // console.log('Processed doctor details:', doctorDetails);
         setDoctor(doctorDetails);

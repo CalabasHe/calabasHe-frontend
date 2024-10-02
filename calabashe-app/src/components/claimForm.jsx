@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import Pill from '../assets/icons/pill.svg'
 import { accountClaims } from "../api/authApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import '../stylesheets/claimForm.css'
 
 const AccountClaimForm = () => {
   const [disableForm, setDisableForm] = useState(false)
@@ -15,8 +16,24 @@ const AccountClaimForm = () => {
     specialty: "",
     email: "",
   });
-
   const go = useNavigate()
+  const location = useLocation();
+  const prevLocationState = useRef(null);
+
+  useEffect(() => {
+    if (location.state?.message && 
+        (!prevLocationState.current?.message || 
+         prevLocationState.current.message !== location.state.message)) {
+      setFormData(prev => ({
+        ...prev,
+        firstName: location.state.message[0],
+        lastName:location.state.message[1]
+      }));
+      prevLocationState.current = location.state;
+    }
+  }, [location.state]);
+ 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -94,32 +111,36 @@ const AccountClaimForm = () => {
         <h2 className="text-lg font-semibold mb-1">Are you a doctor?</h2>
         <section className="space-y-3 relative text-base placeholder:text-[#ABABAB] placeholder:text-xs">
           <div className="flex justify-evenly gap-5 h-12 sm:h-14 2xl:h-16">
-            <input
-              onChange={handleChange}
-              value={formData.firstName}
-              name="firstName"
-              type="text"
-              className="w-1/2 rounded-md px-4 focus:outline-none"
-              placeholder="First name *"
-              required
-              aria-required
-              aria-label="Enter first name"
-              spellCheck="false"
-              disabled={disableForm}
-            />
-            <input
-              onChange={handleChange}
-              value={formData.lastName}
-              name="lastName"
-              type="text"
-              className="w-1/2 rounded-md px-4 focus:outline-none"
-              placeholder="Last name *"
-              required
-              aria-required
-              aria-label="Enter last name"
-              spellCheck="false"
-              disabled={disableForm}
-            />
+            <div id="firstName-field" className="firstName-field z-0 cursor-pointer relative w-1/2 h-full">
+              <input
+                onChange={handleChange}
+                value={formData.firstName}
+                name="firstName"
+                type="text"
+                className="w-full cursor-pointer h-full rounded-md px-4 focus:outline-none"
+                placeholder={formData.firstName}
+                aria-label="Enter first name"
+                spellCheck="false"
+                disabled='true'
+              />
+              <span className="firstNameBubble absolute shadow-xl text-lg font-semibold border-2 rounded-md top-0 w-full">{formData.firstName}</span>
+            </div>
+            <div className="lastName-field z-0 cursor-pointer relative w-1/2 h-full">
+              <input
+                id="lastName-field"
+                onChange={handleChange}
+                value={formData.lastName}
+                name="lastName"
+                type="text"
+                className="w-full relative -z-1 cursor-pointer h-full rounded-md px-4 focus:outline-none"
+                placeholder="Last name *"
+                aria-label="Enter last name"
+                spellCheck="false"
+                disabled='true'
+              />
+
+<span className="lastNameBubble absolute z-30 shadow-xl border-2 font-semibold  text-lg rounded-md top-0 w-full">{formData.lastName}</span>
+            </div>
           </div>
           <input
             onChange={handleChange}

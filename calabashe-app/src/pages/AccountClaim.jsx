@@ -1,5 +1,5 @@
 import AccountClaimForm from "../components/claimForm";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 
 const AccountClaim = () => {
   return ( 

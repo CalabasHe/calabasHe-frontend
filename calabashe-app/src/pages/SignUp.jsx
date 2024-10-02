@@ -127,7 +127,7 @@ const SignUp = () => {
                   <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">he</span></h1></Link>
                 </div>
                 
-                <div className="absolute z-10 left-[18%] w-[180px] sm:w-[210px] md:w-[240px] -top-[100px] sm:-top-[120px] md:hidden  md:-top-[150px] lg:hidden z-10">
+                <div className="absolute  left-[18%] w-[180px] sm:w-[210px] md:w-[240px] -top-[100px] sm:-top-[120px] md:hidden  md:-top-[150px] lg:hidden z-10">
                   <picture className="relative z-0 inset-0 object-fill">
                     <source className="z-0 object-fill" srcSet={docs1} type="image/webp" alt="animated picture of doctors posing"></source>
                     <img className="z-0 object-fill" src={docs1png} alt="animated picture of doctors posing"></img>
