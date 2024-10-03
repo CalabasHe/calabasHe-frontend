@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import StarRating from "../components/rating";
 import "../stylesheets/profile.css";
@@ -11,15 +11,26 @@ import { toast } from "sonner";
 const DocProfileMd = ({ doctor = [] }) => {
   const [rating, setRating] = useState();
   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate()
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (newRating) => {
     if (!isLoggedIn) {
       toast.info("Sign in to leave a review");
+      return
     }
+    setRating(newRating);
+    navigate(`/review/${doctor.slug}`, {
+      state: {
+        message: [doctor.lastName, "doctor", doctor.id],
+        from: `/review/${doctor.slug}`,
+        ratings: newRating
+      }
+    });
   };
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
+    console.log(rating)
   };
   return (
     <>
@@ -109,7 +120,7 @@ const DocProfileMd = ({ doctor = [] }) => {
 
                 <Link
                   to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-                  onClick={handleLinkClick}
+                  onClick={() => handleLinkClick(rating)}
                   state={{
                     message: [doctor.lastName, "doctor", doctor.id],
                     from: `/review/${doctor.slug}`,
@@ -119,16 +130,11 @@ const DocProfileMd = ({ doctor = [] }) => {
                   Write a review
                 </Link>
               </div>
-              <Link
-                to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-                onClick={handleLinkClick}
-                state={{
-                  message: [doctor.lastName, "doctor", doctor.id],
-                  from: `/review/${doctor.slug}`,
-                }}
+              <div
+                onClick={() => handleLinkClick(rating)}
               >
                 <Stars rating={rating} onRatingChange={handleRatingChange} />
-              </Link>
+              </div>
             </div>
 
             <section className="w-full py-4 lg:py-6 pb-6 lg:pb-8 px-4 rounded-lg border bg-white space-y-4 lg:space-y-6">

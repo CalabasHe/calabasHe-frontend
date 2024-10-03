@@ -137,7 +137,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
                       </p>
                     </div>
 
-                    <p className="text-sm text-base ">{review.description}</p>
+                    <p className="text-sm lg:text-base ">{review.description}</p>
                   </div>
                 ))}
               </div>
@@ -156,7 +156,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
               </section>
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">
-                <h3 className="text-xl lg:2xl font-bold font-black">
+                <h3 className="text-xl lg:2xl font-bold">
                   Contact Details
                 </h3>
                 <div className="flex flex-col gap-4 text-[#205CD4]">
@@ -197,7 +197,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
             <div className="bg-white flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 rounded-xl">
               <div className="space-y-3 lg:space-y-4">
-                <h3 className="text-xl lg:2xl font-bold font-black">
+                <h3 className="text-xl lg:2xl font-bold">
                   Share your experience
                 </h3>
                 <p className="text-sm lg:text-base">

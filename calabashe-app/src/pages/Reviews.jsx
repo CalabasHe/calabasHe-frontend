@@ -19,6 +19,11 @@ const Review = () => {
   const go = useNavigate()
   
   const prevLocationState = useRef(null);
+  const { ratings } = location.state || {};
+
+  if (ratings){
+    setRating(ratings)
+  }
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -28,6 +33,8 @@ const Review = () => {
       if (prevLocationState.current?.message !== location.state?.message) {
         const [revieweeName, revieweeType, revieweeId] = location.state?.message || [];
         setReviewee({ name: revieweeName, type: revieweeType, id: revieweeId });
+        // setRating(reviewee.rating)
+        // console.log(ratings)
         prevLocationState.current = location.state;
       }
     };
@@ -100,7 +107,7 @@ const Review = () => {
           </FadeInOut>
         
         <main className="w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-2  pb-8 flex flex-col gap-12 items-center ">
-        <section className="p-4 px-2 md:px-12 lg:px-16 md:py-8 lg:py-12 md:border space-y-2 border-black rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] ">
+        <section className="p-4 px-2 md:px-12 lg:px-16 md:py-8 lg:py-12 md:border space-y-2 bg-white shadow-md border rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] ">
           <div className="w-full flex flex-col gap-2">
             <div className=" self-center w-[120px] h-[120px] md:w-[160px] md:h-[160px] lg:w-[200px] lg:h-[200px] flex justify-center items-center p-4 border-2 rounded-full">
             <svg
@@ -120,7 +127,7 @@ const Review = () => {
               </p>
               <div className="space-y-2">
                 <p className="text-gray-500 ">Select Rating</p>
-                <Stars rating={rating} onRatingChange={handleRatingChange}/>
+                <Stars rating={reviewee.rating ? reviewee.rating : rating} onRatingChange={handleRatingChange}/>
               </div>
               <div className="mt-2 space-y-3">
                 <label className="text-base md:text-[20px] font-medium" htmlFor="title">Give your review a title</label>
