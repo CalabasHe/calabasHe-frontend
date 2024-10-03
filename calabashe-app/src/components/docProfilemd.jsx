@@ -24,10 +24,10 @@ const DocProfileMd = ({ doctor = [] }) => {
   return (
     <>
       <main className="w-full hidden md:block py-12">
-        <section className="px-16 lg:px-[100px] pt-12 pb-6 flex gap-6  items-center bg-white border-b">
-          <div className="w-44 lg:w-56 h-44 lg:h-56 rounded-full bg-gray-300/40 flex items-center justify-center">
+        <section className="px-8 lg:px-[100px] pt-12 pb-6 flex lg:gap-3 xl:gap-8  items-center bg-white border-b">
+          <div className="size-36 lg:size-44 rounded-full mr-2 xl:mr-0 bg-gray-300/40 flex items-center justify-center">
             <svg
-              className="w-24 lg:28 fill-gray-700"
+              className="size-16 lg:size-24 fill-gray-700"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
             >
@@ -36,7 +36,7 @@ const DocProfileMd = ({ doctor = [] }) => {
           </div>
 
           <div className="space-y-1">
-            <h2 className="text-xl lg:text-2xl font-bold">
+            <h2 className="text-lg lg:text-xl xl:text-2xl font-bold">
               Dr. {doctor.firstName} {doctor.lastName}
             </h2>
             <div className="flex items-center gap-3 lg:gap-4">
@@ -58,7 +58,7 @@ const DocProfileMd = ({ doctor = [] }) => {
             state={{ message: [doctor.firstName, doctor.lastName] }}
             className={`${
               !doctor.verified ? "flex" : "hidden"
-            } border ml-5 lg:ml-12 xl:translate-x-[100px] -translate-y-10 w-fit gap-2 lg:gap-6 items-center md:text-xs px-5 py-2 font-semibold rounded-md border-[#205CD4]`}
+            } border ml-5 lg:ml-12 -translate-y-8 w-fit gap-2 lg:gap-6 items-center md:text-xs px-5 py-2 font-semibold rounded-md border-[#205CD4]`}
           >
             <div className="space-y-1">
               <div className="flex items-center gap-4">
@@ -197,7 +197,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                 <h3 className="text-lg lg:text-xl font-[800] ">
                   About Dr. {doctor.firstName}{" "}
                 </h3>
-                <p className="text-sm lg:text-base ">
+                <p className="text-sm lg:text-base leading-relaxed">
                   Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
                   medical doctor practicing General Medicine.
                   <br />

@@ -1,4 +1,3 @@
-import AnimatePage from "../components/AnimatePage";
 import Banner from "../components/Banner";
 import ExploreCategories from "../components/Categories";
 import DoctorQuote from "../components/DoctorQuote";
@@ -11,8 +10,7 @@ const Home = () => {
 
   return (
         <div className="overflow-hidden">
-          <Header/>
-          <AnimatePage>
+            <Header/>
             <main className='bg-[#FCFBF2] w-full mt-8 flex flex-col gap-3 md:gap-5 items-center'>
               <Banner />
 
@@ -26,7 +24,7 @@ const Home = () => {
               <FaqSection/>
             </main>
             <Footer/>
-          </AnimatePage>
+
         </div>
     )
 }
