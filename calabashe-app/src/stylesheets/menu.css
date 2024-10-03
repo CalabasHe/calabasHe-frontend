@@ -4,25 +4,25 @@
 }
 
 :root{
-  --bar-width: 30px;
-  --bar-height: 4px;
+  --bar-width: 23px;
+  --bar-height: 2px;
   --hamburger-gap: 3px;
   --background: #828282; 
   --hamburger-margin: 4px;
-  --animation-timing:300ms ease-in-out ;
+  --animation-timing:350ms ease-in-out ;
   --hamburger-height: calc(var(--bar-height) * 3 + var(--hamburger-gap) * 2);
-  --max-width-navmenu: 105px
+  --width-navmenu: 55vw;
+  --max-width-navmenu: 350px
 }
 
 body{
   margin:0
 }
 
-/* hamburger menu button */
+/* hamburger menu menubutton */
 
 .hamburger-menu{
   --x-width: calc(var(--hamburger-height) * 1.41421356237);
-
   display: flex;
   flex-direction: column;
   gap: var(--hamburger-gap);
@@ -33,7 +33,7 @@ body{
 
 .hamburger-menu::before,
 .hamburger-menu::after,
-.hamburger-menu input{
+#menubutton{
   content:"";
   width: var(--bar-width);
   height: var(--bar-height);
@@ -47,52 +47,32 @@ body{
   transform-origin: left;
 }
 
-.hamburger-menu input{
+#menubutton{
   appearance: none;
-  outline: none;
   pointer-events: none;
-  width: var(--bar-width);
-  height: var(--bar-height);
+  outline: none;
+  border:  var(--background);
 }
-.hamburger-menu input:checked{
+.hamburger-menu #menubutton:checked{
   opacity: 0;
   width: 0;
 }
 
-.hamburger-menu:has(input:checked)::before {
+.hamburger-menu:has(#menubutton:checked)::before {
   rotate: 45deg;
   width: var(--x-width);
   translate: 0 calc(var(--bar-height) / -2);
 }
-.hamburger-menu:has(input:checked)::after {
+.hamburger-menu:has(#menubutton:checked)::after {
   rotate: -45deg;
   width: var(--x-width);
   translate: 0 calc(var(--bar-height) / 2);
 
 }
 
-.hamburger-menu:has(input:checked)::before,
-.hamburger-menu:has(input:checked)::after{
+.hamburger-menu:has(#menubutton:checked)::before,
+.hamburger-menu:has(#menubutton:checked)::after{
   background-color: white;
-}
-
-/* Navmenu */
-
-.navmenu{
-  width: calc(30vw + 30px);
-  padding: 0px 5px 4px 5px;
-  position: absolute;
-  top: 100%;
-  right: .1%;
-  transform: translateX(105px);
-  transition: transform 400ms ease-out;
-}
-
-.navmenu > ul{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  text-align: center;
 }
 
 #hospitals-link ::after,
@@ -100,12 +80,40 @@ body{
   content: "";
   width:3px;
   height: 2px;
-  background-color: white;
 }
 
-.hamburger-menu:has(input:checked) + .navmenu{
+/* Navmenu */
+
+.navmenu{
+  background-color: black;
+  width: var(--width-navmenu);
+  max-width: var(--max-width-navmenu);
+  min-width: 110px;
+  height: 100vh;
+  position: absolute;
+  top: 100%;
+  right: 0px;
+  transform: translateX(var(--width-navmenu));
+  transition: transform 300ms ease-in-out;
+}
+
+.navmenu > ul{
+  background-color: black;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  padding: 30% 0 0 0;
+}
+
+
+
+.hamburger-menu:has(#menubutton:checked) + .navmenu{
   flex-direction: column;
   background-color: black;
-  transform: translateX(-.1px);
+  transform: translateX(-(var(--width-navmenu)));
+  color: white;
+  margin:0;
+  right: 0px;
 }
 

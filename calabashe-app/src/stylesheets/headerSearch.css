@@ -1,0 +1,16 @@
+#headerSearchIcon{
+  transition: stroke 0.2s ease;
+}
+
+#headerSearchIcon.focused{
+  stroke: white;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

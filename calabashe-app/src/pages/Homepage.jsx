@@ -1,16 +1,31 @@
+import Banner from "../components/Banner";
+import ExploreCategories from "../components/Categories";
+import DoctorQuote from "../components/DoctorQuote";
+import FaqSection from "../components/Faq";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
+import RecentReviews from "../components/recentReviews";
 
 const Home = () => {
-  return ( 
-      <div>
-        <Header/>
-        <main className='h-[100vh] flex flex-col px-2 items-center justify-center'>
-          {/* <Review/>        */}
 
-          <h1 className="text-6xl font-black animate-bounce ">Calabas<span className="text-[#0B7F85]">He</span></h1> 
+  return (
+        <div className="overflow-hidden">
+            <Header/>
+            <main className='bg-[#FCFBF2] w-full mt-8 flex flex-col gap-3 md:gap-5 items-center'>
+              <Banner />
 
-        </main>
-      </div>
+              {/* <Review/>        */}
+              {/* <p className="font-semibold text-2xl sm:text-4xl ">Heyy there!!👋😁</p>
+              <p className="font-semibold text-2xl sm:text-4xl ">Welcome to:</p>
+              <h1 className="z-1 mt-4 text-4xl sm:text-6xl font-black animate-bounce ">Calabas<span className="text-[#04DA8D]">He</span></h1>  */}
+              <ExploreCategories/>
+              <RecentReviews/>
+              <DoctorQuote/>
+              <FaqSection/>
+            </main>
+            <Footer/>
+
+        </div>
     )
 }
  
