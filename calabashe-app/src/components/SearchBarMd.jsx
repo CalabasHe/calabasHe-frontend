@@ -1,15 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 import { useBannerVisibility } from "../context/BannerVisibilityContext";
 import "../stylesheets/headerSearch.css";
 import StarRating from "./rating";
-import SearchData from "../api/search";
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useBannerVisibility } from '../context/BannerVisibilityContext';
-import '../stylesheets/headerSearch.css'
-import StarRating from './rating';
-import SearchData from '../api/search';
+import SearchData from "../api/search"; 
 import debounce from "lodash/debounce";
 
 const SearchBarMd = () => {
@@ -18,20 +12,13 @@ const SearchBarMd = () => {
   const [searchParam, setSearchParam] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
-  const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const searchRef = useRef(null);
   const latestSearchPromise = useRef(null);
 
   const navigate = useNavigate();
 
   const [showResults, setShowResults] = useState(false)
   const searchRef = useRef(null)
-  
-  const go = useNavigate()
-  const location = useLocation()
-  const isVisible = !['/', '/home'].includes(location.pathname);
-  const className = (isVisible || isBannerHidden) ? 'hidden md:flex' : 'hidden';
 
 
   useEffect(() => {
@@ -154,10 +141,6 @@ const SearchBarMd = () => {
           : "rounded-3xl lg:rounded-[999999px]"
       } bg-white/20 px-3 lg:px-5`}
     >
-      <input
-        className="w-[90%] bg-transparent border-none rounded-[inherit] text-sm lg:text-base placeholder:text-[#828282] placeholder:font-[500] placeholder:text-xs outline-none py-2 pl-1"
-  return ( 
-    <div className={`relative searchBar ${isVisible ? 'hidden md:flex' : className} md:flex-grow mx-4 lg:mx-8 justify-between ${showResults ? 'rounded-b-none border-b border-gray-200 rounded-t-3xl' : 'rounded-3xl lg:rounded-[999999px]'} bg-white/20 px-3 lg:px-5`}>
       <input 
         className="w-[90%] bg-transparent border-none rounded-[inherit] text-sm lg:text-base placeholder:text-[#828282] placeholder:font-[500] placeholder:text-xs outline-none py-2 pl-1" 
         id="headerSearchBar"
@@ -232,11 +215,11 @@ const SearchBarMd = () => {
               </div>
             ))}
           </div>
-          <Link to="#" onClick={handleSearchClick}>
+          <div onClick={handleSearchClick}>
             <div className="w-full py-2 text-white text-center bg-[#0070FF]">
               Show all results <span className="ml-2">&rarr;</span>
             </div>
-          </Link>
+          </div>
         </div>
       )}
     </div>
