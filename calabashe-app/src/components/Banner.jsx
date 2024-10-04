@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import {Helmet, HelmetProvider} from 'react-helmet-async'
 import Picture from "../assets/images/picture bubbles.png";
 import SearchContainer from "./searchContainer";
 import PictureWEBP from "../assets/images/picture bubbles.webp";
@@ -6,6 +6,8 @@ import BannerSearch from "./bannerSearchMd";
 const Banner = () => {
   return (
     <>
+    <HelmetProvider>
+
       <Helmet>
         <link rel="preload" as="image" href={PictureWEBP} />
         {/* <link rel="preload" as="image" href={Picture} /> */}
@@ -44,6 +46,7 @@ const Banner = () => {
           </picture>
         </div>
       </section>
+    </HelmetProvider>
     </>
   );
 };
