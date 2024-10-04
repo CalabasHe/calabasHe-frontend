@@ -4,6 +4,7 @@ import StarRating from "./rating";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import { toast } from "sonner";
+import HandleAdjective from "../utils/handleRatingAdjective";
 
 // eslint-disable-next-line react/prop-types
 const FacilityProfileSm = ({ facility = [] }) => {
@@ -32,13 +33,14 @@ const FacilityProfileSm = ({ facility = [] }) => {
             <h2 className="text-sm font-bold">
               {facility.name}
             </h2>
-            <div className="flex items-center gap-3 lg:gap-4">
-              <p className="text-[#6A6A67] text-xs">
+            <div className="flex items-center font-medium text-[#6A6A67] text-xs gap-3 lg:gap-4">
+              <p className="font-normal">
                 {" "}
                 {facility.totalReviews}{" "}
                 {facility.totalReviews === 1 ? "review" : "reviews"}
               </p>
               <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>
+              <p className="">{HandleAdjective(facility.rating)}</p>
             </div>
             <div className="flex items-center gap-3">
               <StarRating rating={facility.rating} />
