@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import {Helmet, HelmetProvider} from 'react-helmet-async'
 import Picture from "../assets/images/picture bubbles.png";
 import SearchContainer from "./searchContainer";
 import PictureWEBP from "../assets/images/picture bubbles.webp";
@@ -6,11 +6,13 @@ import BannerSearch from "./bannerSearchMd";
 const Banner = () => {
   return (
     <>
+    <HelmetProvider>
+
       <Helmet>
-        <link rel="preload" as="image" href={Picture} />
         <link rel="preload" as="image" href={PictureWEBP} />
+        {/* <link rel="preload" as="image" href={Picture} /> */}
       </Helmet>
-      <section className="bg-[#04DA8D] w-full pt-8 md:py-14 md:pt-16 space-y-6 md:space-y-0 md:flex flex-row lg:pl-[3%] lg:py-24 ">
+      <section className="bg-[#04DA8D] w-full pt-12 md:py-14 md:pt-16 space-y-6 md:space-y-0 md:flex flex-row lg:pl-[3%] lg:py-24 ">
         <div className=" flex flex-col md:w-[60%] px-4 md:px-5 space-y-3 lg:justify-between  lg:pb-4">
           <div className="text-lg sm:text-xl font-bold md:text-xl lg:text-4xl lg:space-y-3">
             <p className="">Find reviews on Ghanaian doctors.</p>
@@ -36,16 +38,15 @@ const Banner = () => {
 
         <div className="relative flex  gap-10 justify-end w-full md:w-[50%] min-md:max-w-[450px] lg:w-[50%] h-full">
           <picture>
-            <source
-              className=""
+            < source
               srcSet={PictureWEBP}
               type="image/webp"
-              alt=""
-            ></source>
-            <img className="" src={Picture} alt="" loading="eager"></img>
+            />
+            <img className="" src={Picture} alt="banner image" loading="eager"></img>
           </picture>
         </div>
       </section>
+    </HelmetProvider>
     </>
   );
 };

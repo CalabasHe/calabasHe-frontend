@@ -1,118 +1,245 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import StarRating from "../components/rating";
-import { MdLocationOn } from "react-icons/md";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import { toast } from "sonner";
+import HandleAdjective from "../utils/handleRatingAdjective";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileSm = ({ doctor = [] }) => {
-
   const handleLinkClick = () => {
     if (!isLoggedIn) {
-      toast.info('Sign in to leave a review')
+      toast.info("Sign in to leave a review");
     }
-  }
+  };
   const { isLoggedIn } = useAuth();
   return (
     <>
-      <main className="md:hidden w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-4  pb-8 flex flex-col gap-12 items-center ">
-        <div className="flex flex-col gap-4">
-          <section className="p-4 px-6 space-y-2 border shadow rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] bg-white ">
-            <div className="w-full h-[130px] md:h-[160px] lg:h-[180px] flex items-center justify-center border rounded-lg">
-              <svg
-                className="w-16 sm:w-18 md:w-20 fill-gray-700"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
-              >
-                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
+      <main className="md:hidden w-full mt-8 sm:mt-[80px] pb-8 flex flex-col gap-8 items-center ">
+        <div className="w-full flex flex-col gap-8">
+        <section className="w-full px-2 pt-12 pb-6 flex gap-6  items-center bg-white border-b">
+          <div className="relative size-24 rounded-full bg-gray-300/40 flex items-center justify-center">
+            <svg
+              className="size-12 fill-gray-700"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
+            </svg>
+              <svg className={` ${doctor.verified ? 'flex' : 'hidden'} absolute size-6 top-2 right-0 fill-current text-[#205CD4]`} xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512">
+                <path d="M12,24c-1.617,0-3.136-.708-4.176-1.92-1.587,.124-3.166-.451-4.31-1.595-1.144-1.145-1.717-2.719-1.595-4.31-1.212-1.039-1.92-2.558-1.92-4.175s.708-3.136,1.92-4.175c-.122-1.591,.451-3.166,1.595-4.31,1.144-1.143,2.723-1.712,4.31-1.595,1.04-1.212,2.559-1.92,4.176-1.92s3.136,.708,4.176,1.92c1.587-.119,3.167,.452,4.31,1.595,1.144,1.145,1.717,2.719,1.595,4.31,1.212,1.039,1.92,2.558,1.92,4.175s-.708,3.136-1.92,4.175c.122,1.591-.451,3.166-1.595,4.31-1.143,1.144-2.722,1.719-4.31,1.595-1.04,1.212-2.559,1.92-4.176,1.92Zm-3.274-4.095l.37,.549c.653,.968,1.739,1.546,2.904,1.546s2.251-.578,2.904-1.546l.37-.549,.649,.126c1.148,.223,2.323-.136,3.147-.96,.824-.825,1.183-2.001,.96-3.146l-.127-.65,.55-.37c.968-.653,1.546-1.739,1.546-2.904s-.578-2.251-1.546-2.904l-.55-.37,.127-.65c.223-1.145-.136-2.322-.96-3.146-.824-.824-2-1.182-3.147-.96l-.649,.126-.37-.549c-.653-.968-1.739-1.546-2.904-1.546s-2.251,.578-2.904,1.546l-.37,.549-.649-.126c-1.147-.22-2.323,.136-3.147,.96-.824,.825-1.183,2.001-.96,3.146l.127,.65-.55,.37c-.968,.653-1.546,1.739-1.546,2.904s.578,2.251,1.546,2.904l.55,.37-.127,.65c-.223,1.145,.136,2.322,.96,3.146,.824,.823,1.998,1.182,3.147,.96l.649-.126Zm3.184-4.485l5.793-5.707-1.404-1.425-5.809,5.701-2.793-2.707-1.393,1.437,2.782,2.696c.391,.391,.903,.585,1.416,.585s1.021-.193,1.407-.58Z"/>
               </svg>
+          </div>
+
+          <div className="space-y-1">
+            <h2 className="text-sm font-bold">
+              Dr. {doctor.firstName} {doctor.lastName}
+            </h2>
+            <div className="flex items-center font-medium text-xs text-[#6A6A67] gap-3 lg:gap-4">
+              <p className="font-normal">
+                {" "}
+                {doctor.totalReviews}{" "}
+                {doctor.totalReviews === 1 ? "review" : "reviews"}
+              </p>
+              <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>
+              <p className="">{HandleAdjective(doctor.rating)}</p>
             </div>
-            <div className="w-full grid grid-cols-5">
-              <div className="pt-4 space-y-2 col-span-3">
-                <div className="md:mb-3 lg:mb-4">
-                  <h2 className="text-sm md:text-lg lg:text-xl font-semibold">
-                    Dr. {doctor.firstName} {doctor.lastName}
-                  </h2>
-                  <p className="text-xs md:text-sm ">{doctor.specialty}</p>
+            <div className="flex items-center gap-3">
+              <StarRating rating={doctor.rating} />
+              <p className="text-[#6A6A67]">{doctor.rating.toFixed(1)}</p>
+             </div>
+            </div>
+          </section>
+          <div className="w-full px-4">
+            <Link to='/initial_form' state={{ message: [doctor.firstName, doctor.lastName] }} 
+            className={`${!doctor.verified ? "flex" : "hidden"}  w-full px-[7%] py-3 flex items-center justify-between border-[#205CD4] border rounded-md`}>
+              <div className="text-sm space-y-1">
+              <div className="flex font-semibold items-center gap-2">
+                  <svg
+                    className="size-3"
+                    width="17"
+                    height="17"
+                    viewBox="0 0 17 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6 2L4.2 2C3.08 2 2.52 2 2.092 2.218C1.71569 2.40974 1.40974 2.71569 1.218 3.092C1 3.52 1 4.08 1 5.2L1 12.8C1 13.92 1 14.48 1.218 14.908C1.40974 15.2843 1.71569 15.5903 2.092 15.782C2.519 16 3.079 16 4.197 16H11.803C12.921 16 13.48 16 13.907 15.782C14.284 15.59 14.59 15.284 14.782 14.908C15 14.48 15 13.921 15 12.803L15 11M16 6L16 1M16 1L11 1M16 1L9 8"
+                      stroke="#1F44FF"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="">
+                    Are you Dr. {doctor.firstName.split(" ")[0]}?
+                  </p>
                 </div>
-                <StarRating rating={doctor.rating} />
-
-                {/* Patients tell us */}
-                <ul className="text-xs md:text-sm font-semibold">
-                  Patients tell us:
-                  {doctor.reviews.slice(0, 3).map((titles) => (
-                    <li key={titles.id} className="font-medium text-xs ">
-                      &#8226;{" "}
-                      {titles.title.charAt(0).toUpperCase() +
-                        titles.title.slice(1).toLowerCase()}
-                    </li>
-                  ))}
-                  {/* <li>{patientsTellUs[0]}</li> */}
-                </ul>
+                <p className="font-light text-xs">Verify your account</p>
               </div>
+              <svg
+                width="18"
+                height="16"
+                viewBox="0 0 18 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 8L10.5 0.5L9.4425 1.5575L15.1275 7.25L0 7.25V8.75L15.1275 8.75L9.4425 14.4425L10.5 15.5L18 8Z"
+                  fill="#1F44FF"
+                />
+              </svg>
+            </Link>
+          </div>
 
-              {/* Qualifications */}
-              <div className="bg-[#D3D3B1] rounded-md space-y-3 col-span-2 p-2">
-                <svg
-                  className=""
-                  width="35"
-                  height="34"
-                  viewBox="0 0 57 56"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M49.625 1H7.33333C4.11167 1 1.5 3.61167 1.5 6.83333V49.125C1.5 52.3467 4.11167 54.9583 7.33333 54.9583H49.625C52.8467 54.9583 55.4583 52.3467 55.4583 49.125V6.83333C55.4583 3.61167 52.8467 1 49.625 1Z"
-                    stroke="black"
-                    strokeWidth="1.45833"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M41.2393 21.4167C39.5955 21.4167 38.019 20.7637 36.8567 19.6014C35.6943 18.439 35.0413 16.8626 35.0413 15.2188C35.0413 13.575 34.3883 11.9985 33.226 10.8362C32.0637 9.67387 30.4872 9.02087 28.8434 9.02087H28.1143C26.4705 9.02087 24.894 9.67387 23.7317 10.8362C22.5693 11.9985 21.9163 13.575 21.9163 15.2188C21.9163 16.8626 21.2633 18.439 20.101 19.6014C18.9387 20.7637 17.3622 21.4167 15.7184 21.4167C14.0746 21.4167 12.4982 22.0697 11.3358 23.232C10.1735 24.3944 9.52051 25.9708 9.52051 27.6146V28.3438C9.52051 29.9876 10.1735 31.564 11.3358 32.7264C12.4982 33.8887 14.0746 34.5417 15.7184 34.5417C17.3622 34.5417 18.9387 35.1947 20.101 36.357C21.2633 37.5194 21.9163 39.0958 21.9163 40.7396C21.9163 42.3834 22.5693 43.9599 23.7317 45.1222C24.894 46.2845 26.4705 46.9375 28.1143 46.9375H28.8434C30.4872 46.9375 32.0637 46.2845 33.226 45.1222C34.3883 43.9599 35.0413 42.3834 35.0413 40.7396C35.0413 39.0958 35.6943 37.5194 36.8567 36.357C38.019 35.1947 39.5955 34.5417 41.2393 34.5417C42.883 34.5417 44.4595 33.8887 45.6218 32.7264C46.7842 31.564 47.4372 29.9876 47.4372 28.3438V27.6146C47.4372 25.9708 46.7842 24.3944 45.6218 23.232C44.4595 22.0697 42.883 21.4167 41.2393 21.4167Z"
-                    stroke="black"
-                    strokeWidth="1.45833"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M42.1437 32.3614C40.9816 31.1991 40.3287 29.6228 40.3287 27.9791C40.3287 26.3355 40.9816 24.7592 42.1437 23.5968C43.3059 22.4345 43.9587 20.8582 43.9587 19.2145C43.9587 17.5709 43.3059 15.9946 42.1437 14.8323L41.6275 14.316C40.4652 13.1539 38.8888 12.501 37.2452 12.501C35.6015 12.501 34.0252 13.1539 32.8629 14.316C32.2873 14.8917 31.604 15.3483 30.852 15.6599C30.0999 15.9714 29.2939 16.1318 28.4799 16.1318C27.6658 16.1318 26.8598 15.9714 26.1077 15.6599C25.3557 15.3483 24.6724 14.8917 24.0968 14.316C22.9345 13.1539 21.3582 12.501 19.7145 12.501C18.0709 12.501 16.4946 13.1539 15.3323 14.316L14.816 14.8308C13.6539 15.9931 13.001 17.5694 13.001 19.2131C13.001 20.8567 13.6539 22.4331 14.816 23.5954C15.3917 24.1709 15.8483 24.8542 16.1599 25.6063C16.4714 26.3583 16.6318 27.1644 16.6318 27.9784C16.6318 28.7924 16.4714 29.5985 16.1599 30.3505C15.8483 31.1026 15.3917 31.7859 14.816 32.3614C13.6539 33.5237 13.001 35.1001 13.001 36.7437C13.001 38.3874 13.6539 39.9637 14.816 41.126L15.3308 41.6423C16.4931 42.8044 18.0694 43.4573 19.7131 43.4573C21.3567 43.4573 22.9331 42.8044 24.0954 41.6423C24.6709 41.0666 25.3542 40.61 26.1063 40.2984C26.8583 39.9868 27.6644 39.8265 28.4784 39.8265C29.2924 39.8265 30.0985 39.9868 30.8505 40.2984C31.6026 40.61 32.2859 41.0666 32.8614 41.6423C34.0237 42.8044 35.6001 43.4573 37.2437 43.4573C38.8874 43.4573 40.4637 42.8044 41.626 41.6423L42.1423 41.1275C43.3044 39.9652 43.9573 38.3888 43.9573 36.7452C43.9573 35.1015 43.3044 33.5252 42.1423 32.3629"
-                    stroke="black"
-                    strokeWidth="1.45833"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+        </div>
 
-                <p>
-                  Highest Honours PhD
-                </p>
+        <section className="px-4 space-y-8">
+          {/* Write a review */}
+          <div className="w-full bg-[#205CD4] text-center py-3 rounded-3xl">
+            <Link
+            to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+            onClick={handleLinkClick} 
+            state={{
+                    message: [doctor.lastName, "doctor", doctor.id],
+                    from: `/review/${doctor.slug}`,
+                  }}
+              className="text-white">
+                Write a review
+            </Link>
+          </div>
 
-              {/* <div className="">
-                  <img src={doctor.qrCode}></img>
-              </div> */}
+          {/* Ratings */}
+          <section className="w-full space-y-4 max-w-[700px]">
+            <div className="bg-white border py-6 px-4 rounded-lg space-y-6">
+            <h3 className="text-lg font-bold"> Ratings</h3>
+              <div className="space-y-2">
+              <div className="">
+  <p className="text-4xl font-black">
+    {doctor.rating}
+  </p>
+  <p className="text-sm font-light text-[#A0AAB3]">
+    {doctor.totalReviews === 1 ? doctor.totalReviews + ' review' : doctor.totalReviews + ' reviews'}
+  </p>
+</div>
+                <StarRating profile={true} rating={parseFloat(doctor.rating)} />
               </div>
+              <ul className="pr-6 space-y-3">
+                {[5, 4, 3, 2, 1].map((star, index) => (
+                  <li
+                    key={star}
+                    className="text-base md:text-lg lg:text-xl font-medium grid grid-cols-[2.5rem_1fr_3rem] items-center gap-2"
+                  >
+                    <label htmlFor={`${star}star`} className="whitespace-nowrap">
+                      {star} star
+                    </label>
+                    <div className="w-full pl-2 flex items-center justify-center ">
+                      <progress
+                        id={`${star}star`}
+                        value={doctor.ratingPercentages[index].percentage}
+                        max="100"
+                        className=" max-w-[430px] h-4 md:h-5"
+                      ></progress>
+                    </div>
+                    <p className="text-[#A0AAB3] text-right">
+                      {doctor.ratingPercentages[index].percentage}%
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 
-          <div className="bg-white w-full p-2  pl-4 mb-4 flex items-center justify-between rounded-lg border">
-                <div className=" flex grow items-center gap-3 mr-1 ">
-                  <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
-
-                  <Link
-                    to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-                    onClick={handleLinkClick}
-                    state={{
-                      message: [doctor.lastName, "doctor", doctor.id],
-                      from: `/review/${doctor.slug}`,
-                    }}
-                    className="text-xs lg:text-sm font-[600] text-[#205CD4]"
-                  >
-                    <p className="">Write a review</p>
-                  </Link>
+          {/* Reviews */}
+          <section className="w-full space-y-4 md:w-[80%] md:max-w-[700px] select-none">
+            <h3 className="text-lg md:text-xl font-bold ">Reviews</h3>
+            {!doctor.reviews.length > 0 ? (
+              <p className="text-base text-[#A0AAB3]  border-b border-[#D0D0D0] pb-4">
+                No reviews yet
+              </p>
+            ) : (
+              <p className="text-sm md:text-base border-b border-[#D0D0D0] pb-4">
+                All reviews have been left by actual patients.
+              </p>
+            )}
+            <div className="flex flex-col gap-4 md:gap-8">
+              {doctor.reviews.slice(0, 4).map((review) => (
+                <div
+                key={review.id}
+                className="w-full border shadow-sm bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
+              >
+                <div className="flex justify-between items-center ">
+                  <StarRating rating={review.rating} />
+                  <p className="text-xs text-[#333333] opacity-50">
+                    {formatDate(review.created_at.split("T")[0])}
+                  </p>
                 </div>
+
+                <p className="text-sm ">{review.description}</p>
+              </div>
+              ))}
+            </div>
+          </section>
+          
+          {/* About Section */}
+          <section className="w-full space-y-3">
+              <div className="border space-y-3 bg-white pt-4 pb-4 px-4 rounded-xl">
+                <section className="pb-8 border-b-2 space-y-4">
+                  <h3 className="text-base font-[800] ">
+                    About Dr. {doctor.firstName.split(' ')[0]}{" "}
+                  </h3>
+                  <p className="text-xs max-w-[90%] leading-loose ">
+                    Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
+                    medical doctor practicing General Medicine.
+                    <br />
+                    In Ghana, General Practitioners (GPs) provide primary
+                    healthcare, handling a wide range of conditions and referring
+                    patients to specialists when needed. GPs complete six years of
+                    medical school and a two-year housemanship, gaining practical
+                    experience before receiving full licensing from the Medical
+                    and Dental Council of Ghana.
+                  </p>
+                </section>
+
+                <section className="w-full space-y-4 pt-8 lg:pt-12">
+                  <h3 className="text-base font-bold">Contact Details</h3>
+                  <ul className="space-y-2">
+                    <li></li>
+                    <li className="flex items-center gap-2">
+                      <svg
+                        className="size-4"
+                        width="21"
+                        height="25"
+                        viewBox="0 0 21 25"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18.0482 3.63002C14.1432 -0.211228 7.81198 -0.211228 3.90698 3.63002C2.97984 4.53582 2.24312 5.61781 1.74013 6.81241C1.23714 8.00701 0.978027 9.2901 0.978027 10.5863C0.978027 11.8824 1.23714 13.1655 1.74013 14.3601C2.24312 15.5547 2.97984 16.6367 3.90698 17.5425L10.977 24.4988L18.0482 17.5425C18.9754 16.6367 19.7121 15.5547 20.2151 14.3601C20.7181 13.1655 20.9772 11.8824 20.9772 10.5863C20.9772 9.2901 20.7181 8.00701 20.2151 6.81241C19.7121 5.61781 18.9754 4.53582 18.0482 3.63002ZM10.977 13.8738C10.142 13.8738 9.35823 13.5488 8.76698 12.9588C8.18167 12.3722 7.85295 11.5774 7.85295 10.7488C7.85295 9.92013 8.18167 9.12533 8.76698 8.53877C9.35698 7.94877 10.142 7.62377 10.977 7.62377C11.812 7.62377 12.597 7.94877 13.187 8.53877C13.7723 9.12533 14.101 9.92013 14.101 10.7488C14.101 11.5774 13.7723 12.3722 13.187 12.9588C12.597 13.5488 11.812 13.8738 10.977 13.8738Z"
+                          fill="#205CD4"
+                        />
+                      </svg>
+                      <p className="text-xs self-center font-normal">
+                        {doctor.location}, Ghana
+                      </p>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+
+              <div className="bg-white  flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 border rounded-xl">
+                <div className="space-y-3 lg:space-y-4">
+                  <h3 className="text-xl lg:2xl font-bold">
+                    Share your experience
+                  </h3>
+                  <p className="text-sm lg:text-base">
+                    We value your feedback and look forward to hearing about your
+                    experiences with our services. Your insights help us improve
+                    and provide the best care possible.
+                  </p>
+                </div>
+
                 <Link
                   to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
                   onClick={handleLinkClick}
@@ -120,149 +247,32 @@ const DocProfileSm = ({ doctor = [] }) => {
                     message: [doctor.lastName, "doctor", doctor.id],
                     from: `/review/${doctor.slug}`,
                   }}
+                  className="w-full  hover:scale-[1.01] duration-100"
                 >
-                  <StarRating rating={0} />
+                  <button
+                    className="w-full mt-4 flex items-center justify-center gap-2 text-lg font-bold bg-[#FEE330] px-2 py-3 rounded-md"
+                    aria-label={`Leave a review for Dr. ${doctor.slug}`}
+                  >
+                    <p className="text-center text-lg lg:text-xl font-bold">
+                      Leave a Review
+                    </p>
+                    <svg
+                      width="25"
+                      height="26"
+                      viewBox="0 0 30 31"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M27 0.968994H3C1.35 0.968994 0 2.31899 0 3.96899V30.969L6 24.969H27C28.65 24.969 30 23.619 30 21.969V3.96899C30 2.31899 28.65 0.968994 27 0.968994ZM6 18.969V15.264L16.32 4.94399C16.62 4.64399 17.085 4.64399 17.385 4.94399L20.04 7.59899C20.34 7.89899 20.34 8.36399 20.04 8.66399L9.705 18.969H6ZM22.5 18.969H12.75L15.75 15.969H22.5C23.325 15.969 24 16.644 24 17.469C24 18.294 23.325 18.969 22.5 18.969Z"
+                        fill="black"
+                      />
+                    </svg>
+                  </button>
                 </Link>
               </div>
-
-        </div>
-
-        {/* About Section */}
-        <section className="w-full flex flex-col gap-3 md:w-[80%] md:max-w-[700px]">
-          <h3 className="text-lg md:text-xl font-bold ">
-            About Dr. {doctor.firstName}{" "}
-          </h3>
-          <p className="text-sm sm:text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
-            maxime modi sequi, sed vel perferendis, labore at beatae ea ut non
-            rem perspiciatis! Omnis dolorum minus nisi quisquam voluptatum dicta
-            vero sit soluta cum quas, neque odit dolor asperiores maxime, fugit
-            molestias excepturi, tempora repellendus quae nobis rem architecto
-            aperiam. Suscipit, ad debitis dolores delectus quisquam architecto
-            mollitia unde possimus.
-          </p>
-        </section>
-        <section className="w-full space-y-4 md:w-[80%] md:max-w-[700px]">
-          <h3 className="text-lg md:text-xl font-bold ">Contact Details</h3>
-          <ul className="space-y-2">
-            <li></li>
-            <li className="flex gap-3">
-              <MdLocationOn size={28} className="text-[#B6D9DA] " />
-              <p className="text-base self-center font-medium">
-                {doctor.location}, Ghana
-              </p>
-            </li>
-          </ul>
-        </section>
-
-        {/* Ratings */}
-        <section className="w-full space-y-4 md:w-[80%] max-w-[700px]">
-          <h3 className="text-lg md:text-xl font-bold"> Ratings</h3>
-          <div className="bg-white border py-12 px-4 md:px-8 rounded-lg space-y-6">
-            <div className="space-y-2">
-              <p className="text-4xl md:text-5xl font-black">
-                {doctor.rating}
-                <span className="text-lg font-light md:font-normal text-[#A0AAB3]">
-                  ({doctor.totalReviews})
-                </span>
-              </p>
-              <StarRating profile={true} rating={parseFloat(doctor.rating)} />
-            </div>
-            <ul className="pr-6 space-y-3">
-              {[5, 4, 3, 2, 1].map((star, index) => (
-                <li
-                  key={star}
-                  className="text-base md:text-lg lg:text-xl font-medium grid grid-cols-[2.5rem_1fr_3rem] items-center gap-2"
-                >
-                  <label htmlFor={`${star}star`} className="whitespace-nowrap">
-                    {star} star
-                  </label>
-                  <div className="w-full pl-1 flex items-center justify-center ">
-                    <progress
-                      id={`${star}star`}
-                      value={doctor.ratingPercentages[index].percentage}
-                      max="100"
-                      className=" max-w-[430px] h-4 md:h-5"
-                    ></progress>
-                  </div>
-                  <p className="text-[#A0AAB3] text-right">
-                    {doctor.ratingPercentages[index].percentage}%
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* Reviews */}
-        <section className="w-full space-y-4 md:w-[80%] md:max-w-[700px] select-none">
-          <h3 className="text-lg md:text-xl font-bold ">Reviews</h3>
-          {!doctor.reviews.length > 0 ? (
-            <p className="text-base text-[#A0AAB3]  border-b border-[#D0D0D0] pb-4">
-              No reviews yet
-            </p>
-          ) : (
-            <p className="text-sm md:text-base border-b border-[#D0D0D0] pb-4">
-              All reviews have been left by actual patients.
-            </p>
-          )}
-          <div className="flex flex-col gap-4 md:gap-8">
-            {doctor.reviews.slice(0, 4).map((review) => (
-              <div key={review.id} className="w-full space-y-2 ">
-                <StarRating rating={review.rating} />
-                <div>
-                  <p className="text-sm md:text-base ">{review.description}</p>
-                  <p className="text-xs md:text-sn text-[#333333] opacity-50">
-                    {formatDate(review.created_at.split("T")[0])}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="w-full space-y-2 md:w-[80%] md:max-w-[700px]">
-          <h3 className="text-lg md:text-xl font-bold ">
-            Share your experience
-          </h3>
-          <p className="text-xs sm:text-sm font-medium max-w-[85%]">
-            We value your feedback and look forward to hearing about your
-            experiences with our services. Your insights help us improve and
-            provide the best care possible.
-          </p>
-        </section>
-
-        {/* Leave a Review */}
-        <Link
-          to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-          onClick={handleLinkClick}
-          state={{
-            message: [doctor.lastName, "doctor", doctor.id],
-            from: `/review/${doctor.slug}`,
-          }}
-          className="w-full md:w-[80%] md:max-w-[700px] lg:hover:scale-[1.01] duration-100"
-        >
-          <button
-            className="w-full mt-4 flex items-center justify-center gap-2 md:px-6 md:w-[250px] text-lg font-bold bg-[#FEE330] py-3 rounded-md"
-            aria-label={`Leave a review for Dr. ${doctor.slug}`}
-          >
-            <p className="text-center text-lg md:text-xl font-bold">
-              Leave a Review
-            </p>
-            <svg
-              width="25"
-              height="26"
-              viewBox="0 0 30 31"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M27 0.968994H3C1.35 0.968994 0 2.31899 0 3.96899V30.969L6 24.969H27C28.65 24.969 30 23.619 30 21.969V3.96899C30 2.31899 28.65 0.968994 27 0.968994ZM6 18.969V15.264L16.32 4.94399C16.62 4.64399 17.085 4.64399 17.385 4.94399L20.04 7.59899C20.34 7.89899 20.34 8.36399 20.04 8.66399L9.705 18.969H6ZM22.5 18.969H12.75L15.75 15.969H22.5C23.325 15.969 24 16.644 24 17.469C24 18.294 23.325 18.969 22.5 18.969Z"
-                fill="black"
-              />
-            </svg>
-          </button>
-        </Link>
+            </section>
+        </section>    
       </main>
     </>
   );

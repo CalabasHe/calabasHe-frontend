@@ -19,7 +19,7 @@ const FaqSection = () => {
               <h3 className="pt-3 pb-7 text-sm md:text-base text-center font-medium">
                 How many reviews can I make a day?
               </h3>
-              <p className="text-xs md:text-sm text-center">{`All users are limited to 5 ratings a day. This is to ensure authenticity and genuine ratings that can help people make crucial health decisions.`}</p>
+              <p className="text-xs md:text-sm text-center">{`All users are limited to 5 reviews a day. This is to ensure authenticity and genuine ratings that can help people make crucial health decisions.`}</p>
             </div>
           </article>
 

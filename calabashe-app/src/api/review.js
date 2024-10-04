@@ -36,7 +36,7 @@ export const createDoctorReview = async ({ user, rating, title, description, doc
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error:', error);
+    // console.error('Something went wrong!');
     throw error;
   }
 };
@@ -74,8 +74,8 @@ export const createFacilityReview = async ({ user, rating, title, description, f
       const data = JSON.parse(responseText);
       return data;
     } catch (parseError) {
-      console.error('Error parsing JSON:', parseError);
-      console.error('Raw response:', responseText);
+      // console.error('Error parsing JSON:', parseError);
+      // console.error('Raw response:', responseText);
       throw new Error('Invalid JSON in server response');
     }
   } catch (error) {

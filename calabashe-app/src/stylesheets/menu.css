@@ -103,7 +103,7 @@ body{
   display: flex;
   flex-direction: column;
   gap: 5%;
-  padding: 30% 0 0 10%;
+  padding: 30% 0 0 0;
 }
 
 
