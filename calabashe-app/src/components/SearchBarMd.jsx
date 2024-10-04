@@ -160,7 +160,7 @@ const SearchBarMd = () => {
           id="headerSearchIcon"
           className={`${
             isFocused ? "focused" : "stroke-[#828282]"
-          } w-5 lg:w-6 h-5 lg:h-6 mt-2 ${isLoading ? "animate-ping" : ""}`}
+          } w-5 lg:w-6 h-5 lg:h-6 mt-2`}
           width="32"
           height="32"
           viewBox="0 0 32 32"
