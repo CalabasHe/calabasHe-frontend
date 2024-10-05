@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
@@ -11,20 +10,17 @@ const BannerSearch = () => {
   const [debouncedSearchParam, setDebouncedSearchParam] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
-  const [bottomRadius, setBottomRadius] = useState();
-  const bannerRef = useRef(null);
   const [showResults, setShowResults] = useState(false);
   const { updateBannerVisibility } = useBannerVisibility();
+  const bannerRef = useRef(null);
   const resultsRef = useRef(null);
   const searchBarRef = useRef(null);
-
-  const go = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (resultsRef.current && !resultsRef.current.contains(event.target)) {
         setShowResults(false);
-        // searchBarRef.current.value = '';
         setSearchParam("");
       }
     };
@@ -37,7 +33,7 @@ const BannerSearch = () => {
   }, []);
 
   const handleMouseEnter = () => {
-    if (results && searchParam != "") {
+    if (results && searchParam !== "") {
       setShowResults(true);
     }
   };
@@ -46,7 +42,6 @@ const BannerSearch = () => {
     setShowResults(false);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearch = useCallback(
     debounce((value) => {
       setDebouncedSearchParam(value);
@@ -80,7 +75,6 @@ const BannerSearch = () => {
             reviewCount: result.total_reviews,
           }));
           setResults(resultDetails);
-          // console.log(resultDetails)
           setShowResults(true);
           setError("");
         } else {
@@ -96,41 +90,15 @@ const BannerSearch = () => {
     searchSomething();
   }, [debouncedSearchParam]);
 
-  const handleLinkClick = (result) => {
-    go(
-      result.type
-        ? `/facilities/${result.type}s/${result.slug}`
-        : result.specialty
-        ? `/doctors/${result.slug}`
-        : `/services`
-    );
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    if (!searchParam) return;
+    setShowResults(false);
+
+    // Navigate to the results page and pass search data via state
+    navigate("/results", { state: { searchParam, results } });
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        const isFullyVisible =
-          entry.isIntersecting && entry.intersectionRatio === 1;
-        updateBannerVisibility(!isFullyVisible); // Update context when visibility changes
-      },
-      {
-        threshold: [0, 1], // Trigger when the element becomes visible at all, or fully visible
-        rootMargin: "0px",
-      }
-    );
-
-    if (bannerRef.current) {
-      observer.observe(bannerRef.current);
-    }
-
-    return () => {
-      if (bannerRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(bannerRef.current);
-      }
-    };
-  }, [updateBannerVisibility]);
   return (
     <div
       onMouseLeave={handleMouseLeave}
@@ -146,7 +114,6 @@ const BannerSearch = () => {
         } font-medium border-black p-1`}
       >
         <input
-          // value={searchParams}
           ref={searchBarRef}
           id="banner_search_field"
           type="text"
@@ -155,22 +122,28 @@ const BannerSearch = () => {
           placeholder="Search for doctors, clinics or services"
           onChange={(e) => setSearchParam(e.target.value)}
           autoComplete="off"
+          value={searchParam}
         />
+
         <button
-          id="banner_search_button"
+          //search buton
+          onClick={handleSearchClick}
+          // id="banner_search_button"
           className="relative z-30 items-center w-[30%] lg:w-[25%] h-8 md:h-[40px] lg:h-[60px] text-white text-base lg:text-lg font-bold p-2 lg:p-1 bg-[#0070FF] rounded-3xl lg:rounded-[999999px]"
         >
           Search
         </button>
       </div>
 
+      {/* Results Dropdown (show on input) */}
       {showResults && (
         <div
           ref={resultsRef}
-          className={`absolute z-50 rounded-b-3xl py-4 space-y-6 shadow-lg bg-white w-full`}
+          className="absolute z-50 rounded-b-3xl py-4 space-y-6 shadow-lg bg-white w-full"
         >
           {results.length > 0 && (
             <>
+              {/* Show doctors */}
               {results.filter((result) => result.specialty).length > 0 && (
                 <div className="space-y-2 border-b pb-4">
                   <p className="px-4 text-lg font-medium">Doctors</p>
@@ -204,6 +177,7 @@ const BannerSearch = () => {
                 </div>
               )}
 
+              {/* Show facilities */}
               {results.filter((result) => !result.specialty).length > 0 && (
                 <div className="space-y-2">
                   <p className="px-4 text-lg font-medium">Facilities</p>
@@ -239,8 +213,12 @@ const BannerSearch = () => {
             </>
           )}
 
+          {/* Show all results button */}
           {results.length > 4 && (
-            <div className="w-[full] cursor-pointer mx-4 py-3 rounded-xl text-white text-center bg-[#0070FF]">
+            <div
+              onClick={handleSearchClick}
+              className="w-[full] cursor-pointer mx-4 py-3 rounded-xl text-white text-center bg-[#0070FF]"
+            >
               Show all results <span className="ml-2">&rarr;</span>
             </div>
           )}
