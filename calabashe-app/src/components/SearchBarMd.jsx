@@ -4,6 +4,7 @@ import { useBannerVisibility } from "../context/BannerVisibilityContext";
 import "../stylesheets/headerSearch.css";
 import StarRating from "./rating";
 import SearchData from "../api/search";
+import SearchData from "../api/search";
 import debounce from "lodash/debounce";
 
 const SearchBarMd = () => {

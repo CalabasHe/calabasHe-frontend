@@ -97,7 +97,7 @@ const DoctorCard = () => {
           className="cursor-pointer lg:hover:scale-[1.01] duration-300 mt-4 border  bg-white shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
-          <div className="relative h-[full] mt-2 lg:self-center lg:h-[80%] w-[35%] max-w-[120px] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
+          <div className="relative h-[full] mt-2 lg:self-center lg:h-[90%] w-[35%] max-w-[120px] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
             <svg
               className="w-16 sm:w-18 md:w-20 fill-gray-700"
               xmlns="http://www.w3.org/2000/svg"

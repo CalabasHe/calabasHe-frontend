@@ -35,15 +35,15 @@ const SearchResultsPageLG = () => {
   return (
     <main className=" lg:block md:block pb-11">
       <section className="bg-white w-full h-auto border-b-2 pt-[100px] pb-10">
-        <h1 className="font-poppins pt-9 font-bold text-4xl flex justify-center items-center">
-          Results for "{searchParam}"
+        <h1 className="font-poppins pt-9 font-bold text-2xl md:text-4xl flex justify-center items-center">
+          Results for &quot;{searchParam}&quot;
         </h1>
         <ExploreCategories />
       </section>
       <div className=" w-full mt-[100px] px-4 flex justify-center">
         <section className="flex flex-col lg:flex-row gap-11 lg:justify-center w-full">
           {/* First column for the rating card */}
-          <div className="w-fit ">
+          <div className="min-w-fit ">
             {/* Rating card */}
             <div className="   h-auto bg-[#fff] rounded-[8px] border-solid border p-5 border-[#d9d9d9]">
               <p className="font-semibold">Rating</p>
@@ -59,7 +59,7 @@ const SearchResultsPageLG = () => {
                   Any
                 </button>
                 <button
-                  className={`border-[#000000] font-semibold min-w-fit text-[#205CD4] px-4 py-2 ${
+                  className={`border-[#000000] font-semibold min-w-fit text-black px-4 py-2 ${
                     selectedRating === "3.0"
                       ? "bg-[#d7e3fa] "
                       : "border-t-2 border-b-2 border-l-2"
@@ -69,7 +69,7 @@ const SearchResultsPageLG = () => {
                   3.0 ★
                 </button>
                 <button
-                  className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-[#205CD4]  ${
+                  className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-black  ${
                     selectedRating === "4.0"
                       ? "bg-[#d7e3fa] "
                       : "border-t-2 border-b-2 border-l-2"
@@ -79,7 +79,7 @@ const SearchResultsPageLG = () => {
                   4.0 ★
                 </button>
                 <button
-                  className={`border-[#000000] min-w-fit font-semibold text-[#205CD4] px-4 py-2 rounded-tr-lg rounded-br-lg ${
+                  className={`border-[#000000] min-w-fit font-semibold text-black px-4 py-2 rounded-tr-lg rounded-br-lg ${
                     selectedRating === "4.5"
                       ? "bg-[#d7e3fa]  rounded-tr-lg rounded-br-lg"
                       : "border-t-2 border-r-2 border-b-2 border-l-2"
@@ -124,7 +124,7 @@ const SearchResultsPageLG = () => {
                       <div className="flex-1">
                         {result.specialty ? (
                           <Link to={`/doctors/${result.slug}`}>
-                            <h2 className="font-poppins text-xs  md:text-base lg:text-lg font-black text-[16px] font-semibold leading-[24px]">
+                            <h2 className="font-poppins text-xs  md:text-base lg:text-lg text-[16px] font-semibold leading-[24px]">
                               Dr. {result.firstName} {result.lastName}
                             </h2>
                           </Link>
@@ -178,23 +178,23 @@ const SearchResultsPageLG = () => {
                           <path
                             d="M18 28.875C24.0061 28.875 28.875 24.0061 28.875 18C28.875 11.9939 24.0061 7.125 18 7.125C11.9939 7.125 7.125 11.9939 7.125 18C7.125 24.0061 11.9939 28.875 18 28.875Z"
                             stroke="#18191A"
-                            stroke-width="0.75"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="0.75"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M7.125 18H28.875M8.60775 12.5198H27.3922M8.6085 23.4802H27.3915M18 28.875V7.125"
                             stroke="#18191A"
-                            stroke-width="0.75"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="0.75"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M18 28.875C21.0267 28.875 23.4803 24.0061 23.4803 18C23.4803 11.9939 21.0267 7.125 18 7.125C14.9734 7.125 12.5198 11.9939 12.5198 18C12.5198 24.0061 14.9734 28.875 18 28.875Z"
                             stroke="#18191A"
-                            stroke-width="0.75"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="0.75"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                         <svg
