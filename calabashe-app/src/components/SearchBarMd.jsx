@@ -12,6 +12,7 @@ const SearchBarMd = () => {
   const [searchParam, setSearchParam] = useState('')
   const [debouncedSearchParam, setDebouncedSearchParam] = useState("");
   const [results, setResults] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
   const [showResults, setShowResults] = useState(false)
   const searchRef = useRef(null)

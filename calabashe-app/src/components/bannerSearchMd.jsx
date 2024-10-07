@@ -135,7 +135,7 @@ const BannerSearch = () => {
     onMouseLeave={handleMouseLeave}
     onMouseEnter={handleMouseEnter}
     className="relative z-30" ref={bannerRef}>
-      <div className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white relative max-w-[100%] ${showResults ? 'rounded-b-none border-b border-gray-200 rounded-t-3xl py-4' : 'rounded-3xl lg:rounded-[999999px]'} font-medium border-black p-1`}>
+      <div className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white  max-w-[100%] ${showResults ? 'rounded-b-none border-b border-gray-200 rounded-t-3xl py-4' : 'rounded-3xl lg:rounded-[999999px]'} font-medium border-black p-1`}>
         <input
           // value={searchParams}
           ref={searchBarRef}
