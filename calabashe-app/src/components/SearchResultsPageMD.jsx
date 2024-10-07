@@ -10,6 +10,8 @@ const SearchResultsPageLG = () => {
     searchParam: "",
     results: [],
   };
+  // State to manage the visibility of the filter overlay
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // State to manage the open accordion item
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -33,17 +35,125 @@ const SearchResultsPageLG = () => {
   });
 
   return (
-    <main className=" lg:block md:block pb-11">
+    <main className="  pb-11">
       <section className="bg-white w-full h-auto border-b-2 pt-[100px] pb-10">
-        <h1 className="font-poppins pt-9 font-bold text-2xl md:text-4xl flex justify-center items-center">
+        <h1 className="font-poppins pt-9 font-bold  text-5xl md:text-4xl flex justify-center items-center">
           Results for &quot;{searchParam}&quot;
         </h1>
         <ExploreCategories />
+        {/*Filter for mobile*/}
+        {/* Filter Button */}
+        <div className=" md:hidden lg:hidden flex justify-center mt-2 px-4">
+          <button
+            onClick={() => setIsFilterOpen(true)}
+            className="border border-[#205CD4] text-[#205CD4] flex justify-center space-x-3 py-2 w-full rounded-full"
+          >
+            <div className="font-semibold text-lg">Filter</div>
+
+            <svg
+              width="24"
+              height="25"
+              viewBox="0 0 24 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 2C8.06902 1.99951 7.16081 2.28778 6.40053 2.82508C5.64025 3.36239 5.06533 4.12227 4.755 5H0V8H4.755C5.0649 8.8783 5.63961 9.63885 6.3999 10.1768C7.16019 10.7148 8.06863 11.0037 9 11.0037C9.93137 11.0037 10.8398 10.7148 11.6001 10.1768C12.3604 9.63885 12.9351 8.8783 13.245 8H24V5H13.245C12.9347 4.12227 12.3598 3.36239 11.5995 2.82508C10.8392 2.28778 9.93098 1.99951 9 2ZM7.5 6.5C7.5 6.10218 7.65804 5.72064 7.93934 5.43934C8.22064 5.15804 8.60218 5 9 5C9.39782 5 9.77936 5.15804 10.0607 5.43934C10.342 5.72064 10.5 6.10218 10.5 6.5C10.5 6.89783 10.342 7.27936 10.0607 7.56066C9.77936 7.84196 9.39782 8 9 8C8.60218 8 8.22064 7.84196 7.93934 7.56066C7.65804 7.27936 7.5 6.89783 7.5 6.5ZM15 14C14.069 13.9995 13.1608 14.2878 12.4005 14.8251C11.6402 15.3624 11.0653 16.1223 10.755 17H0V20H10.755C11.0649 20.8783 11.6396 21.6388 12.3999 22.1768C13.1602 22.7148 14.0686 23.0037 15 23.0037C15.9314 23.0037 16.8398 22.7148 17.6001 22.1768C18.3604 21.6388 18.9351 20.8783 19.245 20H24V17H19.245C18.9347 16.1223 18.3598 15.3624 17.5995 14.8251C16.8392 14.2878 15.931 13.9995 15 14ZM13.5 18.5C13.5 18.1022 13.658 17.7206 13.9393 17.4393C14.2206 17.158 14.6022 17 15 17C15.3978 17 15.7794 17.158 16.0607 17.4393C16.342 17.7206 16.5 18.1022 16.5 18.5C16.5 18.8978 16.342 19.2794 16.0607 19.5607C15.7794 19.842 15.3978 20 15 20C14.6022 20 14.2206 19.842 13.9393 19.5607C13.658 19.2794 13.5 18.8978 13.5 18.5Z"
+                fill="#205CD4"
+              />
+            </svg>
+          </button>
+        </div>
       </section>
+      {/* Filter Overlay */}
+      {isFilterOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg p-6 relative w-11/12 max-w-md">
+            <button
+              onClick={() => setIsFilterOpen(false)}
+              className="absolute top-2 right-2 text-gray-500"
+            >
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 8.586L16.95 1.636 18.364 3.05 11.414 10 18.364 16.95l-1.414 1.414L10 11.414l-6.95 6.95-1.414-1.414L8.586 10 1.636 3.05 3.05 1.636 10 8.586z"
+                  fill="#000"
+                />
+              </svg>
+            </button>
+            <h2 className="text-lg font-semibold mb-4">Filter Options</h2>
+
+            {/* Rating Filter Options */}
+            <div>
+              <p className="font-semibold">Select Rating:</p>
+              <div className="flex  justify-center mt-4">
+                <button
+                  className={`border-[#000000] min-w-fit px-4 py-2 text-[#205CD4] font-semibold rounded-tl-lg rounded-bl-lg ${
+                    selectedRating === "Any"
+                      ? "bg-[#d7e3fa] border-[#000000] border-t-2 border-l-2 border-b-2"
+                      : "border-t-2 border-l-2 border-b-2"
+                  }`}
+                  onClick={() => setSelectedRating("Any")}
+                >
+                  Any
+                </button>
+                <button
+                  className={`border-[#000000] font-semibold min-w-fit text-[#205CD4] px-4 py-2 ${
+                    selectedRating === "3.0"
+                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
+                      : "border-t-2 border-b-2 border-l-2"
+                  }`}
+                  onClick={() => setSelectedRating("3.0")}
+                >
+                  3.0 ★
+                </button>
+                <button
+                  className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-[#205CD4] ${
+                    selectedRating === "4.0"
+                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
+                      : "border-t-2 border-b-2 border-l-2"
+                  }`}
+                  onClick={() => setSelectedRating("4.0")}
+                >
+                  4.0 ★
+                </button>
+                <button
+                  className={`border-[#000000] min-w-fit font-semibold text-[#205CD4] px-4 py-2 rounded-tr-lg rounded-br-lg ${
+                    selectedRating === "4.5"
+                      ? "bg-[#d7e3fa] border-t-2 border-r-2 border-b-2 border-l-2 rounded-tr-lg rounded-br-lg"
+                      : "border-t-2 border-r-2 border-b-2 border-l-2"
+                  }`}
+                  onClick={() => setSelectedRating("4.5")}
+                >
+                  4.5 ★
+                </button>
+              </div>
+            </div>
+
+            {/* Apply Button */}
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={() => {
+                  setIsFilterOpen(false); // Close the overlay
+                  // Additional logic can be added here to apply filters
+                }}
+                className="bg-[#205CD4] w-full text-white py-2 px-4 rounded-full"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className=" w-full mt-[100px] px-4 flex justify-center">
         <section className="flex flex-col lg:flex-row gap-11 lg:justify-center w-full">
           {/* First column for the rating card */}
-          <div className="min-w-fit ">
+          <div className="min-w-fit hidden md:block lg:block ">
             {/* Rating card */}
             <div className="   h-auto bg-[#fff] rounded-[8px] border-solid border p-5 border-[#d9d9d9]">
               <p className="font-semibold">Rating</p>
@@ -51,7 +161,7 @@ const SearchResultsPageLG = () => {
                 <button
                   className={`border-[#000000] min-w-fit px-4 py-2 text-[#205CD4] font-semibold rounded-tl-lg rounded-bl-lg  ${
                     selectedRating === "Any"
-                      ? "bg-[#d7e3fa] border-[#000000] "
+                      ? "bg-[#d7e3fa] border-[#000000] border-t-2 border-l-2 border-b-2"
                       : "border-t-2 border-l-2 border-b-2 rounded-tl-lg rounded-bl-lg"
                   }`}
                   onClick={() => setSelectedRating("Any")}
@@ -61,7 +171,7 @@ const SearchResultsPageLG = () => {
                 <button
                   className={`border-[#000000] font-semibold min-w-fit text-black px-4 py-2 ${
                     selectedRating === "3.0"
-                      ? "bg-[#d7e3fa] "
+                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
                       : "border-t-2 border-b-2 border-l-2"
                   }`}
                   onClick={() => setSelectedRating("3.0")}
@@ -71,7 +181,7 @@ const SearchResultsPageLG = () => {
                 <button
                   className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-black  ${
                     selectedRating === "4.0"
-                      ? "bg-[#d7e3fa] "
+                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2 "
                       : "border-t-2 border-b-2 border-l-2"
                   }`}
                   onClick={() => setSelectedRating("4.0")}
@@ -81,7 +191,7 @@ const SearchResultsPageLG = () => {
                 <button
                   className={`border-[#000000] min-w-fit font-semibold text-black px-4 py-2 rounded-tr-lg rounded-br-lg ${
                     selectedRating === "4.5"
-                      ? "bg-[#d7e3fa]  rounded-tr-lg rounded-br-lg"
+                      ? "bg-[#d7e3fa] border-t-2 border-r-2 border-b-2 border-l-2  rounded-tr-lg rounded-br-lg"
                       : "border-t-2 border-r-2 border-b-2 border-l-2"
                   }`}
                   onClick={() => setSelectedRating("4.5")}
@@ -124,7 +234,7 @@ const SearchResultsPageLG = () => {
                       <div className="flex-1">
                         {result.specialty ? (
                           <Link to={`/doctors/${result.slug}`}>
-                            <h2 className="font-poppins text-xs  md:text-base lg:text-lg text-[16px] font-semibold leading-[24px]">
+                            <h2 className="font-poppins text-lg  md:text-base lg:text-lg text-[16px] font-semibold leading-[24px]">
                               Dr. {result.firstName} {result.lastName}
                             </h2>
                           </Link>
@@ -157,7 +267,7 @@ const SearchResultsPageLG = () => {
                       <div className="">
                         <button
                           onClick={() => toggleAccordion(result.id)}
-                          className="text-[#205cd4] text-[14px] focus:outline-none"
+                          className="text-[#205cd4] text-lg focus:outline-none"
                         >
                           {openAccordion === result.id
                             ? "Hide reviews"
@@ -254,6 +364,7 @@ const SearchResultsPageLG = () => {
                 <p>No results found.</p>
               )}
             </div>
+            <div></div>
           </div>
         </section>
       </div>
