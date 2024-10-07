@@ -11,6 +11,7 @@ const SearchBarMd = () => {
   const { isBannerHidden } = useBannerVisibility();
   const [searchParam, setSearchParam] = useState("");
   const [results, setResults] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const latestSearchPromise = useRef(null);
