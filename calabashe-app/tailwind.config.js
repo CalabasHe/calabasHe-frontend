@@ -6,10 +6,17 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundClip: {
+        text: 'text',
+      },
       fontFamily: {
         'poppins': ["Poppins", 'sans-serif']
       },
     },
+    variants: {
+      backgroundClip: ['responsive', 'hover', 'focus'],
+    },
+    plugins: [],
   },
   plugins: [],
 }

@@ -14,6 +14,7 @@ import FacilityProfile from "./pages/FacilityProfile";
 import { BannerVisibilityProvider } from "./context/BannerVisibilityContext";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import AccountClaim from './pages/AccountClaim';
+import ForgotPassword from "./pages/ForgotPassword";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route path="/doctors/:slug" element={<DocProfile />} />
             <Route path="/sign_up" element={<SignUp />} />
             <Route path="/sign_in" element={<SignIn />} />
+            <Route path="/forgot_password" element={<ForgotPassword/>} />
             <Route path="/verification" element={<VerifyUser />} />
             <Route path="/results" element={<SearchResultsPage />} />
             <Route path='/initial_form' element={<AccountClaim />} />

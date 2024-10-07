@@ -10,5 +10,6 @@ Disallow: /services
 Disallow: /sign_up
 Disallow: /sign_in
 Disallow: /verification
+Disallow: /forgot_password
 
 Sitemap: https://calabashe.com/sitemap.xml
