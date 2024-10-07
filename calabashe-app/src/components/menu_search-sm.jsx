@@ -61,19 +61,14 @@ const Menu = () => {
       </label>
       <aside className="navmenu antialiased font-semibold text-sm rounded-bl-md">
         <ul>
-          <li id="sign-in link">
             {isLoggedIn ? 
-            <span aria-label="logout" onClick={logout}> Logout</span> : <Link to='/sign_in' onClick={handleLinkClick}>Sign In</Link>}
-          </li>
-          <li id="hospital-link">
-            <Link to="/facilities" onClick={handleLinkClick}>Facilities</Link>
-          </li>
-          <li id="doctors-link">
-            <Link to="/doctors" onClick={handleLinkClick}>Doctors</Link>
-          </li>
-          <li id="services-link">
-            <Link to="/services" onClick={handleLinkClick}>Services</Link>
-          </li>
+            <span aria-label="logout" className='px-4' onClick={logout}> Logout</span> : <Link to='/sign_in' className='w-full px-4' onClick={handleLinkClick}>Sign In</Link>}
+          <Link className='px-4' to="/facilities" onClick={handleLinkClick} id="hospital-link">
+            <span>Facilities</span>
+          </Link>
+          <Link className='px-4' to="/doctors" onClick={handleLinkClick} id="doctors-link">
+            <span>Doctors</span>
+          </Link>
         </ul>
       </aside>
     </nav>

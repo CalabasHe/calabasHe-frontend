@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { fetchCurrentReviews } from "../api/getCategoriesData";
 import formatDate from "../utils/dateConversion";
@@ -9,7 +8,7 @@ import '../stylesheets/reviews.css';
 import { FadeInOut } from "./ComponentAnimations";
 
 const ReviewCard = ({ review }) => (
-  <div className="cursor-pointer h-fit  max-h-[200px] min-w-[260px] overflow-hidden select-none rounded-lg bg-white border px-3 md:px-4 py-4">
+  <div className="hover:scale-105 duration-200 cursor-pointer max-h-[200px] h-fit min-w-[260px] overflow-hidden select-none rounded-lg bg-white border px-3 md:px-4 py-4">
     <div className="flex gap-4 items-center">
       <div className="p-1 pb-[1px] rounded-full border-2 border-black">
         <FaUser className="rounded-[50%] w-6 h-6 md:w-8 md:h-8" />
@@ -18,7 +17,7 @@ const ReviewCard = ({ review }) => (
     </div>
     
     <p className="font-medium text-sm md:text-base mt-2">
-      {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed</span> <Link  to={review.type === 'doctor' ? '/doctors/'+ review.slug : '/facilities/'+review.facilityType+'s/'+review.slug} className="font-bold">
+      {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed</span> <Link  to={review.type === 'doctor' ? '/doctors/'+ review.slug : '/facilities/'+review.facilityType+'s/'+review.slug} className="hover:underline font-bold">
         {review.type === "doctor" ? `Dr. ${review.subject.split(' ')[0]}` : review.subject}
       </Link>
     </p>
@@ -27,15 +26,32 @@ const ReviewCard = ({ review }) => (
   </div>
 );
 
-
-
 const RecentReviews = () => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
   const reviewIntervalRef = useRef(null);
+  const isHovered = useRef(false);
 
+  const handleMouseEnter = useCallback(() => {
+    isHovered.current = true;
+    if (reviewIntervalRef.current) {
+      clearInterval(reviewIntervalRef.current);
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    isHovered.current = false;
+    if (reviews.length > 0) {
+      reviewIntervalRef.current = setInterval(() => {
+        setOffset((prevOffset) => {
+          const newOffset = prevOffset + 1;
+          return newOffset >= reviews.length ? 0 : newOffset;
+        });
+      }, 7000);
+    }
+  }, [reviews.length]);
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -52,7 +68,6 @@ const RecentReviews = () => {
             user: review.user,
             slug: review.subject_slug,
             facilityType: review?.facility_type_slug
-
           }));
           setReviews(reviewDetails);
         } else {
@@ -67,24 +82,26 @@ const RecentReviews = () => {
     };
 
     fetchReview();
-    const intervalId = setInterval(fetchReview, 120000);
+    const fetchInterval = setInterval(fetchReview, 120000);
 
-    return () => clearInterval(intervalId);
+    return () => clearInterval(fetchInterval);
   }, []);
 
-
   useEffect(() => {
-    if (reviews.length > 0) {
+    if (reviews.length > 0 && !isHovered.current) {
       reviewIntervalRef.current = setInterval(() => {
         setOffset((prevOffset) => {
           const newOffset = prevOffset + 1;
-          // Reset to 0 if we reach the end, but we want to keep the animation going
           return newOffset >= reviews.length ? 0 : newOffset;
         });
       }, 7000);
-
-      return () => clearInterval(reviewIntervalRef.current);
     }
+
+    return () => {
+      if (reviewIntervalRef.current) {
+        clearInterval(reviewIntervalRef.current);
+      }
+    };
   }, [reviews.length]);
 
   if (isLoading) return (
@@ -97,7 +114,6 @@ const RecentReviews = () => {
 
   if (error) return <div>{error}</div>;
 
-  // Duplicate reviews for continuous scrolling
   const duplicatedReviews = [...reviews, ...reviews];
 
   return (
@@ -105,7 +121,11 @@ const RecentReviews = () => {
       <div className="w-full mt-2 lg:mt-6 lg:mr-2 space-y-4 lg:space-y-8 pb-2 lg:pb-6">
         <h1 className="text-center md:text-2xl text-xl font-bold">Recent Reviews</h1>
 
-        <div className="w-full overflow-scroll pt-4">
+        <div 
+          className="w-full overflow-hidden pt-4"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <div 
             className="grid grid-rows-2 auto-cols-[260px] grid-flow-col gap-2 transition-transform duration-1000 ease-in-out"
             style={{ 

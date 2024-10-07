@@ -6,6 +6,12 @@ const animationsY = {
   exit: { opacity: 0, y: 100 },
 };
 
+const animationsUp = {
+  initial: { opacity: 0, y: -100 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -100 },
+};
+
 const fadeInRight = {
   initial:{ opacity: 0, x: -150 },
   animate:{ opacity: 1, x: 0 },
@@ -28,6 +34,22 @@ const fadeOut = {
       animate="animate"
       exit="exit"
       transition={{ duration: .3 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+ 
+export const AnimateUp = ({ children }) => {
+  // Moves component along the y-axis
+  return (
+    <motion.div
+      className="w-full"
+      variants={animationsUp}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: .4 }}
     >
       {children}
     </motion.div>

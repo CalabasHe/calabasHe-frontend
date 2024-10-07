@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /home
+Allow: /facilities
+Allow: /doctors
+Allow: /account_claim
+
+Disallow: /review
+Disallow: /services
+Disallow: /sign_up
+Disallow: /sign_in
+Disallow: /verification
+
+Sitemap: https://calabashe.com/sitemap.xml

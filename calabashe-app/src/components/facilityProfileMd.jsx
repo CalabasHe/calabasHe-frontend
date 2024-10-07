@@ -7,6 +7,7 @@ import formatDate from "../utils/dateConversion";
 import Stars from "./Star";
 import { FaPhoneAlt } from "react-icons/fa";
 import { toast } from "sonner";
+import HandleAdjective from "../utils/handleRatingAdjective";
 
 // eslint-disable-next-line react/prop-types
 const FacilityProfileMd = ({ facility = [] }) => {
@@ -15,9 +16,9 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
   const handleLinkClick = () => {
     if (!isLoggedIn) {
-      toast.info('Sign in to leave a review')
+      toast.info("Sign in to leave a review");
     }
-  }
+  };
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -38,13 +39,14 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
           <div className="space-y-1">
             <h2 className="text-xl lg:text-2xl font-bold">{facility.name}</h2>
-            <div className="flex items-center gap-3 lg:gap-4">
-              <p className="text-[#6A6A67]">
+            <div className="flex font-semibold text-[#6A6A67] items-center gap-3 lg:gap-4">
+              <p className="font-medium">
                 {" "}
                 {facility.totalReviews}{" "}
                 {facility.totalReviews < 2 ? "review" : "reviews"}
               </p>
               <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>
+              <p className="">{HandleAdjective(facility.rating)}</p>
             </div>
             <div className="flex items-center gap-3">
               <StarRating rating={facility.rating} />
@@ -137,7 +139,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
                       </p>
                     </div>
 
-                    <p className="text-sm text-base ">{review.description}</p>
+                    <p className="text-sm lg:text-base ">{review.description}</p>
                   </div>
                 ))}
               </div>
@@ -156,7 +158,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
               </section>
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">
-                <h3 className="text-xl lg:2xl font-bold font-black">
+                <h3 className="text-xl lg:2xl font-bold">
                   Contact Details
                 </h3>
                 <div className="flex flex-col gap-4 text-[#205CD4]">
@@ -197,7 +199,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
             <div className="bg-white flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 rounded-xl">
               <div className="space-y-3 lg:space-y-4">
-                <h3 className="text-xl lg:2xl font-bold font-black">
+                <h3 className="text-xl lg:2xl font-bold">
                   Share your experience
                 </h3>
                 <p className="text-sm lg:text-base">

@@ -42,6 +42,7 @@ const DoctorCard = () => {
           specialty: doc.specialty?.name,
           slug: doc.slug,
           reviews: doc.reviews,
+          verified:doc.is_verified
         }));
         setDoctors(doctorDetails);
       } else {
@@ -93,10 +94,10 @@ const DoctorCard = () => {
         <Link
           to={`/doctors/${doctor.slug}`}
           key={doctor.id}
-          className="cursor-pointer lg:hover:scale-[1.01] duration-300 mt-4 border border-black shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
+          className="cursor-pointer lg:hover:scale-[1.01] duration-300 mt-4 border  bg-white shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
-          <div className="h-full lg:self-center lg:h-[80%] w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
+          <div className="relative h-[full] mt-2 lg:self-center lg:h-[90%] w-[35%] max-w-[120px] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-md">
             <svg
               className="w-16 sm:w-18 md:w-20 fill-gray-700"
               xmlns="http://www.w3.org/2000/svg"
@@ -104,12 +105,15 @@ const DoctorCard = () => {
             >
               <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
             </svg>
+            <svg className={` ${doctor.verified ? 'flex' : 'hidden'} absolute size-6 -top-2 -right-2 fill-current text-[#205CD4]`} xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512">
+                <path d="M12,24c-1.617,0-3.136-.708-4.176-1.92-1.587,.124-3.166-.451-4.31-1.595-1.144-1.145-1.717-2.719-1.595-4.31-1.212-1.039-1.92-2.558-1.92-4.175s.708-3.136,1.92-4.175c-.122-1.591,.451-3.166,1.595-4.31,1.144-1.143,2.723-1.712,4.31-1.595,1.04-1.212,2.559-1.92,4.176-1.92s3.136,.708,4.176,1.92c1.587-.119,3.167,.452,4.31,1.595,1.144,1.145,1.717,2.719,1.595,4.31,1.212,1.039,1.92,2.558,1.92,4.175s-.708,3.136-1.92,4.175c.122,1.591-.451,3.166-1.595,4.31-1.143,1.144-2.722,1.719-4.31,1.595-1.04,1.212-2.559,1.92-4.176,1.92Zm-3.274-4.095l.37,.549c.653,.968,1.739,1.546,2.904,1.546s2.251-.578,2.904-1.546l.37-.549,.649,.126c1.148,.223,2.323-.136,3.147-.96,.824-.825,1.183-2.001,.96-3.146l-.127-.65,.55-.37c.968-.653,1.546-1.739,1.546-2.904s-.578-2.251-1.546-2.904l-.55-.37,.127-.65c.223-1.145-.136-2.322-.96-3.146-.824-.824-2-1.182-3.147-.96l-.649,.126-.37-.549c-.653-.968-1.739-1.546-2.904-1.546s-2.251,.578-2.904,1.546l-.37,.549-.649-.126c-1.147-.22-2.323,.136-3.147,.96-.824,.825-1.183,2.001-.96,3.146l.127,.65-.55,.37c-.968,.653-1.546,1.739-1.546,2.904s.578,2.251,1.546,2.904l.55,.37-.127,.65c-.223,1.145,.136,2.322,.96,3.146,.824,.823,1.998,1.182,3.147,.96l.649-.126Zm3.184-4.485l5.793-5.707-1.404-1.425-5.809,5.701-2.793-2.707-1.393,1.437,2.782,2.696c.391,.391,.903,.585,1.416,.585s1.021-.193,1.407-.58Z"/>
+            </svg>
           </div>
 
           {/* Profile Data */}
-          <section className="antialiased lg:self-center grow flex flex-col sm:flex-row justify-between py-1">
+          <section className="antialiased lg:self-center grow flex flex-col max-sm:max-w-[60%] sm:flex-row justify-between py-1">
             <div className="px-1 mb-auto overflow-hidden">
-              <h2 className="text-xs  md:text-base lg:text-lg font-black  overflow-hidden text-wrap line-clamp-1">
+              <h2 className="text-xs md:text-base lg:text-lg font-black max-md:max-w-[250px] md:max-w-[280px] lg:max-w-[325px] overflow-hidden text-ellipsis whitespace-nowrap">
                 Dr.&nbsp; {doctor.lastName} {doctor.firstName}
               </h2>
               <p className="text-[10px]  md:text-xs font-[400] whitespace-nowrap overflow-hidden text-ellipsis">
@@ -154,7 +158,8 @@ const DoctorCard = () => {
               </div>
             </div>
 
-            <div className="w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
+            {/* View profile lg*/}
+            <div className="max-lg:w-[150px] lg:w-[200px] p-2 rounded-md hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
               <svg
                 className="p-1"
                 width="41"
@@ -173,7 +178,7 @@ const DoctorCard = () => {
 
               {/* <p className="text-center font-semibold text-sm lg:text-base">Want to know more about <span className="font-bold"> Dr. {doctor.firstName.split(' ')[0]}?</span></p> */}
               <p className="font-regular p-2 text-sm lg:text-base">
-                You want to book an appointment?
+                Do you want to leave a review?
               </p>
               <div className="block w-full ">
                 <button
