@@ -208,13 +208,15 @@ const SearchResultsPageLG = () => {
             <div className="mb-4 2">
               {filteredResults.length > 0 ? (
                 <h2 className="text-lg font-semibold">
-                  Companies{" "}
+                  Healthcare providers{" "}
                   <span className="font-normal text-[#6a6a67]">
                     ({filteredResults.length})
                   </span>
                 </h2>
               ) : (
-                <h2 className="text-lg font-semibold">No companies found</h2>
+                <h2 className="text-lg font-semibold">
+                  No healthcare provider found
+                </h2>
               )}
             </div>
 
@@ -353,7 +355,7 @@ const SearchResultsPageLG = () => {
                               </div>
                             ))
                           ) : (
-                            <p className="text-sm">No reviews available.</p>
+                            <p className="text-sm">No reviews available</p>
                           )}
                         </div>
                       </div>
@@ -361,7 +363,7 @@ const SearchResultsPageLG = () => {
                   </div>
                 ))
               ) : (
-                <p>No results found.</p>
+                <p>No results found</p>
               )}
             </div>
             <div></div>
