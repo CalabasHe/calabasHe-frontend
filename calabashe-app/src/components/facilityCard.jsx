@@ -104,10 +104,10 @@ const FacilityCard = () => {
       {facilities.map((facility) => (
         <div
           key={facility.id}
-          className="cursor-pointer lg:hover:scale-[1.02] duration-300 mt-4 border border-black shadow-md h-44 sm:h-36 md:h-44 lg:h-52 rounded-lg md:rounded-xl lg:rounded-2xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
+          className="cursor-pointer lg:hover:scale-[1.02] duration-300 mt-4 border bg-white shadow-md h-44 sm:h-36 md:h-44 lg:h-52 rounded-lg md:rounded-xl lg:rounded-2xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
         >
           {/* Profile image comes here */}
-          <div className="h-full lg:self-center lg:h-[80%] w-[35%] sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-lg">
+          <div className="h-full lg:self-center lg:h-[80%] w-[35%] mb-1 sm:max-w-[150px] md:max-w-[180px] flex items-center justify-center border rounded-lg">
             <svg
               className="w-16 sm:w-18 md:w-20 fill-gray-700"
               xmlns="http://www.w3.org/2000/svg"

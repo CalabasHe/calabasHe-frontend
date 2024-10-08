@@ -23,8 +23,7 @@ export const fetchServices = async () => {
     const response = await axios.get('https://calabashe-api.onrender.com/api/services/');
     return response.data;
   } catch (error) {
-    console.error('Error fetching services:', error);
-    throw error;
+    throw new Error('Error fetching services:', error);
   }
 };
 
@@ -33,8 +32,7 @@ export const fetchReviewCount = async () => {
     const response = await axios.get('https://calabashe-api.onrender.com/api/reviews/combined-reviews/');
     return response.data.count;
   } catch (error) {
-    console.error('Error fetching reviewCount:', error);
-    throw error;
+    throw new Error('Error fetching reviewCount:', error);
   }
 };
 
@@ -43,7 +41,18 @@ export const fetchCurrentReviews = async () => {
     const response = await axios.get('https://calabashe-api.onrender.com/api/reviews/combined-reviews/');
     return response.data.results.reviews;
   } catch (error) {
-    console.error('Error fetching doctors:', error);
-    throw error;
+    throw new Error('Error fetching doctors:', error);
   }
 };
+
+export const fetchServiceCategories = async () => {
+  try{
+    const response = await axios.get('https://calabashe-api.onrender.com/api/services/categories/');
+    (response.data)
+    return response.data
+  }catch (error) {
+    throw new Error('Error fetching categories:', error);
+  }
+}
+
+fetchServiceCategories()

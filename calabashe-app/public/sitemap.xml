@@ -12,10 +12,10 @@
     <loc>https://calabashe.com/facilities</loc>
     <priority>0.8</priority>
   </url>
-  <!-- <url>
+  <url>
     <loc>https://calabashe.com/services</loc>
     <priority>0.8</priority>
-  </url> -->
+  </url>
   <url>
     <loc>https://calabashe.com/doctors</loc>
     <priority>0.8</priority>
