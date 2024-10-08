@@ -76,7 +76,7 @@ const ServiceLink = () => {
               <ul>
                 {column.map((service) => (
                   <li key={service.id} className="font-medium text-xs md:text-sm mb-3 list-none truncate">
-                    <Link to={``}><span className="text-[#17a471]">{service.service_count} </span> {service.name}</Link>
+                    <Link to={``}><span className="text-[#17a471] mr-1">{service.service_count} </span> {service.name}</Link>
                   </li>
                 ))}
               </ul>
