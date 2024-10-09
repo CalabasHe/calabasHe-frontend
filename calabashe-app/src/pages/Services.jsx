@@ -1,7 +1,7 @@
 import AnimatePage from "../components/AnimatePage";
 import { FadeInOut } from "../components/ComponentAnimations";
 import Header from "../components/Header";
-import ServiceLink from "../components/service";
+import ServiceLink from "../components/serviceCategories";
 
 const Services = () => {
   return ( 
