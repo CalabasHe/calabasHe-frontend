@@ -26,11 +26,11 @@ const SearchResultsPageLG = () => {
     }
   }, [results]);
 
-  useEffect(() => {
-    console.log(allResults);
-    console.log(doctors);
-    console.log(facilities);
-  }, [doctors, facilities, allResults]);
+  // useEffect(() => {
+  //   console.log(allResults);
+  //   console.log(doctors);
+  //   console.log(facilities);
+  // }, [doctors, facilities, allResults]);
   // State to manage the visibility of the filter overlay
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -58,7 +58,7 @@ const SearchResultsPageLG = () => {
   return (
     <main className="  pb-11">
       <section className="bg-white w-full h-auto border-b-2 pt-[100px] pb-10">
-        <h1 className="font-poppins pt-9 font-semibold italic  text-5xl md:text-4xl flex justify-center items-center">
+        <h1 className="font-poppins pt-9 font-semibold italic  text-3xl md:text-4xl flex justify-center items-center">
           Results for &quot;{searchParam}&quot;
         </h1>
         <ExploreCategories />
