@@ -200,19 +200,23 @@ const SearchBarMd = () => {
                       ? "Dr. " + result.firstName + " " + result.lastName
                       : result.name}
                   </p>
+                  {result.rating &&
                   <div className="flex gap-1 text-gray-500 items-center">
                     <p className="text-xs">{result.rating}</p>
                     <StarRating rating={result.rating} search={true} />
                   </div>
+                  }
                 </div>
 
-                <div className="text-xs flex justify-between text-gray-500">
-                  <p>{result.specialty ? result.specialty : result.type}</p>
-                  <p>
-                    {result.reviewCount ? result.reviewCount : "0"}{" "}
-                    {result.reviewCount === 1 ? "review" : "reviews"}
-                  </p>
-                </div>
+                {result.rating &&
+                  <div className="text-xs flex justify-between text-gray-500">
+                    <p>{result.specialty ? result.specialty : result.type}</p>
+                    <p>
+                      {result.reviewCount ? result.reviewCount : "0"}{" "}
+                      {result.reviewCount === 1 ? "review" : "reviews"}
+                    </p>
+                  </div>
+                }  
               </div>
             ))}
           </div>
