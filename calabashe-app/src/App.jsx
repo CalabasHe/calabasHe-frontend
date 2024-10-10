@@ -14,6 +14,8 @@ import FacilityProfile from "./pages/FacilityProfile";
 import { BannerVisibilityProvider } from "./context/BannerVisibilityContext";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import AccountClaim from './pages/AccountClaim';
+import SubServices from "./pages/SubServices";
+import ServiceProviders from "./pages/ServiceProviders";
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
               element={<FacilityProfile />}
             />
             <Route path="/services" element={<Services />} />
+            <Route path="/services/:slug" element={<SubServices/>} />
+            <Route path="/services/:slug/:slug" element={<ServiceProviders/>} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/doctors/:slug" element={<DocProfile />} />
             <Route path="/sign_up" element={<SignUp />} />

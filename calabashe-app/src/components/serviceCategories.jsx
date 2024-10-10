@@ -73,10 +73,10 @@ const ServiceLink = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {servicesColumns.map((column, index) => (
             <div key={index} className="p-4 pt-6 border bg-[#fff] rounded-md shadow-md">
-              <ul>
+              <ul className="">
                 {column.map((service) => (
                   <li key={service.id} className="font-medium text-xs md:text-sm mb-3 list-none truncate">
-                    <Link to={``}><span className="text-[#17a471] mr-1">{service.service_count} </span> {service.name}</Link>
+                    <Link className="md:hover:text-[#17a471] hover:underline" to={`/services/${service.slug}`} state={{slug:service.slug, category:service.name}}><span className=" text-[#17a471] mr-1">{service.service_count} </span> {service.name}</Link>
                   </li>
                 ))}
               </ul>

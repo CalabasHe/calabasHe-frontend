@@ -45,9 +45,9 @@ export const fetchCurrentReviews = async () => {
   }
 };
 
-export const fetchServiceCategories = async () => {
+export const fetchServiceCategories = async (category = '/categories') => {
   try{
-    const response = await axios.get('https://calabashe-api.onrender.com/api/services/categories/');
+    const response = await axios.get(`https://calabashe-api.onrender.com/api/services${category}`);
     (response.data)
     return response.data
   }catch (error) {
