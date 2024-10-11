@@ -80,7 +80,7 @@ const SubServices = () => {
 
           <button
             onClick={() => navigate('/services')}
-            className="text-sm md:text-base  font-semibold hover:underline text-slate-600 hover:text-orange-400"
+            className="text-sm md:text-base  font-semibold hover:underline text-slate-500 hover:text-orange-400"
           >
             To service categories &gt;&gt;
           </button>

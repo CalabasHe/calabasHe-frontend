@@ -66,7 +66,7 @@ const ServiceProviders = () => {
 
             <button
               onClick={() => navigate('/services')}
-              className="text-sm md:text-base  font-semibold hover:underline text-slate-600 hover:text-[#17a471]"
+              className="text-sm md:text-base  font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
             >
               To service categories &gt;&gt; 
             </button>
