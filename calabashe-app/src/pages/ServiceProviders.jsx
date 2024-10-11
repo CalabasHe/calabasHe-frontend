@@ -56,12 +56,21 @@ const ServiceProviders = () => {
       <div>
         <Header />
         <main className="px-4 mt-16 md:mt-24 pb-6 lg:pb-10 md:px-12 lg:px-16">
-          <button
-            onClick={() => navigate(-1)}
-            className="font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
-          >
-            &lt;&lt; Go back
-          </button>
+          <div className="w-full flex justify-between items-center">
+            <button
+              onClick={() => navigate(-1)}
+              className="font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
+            >
+              &lt;&lt; Go back
+            </button>
+
+            <button
+              onClick={() => navigate(-1)}
+              className="font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
+            >
+              Back to Services Page &gt;&gt; 
+            </button>
+          </div>
 
           <section className="mt-6 md:mt-10 space-y-4 md:space-y-8">
                 <p className={`${facilities.length > 0 || doctors.length > 0 ? '' : 'hidden'} text-sm md:text-base lg:text-lg font-medium`}>

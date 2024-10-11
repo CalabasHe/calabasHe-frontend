@@ -7,7 +7,7 @@ import getCategoryfromSlug from "../utils/getCategory";
 
 const SubServices = () => {
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { subservices: paramSlug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,11 +16,11 @@ const SubServices = () => {
   const [serviceData, setServiceData] = useState([]);
 
   useEffect(() => {
-    setCategory(getCategoryfromSlug(paramSlug))
-  }, [paramSlug])
+    setCategory(getCategoryfromSlug(paramSlug));
+  }, [paramSlug]);
 
   useEffect(() => {
-    location.state?.category && setCategory(location.state?.category)
+    location.state?.category && setCategory(location.state?.category);
     setSlug(location.state?.slug || paramSlug || "");
   }, [location, paramSlug]);
 
@@ -70,7 +70,21 @@ const SubServices = () => {
     <>
       <Header />
       <main className="px-4 mt-16 md:mt-24 mb-3 md:px-12 lg:px-16">
-        <button onClick={() => navigate(-1)} className="font-semibold hover:underline text-slate-500 hover:text-[#17a471]">&lt;&lt; Go back</button>
+        <div className="w-full flex justify-between items-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-sm md:text-base font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
+          >
+            &lt;&lt; Go back
+          </button>
+
+          <button
+            onClick={() => navigate(-1)}
+            className="text-sm md:text-base  font-semibold hover:underline text-slate-500 hover:text-orange-400"
+          >
+            Back to Services &gt;&gt;
+          </button>
+        </div>
         <div className="mb-8 mt-16 md:mt-[10vh] md:mb-24 font-semibold text-sm md:text-lg lg:text-xl">
           {error ? (
             <p className="text-red-500 w-full text-center">{error}</p>
@@ -82,12 +96,25 @@ const SubServices = () => {
           {Array.isArray(serviceData) && serviceData.length > 0 ? (
             <div className={getGridClasses()}>
               {serviceGroups.map((group, index) => (
-                <div key={index} className="p-4 pt-6 border bg-[#fff] rounded-md shadow-md min-w-[250px] w-full max-w-[350px]">
+                <div
+                  key={index}
+                  className="p-4 pt-6 border bg-[#fff] rounded-md shadow-md min-w-[250px] w-full max-w-[350px]"
+                >
                   <ul className="">
                     {group.map((service) => (
-                      <li key={service.id} className="font-medium text-xs md:text-sm mb-3 list-none truncate">
-                        <Link className="hover:text-[#17a471] hover:underline" to={`/services/${slug}/${service.slug}`} state={{slug: service.slug, category: service.name}}>
-                          <span className="text-[#17a471] mr-1">{service.total_providers} </span> {service.name}
+                      <li
+                        key={service.id}
+                        className="font-medium text-xs md:text-sm mb-3 list-none truncate"
+                      >
+                        <Link
+                          className="hover:text-[#17a471] hover:underline"
+                          to={`/services/${slug}/${service.slug}`}
+                          state={{ slug: service.slug, category: service.name }}
+                        >
+                          <span className="text-[#17a471] mr-1">
+                            {service.total_providers}{" "}
+                          </span>{" "}
+                          {service.name}
                         </Link>
                       </li>
                     ))}
