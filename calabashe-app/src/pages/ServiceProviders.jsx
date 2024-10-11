@@ -59,16 +59,16 @@ const ServiceProviders = () => {
           <div className="w-full flex justify-between items-center">
             <button
               onClick={() => navigate(-1)}
-              className="font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
+              className="text-sm md:text-base  font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
             >
               &lt;&lt; Go back
             </button>
 
             <button
-              onClick={() => navigate(-1)}
-              className="font-semibold hover:underline text-slate-500 hover:text-[#17a471]"
+              onClick={() => navigate('/services')}
+              className="text-sm md:text-base  font-semibold hover:underline text-slate-600 hover:text-[#17a471]"
             >
-              Back to Services Page &gt;&gt; 
+              To service categories &gt;&gt; 
             </button>
           </div>
 
