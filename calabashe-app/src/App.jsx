@@ -35,8 +35,8 @@ function App() {
               element={<FacilityProfile />}
             />
             <Route path="/services" element={<Services />} />
-            <Route path="/services/:slug" element={<SubServices/>} />
-            <Route path="/services/:slug/:slug" element={<ServiceProviders/>} />
+            <Route path="/services/:subservices" element={<SubServices/>} />
+            <Route path="/services/:subservices/:providers" element={<ServiceProviders/>} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/doctors/:slug" element={<DocProfile />} />
             <Route path="/sign_up" element={<SignUp />} />

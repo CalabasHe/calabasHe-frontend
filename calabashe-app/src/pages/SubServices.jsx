@@ -8,7 +8,7 @@ import getCategoryfromSlug from "../utils/getCategory";
 const SubServices = () => {
   const location = useLocation();
   const navigate = useNavigate()
-  const { slug: paramSlug } = useParams();
+  const { subservices: paramSlug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [category, setCategory] = useState("");
@@ -69,7 +69,7 @@ const SubServices = () => {
   return (
     <>
       <Header />
-      <main className="px-4 mt-16 md:mt-24 mb-1 md:px-12 lg:px-16">
+      <main className="px-4 mt-16 md:mt-24 mb-3 md:px-12 lg:px-16">
         <button onClick={() => navigate(-1)} className="font-semibold hover:underline text-slate-500 hover:text-[#17a471]">&lt;&lt; Go back</button>
         <div className="mb-8 mt-16 md:mt-[10vh] md:mb-24 font-semibold text-sm md:text-lg lg:text-xl">
           {error ? (
