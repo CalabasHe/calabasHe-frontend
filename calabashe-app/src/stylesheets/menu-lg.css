@@ -4,7 +4,7 @@
     position: relative;
     display: inline-block;
   
-    transition: transform 300ms;
+    transition: transform 200ms;
     cursor: pointer;
 
     transform: translateZ(0);
@@ -25,7 +25,7 @@
     background-color: white;
     transform: scaleX(0);
     transform-origin: center;
-    transition: transform 350ms;
+    transition: transform 200ms;
   }
   
   .links > li:hover {

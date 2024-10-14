@@ -35,10 +35,11 @@ const SearchBarMd = () => {
     };
   }, [handleClickOutside]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearch = useCallback(
     debounce((value) => {
       setDebouncedSearchParam(value);
-    }, 300),
+    }, 500),
     []
   );
 

@@ -19,9 +19,12 @@ const BannerSearch = () => {
   const navigate = useNavigate();
 
   const handleClickOutside = useCallback((event) => {
-    if (resultsRef.current && !resultsRef.current.contains(event.target)) {
+    if (
+      resultsRef.current &&
+      !resultsRef.current.contains(event.target) &&
+      !searchBarRef.current.contains(event.target)
+    ) {
       setShowResults(false);
-      setSearchParam("");
     }
   }, []);
 
@@ -42,10 +45,11 @@ const BannerSearch = () => {
     setShowResults(false);
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearch = useCallback(
     debounce((value) => {
       setDebouncedSearchParam(value);
-    }, 300),
+    }, 500),
     []
   );
 
@@ -71,6 +75,7 @@ const BannerSearch = () => {
           reviews: result.reviews,
           reviewCount: result.total_reviews,
         }));
+        setError('')
         return resultDetails;
       } else {
         setError("No results found");
@@ -85,9 +90,15 @@ const BannerSearch = () => {
 
   useEffect(() => {
     (async () => {
-      const results = await performSearch(debouncedSearchParam);
-      setResults(results);
-      setShowResults(results.length > 0);
+      if (debouncedSearchParam) {
+        const results = await performSearch(debouncedSearchParam);
+        setResults(results);
+        setShowResults(true);
+      } else {
+        setResults([]);
+        setShowResults(false);
+        setError("");
+      }
     })();
   }, [debouncedSearchParam, performSearch]);
 
@@ -158,7 +169,7 @@ const BannerSearch = () => {
       <div
         className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white max-w-[100%] ${
           showResults
-            ? "rounded-b-none border-b border-gray-200 rounded-t-3xl py-4"
+            ? "rounded-b-none border-b border-gray-200 rounded-t-3xl"
             : "rounded-3xl lg:rounded-[999999px]"
         } font-medium border-black p-1`}
       >
@@ -188,6 +199,9 @@ const BannerSearch = () => {
           ref={resultsRef}
           className={`absolute z-50 rounded-b-3xl py-4 space-y-6 shadow-lg bg-white w-full`}
         >
+          {error && (
+            <div className="px-4 py-2 text-center text-gray-500">{error}</div>
+          )}
           {results.length > 0 && (
             <>
               {results.filter((result) => result.specialty).length > 0 && (

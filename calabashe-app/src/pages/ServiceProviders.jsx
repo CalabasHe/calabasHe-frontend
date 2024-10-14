@@ -2,7 +2,6 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { fetchServiceCategories } from "../api/getCategoriesData";
-import Doctors from "./Doctors";
 import LoadingAnimation from "../components/loadingAnimation";
 import getCategoryfromSlug from "../utils/getCategory";
 import StarRating from "../components/rating";
