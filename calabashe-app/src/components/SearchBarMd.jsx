@@ -52,6 +52,7 @@ const SearchBarMd = () => {
 
     try {
       const data = await currentPromise;
+      // console.log(data)
       if (currentPromise !== latestSearchPromise.current) {
         // A newer search has started, discard this result
         return [];
@@ -72,6 +73,7 @@ const SearchBarMd = () => {
         }));
         setResults(resultDetails);
         setShowResults(true);
+        // console.log(resultDetails)
         setError("");
         return resultDetails;
       } else {
@@ -202,7 +204,7 @@ const SearchBarMd = () => {
                   </p>
                   {result.rating &&
                   <div className="flex gap-1 text-gray-500 items-center">
-                    <p className="text-xs">{result.rating}</p>
+                    <p className="text-xs">{parseFloat(result.rating).toFixed(1)}</p>
                     <StarRating rating={result.rating} search={true} />
                   </div>
                   }
@@ -212,7 +214,7 @@ const SearchBarMd = () => {
                   <div className="text-xs flex justify-between text-gray-500">
                     <p>{result.specialty ? result.specialty : result.type}</p>
                     <p>
-                      {result.reviewCount ? result.reviewCount : "0"}{" "}
+                      {result.reviewCount ? result.reviewCount : "No"}{" "}
                       {result.reviewCount === 1 ? "review" : "reviews"}
                     </p>
                   </div>

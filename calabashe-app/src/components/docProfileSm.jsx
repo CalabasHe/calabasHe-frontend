@@ -39,7 +39,7 @@ const DocProfileSm = ({ doctor = [] }) => {
             <div className="flex items-center font-medium text-xs text-[#6A6A67] gap-3 lg:gap-4">
               <p className="font-normal">
                 {" "}
-                {doctor.totalReviews}{" "}
+                {doctor.totalReviews === 0 ? 'No' : doctor.totalReviews }{" "}
                 {doctor.totalReviews === 1 ? "review" : "reviews"}
               </p>
               <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>

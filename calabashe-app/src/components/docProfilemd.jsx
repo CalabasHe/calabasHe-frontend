@@ -57,8 +57,8 @@ const DocProfileMd = ({ doctor = [] }) => {
             <div className="flex font-semibold text-[#6A6A67] items-center gap-3 lg:gap-4">
               <p className="font-medium">
                 {" "}
-                {doctor.totalReviews}{" "}
-                {doctor.totalReviews < 2 ? "review" : "reviews"}
+                {doctor.totalReviews === 0 ? 'No' : doctor.totalReviews }{" "}
+                {doctor.totalReviews === 1 ? "review" : "reviews"}
               </p>
               <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>
               <p className="">{HandleAdjective(doctor.rating)}</p>
