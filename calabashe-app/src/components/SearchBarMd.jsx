@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBannerVisibility } from "../context/BannerVisibilityContext";
 import "../stylesheets/headerSearch.css";
 import StarRating from "./rating";
@@ -10,54 +10,47 @@ const SearchBarMd = () => {
   const [isFocused, setIsFocused] = useState(false);
   const { isBannerHidden } = useBannerVisibility();
   const [searchParam, setSearchParam] = useState("");
+  const [debouncedSearchParam, setDebouncedSearchParam] = useState("");
   const [results, setResults] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const latestSearchPromise = useRef(null);
-
+  const [showResults, setShowResults] = useState(false);
+  const searchRef = useRef(null);
   const navigate = useNavigate();
 
-  const [showResults, setShowResults] = useState(false)
-  const searchRef = useRef(null)
-
+  const handleClickOutside = useCallback((event) => {
+    if (
+      searchRef.current &&
+      !searchRef.current.contains(event.target) &&
+      !event.target.closest("#headerSearchBar")
+    ) {
+      setShowResults(false);
+      setSearchParam("");
+    }
+  }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target) &&
-        !event.target.closest("#headerSearchBar")
-      ) {
-        setShowResults(false);
-      }
-    };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
-  const performSearch = async (value) => {
-    if (!value) {
-      setResults([]);
-      setError("");
-      return [];
-    }
+  const debouncedSetSearch = useCallback(
+    debounce((value) => {
+      setDebouncedSearchParam(value);
+    }, 300),
+    []
+  );
 
-    setIsLoading(true);
-    const currentPromise = SearchData(value);
-    latestSearchPromise.current = currentPromise;
+  useEffect(() => {
+    debouncedSetSearch(searchParam);
+    return () => debouncedSetSearch.cancel();
+  }, [searchParam, debouncedSetSearch]);
 
+  const performSearch = useCallback(async (searchParam) => {
+    if (!searchParam) return [];
     try {
-      const data = await currentPromise;
-      // console.log(data)
-      if (currentPromise !== latestSearchPromise.current) {
-        // A newer search has started, discard this result
-        return [];
-      }
-
+      const data = await SearchData(searchParam);
       if (Array.isArray(data) && data.length > 0) {
         const resultDetails = data.map((result) => ({
           id: result.id,
@@ -71,41 +64,28 @@ const SearchBarMd = () => {
           reviews: result.reviews,
           reviewCount: result.total_reviews,
         }));
-        setResults(resultDetails);
-        setShowResults(true);
-        // console.log(resultDetails)
-        setError("");
         return resultDetails;
       } else {
-        setResults([]);
         setError("No results found");
         return [];
       }
     } catch (error) {
-      if (currentPromise === latestSearchPromise.current) {
-        console.error(error);
-        setError("An error occurred while searching");
-      }
+      console.error(error);
+      setError("An error occurred while searching");
       return [];
-    } finally {
-      if (currentPromise === latestSearchPromise.current) {
-        setIsLoading(false);
-      }
     }
-  };
-
-  const debouncedSearch = useCallback(
-    debounce((value) => performSearch(value), 300),
-    []
-  );
+  }, []);
 
   useEffect(() => {
-    debouncedSearch(searchParam);
-    return () => debouncedSearch.cancel();
-  }, [searchParam, debouncedSearch]);
+    (async () => {
+      const results = await performSearch(debouncedSearchParam);
+      setResults(results);
+      setShowResults(results.length > 0);
+    })();
+  }, [debouncedSearchParam, performSearch]);
 
   const handleLinkClick = (result) => {
-    setShowResults(false); // Hide results immediately
+    setShowResults(false);
     const path = result.type
       ? `/facilities/${result.type}s/${result.slug}`
       : result.specialty
@@ -117,7 +97,7 @@ const SearchBarMd = () => {
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      setShowResults(false); // Hide results immediately
+      setShowResults(false);
       const searchResults = await performSearch(searchParam);
       navigate("/results", { state: { searchParam, results: searchResults } });
     }
@@ -126,13 +106,18 @@ const SearchBarMd = () => {
   const handleSearchClick = async (e) => {
     e.preventDefault();
     if (!searchParam) return;
-    setShowResults(false); // Hide results immediately
+    setShowResults(false);
     const searchResults = await performSearch(searchParam);
     navigate("/results", { state: { searchParam, results: searchResults } });
   };
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
+
+  const handleShowResults = (e) => {
+    e.preventDefault();
+    navigate("/results", { state: { searchParam, results } });
+  };
 
   return (
     <div
@@ -158,12 +143,12 @@ const SearchBarMd = () => {
         autoComplete="off"
         value={searchParam}
       />
-      <Link to="#" onClick={handleSearchClick}>
+      <button onClick={handleSearchClick}>
         <svg
           id="headerSearchIcon"
           className={`${
             isFocused ? "focused" : "stroke-[#828282]"
-          } w-5 lg:w-6 h-5 lg:h-6 mt-2`}
+          } w-5 lg:w-6 h-5 lg:h-6`}
           width="32"
           height="32"
           viewBox="0 0 32 32"
@@ -182,51 +167,88 @@ const SearchBarMd = () => {
             strokeLinejoin="round"
           />
         </svg>
-      </Link>
+      </button>
 
       {showResults && (
         <div
           ref={searchRef}
-          className="cursor-pointer flex flex-col scrollbar-hide w-full absolute text-black max-h-[300px] overflow-x-hidden left-0 right-0 top-full mt-1 z-50 rounded-b-3xl pt-4 space-y-4 shadow-lg bg-white"
+          className={`absolute z-50 rounded-b-3xl ${results.length < 4 ? 'pb-5' : ''} pt-4 space-y-6 shadow-lg bg-white w-full left-0 top-full`}
         >
-          <div className="overflow-y-scroll scroll-smooth scrollbar-hide">
-            {results.slice(0, 10).map((result) => (
-              <div
-                onClick={() => handleLinkClick(result)}
-                key={result.id}
-                className="hover:bg-blue-100 py-3 px-4 "
-              >
-                <div className="flex gap-2 justify-between">
-                  <p className="font-bold text-sm lg:text-base truncate ">
-                    {result.specialty
-                      ? "Dr. " + result.firstName + " " + result.lastName
-                      : result.name}
-                  </p>
-                  {result.rating &&
-                  <div className="flex gap-1 text-gray-500 items-center">
-                    <p className="text-xs">{parseFloat(result.rating).toFixed(1)}</p>
-                    <StarRating rating={result.rating} search={true} />
-                  </div>
-                  }
+          {results.length > 0 && (
+            <>
+              {results.filter((result) => result.specialty).length > 0 && (
+                <div className="space-y-2 border-b pb-4 text-black">
+                  <p className="px-4 text-lg font-medium">Doctors</p>
+                  {results
+                    .filter((result) => result.specialty)
+                    .slice(0, 4)
+                    .map((result) => (
+                      <div
+                        onClick={() => handleLinkClick(result)}
+                        key={result.id}
+                        className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
+                      >
+                        <div className="flex gap-2 justify-between">
+                          <p className=" font-bold text-sm lg:text-base truncate">
+                            {"Dr. " + result.firstName + " " + result.lastName}
+                          </p>
+                          <div className="flex gap-1 text-gray-500 items-center">
+                            <p className="text-xs">{result.rating}</p>
+                            <StarRating rating={result.rating} search={true} />
+                          </div>
+                        </div>
+                        <div className="text-xs flex justify-between text-gray-500">
+                          <p>{result.specialty}</p>
+                          <p>
+                            {result.reviewCount ? result.reviewCount : "0"}{" "}
+                            {result.reviewCount === 1 ? "review" : "reviews"}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                 </div>
+              )}
 
-                {result.rating &&
-                  <div className="text-xs flex justify-between text-gray-500">
-                    <p>{result.specialty ? result.specialty : result.type}</p>
-                    <p>
-                      {result.reviewCount ? result.reviewCount : "No"}{" "}
-                      {result.reviewCount === 1 ? "review" : "reviews"}
-                    </p>
-                  </div>
-                }  
-              </div>
-            ))}
-          </div>
-          <div onClick={handleSearchClick}>
-            <div className="w-full py-2 text-white text-center bg-[#0070FF]">
+              {results.filter((result) => !result.specialty).length > 0 && (
+                <div className="space-y-2 text-black">
+                  <p className="px-4 text-lg font-medium">Facilities</p>
+                  {results
+                    .filter((result) => !result.specialty && result.type)
+                    .slice(0, 4)
+                    .map((result) => (
+                      <div
+                        onClick={() => handleLinkClick(result)}
+                        key={result.id}
+                        className="hover:bg-blue-100  text-black cursor-pointer py-3 px-4"
+                      >
+                        <div className="flex gap-2 justify-between">
+                          <p className="font-bold text-sm lg:text-base truncate">
+                            {result.name}
+                          </p>
+                          <div className="flex gap-1 text-gray-500 items-center">
+                            <p className="text-xs">{result.rating}</p>
+                            <StarRating rating={result.rating} search={true} />
+                          </div>
+                        </div>
+                        <div className="text-xs flex justify-between text-gray-500">
+                          <p>{result.type}</p>
+                          <p>
+                            {result.reviewCount ? result.reviewCount : "0"}{" "}
+                            {result.reviewCount === 1 ? "review" : "reviews"}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </>
+          )}
+
+          {results.length > 4 && (
+            <div onClick={handleShowResults} className="w-full cursor-pointer py-3 rounded-xl rounded-t-none text-white text-center bg-[#0070FF]">
               Show all results <span className="ml-2">&rarr;</span>
             </div>
-          </div>
+          )}
         </div>
       )}
     </div>

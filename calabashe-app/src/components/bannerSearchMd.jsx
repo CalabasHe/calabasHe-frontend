@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
@@ -11,38 +10,37 @@ const BannerSearch = () => {
   const [debouncedSearchParam, setDebouncedSearchParam] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
-  const [bottomRadius, setBottomRadius] = useState(0); // Set default value here
-  const bannerRef = useRef(null);
   const [showResults, setShowResults] = useState(false);
-  const { updateBannerVisibility } = useBannerVisibility();
+  const bannerRef = useRef(null);
   const resultsRef = useRef(null);
   const searchBarRef = useRef(null);
+  const { updateBannerVisibility } = useBannerVisibility();
 
-  const go = useNavigate();
+  const navigate = useNavigate();
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = useCallback((event) => {
     if (resultsRef.current && !resultsRef.current.contains(event.target)) {
       setShowResults(false);
       setSearchParam("");
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
-  const handleMouseEnter = () => {
-    if (results && searchParam !== "") {
+  const handleMouseEnter = useCallback(() => {
+    if (results.length > 0 && searchParam !== "") {
       setShowResults(true);
     }
-  };
+  }, [results, searchParam]);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setShowResults(false);
-  };
+  }, []);
 
   const debouncedSetSearch = useCallback(
     debounce((value) => {
@@ -56,8 +54,7 @@ const BannerSearch = () => {
     return () => debouncedSetSearch.cancel();
   }, [searchParam, debouncedSetSearch]);
 
-  // Move searchSomething outside of useEffect
-  const searchSomething = async (searchParam) => {
+  const performSearch = useCallback(async (searchParam) => {
     if (!searchParam) return [];
     try {
       const data = await SearchData(searchParam);
@@ -84,46 +81,47 @@ const BannerSearch = () => {
       setError("An error occurred while searching");
       return [];
     }
-  };
+  }, []);
 
   useEffect(() => {
     (async () => {
-      const results = await searchSomething(debouncedSearchParam);
+      const results = await performSearch(debouncedSearchParam);
       setResults(results);
+      setShowResults(results.length > 0);
     })();
-  }, [debouncedSearchParam]);
+  }, [debouncedSearchParam, performSearch]);
 
-  const handleLinkClick = (result) => {
-    go(
+  const handleLinkClick = useCallback((result) => {
+    navigate(
       result.type
         ? `/facilities/${result.type}s/${result.slug}`
         : result.specialty
         ? `/doctors/${result.slug}`
         : `/services`
     );
-  };
+  }, [navigate]);
 
-  const handleKeyDown = async (event) => {
+  const handleKeyDown = useCallback(async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       setShowResults(false);
-      const searchResults = await searchSomething(searchParam);
-      go("/results", { state: { searchParam, results: searchResults } });
+      const searchResults = await performSearch(searchParam);
+      navigate("/results", { state: { searchParam, results: searchResults } });
     }
-  };
+  }, [navigate, performSearch, searchParam]);
 
-  const handleSearchClick = async (e) => {
+  const handleSearchClick = useCallback(async (e) => {
     e.preventDefault();
     if (!searchParam) return;
     setShowResults(false);
-    const searchResults = await searchSomething(searchParam);
-    go("/results", { state: { searchParam, results: searchResults } });
-  };
+    const searchResults = await performSearch(searchParam);
+    navigate("/results", { state: { searchParam, results: searchResults } });
+  }, [navigate, performSearch, searchParam]);
   
-  const handleShowResults = (e) => {
+  const handleShowResults = useCallback((e) => {
     e.preventDefault();
-    go("/results", { state: { searchParam, results: results} });
-  };
+    navigate("/results", { state: { searchParam, results } });
+  }, [navigate, searchParam, results]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -131,10 +129,10 @@ const BannerSearch = () => {
         const entry = entries[0];
         const isFullyVisible =
           entry.isIntersecting && entry.intersectionRatio === 1;
-        updateBannerVisibility(!isFullyVisible); // Update context when visibility changes
+        updateBannerVisibility(!isFullyVisible);
       },
       {
-        threshold: [0, 1], // Trigger when the element becomes visible at all, or fully visible
+        threshold: [0, 1],
         rootMargin: "0px",
       }
     );
@@ -149,6 +147,7 @@ const BannerSearch = () => {
       }
     };
   }, [updateBannerVisibility]);
+
   return (
     <div
       onMouseLeave={handleMouseLeave}
@@ -164,7 +163,6 @@ const BannerSearch = () => {
         } font-medium border-black p-1`}
       >
         <input
-          // value={searchParams}
           ref={searchBarRef}
           id="banner_search_field"
           type="text"
@@ -172,6 +170,7 @@ const BannerSearch = () => {
           className="relative z-30 h-[40px] lg:h-[60px] w-[71%] lg:w-[75%] border-none rounded-3xl lg:rounded-[999999px]  text-base lg:text-xl font-semibold placeholder:text-[#5E5E5E] placeholder:text-base lg:placeholder:text-lg caret-[#34c759] outline-none px-4 lg:pl-6"
           placeholder="Search for doctors, clinics or services"
           onChange={(e) => setSearchParam(e.target.value)}
+          value={searchParam}
           autoComplete="off"
           onKeyDown={handleKeyDown}
         />
