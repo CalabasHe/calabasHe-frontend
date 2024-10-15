@@ -51,9 +51,12 @@ const DocProfileMd = ({ doctor = [] }) => {
           </div>
 
           <div className="space-y-1">
-            <h2 className="text-lg lg:text-xl xl:text-2xl font-bold">
-              Dr. {doctor.firstName} {doctor.lastName}
-            </h2>
+            <div>
+              <h2 className="text-lg lg:text-xl xl:text-2xl font-bold">
+                Dr. {doctor.firstName} {doctor.lastName}
+              </h2>
+              <p className="text-sm lg:text-base font-light text-gray-600 ">{doctor.specialty}</p>
+            </div>
             <div className="flex font-semibold text-[#6A6A67] items-center gap-3 lg:gap-4">
               <p className="font-medium">
                 {" "}

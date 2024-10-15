@@ -12,7 +12,7 @@ import AnimateCount from "./AnimateCount";
 const CategoryItem = ({ count, label, to, icon }) => (
   <Link
     to={to}
-    className="relative flex items-center px-2 bg-white border border-gray-400 md:border-black rounded-md max-w-[191px] md:max-w-[250px] lg:max-w-[310px] h-[70px] md:h-[90px] lg:h-[110px]"
+    className="relative lg:hover:-translate-y-1 duration-150 lg:hover:shadow-xl ease-in-out flex items-center px-2 bg-white border border-gray-400 md:border-black rounded-md max-w-[191px] md:max-w-[250px] lg:max-w-[310px] h-[70px] md:h-[90px] lg:h-[110px]"
   >
     <div className="flex flex-col gap-[1px]">
       <p className="font-semibold text-sm md:text-base">

@@ -171,7 +171,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               {type !== 'Services' && (
                 <div className="mt-3">
                   <p className={`${result.reviews.length === 0 && 'text-xs text-gray-500 italic' } font-semibold`}>
-                    {result.reviews.length > 0 ? result.reviews.length : 'No'} reviews
+                    {result.reviews.length > 0 ? result.reviews.length : 'No'} {result.reviews.length < 2 ? 'review' : 'reviews'}
                   </p>
                   {
                     result.rating ? (

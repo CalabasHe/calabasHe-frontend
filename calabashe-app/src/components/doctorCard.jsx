@@ -39,7 +39,7 @@ const DoctorCard = () => {
           firstName: doc.first_name,
           lastName: doc.last_name,
           rating: doc.average_rating,
-          specialty: doc.specialty?.name,
+          specialty: doc.specialty_name,
           slug: doc.slug,
           reviews: doc.reviews,
           verified:doc.is_verified
