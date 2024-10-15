@@ -43,6 +43,7 @@ const FacilityCard = () => {
             id: facility.id,
             name: facility.name,
             type: facility.facility_type.name,
+            typeSlug: facility.facility_type?.slug,
             rating: facility.average_rating,
             slug: facility.slug,
             reviews: facility.reviews,
@@ -54,7 +55,7 @@ const FacilityCard = () => {
           // console.log(docData.patientsTellUs)
           setFacilities(facilityDetails);
         } else {
-          console.log("No results found");
+          setError("No results found");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -155,7 +156,7 @@ const FacilityCard = () => {
 
               {/* View Profile button */}
               <Link
-                to={`/facilities/${facility.type.toLowerCase()}s/${
+                to={`/facilities/${facility.typeSlug}s/${
                   facility.slug
                 }`}
                 className="block w-full"
@@ -191,7 +192,7 @@ const FacilityCard = () => {
                   className="w-full h-[inherit] p-1 text-center bg-[#B6B67C] rounded-md text-sm sm:text-base font-bold"
                   onClick={() =>
                     handleProfileClick(
-                      facility.type.toLowerCase() + "s",
+                      facility.typeSlug + "s",
                       facility.slug
                     )
                   }

@@ -190,7 +190,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
                       />
                     </svg>
                     <p className="text-sm text-black lg:text-base self-center font-normal">
-                      {facility.location}, Ghana
+                      {facility.region}, Ghana
                     </p>
                   </div>
                 </div>

@@ -28,7 +28,7 @@ const DocProfile = () => {
           specialty: data.specialty?.name,
           slug: data.slug,
           patientsTellUs: data.reviews?.title,
-          location: data.region?.name,
+          region: data.region_name,
           ratingPercentages: data.rating_percentages,
           reviews: data.reviews,
           totalReviews: data.total_reviews,

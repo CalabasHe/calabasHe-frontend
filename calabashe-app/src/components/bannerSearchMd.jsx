@@ -68,10 +68,13 @@ const BannerSearch = () => {
           firstName: result.first_name,
           lastName: result.last_name,
           rating: result.average_rating && result.average_rating.toFixed(1),
-          specialty: result.specialty?.name,
+          specialty: result.specialty_name,
           type: result.facility_type?.name,
+          typeSlug: result.facility_type?.slug,
           name: result.name,
           slug: result.slug,
+          category: result.category?.name,
+          categorySlug: result.category?.slug,
           reviews: result.reviews,
           reviewCount: result.total_reviews,
         }));
@@ -105,10 +108,10 @@ const BannerSearch = () => {
   const handleLinkClick = useCallback((result) => {
     navigate(
       result.type
-        ? `/facilities/${result.type}s/${result.slug}`
+        ? `/facilities/${result.typeSlug}s/${result.slug}`
         : result.specialty
         ? `/doctors/${result.slug}`
-        : `/services`
+        : `/services/${result.categorySlug}/${result.slug}`
     );
   }, [navigate]);
 
@@ -204,6 +207,31 @@ const BannerSearch = () => {
           )}
           {results.length > 0 && (
             <>
+
+{results.filter((result) => result.category).length > 0 && (
+                <div className="space-y-2 border-b pb-4 text-black">
+                  <p className="px-4 text-lg font-medium">Services</p>
+                  {results
+                    .filter((result) => result.category)
+                    .slice(0,4)
+                    .map((result) => (
+                      <div
+                        onClick={() => handleLinkClick(result)}
+                        key={result.id}
+                        className="hover:bg-blue-100 text-black cursor-pointer py-3 px-4"
+                      >
+                          <p className=" font-bold text-sm lg:text-base truncate">
+                           {result.name}
+                          </p>
+                          
+                        <div className="text-xs text-gray-500">
+                          <p>{result.category}</p>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+
               {results.filter((result) => result.specialty).length > 0 && (
                 <div className="space-y-2 border-b pb-4">
                   <p className="px-4 text-lg font-medium">Doctors</p>

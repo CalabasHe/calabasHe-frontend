@@ -23,7 +23,7 @@ const FacilityProfile = () => {
           id: data.id,
           name: data.name,
           contact: data.phone,
-          location: data.location,
+          region: data.region?.name,
           address: data.address,
           rating: data.average_rating,
           services: data.services,

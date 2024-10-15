@@ -171,7 +171,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
                         />
                       </svg>
                       <p className="text-xs self-center font-normal">
-                        {facility.location}, Ghana
+                        {facility.region}, Ghana
                       </p>
                     </li>
                   </ul>

@@ -58,10 +58,13 @@ const SearchBarMd = () => {
           firstName: result.first_name,
           lastName: result.last_name,
           rating: result.average_rating && result.average_rating.toFixed(1),
-          specialty: result.specialty?.name,
+          specialty: result.specialty_name,
           type: result.facility_type?.name,
+          typeSlug: result.facility_type?.slug,
           name: result.name,
           slug: result.slug,
+          category: result.category?.name,
+          categorySlug: result.category?.slug,
           reviews: result.reviews,
           reviewCount: result.total_reviews,
         }));
@@ -88,10 +91,10 @@ const SearchBarMd = () => {
   const handleLinkClick = (result) => {
     setShowResults(false);
     const path = result.type
-      ? `/facilities/${result.type}s/${result.slug}`
+      ? `/facilities/${result.typeSlug}s/${result.slug}`
       : result.specialty
       ? `/doctors/${result.slug}`
-      : `/services`;
+      : `/services/${result.categorySlug}/${result.slug}`;
     navigate(path);
   };
 
@@ -173,10 +176,34 @@ const SearchBarMd = () => {
       {showResults && (
         <div
           ref={searchRef}
-          className={`absolute z-50 rounded-b-3xl ${results.length < 4 ? 'pb-5' : ''} pt-4 space-y-6 shadow-lg bg-white w-full left-0 top-full`}
+          className={`absolute max-h-[85vh] overflow-y-scroll z-50 rounded-b-3xl ${results.length < 4 ? 'pb-5' : ''} pt-4 space-y-6 shadow-lg bg-white w-full left-0 top-full`}
         >
           {results.length > 0 && (
             <>
+              {results.filter((result) => result.category).length > 0 && (
+                <div className="space-y-2 border-b pb-4 text-black">
+                  <p className="px-4 text-lg font-medium">Services</p>
+                  {results
+                    .filter((result) => result.category)
+                    .slice(0,4)
+                    .map((result) => (
+                      <div
+                        onClick={() => handleLinkClick(result)}
+                        key={result.id}
+                        className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
+                      >
+                          <p className=" font-bold text-sm lg:text-base truncate">
+                           {result.name}
+                          </p>
+                          
+                        <div className="text-xs text-gray-500">
+                          <p>{result.category}</p>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+
               {results.filter((result) => result.specialty).length > 0 && (
                 <div className="space-y-2 border-b pb-4 text-black">
                   <p className="px-4 text-lg font-medium">Doctors</p>
@@ -195,15 +222,24 @@ const SearchBarMd = () => {
                           </p>
                           <div className="flex gap-1 text-gray-500 items-center">
                             <p className="text-xs">{result.rating}</p>
-                            <StarRating rating={result.rating} search={true} />
+                            {
+                              result.reviewCount > 0 && (
+                                <StarRating rating={result.rating} search={true} />
+                              )
+                            }
                           </div>
                         </div>
                         <div className="text-xs flex justify-between text-gray-500">
                           <p>{result.specialty}</p>
-                          <p>
-                            {result.reviewCount ? result.reviewCount : "0"}{" "}
-                            {result.reviewCount === 1 ? "review" : "reviews"}
-                          </p>
+                          { result.reviewCount > 0 ? (
+                            <p>
+                              {result.reviewCount ? result.reviewCount : "0"}{" "}
+                              {result.reviewCount === 1 ? "review" : "reviews"}
+                            </p>
+                          ) :
+                          <p className="font-semibold italic text-gray-600">No reviews</p>
+
+                          }
                         </div>
                       </div>
                     ))}
@@ -228,15 +264,24 @@ const SearchBarMd = () => {
                           </p>
                           <div className="flex gap-1 text-gray-500 items-center">
                             <p className="text-xs">{result.rating}</p>
-                            <StarRating rating={result.rating} search={true} />
+                            {
+                              result.reviewCount > 0 && (
+                                <StarRating rating={result.rating} search={true} />
+                              )
+                            }
                           </div>
                         </div>
                         <div className="text-xs flex justify-between text-gray-500">
                           <p>{result.type}</p>
-                          <p>
-                            {result.reviewCount ? result.reviewCount : "0"}{" "}
-                            {result.reviewCount === 1 ? "review" : "reviews"}
-                          </p>
+                          { result.reviewCount > 0 ? (
+                            <p>
+                              {result.reviewCount ? result.reviewCount : "0"}{" "}
+                              {result.reviewCount === 1 ? "review" : "reviews"}
+                            </p>
+                          ) :
+                          <p className="font-semibold italic text-gray-600">No reviews</p>
+
+                          }
                         </div>
                       </div>
                     ))}
