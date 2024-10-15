@@ -248,7 +248,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
         </div>
         <div
           id="resultsCard"
-          className={`w-full ${(facilities.length || doctors.length || services.length) > 0 ? 'pb-[30px] h-screen' : ''} flex flex-col bg-gray-100 text-black gap-2 px-2 overflow-y-scroll`}
+          className={`w-full ${(facilities.length || doctors.length || services.length) > 0 ? 'pb-[80px] h-screen' : ''} flex flex-col bg-gray-100 text-black gap-2 px-2 overflow-y-scroll`}
         >
           {renderResults(services, 'Services')}
           {renderResults(facilities, 'Facilities')}
