@@ -11,6 +11,15 @@ export const fetchDoctors = async (page=1) => {
   }
 };
 
+export const fetchDoctorBySpecialties = async (slug) => {
+  try {
+    const response = await axios.get(`${api}/specialties/${slug}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching doctors:', error);
+  }
+};
+
 export const fetchSpecialties = async () => {
   try {
     const response = await axios.get(`${api}/specialties`);

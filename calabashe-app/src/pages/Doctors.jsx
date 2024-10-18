@@ -1,8 +1,10 @@
+import AllDoctorList from "../components/allDoctorList";
 import AnimatePage from "../components/AnimatePage";
 import { FadeInOut } from "../components/ComponentAnimations";
-import DoctorCard from "../components/doctorCard";
+import DoctorListContainer from "../components/DoctorListContainer";
 import Header from "../components/Header";
 import Specialty from "../components/specialties";
+import SpecialtyDoctorList from "../components/specialtyDoctorList";
 
 const Doctors = () => {
   return (
@@ -20,14 +22,10 @@ const Doctors = () => {
         </aside>
       </FadeInOut>
       <AnimatePage>
-        <main className="flex-grow flex flex-col lg:pb-[100px] lg:flex-row lg:justify-center lg:gap-2 relative border border-blue-600 mt-32 lg:px-4 xl:px-6 sm:mt-16 p-2">
-          <div className=" lg:min-w-[300px] max-lg:w-[30%] lg:sticky lg:top-[70px] pr-2 border-r  lg:self-start xl:pl-4">
-            <Specialty />
-          </div>
-          <div className=" px-2 xl:px-4 border border-emerald-700">
-            <div className="w-full flex flex-col items-center ">
-              <DoctorCard />
-            </div>
+        {/* <main className="flex-grow w-full flex flex-col lg:pb-[100px] lg:flex-row lg:justify-center lg:gap-2 relative mt-32 lg:px-4 xl:px-6 sm:mt-16 p-2"> */}
+        <main className="mt-32 sm:mt-16">
+          <div className="w-full px-2 xl:px-4">
+            <DoctorListContainer/>
           </div>
         </main>
       </AnimatePage>
