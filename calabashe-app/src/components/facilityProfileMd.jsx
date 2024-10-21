@@ -113,7 +113,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
                           id={`${star}star`}
                           value={facility.ratingPercentages[index].percentage}
                           max="100"
-                          className=" max-w-[430px] h-4 md:h-5"
+                          className=" max-w-[430px] ml-[5%] h-3 md:h-4"
                         ></progress>
                       </div>
                       <p className="text-[#A0AAB3] text-right font-normal">

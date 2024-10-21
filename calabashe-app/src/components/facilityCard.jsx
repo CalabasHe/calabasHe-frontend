@@ -26,11 +26,10 @@ const FacilityCard = () => {
   };
 
   useEffect(() => {
-    const fetchFacilityData = async () => {
+    const fetchFacilityData = async (page) => {
       try {
         setIsLoading(true);
-        const facilityData = await fetchFacilities(pagination);
-        
+        const facilityData = await fetchFacilities(page);
         setHasPreviousPage(!!facilityData.previous);
         setHasNextPage(!!facilityData.next);
         if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
@@ -54,7 +53,7 @@ const FacilityCard = () => {
       }
     };
 
-    fetchFacilityData();
+    fetchFacilityData(pagination);
     navigate(`?page=${pagination}`, { replace: true });
   }, [pagination, navigate]);
 

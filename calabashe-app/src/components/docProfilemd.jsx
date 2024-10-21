@@ -165,12 +165,12 @@ const DocProfileMd = ({ doctor = [] }) => {
                       >
                         {star} star
                       </label>
-                      <div className="w-full pl-1 flex items-center justify-center ">
+                      <div className="w-full pl-[5%] flex items-center justify-center ">
                         <progress
                           id={`${star}star`}
                           value={doctor.ratingPercentages[index].percentage}
                           max="100"
-                          className=" max-w-[430px] h-4 md:h-5"
+                          className=" max-w-[430px] h-3 md:h-4"
                         ></progress>
                       </div>
                       <p className="text-[#A0AAB3] text-right font-normal">
