@@ -148,9 +148,9 @@ const FacilityProfileSm = ({ facility = [] }) => {
                     About {facility.name}
                   </h3>
                   <p className="text-xs max-w-[90%] leading-loose ">
-                   {facility.description.length > 0 ? facility.description : 
+                   {facility.description ? facility.description : 
                    <span>
-                    {facility.name} is located at {facility.location} in the {facility.region}. It is a {facility.type.toLowerCase()}.
+                    {facility.name} is a {facility.type.toLowerCase()} located at {facility.location} in the {facility.region}.
                     
                     At {facility.name}, personalised care is provided, tailored to each patient&apos;s unique circumstances to ensure the highest quality of service and support.
                     

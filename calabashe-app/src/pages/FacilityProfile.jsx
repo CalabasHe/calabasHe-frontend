@@ -28,7 +28,7 @@ const FacilityProfile = () => {
           location: data.location,
           rating: data.average_rating,
           services: data.services,
-          type: data.facility_type.name,
+          type: data.facility_type_name,
           slug: data.slug,
           description: data.description,
           ratingPercentages: data.rating_percentages,
