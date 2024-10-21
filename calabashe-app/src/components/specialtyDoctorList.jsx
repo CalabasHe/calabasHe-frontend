@@ -30,7 +30,7 @@ const SpecialtyDoctorList = ({ specialty }) => {
       setHasNextPage(!!docData.next);
 
       if (docData.results && Array.isArray(docData.results.doctors) && docData.results.doctors.length > 0) {
-        console.log("Number of doctors:", docData.results.doctors.length);
+        // console.log("Number of doctors:", docData.results.doctors.length);
         const doctorDetails = docData.results.doctors.map((doc) => ({
           id: doc.id,
           firstName: doc.first_name,

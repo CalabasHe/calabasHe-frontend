@@ -29,6 +29,15 @@ export const fetchSpecialties = async () => {
   }
 };
 
+export const fetchSubSpecialties = async () => {
+  try {
+    const response = await axios.get(`${api}/specialties`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching doctors:', error);
+  }
+};
+
 
 
 export const fetchFacilities = async () => {

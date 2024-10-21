@@ -6,7 +6,7 @@ const DoctorCard = ({ doctor }) => {
   return (
     <Link
       to={`/doctors/${doctor.slug}`}
-      className="cursor-pointer lg:hover:scale-[1.01] duration-300 mt-4 border  bg-white shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] lg:w-full lg:max-w-[650px] p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
+      className="cursor-pointer lg:hover:scale-[1.01] duration-300 mt-4 border  bg-white shadow-md h-[165px] sm:h-36 md:h-40 lg:h-48 rounded-md md:rounded-xl w-[98%] max-w-[380px] md:w-[85%] md:max-w-[800px] sm:max-w-[600px] lg:w-full lg:max-w-[650px] xl:max-w-full p-1 lg:px-4 flex gap-4 md:gap-6 min-[400px]:gap-6"
     >
       {/* Profile image */}
       <div className="relative h-[full] mt-2 lg:self-center lg:h-[90%] w-[35%] max-w-[120px] sm:max-w-[150px] max-md:max-w-[180px] lg:w-[150px] flex items-center justify-center border rounded-md">
