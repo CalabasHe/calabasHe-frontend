@@ -113,7 +113,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
                           id={`${star}star`}
                           value={facility.ratingPercentages[index].percentage}
                           max="100"
-                          className=" max-w-[430px] h-4 md:h-5"
+                          className=" max-w-[430px] ml-[5%] h-3 md:h-4"
                         ></progress>
                       </div>
                       <p className="text-[#A0AAB3] text-right font-normal">
@@ -154,7 +154,18 @@ const FacilityProfileMd = ({ facility = [] }) => {
                 <h3 className="text-lg lg:text-xl font-[800] ">
                   {facility.name}
                 </h3>
-                <p className="text-sm lg:text-base ">{facility.description}</p>
+                <p className="text-sm lg:text-base ">
+                  {facility.description ? facility.description : 
+                   <span>
+                    {facility.name} is a {facility.type.toLowerCase()} located at {facility.location} in the {facility.region}.<br/><br/>
+                    At {facility.name}, personalised care is provided, tailored to each patient&apos;s unique circumstances to ensure the highest quality of service and support.
+                    {facility.name} offers welcoming and modern environment designed to make patients feel comfortable and relaxed. 
+                    <br/><br/>                
+                    The staff is dedicated to fostering a culture of kindness and openness, maintaining the highest standards of care through continual training and auditing.
+                    {facility.name} looks forward to welcoming patients, where their health and happiness are the top priorities.
+                    </span>
+                   }
+                </p>
               </section>
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">
@@ -162,20 +173,22 @@ const FacilityProfileMd = ({ facility = [] }) => {
                   Contact Details
                 </h3>
                 <div className="flex flex-col gap-4 text-[#205CD4]">
-                  <div className="flex gap-4 ">
-                    <aside className="relative inline-block">
-                      <FaPhoneAlt size={24} />
-                      <span className="absolute text-[14px] -top-[5px] -right-[5px] font-bold">
-                        +
-                      </span>
-                    </aside>
-                    <a
-                      href={`tel: ${facility.contact}`}
-                      className="text-base text-black self-center font-medium"
-                    >
-                      {facility.contact}
-                    </a>
-                  </div>
+                  { facility.contact && 
+                    <div className="flex gap-4 ">
+                      <aside className="relative inline-block">
+                        <FaPhoneAlt size={24} />
+                        <span className="absolute text-[14px] -top-[5px] -right-[5px] font-bold">
+                          +
+                        </span>
+                      </aside>
+                      <a
+                        href={`tel: ${facility.contact}`}
+                        className="text-base text-black self-center font-medium"
+                      >
+                        {facility.contact}
+                      </a>
+                    </div>
+                  }
                   <div className="flex gap-3">
                     <svg
                       width="21"

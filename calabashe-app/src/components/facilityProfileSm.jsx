@@ -92,12 +92,12 @@ const FacilityProfileSm = ({ facility = [] }) => {
                     <label htmlFor={`${star}star`} className="whitespace-nowrap">
                       {star} star
                     </label>
-                    <div className="w-full pl-2 flex items-center justify-center ">
+                    <div className="w-full pl-[6%] flex items-center justify-center ">
                       <progress
                         id={`${star}star`}
                         value={facility.ratingPercentages[index].percentage}
                         max="100"
-                        className=" max-w-[430px] h-4 md:h-5"
+                        className=" max-w-[430px]  h-3 md:h-4"
                       ></progress>
                     </div>
                     <p className="text-[#A0AAB3] text-right">
@@ -148,7 +148,19 @@ const FacilityProfileSm = ({ facility = [] }) => {
                     About {facility.name}
                   </h3>
                   <p className="text-xs max-w-[90%] leading-loose ">
-                   {facility.description}
+                   {facility.description ? facility.description : 
+                   <span>
+                    {facility.name} is a {facility.type.toLowerCase()} located at {facility.location} in the {facility.region}.
+                    
+                    At {facility.name}, personalised care is provided, tailored to each patient&apos;s unique circumstances to ensure the highest quality of service and support.
+                    
+                    
+                    {facility.name} offers welcoming and modern environment designed to make patients feel comfortable and relaxed.
+                    
+                    The staff is dedicated to fostering a culture of kindness and openness, maintaining the highest standards of care through continual training and auditing.
+                    {facility.name} looks forward to welcoming patients, where their health and happiness are the top priorities.
+                    </span>
+                   }
                   </p>
                 </section>
 
