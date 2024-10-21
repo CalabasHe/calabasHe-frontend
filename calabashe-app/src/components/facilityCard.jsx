@@ -32,6 +32,7 @@ const FacilityCard = () => {
       try {
         setIsLoading(true);
         const facilityData = await fetchFacilities();
+        // console.log(facilityData.results)
         setHasPreviousPage(!!facilityData.previous);
         // console.log(hasPreviousPage)
         setHasNextPage(!!facilityData.next);
@@ -42,8 +43,8 @@ const FacilityCard = () => {
           const facilityDetails = facilityData.results.map((facility) => ({
             id: facility.id,
             name: facility.name,
-            type: facility.facility_type.name,
-            typeSlug: facility.facility_type?.slug,
+            type: facility.facility_type_name,
+            // typeSlug: facility.facility_type_slug,
             rating: facility.average_rating,
             slug: facility.slug,
             reviews: facility.reviews,
@@ -156,7 +157,7 @@ const FacilityCard = () => {
 
               {/* View Profile button */}
               <Link
-                to={`/facilities/${facility.typeSlug}s/${
+                to={`/facilities/${facility.type.toLowerCase()}s/${
                   facility.slug
                 }`}
                 className="block w-full"
@@ -167,7 +168,7 @@ const FacilityCard = () => {
               </Link>
             </div>
 
-            <div className="h-full w-[150px] lg:w-[200px] p-2 rounded-lg md:rounded-xl hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
+            <div className="h-full w-[150px] md:w-[200px] p-2 rounded-lg md:rounded-xl hidden sm:flex flex-col justify-between gap-2 bg-[#E9E9D8]">
               <svg
                 className=" p-2 "
                 width="45"
@@ -192,7 +193,7 @@ const FacilityCard = () => {
                   className="w-full h-[inherit] p-1 text-center bg-[#B6B67C] rounded-md text-sm sm:text-base font-bold"
                   onClick={() =>
                     handleProfileClick(
-                      facility.typeSlug + "s",
+                      facility.type.toLowerCase()+ "s",
                       facility.slug
                     )
                   }

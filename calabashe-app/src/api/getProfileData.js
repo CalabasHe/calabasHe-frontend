@@ -9,9 +9,9 @@ export const fetchDoctorBySlug = async (slug) => {
   }
 };
 
-export const fetchFacilityBySlug = async (type, slug) => {
+export const fetchFacilityBySlug = async (slug) => {
   try {
-    const response = await axios.get(`https://calabashe-api.onrender.com/api/facilities/${type.toLowerCase()}/${slug}/`);
+    const response = await axios.get(`https://calabashe-api.onrender.com/api/facilities/${slug}/`);
     return response.data;
   } catch (error) {
     throw new Error(`Refresh page`);

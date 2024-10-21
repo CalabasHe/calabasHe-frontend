@@ -17,7 +17,7 @@ const FacilityProfile = () => {
   useEffect(() => {
     const fetchFacility = async () => {
       try {
-        const data = await fetchFacilityBySlug(type, slug);
+        const data = await fetchFacilityBySlug(slug);
         // console.log('API Response:', data);
         const FacilityDetails = {
           id: data.id,
