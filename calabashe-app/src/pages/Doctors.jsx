@@ -1,10 +1,7 @@
-import AllDoctorList from "../components/allDoctorList";
 import AnimatePage from "../components/AnimatePage";
 import { FadeInOut } from "../components/ComponentAnimations";
 import DoctorListContainer from "../components/DoctorListContainer";
 import Header from "../components/Header";
-import Specialty from "../components/specialties";
-import SpecialtyDoctorList from "../components/specialtyDoctorList";
 
 const Doctors = () => {
   return (

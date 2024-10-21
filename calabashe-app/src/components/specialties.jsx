@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchSpecialties } from "../api/getCategoriesData";
+import SubSpecialties from "./subSpecialties";
 
 const Specialty = ({ selectedSpecialty, onSpecialtyChange, start = false }) => {
   const [parents, setParents] = useState([]);
@@ -27,8 +28,8 @@ const Specialty = ({ selectedSpecialty, onSpecialtyChange, start = false }) => {
   }
 
   return (
-    <section className="sticky top-[80px] w-full max-lg:hidden rounded-lg">
-      <div className="bg-white py-8 rounded-[inherit] pl-8 pr-2 space-y-6 border w-full h-fit max-h-[75vh] scrollbar-thin overflow-y-scroll">
+    <section className="sticky top-[80px] w-full flex flex-col gap-3 max-lg:hidden rounded-lg">
+      <div className="bg-white py-8 rounded-[inherit] pl-8 pr-2 space-y-6 border w-full h-fit max-h-[65vh] scrollbar-thin overflow-y-scroll">
         <div className="">
           <h2 className="font-semibold text-lg">Specialties</h2>
           <p className="text-sm text-slate-500 italic">Choose a specialty</p>
@@ -59,6 +60,7 @@ const Specialty = ({ selectedSpecialty, onSpecialtyChange, start = false }) => {
             ))}
         </ul>
       </div>
+      <SubSpecialties/>
     </section>
   );
 };
