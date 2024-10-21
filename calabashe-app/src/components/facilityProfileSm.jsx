@@ -148,7 +148,19 @@ const FacilityProfileSm = ({ facility = [] }) => {
                     About {facility.name}
                   </h3>
                   <p className="text-xs max-w-[90%] leading-loose ">
-                   {facility.description}
+                   {facility.description.length > 0 ? facility.description : 
+                   <span>
+                    {facility.name} is located at {facility.location} in the {facility.region}. It is a {facility.type.toLowerCase()}.
+                    
+                    At {facility.name}, personalised care is provided, tailored to each patient&apos;s unique circumstances to ensure the highest quality of service and support.
+                    
+                    
+                    {facility.name} offers welcoming and modern environment designed to make patients feel comfortable and relaxed.
+                    
+                    The staff is dedicated to fostering a culture of kindness and openness, maintaining the highest standards of care through continual training and auditing.
+                    {facility.name} looks forward to welcoming patients, where their health and happiness are the top priorities.
+                    </span>
+                   }
                   </p>
                 </section>
 
