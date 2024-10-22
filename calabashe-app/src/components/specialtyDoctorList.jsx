@@ -1,4 +1,3 @@
-// specialtyDoctorList.jsx
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import DoctorCard from "./doctorCard";
@@ -37,7 +36,7 @@ const SpecialtyDoctorList = () => {
       setIsLoading(true);
       setError(null);
 
-      // Determine which specialty slug to use
+
       const specialtyToFetch = selectedSubSpecialty === "all" ? 
         selectedSpecialty : 
         selectedSubSpecialty;
@@ -67,7 +66,7 @@ const SpecialtyDoctorList = () => {
         setDoctors([]);
       }
 
-      // Update subspecialties if available and we're on a main specialty
+
       if (
         selectedSubSpecialty === "all" && 
         docData.results?.children && 
