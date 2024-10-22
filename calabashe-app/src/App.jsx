@@ -13,40 +13,45 @@ import DocProfile from "./pages/DocProfile";
 import FacilityProfile from "./pages/FacilityProfile";
 import { BannerVisibilityProvider } from "./context/BannerVisibilityContext";
 import SearchResultsPage from "./pages/SearchResultsPage";
-import AccountClaim from './pages/AccountClaim';
+import AccountClaim from "./pages/AccountClaim";
 import SubServices from "./pages/SubServices";
 import ServiceProviders from "./pages/ServiceProviders";
-
+import { SpecialtyProvider } from "./context/specialtyContext";
 
 function App() {
   const location = useLocation();
 
   return (
     <AuthProvider>
-      <BannerVisibilityProvider>
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route index element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/review/:slug" element={<Review />} />
-            <Route path="/facilities" element={<Facilities />} />
-            <Route
-              path="/facilities/:type/:slug"
-              element={<FacilityProfile />}
-            />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:subservices" element={<SubServices/>} />
-            <Route path="/services/:subservices/:providers" element={<ServiceProviders/>} />
-            <Route path="/doctors" element={<Doctors />} />
-            <Route path="/doctors/:slug" element={<DocProfile />} />
-            <Route path="/sign_up" element={<SignUp />} />
-            <Route path="/sign_in" element={<SignIn />} />
-            <Route path="/verification" element={<VerifyUser />} />
-            <Route path="/results" element={<SearchResultsPage />} />
-            <Route path='/initial_form' element={<AccountClaim />} />
-          </Routes>
-        </AnimatePresence>
-      </BannerVisibilityProvider>
+      <SpecialtyProvider>
+        <BannerVisibilityProvider>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route index element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/review/:slug" element={<Review />} />
+              <Route path="/facilities" element={<Facilities />} />
+              <Route
+                path="/facilities/:type/:slug"
+                element={<FacilityProfile />}
+              />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/:subservices" element={<SubServices />} />
+              <Route
+                path="/services/:subservices/:providers"
+                element={<ServiceProviders />}
+              />
+              <Route path="/doctors" element={<Doctors />} />
+              <Route path="/doctors/:slug" element={<DocProfile />} />
+              <Route path="/sign_up" element={<SignUp />} />
+              <Route path="/sign_in" element={<SignIn />} />
+              <Route path="/verification" element={<VerifyUser />} />
+              <Route path="/results" element={<SearchResultsPage />} />
+              <Route path="/initial_form" element={<AccountClaim />} />
+            </Routes>
+          </AnimatePresence>
+        </BannerVisibilityProvider>
+      </SpecialtyProvider>
     </AuthProvider>
   );
 }
