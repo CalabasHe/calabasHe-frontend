@@ -1,71 +1,47 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { SpecialtyContext } from "../context/specialtyContext";
 
-const SubSpecialties = (mainSpecialty = 'all', subSpecialtyList) => {
-  const [chosenSpecialty, setChosenSpecialty] = useState('all')
-  const [subSpecialties, setSubSpecialties] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+const SubSpecialties = () => {
+  const { subSpecialties, selectedSubSpecialty, updateSelectedSubSpecialty } =
+    useContext(SpecialtyContext);
 
-  // useEffect(() => {
-  //   const getSubSpecialtyData = async () => {
-  //     try {
-  //       // setIsLoading(true);
-  //       const data = await fetchSpecialties();
-  //       setSubSpecialties(data.results);
-  //     } catch (err) {
-  //       console.log(err);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-    
-  // }, []);
+  const handleSubSpecialtyClick = (slug) => {
+    updateSelectedSubSpecialty(slug);
+  };
 
-  // if (isLoading) {
-  //   return '';
-  // }
-
-  useEffect(() => {
-    console.log(chosenSpecialty)
-    console.log()
-  }, [chosenSpecialty])
-
-
-
-  return ( 
-  <>
+  return (
     <div className="bg-white py-8 rounded-[inherit] pl-8 pr-2 space-y-6 border w-full h-fit max-h-[65vh] scrollbar-thin overflow-y-scroll">
-        <div className="">
-          <h2 className="font-semibold text-lg">Specialties</h2>
-          <p className="text-sm text-slate-500 italic">Choose a specialty</p>
-        </div>
-        <ul className="flex gap-2 text-xs flex-wrap">
-          <li
-            className={`border flex items-center p-1 px-3 rounded-2xl cursor-pointer ${
-              chosenSpecialty === 'all' ? 'bg-[#04da8d] text-white' : ''
-            }`}
-            onClick={() => setChosenSpecialty('all')}
-          >
-            <span>All</span>
-          </li>
-          {/* {subSpecialties &&
-            subSpecialties.map((subspecialty) => (
-              <li
-                key={parent.id}
-                className={`border flex gap-1 items-center font-medium p-1 px-2 pr-1 rounded-[9999px] cursor-pointer ${
-                  chosenSpecialty === subspecialty.slug ? 'bg-[#04da8d] text-white' : ''
-                }`}
-                onClick={() => setChosenSpecialty(subspecialty.slug)}
-              >
-                <span>{parent.name}</span>
-                <span id="count" className="bg-gray-500 py-0.5 font-medium text-white px-2 rounded-full">
-                  {parent.total_doctor_count}
-                </span>
-              </li>
-            ))} */}
-        </ul>
+      <div className="">
+        <h2 className="font-semibold text-lg">Sub-Specialties</h2>
+        <p className="text-sm text-slate-500 italic">Choose a sub-specialty</p>
       </div>
-  </> 
+      <ul className="flex gap-2 text-xs flex-wrap">
+        <li
+          className={`border flex items-center p-1 px-3 rounded-2xl cursor-pointer ${
+            selectedSubSpecialty === "all" ? "bg-[#c26174] text-white" : ""
+          }`}
+          onClick={() => handleSubSpecialtyClick("all")}
+        >
+          <span>All</span>
+        </li>
+        {subSpecialties &&
+          subSpecialties.length > 0 &&
+          subSpecialties.map((subspecialty) => (
+            <li
+              key={subspecialty.id}
+              className={`border flex gap-1 items-center font-medium p-1 px-3 rounded-[9999px] cursor-pointer ${
+                selectedSubSpecialty === subspecialty.slug
+                  ? "bg-[#c26174] text-white"
+                  : ""
+              }`}
+              onClick={() => handleSubSpecialtyClick(subspecialty.slug)}
+            >
+              <span>{subspecialty.name}</span>
+            </li>
+          ))}
+      </ul>
+    </div>
   );
-}
- 
+};
+
 export default SubSpecialties;

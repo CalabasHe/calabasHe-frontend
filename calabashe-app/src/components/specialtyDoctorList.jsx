@@ -1,14 +1,19 @@
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import DoctorCard from "./doctorCard";
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchDoctorBySpecialties } from "../api/getCategoriesData";
+import { SpecialtyContext } from "../context/specialtyContext";
 
+// eslint-disable-next-line react/prop-types
 const SpecialtyDoctorList = ({ specialty }) => {
   const [doctors, setDoctors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
+
+  const { updateSubSpecialties, selectedSubSpecialty, subSpecialties } =
+    useContext(SpecialtyContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,17 +25,27 @@ const SpecialtyDoctorList = ({ specialty }) => {
 
   const [pagination, setPagination] = useState(getCurrentPage());
 
+  useEffect(() => {
+    setPagination(1);
+  }, [specialty, selectedSubSpecialty]);
+
   const fetchDocData = async () => {
     try {
       setIsLoading(true);
-      const docData = await fetchDoctorBySpecialties(specialty);
-      console.log("API Response:", docData);
+      const selectedSpecialty =
+        selectedSubSpecialty === "all" ? specialty : selectedSubSpecialty;
+      // console.log("Fetching doctors for specialty:", selectedSpecialty);
+
+      const docData = await fetchDoctorBySpecialties(selectedSpecialty);
 
       setHasPreviousPage(!!docData.previous);
       setHasNextPage(!!docData.next);
 
-      if (docData.results && Array.isArray(docData.results.doctors) && docData.results.doctors.length > 0) {
-        // console.log("Number of doctors:", docData.results.doctors.length);
+      if (
+        docData.results &&
+        Array.isArray(docData.results.doctors) &&
+        docData.results.doctors.length > 0
+      ) {
         const doctorDetails = docData.results.doctors.map((doc) => ({
           id: doc.id,
           firstName: doc.first_name,
@@ -43,8 +58,17 @@ const SpecialtyDoctorList = ({ specialty }) => {
         }));
         setDoctors(doctorDetails);
       } else {
-        console.log("No doctors found");
+        // console.log("No doctors found");
         setDoctors([]);
+      }
+
+      if (
+        docData.results &&
+        Array.isArray(docData.results.children) &&
+        docData.results.children.length > 0 &&
+        subSpecialties.length === 0
+      ) {
+        updateSubSpecialties(docData.results.children);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -55,21 +79,25 @@ const SpecialtyDoctorList = ({ specialty }) => {
   };
 
   useEffect(() => {
-    fetchDocData();
     navigate(`?page=${pagination}`, { replace: true });
-  }, [pagination, navigate, specialty]);
+  }, [pagination, navigate]);
 
-  const handleNextPage = () => {
-    if (hasNextPage) {
-      setPagination((prev) => prev + 1);
-    }
-  };
+  useEffect(() => {
+    fetchDocData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagination, specialty, selectedSubSpecialty]);
 
-  const handlePreviousPage = () => {
-    if (hasPreviousPage) {
-      setPagination((prev) => prev - 1);
-    }
-  };
+  // const handleNextPage = () => {
+  //   if (hasNextPage) {
+  //     setPagination((prev) => prev + 1);
+  //   }
+  // };
+
+  // const handlePreviousPage = () => {
+  //   if (hasPreviousPage) {
+  //     setPagination((prev) => prev - 1);
+  //   }
+  // };
 
   if (isLoading)
     return (
@@ -88,16 +116,18 @@ const SpecialtyDoctorList = ({ specialty }) => {
     );
 
   return (
-    <>
+    <div className="w-full flex flex-col items-center mb-3">
       {doctors.length > 0 ? (
-        doctors.map((doctor) => (
-          <DoctorCard key={doctor.id} doctor={doctor} />
-        ))
+        doctors.map((doctor) =>  
+        <DoctorCard key={doctor.id} doctor={doctor} />
+      )
       ) : (
-        <div className="text-center py-8">No doctors found for this specialty.</div>
+        <div className="text-center py-8">
+          No doctors found for this specialty.
+        </div>
       )}
 
-      <div className="flex justify-center border-r border-black my-8 md:my-12">
+      {/* <div className="flex justify-center border-r border-black my-8 md:my-12">
         <button
           onClick={handlePreviousPage}
           className={`${
@@ -118,9 +148,9 @@ const SpecialtyDoctorList = ({ specialty }) => {
         >
           Next Page
         </button>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
-}
+};
 
 export default SpecialtyDoctorList;
