@@ -80,13 +80,13 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               lastName: result.last_name,
               rating: result.average_rating,
               specialty: result.specialty_name,
-              type: result.facility_type?.name,
-              typeSlug: result.facility_type?.slug,
+              type: result.facility_type_name,
+              typeSlug: result.facility_type_name?.toLowerCase(),
               name: result.name,
               slug: result.slug,
               reviews: result.reviews,
-              categoryName: result.category?.name,
-              categorySlug: result.category?.slug
+              categoryName: result.category_name,
+              categorySlug: result.category_slug
             };
 
             if (result.facility_type) {
