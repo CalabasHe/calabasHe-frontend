@@ -34,10 +34,9 @@ const FacilityProfileSm = ({ facility = [] }) => {
               {facility.name}
             </h2>
             <div className="flex items-center font-medium text-[#6A6A67] text-xs gap-3 lg:gap-4">
-              <p className="font-normal">
+              <p className={`font-normal`}>
                 {" "}
-                {facility.totalReviews}{" "}
-                {facility.totalReviews === 1 ? "review" : "reviews"}
+                {facility.totalReviews.length > 0 ? facility.totalReviews : 'No' } {facility.totalReviews.length > 1 ? 'reviews' : 'review'}
               </p>
               <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>
               <p className="">{HandleAdjective(facility.rating)}</p>

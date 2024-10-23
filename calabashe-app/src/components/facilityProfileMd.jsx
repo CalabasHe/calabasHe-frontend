@@ -42,8 +42,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
             <div className="flex font-semibold text-[#6A6A67] items-center gap-3 lg:gap-4">
               <p className="font-medium">
                 {" "}
-                {facility.totalReviews}{" "}
-                {facility.totalReviews < 2 ? "review" : "reviews"}
+                {facility.totalReviews.length > 0 ? facility.totalReviews : 'No' } {facility.totalReviews.length > 1 ? 'reviews' : 'review'}
               </p>
               <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>
               <p className="">{HandleAdjective(facility.rating)}</p>
