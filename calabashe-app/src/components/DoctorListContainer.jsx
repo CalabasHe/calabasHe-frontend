@@ -55,7 +55,7 @@ const DoctorListContainer = () => {
       )}
       
       {/* Doctor list section */}
-      <div className="w-full lg:w-3/4 lg:h-full lg:overflow-y-auto lg:pb-24 scrollbar-thin">
+      <div className="w-full lg:w-3/4 lg:px-2 lg:h-full lg:overflow-y-auto lg:pb-24 scrollbar-thin">
         <div className="lg:pl-4">
           <SpecialtyContext.Consumer>
             {({ selectedSpecialty }) => (
