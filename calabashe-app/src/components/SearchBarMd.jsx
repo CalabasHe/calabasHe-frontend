@@ -176,123 +176,126 @@ const SearchBarMd = () => {
       {showResults && (
         <div
           ref={searchRef}
-          className={`absolute max-h-[85vh] overflow-y-scroll z-50 rounded-b-3xl ${results.length < 4 ? 'pb-5' : ''} pt-4 space-y-6 shadow-lg bg-white w-full left-0 top-full`}
+          className="absolute z-50 rounded-b-3xl bg-white w-full left-0 top-full flex flex-col"
+          style={{ maxHeight: '85vh' }}
         >
-          {results.length > 0 && (
-            <>
-              {results.filter((result) => result.category).length > 0 && (
-                <div className="space-y-2 border-b pb-4 text-black">
-                  <p className="px-4 text-lg font-medium">Services</p>
-                  {results
-                    .filter((result) => result.category)
-                    .slice(0,4)
-                    .map((result) => (
-                      <div
-                        onClick={() => handleLinkClick(result)}
-                        key={result.id}
-                        className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
-                      >
-                          <p className=" font-bold text-sm lg:text-base truncate">
-                           {result.name}
-                          </p>
-                          
-                        <div className="text-xs text-gray-500">
-                          <p>{result.category}</p>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              )}
-
-              {results.filter((result) => result.specialty).length > 0 && (
-                <div className="space-y-2 border-b pb-4 text-black">
-                  <p className="px-4 text-lg font-medium">Doctors</p>
-                  {results
-                    .filter((result) => result.specialty)
-                    .slice(0, 4)
-                    .map((result) => (
-                      <div
-                        onClick={() => handleLinkClick(result)}
-                        key={result.id}
-                        className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
-                      >
-                        <div className="flex gap-2 justify-between">
-                          <p className=" font-bold text-sm lg:text-base truncate">
-                            {"Dr. " + result.firstName + " " + result.lastName}
-                          </p>
-                          <div className="flex gap-1 text-gray-500 items-center">
-                            <p className="text-xs">{result.rating}</p>
-                            {
-                              result.reviewCount > 0 && (
-                                <StarRating rating={result.rating} search={true} />
-                              )
-                            }
-                          </div>
-                        </div>
-                        <div className="text-xs flex justify-between text-gray-500">
-                          <p>{result.specialty}</p>
-                          { result.reviewCount > 0 ? (
-                            <p>
-                              {result.reviewCount ? result.reviewCount : "0"}{" "}
-                              {result.reviewCount === 1 ? "review" : "reviews"}
+          <div className="overflow-y-auto scrollbar-thin flex-1">
+            <div className="pt-4 space-y-6">
+              {results.length > 0 && (
+                <>
+                  {results.filter((result) => result.category).length > 0 && (
+                    <div className="space-y-2 border-b pb-4 text-black">
+                      <p className="px-4 text-lg font-medium">Services</p>
+                      {results
+                        .filter((result) => result.category)
+                        .slice(0,4)
+                        .map((result) => (
+                          <div
+                            onClick={() => handleLinkClick(result)}
+                            key={result.id}
+                            className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
+                          >
+                            <p className="font-bold text-sm lg:text-base truncate">
+                              {result.name}
                             </p>
-                          ) :
-                          <p className="font-semibold italic text-gray-600">No reviews</p>
-
-                          }
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              )}
-
-              {results.filter((result) => !result.specialty).length > 0 && (
-                <div className="space-y-2 text-black">
-                  <p className="px-4 text-lg font-medium">Facilities</p>
-                  {results
-                    .filter((result) => !result.specialty && result.type)
-                    .slice(0, 4)
-                    .map((result) => (
-                      <div
-                        onClick={() => handleLinkClick(result)}
-                        key={result.id}
-                        className="hover:bg-blue-100  text-black cursor-pointer py-3 px-4"
-                      >
-                        <div className="flex gap-2 justify-between">
-                          <p className="font-bold text-sm lg:text-base truncate">
-                            {result.name}
-                          </p>
-                          <div className="flex gap-1 text-gray-500 items-center">
-                            <p className="text-xs">{result.rating}</p>
-                            {
-                              result.reviewCount > 0 && (
-                                <StarRating rating={result.rating} search={true} />
-                              )
-                            }
+                            <div className="text-xs text-gray-500">
+                              <p>{result.category}</p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="text-xs flex justify-between text-gray-500">
-                          <p>{result.type}</p>
-                          { result.reviewCount > 0 ? (
-                            <p>
-                              {result.reviewCount ? result.reviewCount : "0"}{" "}
-                              {result.reviewCount === 1 ? "review" : "reviews"}
-                            </p>
-                          ) :
-                          <p className="font-semibold italic text-gray-600">No reviews</p>
+                        ))}
+                    </div>
+                  )}
 
-                          }
-                        </div>
-                      </div>
-                    ))}
-                </div>
+                  {results.filter((result) => result.specialty).length > 0 && (
+                    <div className="space-y-2 border-b pb-4 text-black">
+                      <p className="px-4 text-lg font-medium">Doctors</p>
+                      {results
+                        .filter((result) => result.specialty)
+                        .slice(0, 4)
+                        .map((result) => (
+                          <div
+                            onClick={() => handleLinkClick(result)}
+                            key={result.id}
+                            className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
+                          >
+                            <div className="flex gap-2 justify-between">
+                              <p className="font-bold text-sm lg:text-base truncate">
+                                {"Dr. " + result.firstName + " " + result.lastName}
+                              </p>
+                              <div className="flex gap-1 text-gray-500 items-center">
+                                <p className="text-xs">{result.rating}</p>
+                                {result.reviewCount > 0 && (
+                                  <StarRating rating={result.rating} search={true} />
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-xs flex justify-between text-gray-500">
+                              <p>{result.specialty}</p>
+                              {result.reviewCount > 0 ? (
+                                <p>
+                                  {result.reviewCount ? result.reviewCount : "0"}{" "}
+                                  {result.reviewCount === 1 ? "review" : "reviews"}
+                                </p>
+                              ) : (
+                                <p className="font-semibold italic text-gray-600">No reviews</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+
+                  {results.filter((result) => !result.specialty && result.type).length > 0 && (
+                    <div className="space-y-2 text-black">
+                      <p className="px-4 text-lg font-medium">Facilities</p>
+                      {results
+                        .filter((result) => !result.specialty && result.type)
+                        .slice(0, 4)
+                        .map((result) => (
+                          <div
+                            onClick={() => handleLinkClick(result)}
+                            key={result.id}
+                            className="hover:bg-blue-100 text-black cursor-pointer py-3 px-4"
+                          >
+                            <div className="flex gap-2 justify-between">
+                              <p className="font-bold text-sm lg:text-base truncate">
+                                {result.name}
+                              </p>
+                              <div className="flex gap-1 text-gray-500 items-center">
+                                <p className="text-xs">{result.rating}</p>
+                                {result.reviewCount > 0 && (
+                                  <StarRating rating={result.rating} search={true} />
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-xs flex justify-between text-gray-500">
+                              <p>{result.type}</p>
+                              {result.reviewCount > 0 ? (
+                                <p>
+                                  {result.reviewCount ? result.reviewCount : "0"}{" "}
+                                  {result.reviewCount === 1 ? "review" : "reviews"}
+                                </p>
+                              ) : (
+                                <p className="font-semibold italic text-gray-600">No reviews</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </>
               )}
-            </>
-          )}
+            </div>
+          </div>
 
           {results.length > 4 && (
-            <div onClick={handleShowResults} className="w-full cursor-pointer py-3 rounded-xl rounded-t-none text-white text-center bg-[#0070FF]">
-              Show all results <span className="ml-2">&rarr;</span>
+            <div className="sticky bottom-0 w-full">
+              <div 
+                onClick={handleShowResults}
+                className="w-full cursor-pointer py-3 text-white text-center bg-[#0070FF] rounded-b-3xl"
+              >
+                Show all results <span className="ml-2">&rarr;</span>
+              </div>
             </div>
           )}
         </div>
