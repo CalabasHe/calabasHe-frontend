@@ -58,7 +58,7 @@ const Specialty = ({ start = false, onClose }) => {
 
   return (
     <section className="sticky top-[80px] mb-3 w-full flex flex-col gap-3 rounded-lg">
-      <div className="bg-white py-8 rounded-[inherit] pl-8 pr-2 space-y-6 border w-full h-fit max-h-[45vh] scrollbar-thin overflow-y-scroll">
+      <div className="bg-white py-8 rounded-[inherit] pl-8 pr-2 space-y-6 border w-full h-fit max-h-[38vh] scrollbar-thin overflow-y-scroll">
         <div className="">
           <h2 className="font-semibold text-lg">Specialties</h2>
           <p className="text-sm text-slate-500 italic">Choose a specialty</p>

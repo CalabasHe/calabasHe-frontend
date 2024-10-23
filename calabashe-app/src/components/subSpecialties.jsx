@@ -10,7 +10,7 @@ const SubSpecialties = () => {
   };
 
   return (
-    <div className="bg-white py-8 rounded-[inherit] pl-8 pr-2 space-y-6 border w-full h-fit max-h-[65vh] scrollbar-thin overflow-y-scroll">
+    <div className="bg-white py-8 rounded-[inherit] pl-8 pr-2 space-y-6 border w-full h-fit max-h-[35vh] scrollbar-thin overflow-y-scroll">
       <div className="">
         <h2 className="font-semibold text-lg">Sub-Specialties</h2>
         <p className="text-sm text-slate-500 italic">Choose a sub-specialty</p>
@@ -37,6 +37,7 @@ const SubSpecialties = () => {
               onClick={() => handleSubSpecialtyClick(subspecialty.slug)}
             >
               <span>{subspecialty.name}</span>
+              {/* <span>{subspecialty.doctors_count}</span> */}
             </li>
           ))}
       </ul>
