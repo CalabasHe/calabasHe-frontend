@@ -35,11 +35,11 @@ const DoctorCard = ({ doctor }) => {
       {/* Profile Data */}
       <section className="antialiased lg:self-center grow flex flex-col max-sm:max-w-[60%] sm:flex-row justify-between py-1">
         <div className="px-1 mb-auto overflow-hidden">
-          <h2 className="text-xs md:text-base lg:text-base xl:text-lg font-black max-md:max-w-[250px] md:max-w-[280px] lg:max-w-[250px] xl:max-w-[350px] overflow-hidden text-ellipsis whitespace-nowrap">
+          <h2 className="text-xs md:text-base lg:text-base xl:text-lg font-black max-md:max-w-[250px] md:max-w-[280px] lg:max-w-[250px] xl:max-w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
             Dr.&nbsp; {doctor.lastName} {doctor.firstName}
           </h2>
           <p className="text-[10px]  md:text-xs font-[400] max-md:max-w-[250px] md:max-w-[280px] lg:max-w-[250px] xl:max-w-[350px] overflow-hidden text-ellipsis whitespace-nowrap">
-            {doctor.specialty}
+            {doctor.specialtyTag}
           </p>
 
           <div className="mt-2">

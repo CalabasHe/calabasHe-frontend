@@ -37,7 +37,7 @@ const DocProfileSm = ({ doctor = [] }) => {
               <h2 className="text-sm font-bold">
                 Dr. {doctor.firstName} {doctor.lastName}
               </h2>
-              <p className="text-xs font-light text-gray-600 ">{doctor.specialty}</p>
+              <p className="text-xs font-light text-gray-600 ">{doctor.specialtyTag}</p>
             </div>
             <div className="flex items-center font-medium text-xs text-[#6A6A67] gap-3 lg:gap-4">
               <p className="font-normal">

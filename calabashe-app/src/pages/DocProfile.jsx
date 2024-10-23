@@ -18,7 +18,7 @@ const DocProfile = () => {
     const fetchDoctor = async () => {
       try {
         const data = await fetchDoctorBySlug(slug);
-        // console.log('API Response:', data);
+        console.log('API Response:', data);
         const doctorDetails = {
           qrCode: data.qr_code,
           id: data.id,
@@ -26,6 +26,7 @@ const DocProfile = () => {
           lastName: data.last_name,
           rating: data.average_rating,
           specialty: data.specialty_name,
+          specialtyTag: data.specialty_tag,
           slug: data.slug,
           patientsTellUs: data.reviews?.title,
           region: data.region_name,

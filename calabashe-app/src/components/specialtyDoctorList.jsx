@@ -57,6 +57,7 @@ const SpecialtyDoctorList = () => {
           lastName: doc.last_name,
           rating: doc.average_rating,
           specialty: doc.specialty_name,
+          specialtyTag: doc.specialty_tag,
           slug: doc.slug,
           reviews: doc.reviews,
           verified: doc.is_verified,
