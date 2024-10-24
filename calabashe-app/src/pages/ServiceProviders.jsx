@@ -205,7 +205,7 @@ const ServiceProviders = () => {
                             <div className="space-y-2">
                               <div>
                                 <Link
-                                  to={`/facilities/${facility.facility_type.name.toLowerCase()}s/${
+                                  to={`/facilities/${facility.facility_type_name.toLowerCase()}s/${
                                     facility.slug
                                   }`}
                                   className="font-bold text-base"

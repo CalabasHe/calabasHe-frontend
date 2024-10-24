@@ -115,7 +115,7 @@ const SignUp = () => {
 
         <AnimateY>
         
-            {/* <Link to='/home' className=" sticky top-2 hidden md:flex bg-white font-bold text-xl md:text-2xl lg:text-3xl mb-4  md:px-2 shadow-md rounded-md w-[fit-content]" >
+            {/* <Link to='/' className=" sticky top-2 hidden md:flex bg-white font-bold text-xl md:text-2xl lg:text-3xl mb-4  md:px-2 shadow-md rounded-md w-[fit-content]" >
               <p> Calabas<span className="text-[#04DA8D]">He</span> </p>
             </Link>      */}
             
@@ -124,7 +124,7 @@ const SignUp = () => {
               
               <div className="relative z-20 bg-white w-[90%] sm:w-[80%] max-w-[300px] sm:max-w-[350px] md:min-w-[40vw] md:max-w-[550px]  flex flex-col  border-black pointer-events-auto rounded-md py-4 lg:py-6 p-4 px-[3%]">
                 <div className="w-[60%] max-w-[250px] text-center z-30 absolute text-xl md:text-2xl text-white px-8 py-2 rounded-md font-bold bg-[#037F52] self-center -translate-y-10">
-                  <Link to='/home'><h1>Calabas<span className="text-[#04DA8D]">he</span></h1></Link>
+                  <Link to='/'><h1>Calabas<span className="text-[#04DA8D]">he</span></h1></Link>
                 </div>
                 
                 <div className="absolute  left-[18%] w-[180px] sm:w-[210px] md:w-[240px] -top-[100px] sm:-top-[120px] md:hidden  md:-top-[150px] lg:hidden z-10">

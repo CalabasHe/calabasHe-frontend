@@ -74,7 +74,7 @@ const Review = () => {
       }
       
       toast.success('Review successful')
-      go('/home')
+      go('/')
     } catch (error) {
       setIsSubmitting(false)
       let errorMessage = 'Failed to submit review. Please try again.';
