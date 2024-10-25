@@ -52,7 +52,7 @@ const DoctorCard = ({ doctor }) => {
                 {doctor.reviews.slice(0, 2).map((review) => (
                   <p
                     key={review.id}
-                    className=" font-medium text-[10px] sm:text-xs md:pl-2 "
+                    className=" font-medium text-[10px] line-clamp-1 sm:text-xs md:pl-2  "
                   >
                     &#8226;{" "}
                     {review.title.charAt(0).toUpperCase() +

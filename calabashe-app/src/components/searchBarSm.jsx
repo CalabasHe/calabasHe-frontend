@@ -79,7 +79,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               firstName: result.first_name,
               lastName: result.last_name,
               rating: result.average_rating,
-              specialty: result.specialty_name,
+              specialty: result.specialty?.name,
               type: result.facility_type_name,
               typeSlug: result.facility_type_name?.toLowerCase(),
               name: result.name,
@@ -160,7 +160,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
             className=""
           >
             <div className="bg-white shadow-md border p-2 px-2 text-sm truncate text-black rounded-md mb-2">
-              <h3 className="leading-snug font-bold">
+              <h3 className="leading-snug font-bold truncate">
                 {result.name
                   ? result.name
                   : `Dr. ${result.firstName} ${result.lastName}`}

@@ -62,13 +62,14 @@ const BannerSearch = () => {
     if (!searchParam) return [];
     try {
       const data = await SearchData(searchParam);
+      console.log(data)
       if (Array.isArray(data) && data.length > 0) {
         const resultDetails = data.map((result) => ({
           id: result.id,
           firstName: result.first_name,
           lastName: result.last_name,
           rating: result.average_rating && result.average_rating.toFixed(1),
-          specialty: result.specialty_name,
+          specialty: result.specialty?.name,
           type: result.facility_type_name,
           typeSlug: result.facility_type_name?.toLowerCase(),
           name: result.name,
@@ -248,15 +249,18 @@ const BannerSearch = () => {
                           <p className="font-bold text-sm lg:text-base truncate">
                             {"Dr. " + result.firstName + " " + result.lastName}
                           </p>
+                      
                           <div className="flex gap-1 text-gray-500 items-center">
                             <p className="text-xs">{result.rating}</p>
-                            <StarRating rating={result.rating} search={true} />
+                            {result.reviewCount > 0 && (
+                                  <StarRating rating={result.rating} search={true} />
+                            )}
                           </div>
                         </div>
                         <div className="text-xs flex justify-between text-gray-500">
                           <p>{result.specialty}</p>
-                          <p>
-                            {result.reviewCount ? result.reviewCount : "0"}{" "}
+                          <p className={`${result.reviewCount < 1 && 'italic'}`}>
+                            {result.reviewCount ? result.reviewCount : "No"}{" "}
                             {result.reviewCount === 1 ? "review" : "reviews"}
                           </p>
                         </div>
@@ -283,13 +287,15 @@ const BannerSearch = () => {
                           </p>
                           <div className="flex gap-1 text-gray-500 items-center">
                             <p className="text-xs">{result.rating}</p>
-                            <StarRating rating={result.rating} search={true} />
+                            {result.reviewCount > 0 && (
+                                  <StarRating rating={result.rating} search={true} />
+                            )}
                           </div>
                         </div>
                         <div className="text-xs flex justify-between text-gray-500">
                           <p>{result.type}</p>
-                          <p>
-                            {result.reviewCount ? result.reviewCount : "0"}{" "}
+                          <p className={`${result.reviewCount < 1 && 'italic'}`}>
+                            {result.reviewCount ? result.reviewCount : "No"}{" "}
                             {result.reviewCount === 1 ? "review" : "reviews"}
                           </p>
                         </div>
