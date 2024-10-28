@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { fetchDoctors } from "../api/getCategoriesData";
-import DoctorCard from "./doctorCard";
+import DoctorCard from "./doctorCardsm";
+import DoctorCardMd from "./doctorCardmd";
 
 const AllDoctorList = () => {
   const [doctors, setDoctors] = useState([]);
@@ -24,7 +25,7 @@ const AllDoctorList = () => {
     try {
       setIsLoading(true);
       const docData = await fetchDoctors(page);
-
+      // console.log(docData)
       setHasPreviousPage(!!docData.previous);
       setHasNextPage(!!docData.next);
       if (Array.isArray(docData.results) && docData.results.length > 0) {
@@ -33,11 +34,15 @@ const AllDoctorList = () => {
           firstName: doc.first_name,
           lastName: doc.last_name,
           rating: doc.average_rating,
-          specialty: doc.specialty_name,
-          specialtyTag: doc.specialty_tag,
+          specialty: doc.specialty?.name,
+          specialtyTag: doc.specialty?.tag,
           slug: doc.slug,
           reviews: doc.reviews,
+          reviewCount: doc.reviews_count,
           verified: doc.is_verified,
+          region: doc.region_name,
+          recommendedFor: doc.specialty?.conditions_and_treatments,
+          experience: doc.years_of_experience
         }));
         setDoctors(doctorDetails);
       } else {
@@ -90,12 +95,28 @@ const AllDoctorList = () => {
     );
 
   return (
-    <>
-      {doctors.map((doctor) => (
+    <div className="w-full flex flex-col items-center">
+      {/* {doctors.slice(0,1).map((doctor) => (
         <DoctorCard key={doctor.id} doctor={doctor} />
-      ))}
+      ))
+      } */}
+      <div className="max-[819px]:hidden w-full  max-w-[1100px] flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
+        {doctors.map((doctor) => (
+          <div key={doctor.id}  className="w-full flex flex-col items-center pt-6 ">
+            <DoctorCardMd doctor={doctor} />
+          </div>
+        ))}
+      </div>
 
-      <div className="w-full flex justify-center border-r border-black my-8 md:my-12">
+      <div className="min-[820px]:hidden w-full">
+      {doctors.map((doctor) => (
+          <div key={doctor.id}  className="w-full flex flex-col items-center pt-6 ">
+            <DoctorCard doctor={doctor} />
+          </div>
+        ))}
+      </div>
+
+      <div className="w-full flex justify-center my-8 md:my-12">
         <button
           onClick={handlePreviousPage}
           className={`${
@@ -117,7 +138,7 @@ const AllDoctorList = () => {
           Next Page
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
