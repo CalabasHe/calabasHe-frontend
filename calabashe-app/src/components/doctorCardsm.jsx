@@ -9,7 +9,7 @@ const DoctorCard = ({ doctor }) => {
   }
   
   return (
-    <div className="min-[820px]:hidden mt-4 border bg-white shadow-md h-[440px] flex flex-col rounded-md w-full">
+    <div className="min-[820px]:hidden mt-4 border bg-white shadow-md h-[420px] sm:h-[440px] flex flex-col rounded-md w-full">
 
       <div className="px-3 p-6 flex-none">
         <section className='w-full flex gap-2'>
@@ -35,10 +35,10 @@ const DoctorCard = ({ doctor }) => {
 
       <div className="px-3 flex-none h-[120px]">
         <section className='w-full font-medium'>
-          <p>{doctor.region}</p>
+          <p className='text-sm sm:text-base'>{doctor.region}</p>
           <div className='mt-1'>
-            <p className='text-[#5C6B88]'>Recommended for:</p>
-            <div className='mt-2 text-sm flex flex-wrap gap-2'>
+            <p className='text-[#5C6B88] text-sm sm:text-base'>Recommended for:</p>
+            <div className='mt-2 text-xs sm:text-sm flex flex-wrap gap-2'>
               <p className='flex gap-0.5 items-center bg-[#9EFFDF] px-2 py-1.5 rounded-3xl'>
                 <span>
                   <svg className='size-4' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,10 +68,10 @@ const DoctorCard = ({ doctor }) => {
       </div>
 
 
-      <div className="px-3 p-6 mt-auto">
+      <div className="px-3 pt-6 pb-4 mt-auto">
         <button 
           onClick={() => toProfile(doctor.slug)} 
-          className='w-full bg-[#205CD4] text-white font-medium text-xl py-3 rounded-sm'
+          className='w-full bg-[#205CD4] text-white font-medium text-xl py-3 rounded-md'
         >
           View Profile
         </button>
