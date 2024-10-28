@@ -125,7 +125,7 @@ const AllDoctorList = () => {
               : !hasNextPage
               ? "border-r"
               : "hidden"
-          } text-xs md:text-sm border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold`}
+          } text-base lg:text-lg border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold`}
         >
           Previous
         </button>
@@ -133,7 +133,7 @@ const AllDoctorList = () => {
           onClick={handleNextPage}
           className={`${
             hasNextPage ? "flex border-r" : "hidden"
-          } text-xs md:text-sm border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}
+          } text-base lg:text-lg border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}
         >
           Next Page
         </button>

@@ -68,10 +68,10 @@ const DoctorCard = ({ doctor }) => {
       </div>
 
 
-      <div className="px-3 pt-6 pb-4 mt-auto">
+      <div className="px-3 pb-4 mt-auto">
         <button 
           onClick={() => toProfile(doctor.slug)} 
-          className='w-full bg-[#205CD4] text-white font-medium text-xl py-3 rounded-md'
+          className='w-full bg-[#205CD4] text-white font-medium text-lg py-2 rounded-md'
         >
           View Profile
         </button>
