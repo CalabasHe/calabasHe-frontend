@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchDoctorBySlug } from "../api/getProfileData";
 import Footer from "../components/Footer";
@@ -33,7 +33,7 @@ const DocProfile = () => {
           ratingPercentages: data.rating_percentages,
           reviews: data.reviews,
           totalReviews: data.total_reviews,
-          verified: data.is_verified
+          verified: data.is_verified,
         };
         // console.log('Processed doctor details:', doctorDetails);
         setDoctor(doctorDetails);
@@ -62,15 +62,17 @@ const DocProfile = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
-      <Header />
-      <AnimatePage>
-        <DocProfileSm doctor={doctor} />
-        <DocProfileMd doctor={doctor} />
-      </AnimatePage>
+    <div className="">
+      <div className="min-h-screen 2xl:container 2xl:border-x mx-auto">
+        <Header />
+        <AnimatePage>
+          <DocProfileSm doctor={doctor} />
+          <DocProfileMd doctor={doctor} />
+        </AnimatePage>
 
-      <Footer />
-    </>
+        <Footer />
+      </div>
+    </div>
   );
 };
 

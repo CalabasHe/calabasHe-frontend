@@ -25,7 +25,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
   };
   return (
     <>
-      <main className="w-full hidden md:block py-12">
+      <main className="w-full hidden md:block py-12 2xl:border-x">
         <section className="px-16 lg:px-[100px] pt-12 pb-6 flex gap-6 lg:gap-8 items-center bg-white">
           <div className="w-44 lg:w-56 h-44 lg:h-56 rounded-full bg-gray-300/40 flex items-center justify-center">
             <svg

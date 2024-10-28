@@ -52,7 +52,7 @@ const ServiceProviders = () => {
 
   return (
     <>
-      <div>
+      <div className="2xl:container mx-auto 2xl:border-x">
         <Header />
         <main className="px-4 mt-16 md:mt-24 pb-6 lg:pb-10 md:px-12 lg:px-16">
           <div className="w-full flex justify-between items-center">

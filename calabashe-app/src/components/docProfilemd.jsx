@@ -35,7 +35,7 @@ const DocProfileMd = ({ doctor = [] }) => {
   };
   return (
     <>
-      <main className="w-full hidden md:block py-12">
+      <main className="w-full hidden md:block py-12 2xl:border-x">
         <section className="px-8 lg:px-[100px] pt-12 pb-6 flex lg:gap-3 xl:gap-8  items-center bg-white border-b">
           <div className="relative size-36 lg:size-44 rounded-full mr-2 xl:mr-0 bg-gray-300/40 flex items-center justify-center">
             <svg

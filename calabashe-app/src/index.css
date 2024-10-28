@@ -3,13 +3,14 @@
 @tailwind utilities;
 
 
+
 *{
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-html{
+html, .mainBg{
   scroll-behavior: smooth;
   background-color:#FCFBF2;
 }
