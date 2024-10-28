@@ -4,6 +4,7 @@ import debounce from "lodash/debounce";
 import SearchData from "../api/search";
 import StarRating from "./rating";
 
+// eslint-disable-next-line react/prop-types
 const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
   const [searchParam, setSearchParam] = useState("");
   const [facilities, setFacilities] = useState([]);

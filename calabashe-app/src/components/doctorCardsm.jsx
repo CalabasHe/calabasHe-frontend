@@ -10,7 +10,7 @@ const DoctorCard = ({ doctor }) => {
   
   return (
     <div className="min-[820px]:hidden mt-4 border bg-white shadow-md h-[440px] flex flex-col rounded-md w-full">
-      {/* Top Section - Fixed Height */}
+
       <div className="px-3 p-6 flex-none">
         <section className='w-full flex gap-2'>
           <div className='min-w-[130px] w-[35%] h-[140px] sm:h-[180px] bg-gray-300 rounded-sm' />
@@ -32,7 +32,7 @@ const DoctorCard = ({ doctor }) => {
         </section>
       </div>
 
-      {/* Middle Section - Fixed Height */}
+
       <div className="px-3 flex-none h-[120px]">
         <section className='w-full font-medium'>
           <p>{doctor.region}</p>
@@ -67,7 +67,7 @@ const DoctorCard = ({ doctor }) => {
         </section>
       </div>
 
-      {/* Bottom Section - Fixed Height */}
+
       <div className="px-3 p-6 mt-auto">
         <button 
           onClick={() => toProfile(doctor.slug)} 
