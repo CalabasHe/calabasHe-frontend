@@ -21,7 +21,7 @@ const Doctors = () => {
       <AnimatePage>
         {/* <main className="flex-grow w-full flex flex-col lg:pb-[100px] lg:flex-row lg:justify-center lg:gap-2 relative mt-32 lg:px-4 xl:px-6 sm:mt-16 p-2"> */}
         <main className="mt-2 sm:mt-16 lg:mt-4">
-          <div className="w-full  px-2 xl:px-4">
+          <div className="w-full px-2 xl:px-4">
             <DoctorListContainer/>
           </div>
         </main>

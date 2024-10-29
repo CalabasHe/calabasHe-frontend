@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { fetchDoctors } from "../api/getCategoriesData";
 import DoctorCard from "./doctorCardsm";
 import DoctorCardMd from "./doctorCardmd";
+import DoctorSearchBar from "./DoctorSearchBar";
+import { DoctorsSearch } from "../api/search";
 
 const AllDoctorList = () => {
   const [doctors, setDoctors] = useState([]);
@@ -10,6 +12,12 @@ const AllDoctorList = () => {
   const [error, setError] = useState(null);
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
+  const [filtering, setFiltering] = useState(false);
+  const [searchCriteria, setSearchCriteria] = useState({
+    search_query: "",
+    specialty: "",
+    location: ""
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,7 +65,22 @@ const AllDoctorList = () => {
   };
 
   useEffect(() => {
-    fetchDocData(pagination);
+    if (filtering)
+    {
+      //call search submit again
+      if (filtering) {
+        handleSearchSubmit(
+          searchCriteria.search_query,
+          searchCriteria.specialty,
+          searchCriteria.location,
+          pagination
+        );
+      } else {
+        fetchDocData(pagination);
+      }
+    } else {
+      fetchDocData(pagination); 
+    }
     navigate(`?page=${pagination}`, { replace: true });
   }, [pagination, navigate]);
 
@@ -75,6 +98,55 @@ const AllDoctorList = () => {
   const handlePreviousPage = () => {
     if (hasPreviousPage) {
       handlePageChange(pagination - 1);
+    }
+  };
+
+
+  const handleSearchSubmit = async (search_query, specialty, location) => {
+    try {
+      setIsLoading(true);
+      setFiltering(true);
+      setSearchCriteria({ search_query, specialty, location });
+      const docData = await DoctorsSearch({ search_query, specialty, location, pagination});
+
+      // Check for pagination availability
+      setHasPreviousPage(!!docData.previous);
+      setHasNextPage(!!docData.next);
+
+      // Validate and process doctor data
+      if (Array.isArray(docData?.results) && docData.results.length > 0) {
+        const doctorDetails = docData.results.map((doc) => ({
+          id: doc.id,
+          firstName: doc.first_name,
+          lastName: doc.last_name,
+          rating: doc.average_rating,
+          specialty: doc.specialty?.name || "N/A",
+          specialtyTag: doc.specialty?.tag || "N/A",
+          slug: doc.slug,
+          reviews: doc.reviews || [],
+          reviewCount: doc.reviews_count || 0,
+          verified: doc.is_verified,
+          region: doc.region_name || "N/A",
+          recommendedFor: doc.specialty?.conditions_and_treatments || [],
+          experience: doc.years_of_experience || 0,
+        }));
+        setDoctors(doctorDetails);
+
+        // Update URL to reflect the search filters
+        const searchParams = new URLSearchParams();
+        if (search_query) searchParams.set("search_query", search_query);
+        if (specialty) searchParams.set("specialty", specialty);
+        if (location) searchParams.set("location", location);
+        searchParams.set("page", "1");
+        navigate(`?${searchParams.toString()}`, { replace: true });
+
+      } else {
+        setDoctors([]); // Clear previous doctor data if no results are found
+      }
+    } catch (error) {
+      setError(error.message || "An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -100,9 +172,10 @@ const AllDoctorList = () => {
         <DoctorCard key={doctor.id} doctor={doctor} />
       ))
       } */}
+      <DoctorSearchBar submitFunc={handleSearchSubmit} />
       <div className="max-[819px]:hidden w-full  max-w-[1100px] flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
         {doctors.map((doctor) => (
-          <div key={doctor.id}  className="w-full flex flex-col items-center pt-6 ">
+          <div key={doctor.id} className="w-full flex flex-col items-center pt-6 ">
             <DoctorCardMd doctor={doctor} />
           </div>
         ))}
@@ -119,21 +192,19 @@ const AllDoctorList = () => {
       <div className="w-full flex justify-center my-8 md:my-12">
         <button
           onClick={handlePreviousPage}
-          className={`${
-            hasPreviousPage
+          className={`${hasPreviousPage
               ? "flex border-r-0"
               : !hasNextPage
-              ? "border-r"
-              : "hidden"
+                ? "border-r"
+                : "hidden"
           } text-base lg:text-lg border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold`}
         >
           Previous
         </button>
         <button
           onClick={handleNextPage}
-          className={`${
-            hasNextPage ? "flex border-r" : "hidden"
-          } text-base lg:text-lg border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}
+          className={`${hasNextPage ? "flex border-r" : "hidden"
+            } text-base lg:text-lg border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}
         >
           Next Page
         </button>
