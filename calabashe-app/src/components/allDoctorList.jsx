@@ -108,9 +108,9 @@ const AllDoctorList = () => {
         ))}
       </div>
 
-      <div className="min-[820px]:hidden w-full">
+      <div className="min-[820px]:hidden w-full flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
       {doctors.map((doctor) => (
-          <div key={doctor.id}  className="w-full flex flex-col items-center pt-6 ">
+          <div key={doctor.id}  className="w-full flex flex-col items-center pt-4 ">
             <DoctorCard doctor={doctor} />
           </div>
         ))}
