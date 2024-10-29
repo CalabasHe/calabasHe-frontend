@@ -12,6 +12,12 @@ const AllDoctorList = () => {
   const [error, setError] = useState(null);
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
+  const [filtering, setFiltering] = useState(false);
+  const [searchCriteria, setSearchCriteria] = useState({
+    search_query: "",
+    specialty: "",
+    location: ""
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -59,7 +65,22 @@ const AllDoctorList = () => {
   };
 
   useEffect(() => {
-    fetchDocData(pagination);
+    if (filtering)
+    {
+      //call search submit again
+      if (filtering) {
+        handleSearchSubmit(
+          searchCriteria.search_query,
+          searchCriteria.specialty,
+          searchCriteria.location,
+          pagination
+        );
+      } else {
+        fetchDocData(pagination);
+      }
+    } else {
+      fetchDocData(pagination); 
+    }
     navigate(`?page=${pagination}`, { replace: true });
   }, [pagination, navigate]);
 
@@ -84,12 +105,13 @@ const AllDoctorList = () => {
   const handleSearchSubmit = async (search_query, specialty, location) => {
     try {
       setIsLoading(true);
-
-      // Await response from DoctorsSearch function
-      const docData = await DoctorsSearch({ search_query, specialty, location });
+      setFiltering(true);
+      setSearchCriteria({ search_query, specialty, location });
+      const docData = await DoctorsSearch({ search_query, specialty, location, pagination});
 
       // Check for pagination availability
-
+      setHasPreviousPage(!!docData.previous);
+      setHasNextPage(!!docData.next);
 
       // Validate and process doctor data
       if (Array.isArray(docData?.results) && docData.results.length > 0) {
@@ -109,12 +131,19 @@ const AllDoctorList = () => {
           experience: doc.years_of_experience || 0,
         }));
         setDoctors(doctorDetails);
+
+        // Update URL to reflect the search filters
+        const searchParams = new URLSearchParams();
+        if (search_query) searchParams.set("search_query", search_query);
+        if (specialty) searchParams.set("specialty", specialty);
+        if (location) searchParams.set("location", location);
+        searchParams.set("page", "1");
+        navigate(`?${searchParams.toString()}`, { replace: true });
+
       } else {
-        console.log("No results found");
         setDoctors([]); // Clear previous doctor data if no results are found
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
       setError(error.message || "An unexpected error occurred");
     } finally {
       setIsLoading(false);
@@ -151,9 +180,10 @@ const AllDoctorList = () => {
           </div>
         ))}
       </div>
-      <div className="min-[820px]:hidden w-full">
-        {doctors.map((doctor) => (
-          <div key={doctor.id} className="w-full flex flex-col items-center pt-6 ">
+
+      <div className="min-[820px]:hidden w-full flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
+      {doctors.map((doctor) => (
+          <div key={doctor.id}  className="w-full flex flex-col items-center pt-4 ">
             <DoctorCard doctor={doctor} />
           </div>
         ))}

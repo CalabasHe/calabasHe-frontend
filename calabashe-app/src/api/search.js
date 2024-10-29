@@ -9,8 +9,8 @@ const SearchData = async (searchParameters) =>{
   }
 }
 
-export const DoctorsSearch = async ({search_query, specialty, location}) => {
-  const url = `https://calabashe-api.onrender.com/api/doctors?region=${encodeURIComponent(location)}&specialty=${encodeURIComponent(specialty)}&search_query=${encodeURIComponent(search_query)}`;
+export const DoctorsSearch = async ({search_query, specialty, location, pagination}) => {
+  const url = `https://calabashe-api.onrender.com/api/doctors?region=${encodeURIComponent(location)}&specialty=${encodeURIComponent(specialty)}&search_query=${encodeURIComponent(search_query)}&page=${pagination}`;
 
   console.log(url);
   try {
