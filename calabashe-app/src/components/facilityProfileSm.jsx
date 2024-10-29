@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import StarRating from "./rating";
 import "../stylesheets/profile.css";
@@ -8,12 +8,25 @@ import HandleAdjective from "../utils/handleRatingAdjective";
 
 // eslint-disable-next-line react/prop-types
 const FacilityProfileSm = ({ facility = [] }) => {
+  const go = useNavigate()
   const { isLoggedIn } = useAuth();
   const handleLinkClick = () => {
     if (!isLoggedIn) {
       toast.info("Sign in to leave a review");
     }
   };
+
+  const writeAReview = (name, slug, id, ) => {
+    if (!isLoggedIn){
+      toast.info("Sign in to leave a review");
+    }
+    const state = {
+      message: [name, "facility", id],
+      from: `/review/${slug}`,
+    };
+    go(isLoggedIn ? `/review/${slug}` : "/sign_in", { state });
+  };
+  
   return (
     <>
       <main className="md:hidden w-full mt-8 sm:mt-[80px] pb-8 flex flex-col gap-6 items-center ">
@@ -30,13 +43,16 @@ const FacilityProfileSm = ({ facility = [] }) => {
           </div>
 
           <div className="space-y-1">
-            <h2 className="text-sm font-bold">
-              {facility.name}
-            </h2>
+            <div>
+              <h2 className="text-sm font-bold">
+                {facility.name}
+              </h2>
+              <p className="text-xs font-light">{facility.type}</p>
+            </div>
             <div className="flex items-center font-medium text-[#6A6A67] text-xs gap-3 lg:gap-4">
               <p className={`font-normal`}>
                 {" "}
-                {facility.totalReviews.length > 0 ? facility.totalReviews : 'No' } {facility.totalReviews.length > 1 ? 'reviews' : 'review'}
+                {facility.totalReviews > 0 ? facility.totalReviews : 'No' } {facility.totalReviews > 1 ? 'reviews' : 'review'}
               </p>
               <div className="w-2 h-2 rounded-full bg-[#6A6A67]"></div>
               <p className="">{HandleAdjective(facility.rating)}</p>
@@ -54,18 +70,9 @@ const FacilityProfileSm = ({ facility = [] }) => {
 
         <section className="px-4 space-y-8">
           {/* Write a review */}
-          <div className="w-full bg-[#205CD4] text-center py-3 rounded-3xl">
-            <Link
-            to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
-            onClick={handleLinkClick} 
-            state={{
-                    message: [facility.name, "facility", facility.id],
-                    from: `/review/${facility.slug}`,
-                  }}
-              className="text-white">
+          <button onClick={() => writeAReview(facility.name, facility.slug, facility.id)}  className="w-full bg-[#205CD4] text-white text-center py-3 rounded-3xl">
                 Write a review
-            </Link>
-          </div>
+          </button>
 
           {/* Ratings */}
           <section className="w-full space-y-4 max-w-[700px]">

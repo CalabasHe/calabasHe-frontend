@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import StarRating from "../components/rating";
 import "../stylesheets/profile.css";
@@ -8,11 +8,27 @@ import HandleAdjective from "../utils/handleRatingAdjective";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileSm = ({ doctor = [] }) => {
+
+  const go = useNavigate()
+
   const handleLinkClick = () => {
     if (!isLoggedIn) {
       toast.info("Sign in to leave a review");
     }
   };
+
+  const writeAReview = (lastName, slug, id, ) => {
+    if (!isLoggedIn){
+      toast.info("Sign in to leave a review");
+    }
+    const state = {
+      message: [lastName, "doctor", id],
+      from: `/review/${slug}`,
+    };
+    go(isLoggedIn ? `/review/${slug}` : "/sign_in", { state });
+  };
+
+
   const { isLoggedIn } = useAuth();
   return (
     <>
@@ -100,19 +116,9 @@ const DocProfileSm = ({ doctor = [] }) => {
 
         <section className="px-4 space-y-8">
           {/* Write a review */}
-          <div className="w-full bg-[#205CD4] text-center py-3 rounded-3xl">
-            <Link
-            to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-            onClick={handleLinkClick} 
-            state={{
-                    message: [doctor.lastName, "doctor", doctor.id],
-                    from: `/review/${doctor.slug}`,
-                  }}
-              className="text-white">
+          <button onClick={() => writeAReview(doctor.lastName, doctor.slug, doctor.id)}  className="w-full bg-[#205CD4] text-white text-center py-3 rounded-3xl">
                 Write a review
-            </Link>
-          </div>
-
+          </button>
           {/* Ratings */}
           <section className="w-full space-y-4 max-w-[700px]">
             <div className="bg-white border py-6 px-4 rounded-lg space-y-6">
@@ -242,18 +248,9 @@ const DocProfileSm = ({ doctor = [] }) => {
                     and provide the best care possible.
                   </p>
                 </div>
-
-                <Link
-                  to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-                  onClick={handleLinkClick}
-                  state={{
-                    message: [doctor.lastName, "doctor", doctor.id],
-                    from: `/review/${doctor.slug}`,
-                  }}
-                  className="w-full  hover:scale-[1.01] duration-100"
-                >
                   <button
-                    className="w-full mt-4 flex items-center justify-center gap-2 text-lg font-bold bg-[#FEE330] px-2 py-3 rounded-md"
+                    onClick={() => writeAReview(doctor.lastName, doctor.slug, doctor.id)}
+                    className="w-full hover:scale-[1.01] duration-100 mt-4 flex items-center justify-center gap-2 text-lg font-bold bg-[#FEE330] px-2 py-3 rounded-md"
                     aria-label={`Leave a review for Dr. ${doctor.slug}`}
                   >
                     <p className="text-center text-lg lg:text-xl font-bold">
@@ -272,7 +269,6 @@ const DocProfileSm = ({ doctor = [] }) => {
                       />
                     </svg>
                   </button>
-                </Link>
               </div>
             </section>
         </section>    
