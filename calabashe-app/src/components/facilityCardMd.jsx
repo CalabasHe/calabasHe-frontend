@@ -35,7 +35,7 @@ const FacilityCardMd = ({ facility }) => {
                 <p>{facility.experience} Yrs experience</p>
             </div>
               } */}
-            { facility.verified &&
+            { facility.isVerified &&
               <div className='flex gap-1 items-center'>
                 <svg className='size-5' width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                    <path d="M8 12.5618L11 15.5618L16 8.56177M4 11.8138C4 19.5008 10.918 22.2008 11.887 22.5418C11.9623 22.5684 12.0377 22.5684 12.113 22.5418C13.084 22.2118 20 19.5798 20 11.8148V4.86577C20.0002 4.7764 19.9705 4.68953 19.9156 4.61903C19.8607 4.54852 19.7837 4.49844 19.697 4.47677L12.097 2.57377C12.0333 2.55785 11.9667 2.55785 11.903 2.57377L4.303 4.47677C4.2163 4.49844 4.13935 4.54852 4.08443 4.61903C4.02952 4.68953 3.99979 4.7764 4 4.86577V11.8138Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
