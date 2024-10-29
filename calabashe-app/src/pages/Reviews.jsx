@@ -106,7 +106,7 @@ const Review = () => {
             </aside>
           </FadeInOut>
         
-        <main className="w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-2  pb-8 flex flex-col gap-12 items-center ">
+        <main className="w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-1 sm:px-2  pb-8 flex flex-col gap-12 items-center ">
         <section className="p-4 px-2 md:px-12 lg:px-16 md:py-8 lg:py-12 md:border space-y-2 bg-white shadow-md border rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] ">
           <div className="w-full flex flex-col gap-2">
             <div className=" self-center w-[120px] h-[120px] md:w-[160px] md:h-[160px] lg:w-[200px] lg:h-[200px] flex justify-center items-center p-4 border-2 rounded-full">
