@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/authContext";
 import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Homepage";
@@ -20,6 +20,15 @@ import { SpecialtyProvider } from "./context/specialtyContext";
 
 function App() {
   const location = useLocation();
+
+  const NoResult = () => {
+    return(
+      <div className="w-full h-screen flex flex-col lg:text-lg gap-2 items-center justify-center">
+        <h2>Nothing to see here 😶‍🌫️😶‍🌫️</h2>
+        <Link className="text-emerald-500 font-semibold hover:underline" to={'/'}>&lt;&lt; Go home</Link>
+      </div>
+    )
+  }
 
   return (
     <AuthProvider>
@@ -47,6 +56,7 @@ function App() {
               <Route path="/verification" element={<VerifyUser />} />
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />
+              <Route path="*" element={<NoResult/>} />
             </Routes>
           </AnimatePresence>
         </BannerVisibilityProvider>

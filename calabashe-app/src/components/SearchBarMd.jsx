@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBannerVisibility } from "../context/BannerVisibilityContext";
 import "../stylesheets/headerSearch.css";
-import StarRating from "./rating";
+import StarRating from "./ratingStars";
 import SearchData from "../api/search"; 
 import debounce from "lodash/debounce";
 
@@ -59,6 +59,7 @@ const SearchBarMd = () => {
           lastName: result.last_name,
           rating: result.average_rating && result.average_rating.toFixed(1),
           specialty: result.specialty?.name,
+          specialtyTag: result.specialty?.tag,
           type: result.facility_type_name,
           typeSlug: result.facility_type_name?.toLowerCase(),
           name: result.name,
@@ -184,8 +185,8 @@ const SearchBarMd = () => {
               {results.length > 0 && (
                 <>
                   {results.filter((result) => result.category).length > 0 && (
-                    <div className="space-y-2 border-b pb-4 text-black">
-                      <p className="px-4 text-lg font-medium">Services</p>
+                    <div className="space-y-2 border-b border-emerald-400 pb-4 text-black">
+                      <p className="px-4 text-lg text-slate-600 font-medium">Services</p>
                       {results
                         .filter((result) => result.category)
                         .slice(0,4)
@@ -207,8 +208,8 @@ const SearchBarMd = () => {
                   )}
 
                   {results.filter((result) => result.specialty).length > 0 && (
-                    <div className="space-y-2 border-b pb-4 text-black">
-                      <p className="px-4 text-lg font-medium">Doctors</p>
+                    <div className="space-y-2 border-b border-emerald-400 pb-4 text-black">
+                      <p className="px-4 text-lg text-slate-600 font-medium">Doctors</p>
                       {results
                         .filter((result) => result.specialty)
                         .slice(0, 4)
@@ -230,7 +231,7 @@ const SearchBarMd = () => {
                               </div>
                             </div>
                             <div className="text-xs flex justify-between text-gray-500">
-                              <p>{result.specialty}</p>
+                              <p>{result.specialtyTag}</p>
                               {result.reviewCount > 0 ? (
                                 <p>
                                   {result.reviewCount ? result.reviewCount : "0"}{" "}
@@ -247,7 +248,7 @@ const SearchBarMd = () => {
 
                   {results.filter((result) => !result.specialty && result.type).length > 0 && (
                     <div className="space-y-2 text-black">
-                      <p className="px-4 text-lg font-medium">Facilities</p>
+                      <p className="px-4 text-lg text-slate-600 font-medium">Facilities</p>
                       {results
                         .filter((result) => !result.specialty && result.type)
                         .slice(0, 4)

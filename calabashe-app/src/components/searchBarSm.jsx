@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 import SearchData from "../api/search";
-import StarRating from "./rating";
+import StarRating from "./ratingStars";
 
 // eslint-disable-next-line react/prop-types
 const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
@@ -81,6 +81,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               lastName: result.last_name,
               rating: result.average_rating,
               specialty: result.specialty?.name,
+              specialtyTag: result.specialty?.tag,
               type: result.facility_type_name,
               typeSlug: result.facility_type_name?.toLowerCase(),
               name: result.name,
@@ -167,7 +168,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
                   : `Dr. ${result.firstName} ${result.lastName}`}
               </h3>
               <p className="leading-none font-[300] text-[12px] ">
-                {type === 'Services' ? result.categoryName : (result.type || result.specialty)}
+                {type === 'Services' ? result.categoryName : (result.type || result.specialtyTag)}
               </p>
               {type !== 'Services' && (
                 <div className="mt-3">
@@ -252,8 +253,8 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
           className={`w-full ${(facilities.length || doctors.length || services.length) > 0 ? 'pb-[80px] h-screen' : ''} flex flex-col bg-white text-black gap-2 px-2 overflow-y-scroll`}
         >
           {renderResults(services, 'Services')}
-          {renderResults(facilities, 'Facilities')}
           {renderResults(doctors, 'Doctors')}
+          {renderResults(facilities, 'Facilities')}
         </div>
         {error && (
           <div className="flex flex-col flex-grow bg-white tracking-wide text-xl items-center overflow-y-hidden font-bold text-center">

@@ -34,7 +34,7 @@ const AccountClaim = () => {
   const containerClass = `flex flex-col ${isLandscape && contentOverflow ? 'min-h-screen' : 'h-screen overflow-hidden'}`;
 
   return (
-    <div className={containerClass}>
+    <div className={`${containerClass} 2xl:container mx-auto`}>
       <div className="">
           <Header />
       </div>

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom';
-import StarRating from './rating';
+import StarRating from './ratingStars';
 import formatDate from '../utils/dateConversion';
 
 const FacilityCardMd = ({ facility }) => {
@@ -47,7 +47,7 @@ const FacilityCardMd = ({ facility }) => {
         </div>
       </div>
       <div className='w-full font-medium space-y-2 text-xs'>
-       <p>{facility.location}</p>
+       <p className='text-nowrap truncate'>{facility.location} - {facility.region}</p>
        <div className='w-full flex items-center gap-2'>
         <p className='text-[#5C6B88] font-normal'>Recommended for :</p>
         <div className='flex gap-2'>
@@ -61,11 +61,11 @@ const FacilityCardMd = ({ facility }) => {
           </p>
           {
             facility.services[0] &&
-            <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[100px] truncate'>{facility.services[0]?.name}</p>
+            <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{facility.services[0]?.name}</p>
           }
           {
             facility.services[1] &&
-            <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl max-lg:max-w-[100px] truncate'>{facility.services[1]?.name}</p>
+            <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{facility.services[1]?.name}</p>
           }
           {
             facility.services.length > 3 &&

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link, useNavigate } from 'react-router-dom';
-import StarRating from './rating';
+import StarRating from './ratingStars';
 import formatDate from '../utils/dateConversion';
 
 const DoctorCardMd = ({ doctor }) => {
@@ -49,9 +49,9 @@ const DoctorCardMd = ({ doctor }) => {
       <div className='w-full font-medium space-y-2 text-xs'>
        <p>{doctor.region}</p>
        <div className='w-full flex items-center gap-2'>
-        <p className='text-[#5C6B88] font-normal'>Recommended for :</p>
-        <div className='flex gap-2'>
-          <p className='flex gap-0.5 items-center bg-[#9EFFDF] px-2 py-1.5 rounded-3xl'>
+        <p className='text-[#5C6B88] font-normal text-nowrap'>Recommended for :</p>
+        <div className='flex gap-2 truncate'>
+          <p className='flex gap-0.5 items-center text-nowrap bg-[#9EFFDF] px-2 py-1.5 rounded-3xl'>
             <span>
               <svg className='size-4' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.5 2.1573C7 2.1573 2.5 6.6573 2.5 12.1573C2.5 17.6573 7 22.1573 12.5 22.1573C18 22.1573 22.5 17.6573 22.5 12.1573C22.5 6.6573 18 2.1573 12.5 2.1573ZM10.5 17.1573L5.5 12.1573L6.91 10.7473L10.5 14.3273L18.09 6.7373L19.5 8.1573L10.5 17.1573Z" fill="black"/>
@@ -59,18 +59,20 @@ const DoctorCardMd = ({ doctor }) => {
             </span>
             {doctor.specialty}
           </p>
-          {
-            doctor.recommendedFor[0] &&
-            <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[100px] truncate'>{doctor.recommendedFor[0]?.name}</p>
-          }
-          {
-            doctor.recommendedFor[1] &&
-            <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl max-lg:max-w-[100px] truncate'>{doctor.recommendedFor[1]?.name}</p>
-          }
-          {
-            doctor.recommendedFor.length > 3 &&
-            <p className='bg-[#FF9EA0] px-2 py-1.5 rounded-3xl'> +{doctor.recommendedFor.length - 2}</p>
-          }
+          <div className='flex flex-grow truncate  gap-2'>
+            {
+              doctor.recommendedFor[0] &&
+              <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[0]?.name}</p>
+            }
+            {
+              doctor.recommendedFor[1] &&
+              <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl  max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[1]?.name}</p>
+            }
+            {
+              doctor.recommendedFor.length > 3 &&
+              <p className='bg-[#FF9EA0] px-2 py-1.5 rounded-3xl'> +{doctor.recommendedFor.length - 2}</p>
+            }
+          </div>
         </div>
        </div>
        {doctor.reviewCount >  0 ? (

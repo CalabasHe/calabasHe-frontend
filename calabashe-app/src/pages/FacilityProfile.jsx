@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFacilityBySlug } from "../api/getProfileData";
 import Footer from "../components/Footer";
@@ -61,7 +61,7 @@ const FacilityProfile = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <>
+    <div className="2xl:container mx-auto 2xl:border-x">
       <Header />
       <AnimatePage>
         <main>
@@ -71,7 +71,7 @@ const FacilityProfile = () => {
       </AnimatePage>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

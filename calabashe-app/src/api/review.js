@@ -15,6 +15,7 @@ export const createDoctorReview = async ({ user, rating, title, description, doc
     'Authorization': token ? `Bearer ${token}` : ''
   });
 
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await fetch(CREATE_DOCTOR_REVIEW, {
       method: 'POST',
