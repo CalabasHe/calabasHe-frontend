@@ -299,7 +299,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                       />
                     </svg>
                     <p className="text-sm lg:text-base self-center font-normal">
-                      {doctor.region}, Ghana
+                      {doctor.region}
                     </p>
                   </li>
                 </ul>
