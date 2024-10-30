@@ -24,7 +24,6 @@ const DocProfile = () => {
           go('/doctors');
           return;
         }
-        // console.log('API Response:', data.specialty.conditions_and_treatments);
         const doctorDetails = {
           qrCode: data.qr_code,
           id: data.id,
@@ -32,7 +31,7 @@ const DocProfile = () => {
           lastName: data.last_name,
           rating: data.average_rating,
           specialty: data.specialty_name,
-          specialtyTag: data.specialty_tag,
+          specialtyTag: data.specialty?.tag,
           image: data.profile_image,
           slug: data.slug,
           patientsTellUs: data.reviews?.title,
