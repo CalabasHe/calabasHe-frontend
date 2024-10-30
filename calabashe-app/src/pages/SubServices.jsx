@@ -67,7 +67,7 @@ const SubServices = () => {
   };
 
   return (
-    <>
+    <div className="2xl:container mx-auto 2xl:border-x">
       <Header />
       <main className="px-4 mt-16 md:mt-24 mb-3 md:px-12 lg:px-16">
         <div className="w-full flex justify-between items-center">
@@ -79,7 +79,7 @@ const SubServices = () => {
           </button>
 
           <button
-            onClick={() => navigate('/services')}
+            onClick={() => navigate("/services")}
             className="text-sm md:text-base  font-semibold hover:underline text-slate-500 hover:text-orange-400"
           >
             To service categories &gt;&gt;
@@ -127,7 +127,7 @@ const SubServices = () => {
           )}
         </div>
       </main>
-    </>
+    </div>
   );
 };
 
