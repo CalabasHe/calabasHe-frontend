@@ -39,13 +39,13 @@ const DoctorCard = ({ doctor }) => {
           <div className='mt-1'>
             <p className='text-[#5C6B88] text-sm sm:text-base'>Recommended for:</p>
             <div className='mt-2 text-xs sm:text-sm flex flex-wrap gap-2'>
-              <p className='flex gap-0.5 items-center bg-[#9EFFDF] px-2 py-1.5 rounded-3xl'>
+              <p className='flex gap-0.5 truncate items-center bg-[#9EFFDF] px-2 py-1.5 rounded-3xl'>
                 <span>
                   <svg className='size-4' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.5 2.1573C7 2.1573 2.5 6.6573 2.5 12.1573C2.5 17.6573 7 22.1573 12.5 22.1573C18 22.1573 22.5 17.6573 22.5 12.1573C22.5 6.6573 18 2.1573 12.5 2.1573ZM10.5 17.1573L5.5 12.1573L6.91 10.7473L10.5 14.3273L18.09 6.7373L19.5 8.1573L10.5 17.1573Z" fill="black"/>
                   </svg>
                 </span>
-                {doctor.specialty}
+                <span className='truncate text-nowrap'>{doctor.specialty}</span>
               </p>
               {doctor.recommendedFor[0] &&
                 <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-sm:max-w-[50%] truncate'>

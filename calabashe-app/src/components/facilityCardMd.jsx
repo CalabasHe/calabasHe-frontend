@@ -61,11 +61,11 @@ const FacilityCardMd = ({ facility }) => {
           </p>
           {
             facility.services[0] &&
-            <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[100px] truncate'>{facility.services[0]?.name}</p>
+            <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{facility.services[0]?.name}</p>
           }
           {
             facility.services[1] &&
-            <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl max-lg:max-w-[100px] truncate'>{facility.services[1]?.name}</p>
+            <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{facility.services[1]?.name}</p>
           }
           {
             facility.services.length > 3 &&
