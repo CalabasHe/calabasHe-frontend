@@ -51,8 +51,8 @@ const ExploreCategories = () => {
           ]);
 
         const newCounts = {
-          doctors: doctorsCount.count,
-          facilities: facilitiesCount.count,
+          doctors: doctorsCount.total_doctors,
+          facilities: facilitiesCount.total_count,
           services: servicesCount.count,
           reviews: reviewsCount,
         };
