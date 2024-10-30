@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import StarRating from "../components/rating";
+import StarRating from "./ratingStars";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import Stars from "./Star";

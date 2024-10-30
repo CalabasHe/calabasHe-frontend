@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import StarRating from "./rating";
+import StarRating from "./ratingStars";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import { toast } from "sonner";

@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import ExploreCategories from "../components/Categories";
-import StarRating from "../components/rating";
+import StarRating from "./ratingStars";
 import { useEffect, useState } from "react";
 import formatDate from "../utils/dateConversion";
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom';
-import StarRating from './rating';
+import StarRating from './ratingStars';
 
 const FacilityCardSm = ({ facility }) => {
   const go = useNavigate()
