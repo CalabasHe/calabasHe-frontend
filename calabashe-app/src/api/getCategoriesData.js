@@ -40,9 +40,9 @@ export const fetchDoctorsBySubSpecialties = async (slug) => {
 
 
 
-export const fetchFacilities = async () => {
+export const fetchFacilities = async (page=1) => {
   try {
-    const response = await axios.get(`${api}/facilities/`);
+    const response = await axios.get(`${api}/facilities/?page=${page}`);
     return response.data;
   } catch (error) {
     throw new Error('Error fetching facilities:', error);
@@ -85,5 +85,6 @@ export const fetchServiceCategories = async (category = '/categories') => {
     throw new Error('Error fetching categories:', error);
   }
 }
+
 
 fetchServiceCategories()

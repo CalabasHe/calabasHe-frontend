@@ -3,7 +3,7 @@ import AllDoctorList from './allDoctorList';
 const DoctorListContainer = () => {
   return (
     <div className="relative max-w-screen px-3 lg:px-8 flex flex-col items-center ">
-   
+
       <AllDoctorList />
       {/* <div className="min-w-[30%] max-w-[40%] lg:block hidden lg:sticky lg:top-0 lg:h-full lg:overflow-y-auto">
         <div className="lg:pr-4">
@@ -44,7 +44,7 @@ const DoctorListContainer = () => {
           </div>
         </div>
       )} */}
-      
+
       {/* Doctor list section */}
     </div>
   );

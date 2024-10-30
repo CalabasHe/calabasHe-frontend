@@ -1,6 +1,6 @@
 import AnimatePage from "../components/AnimatePage";
 import { FadeInOut } from "../components/ComponentAnimations";
-import FacilityCard from "../components/facilityCard";
+import FacilityCard from "../components/facilityCardContainer";
 // import Footer from "../components/Footer";
 import Header from "../components/Header";
 

@@ -11,3 +11,4 @@
   - click on localhost link in terminal to open local server in default browser
 
   - try out the application
+
