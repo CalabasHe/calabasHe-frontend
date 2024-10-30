@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import StarRating from "./rating";
+import StarRating from "./ratingStars";
 import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import { toast } from "sonner";
@@ -185,7 +185,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">
                 <h3 className="text-base font-bold">Contact Details</h3>
-                <ul className="space-y-2">
+                <ul className="text-[.70rem] space-y-2">
                   <li></li>
                   <li className="flex items-center gap-2">
                     <svg
@@ -201,8 +201,8 @@ const FacilityProfileSm = ({ facility = [] }) => {
                         fill="#205CD4"
                       />
                     </svg>
-                    <p className="text-xs self-center font-normal">
-                      {facility.region}, Ghana
+                    <p className=" text-nowrap self-center font-normal">
+                    {facility.location} - {facility.region}
                     </p>
                   </li>
                 </ul>

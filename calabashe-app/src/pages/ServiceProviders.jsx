@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import { fetchServiceCategories } from "../api/getCategoriesData";
 import LoadingAnimation from "../components/loadingAnimation";
 import getCategoryfromSlug from "../utils/getCategory";
-import StarRating from "../components/rating";
+import StarRating from "../components/ratingStars";
 
 const ServiceProviders = () => {
   const location = useLocation();

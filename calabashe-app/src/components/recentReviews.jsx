@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { fetchCurrentReviews } from "../api/getCategoriesData";
 import formatDate from "../utils/dateConversion";
-import StarRating from "./rating";
+import StarRating from "./ratingStars";
 import { FaUser } from "react-icons/fa";
 import '../stylesheets/reviews.css';
 import { FadeInOut } from "./ComponentAnimations";

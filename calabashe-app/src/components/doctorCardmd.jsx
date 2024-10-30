@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link, useNavigate } from 'react-router-dom';
-import StarRating from './rating';
+import StarRating from './ratingStars';
 import formatDate from '../utils/dateConversion';
 
 const DoctorCardMd = ({ doctor }) => {
