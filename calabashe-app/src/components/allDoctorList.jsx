@@ -90,7 +90,7 @@ const AllDoctorList = () => {
     if (filtering && hasNextPage) {
       setSearchPagination(searchPagination + 1);
     } else if (!filtering && hasNextPage) {
-      handlePageChange(pagination+1)
+      handlePageChange(pagination + 1)
     }
   };
 
@@ -98,14 +98,18 @@ const AllDoctorList = () => {
     if (filtering && hasPreviousPage) {
       setSearchPagination(searchPagination - 1);
     } else if (!filtering && hasPreviousPage) {
-      handlePageChange(pagination-1);
+      handlePageChange(pagination - 1);
     }
   };
 
 
 
+
   const handleSearchSubmit = async (search_query, specialty, location, isNewSearch = true) => {
     try {
+      search_query = search_query.trim()
+      specialty = specialty.trim()
+      location = location.trim()
       if (isNewSearch) {
         setPagination(1);
         setSearchPagination(1);
@@ -146,8 +150,10 @@ const AllDoctorList = () => {
         if (search_query) searchParams.set("search_query", search_query);
         if (specialty) searchParams.set("specialty", specialty);
         if (location) searchParams.set("location", location);
-        // searchParams.set("page", "1");
-        navigate(`?${searchParams.toString()}&page=${page}`, { replace: true });
+
+        const queryString = searchParams.toString();
+        navigate(`?${queryString}${queryString ? `&page=${page}` : `page=${page}`}`, { replace: true });
+
       } else {
         setDoctors([]); // Clear previous doctor data if no results are found
       }

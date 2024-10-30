@@ -55,7 +55,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                 
                 {/* Facility Input */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[45%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                    <Icon icon="material-symbols:business" height={24} style={{ color: "black" }} className='md:ml-8' />
+                    <Icon icon="icon-park-solid:hospital-three"  height={24} style={{ color: "black" }} className='md:ml-8 md:mr-1' />
                     <input
                         type="text"
                         value={facility}
@@ -67,7 +67,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                 
                 {/* Service Input */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[28%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                    <Icon icon="fa6-solid:concierge-bell" style={{ color: "black" }} height={24} className='ml-2' />
+                    <Icon icon="ri:service-fill"  style={{ color: "black" }} height={24} className='ml-2'/>
                     <input
                         type="text"
                         placeholder="Service"
@@ -93,7 +93,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                 <div className="mt-3 md:mt-0 flex items-center px-3 py-2 w-full md:w-[8%] lg:w-[4%] bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
                     <button type="submit" size="icon" className="w-full text-center">
                         <span className="hidden md:block"><Icon icon="circum:search" style={{ color: "black" }} height={24} /></span>
-                        <span className="md:hidden font-bold">Find Facilitators</span>
+                        <span className="md:hidden font-bold">Find a facility</span>
                     </button>
                 </div>
             </form>

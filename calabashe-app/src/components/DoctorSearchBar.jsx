@@ -6,28 +6,31 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Extract initial values from URL
+    // Extract initial values from URL and trim any leading/trailing spaces
     const searchParams = new URLSearchParams(location.search);
-    const initialDoctorFacilityTreatment = searchParams.get("doctorFacilityTreatment") || "";
-    const initialSpecialty = searchParams.get("specialty") || "";
-    const initialLocation = searchParams.get("location") || "";
+    const initialDoctorFacilityTreatment = (searchParams.get("doctorFacilityTreatment") || "").trim();
+    const initialSpecialty = (searchParams.get("specialty") || "").trim();
+    const initialLocation = (searchParams.get("location") || "").trim();
 
     const [doctorFacilityTreatment, setDoctorFacilityTreatment] = useState(initialDoctorFacilityTreatment);
     const [specialty, setSpecialty] = useState(initialSpecialty);
     const [locationInput, setLocationInput] = useState(initialLocation);
 
+    /** Helper function to trim and replace multiple spaces with a single space */
+    const sanitizeInput = (value) => value.trim().replace(/\s+/g, " ");
+
     /** Update URL params when input changes */
     const handleDoctorFacilityTreatment = (e) => {
-        const value = e.target.value;
+        const value = sanitizeInput(e.target.value);
         setDoctorFacilityTreatment(value);
 
         const params = new URLSearchParams(location.search);
-        params.set("search_query", value);
+        params.set("doctorFacilityTreatment", value);
         navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleSpecialty = (e) => {
-        const value = e.target.value;
+        const value = sanitizeInput(e.target.value);
         setSpecialty(value);
 
         const params = new URLSearchParams(location.search);
@@ -36,7 +39,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     };
 
     const handleLocation = (e) => {
-        const value = e.target.value;
+        const value = sanitizeInput(e.target.value);
         setLocationInput(value);
 
         const params = new URLSearchParams(location.search);
@@ -49,13 +52,14 @@ const DoctorSearchBar = ({ submitFunc }) => {
         submitFunc(doctorFacilityTreatment, specialty, locationInput);
     };
 
+
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4 md:sticky md:top-[15%] z-30">
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
-                
+
                 {/* Doctor filter conditions */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[45%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                    <Icon icon="material-symbols-light:ecg-heart-outline" height={24} style={{ color: "black" }} className='md:ml-8' />
+                    <Icon icon="material-symbols-light:ecg-heart-outline" height={24} style={{ color: "black" }} className=' ml-2 md:ml-8' />
                     <input
                         type="text"
                         value={doctorFacilityTreatment}
@@ -64,7 +68,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                         className="w-full pl-1 pr-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
                     />
                 </div>
-                
+
                 {/* Specialty */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[28%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
                     <Icon icon="stash:person-light" style={{ color: "black" }} height={24} className='ml-2' />

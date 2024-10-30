@@ -16,7 +16,7 @@ const FacilityCard = () => {
   const [searchCriteria, setSearchCriteria] = useState({
     facility: "",
     service: "",
-    location: ""
+    location: "",
   });
 
   const navigate = useNavigate();
@@ -24,48 +24,45 @@ const FacilityCard = () => {
 
   const getCurrentPage = () => {
     const searchParams = new URLSearchParams(location.search);
-    return parseInt(searchParams.get("page") || "1", 10);
+    return parseInt(searchParams.get('page') || '1', 10);
   };
 
   const [pagination, setPagination] = useState(getCurrentPage());
   const [searchPagination, setSearchPagination] = useState(1);
 
-  useEffect(() => {
-    const fetchFacilityData = async (page) => {
-      try {
-        setIsLoading(true);
-        const facilityData = await fetchFacilities(page);
-        console.log(facilityData)
-        setHasPreviousPage(!!facilityData.previous);
-        setHasNextPage(!!facilityData.next);
-        if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
-          const facilityDetails = facilityData.results.map((facility) => ({
-            id: facility.id,
-            name: facility.name,
-            email: facility.email,
-            type: facility.facility_type_name,
-            rating: facility.average_rating,
-            slug: facility.slug,
-            reviews: facility.reviews,
-            location: facility.location,
-            logo: facility.logo,
-            region: facility.region?.name,
-            reviewCount: facility.total_reviews,
-            services: facility.services,
-            isVerified: facility.is_verified,
-
-          }));
-          setFacilities(facilityDetails);
-        } else {
-          setError("No results found");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
+  const fetchFacilityData = async (page) => {
+    try {
+      setIsLoading(true);
+      const facilityData = await fetchFacilities(page);
+      setHasPreviousPage(!!facilityData.previous);
+      setHasNextPage(!!facilityData.next);
+      if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
+        const facilityDetails = facilityData.results.map((facility) => ({
+          id: facility.id,
+          name: facility.name,
+          email: facility.email,
+          type: facility.facility_type_name,
+          rating: facility.average_rating,
+          slug: facility.slug,
+          reviews: facility.reviews,
+          location: facility.location,
+          logo: facility.logo,
+          region: facility.region?.name,
+          reviewCount: facility.total_reviews,
+          services: facility.services,
+          isVerified: facility.is_verified,
+        }));
+        setFacilities(facilityDetails);
+      } else {
+        setFacilities([]);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (filtering) {
@@ -103,12 +100,14 @@ const FacilityCard = () => {
   };
 
   const handleSearchSubmit = async (facility, service, location, isNewSearch = true) => {
+    facility = facility.trim();
+    service = service.trim();
+    location = location.trim();
     try {
       if (isNewSearch) {
         setPagination(1);
         setSearchPagination(1);
       }
-
       const page = isNewSearch ? 1 : searchPagination;
       setIsLoading(true);
       setFiltering(true);
@@ -128,6 +127,7 @@ const FacilityCard = () => {
           slug: facility.slug,
           reviews: facility.reviews,
           location: facility.location,
+          logo: facility.logo,
           region: facility.region?.name,
           reviewCount: facility.total_reviews,
           services: facility.services,
@@ -139,6 +139,9 @@ const FacilityCard = () => {
         if (facility) searchParams.set("facility", facility);
         if (service) searchParams.set("service", service);
         if (location) searchParams.set("location", location);
+        const queryString = searchParams.toString();
+        navigate(`?${queryString}${queryString ? `&page=${page}` : `page=${page}`}`, { replace: true });
+
         navigate(`?${searchParams.toString()}&page=${page}`, { replace: true });
       } else {
         setFacilities([]);
