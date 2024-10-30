@@ -86,4 +86,5 @@ export const fetchServiceCategories = async (category = '/categories') => {
   }
 }
 
+
 fetchServiceCategories()

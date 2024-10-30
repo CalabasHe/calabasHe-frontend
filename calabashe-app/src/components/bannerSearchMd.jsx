@@ -62,7 +62,7 @@ const BannerSearch = () => {
     if (!searchParam) return [];
     try {
       const data = await SearchData(searchParam);
-      console.log(data)
+      // console.log(data)
       if (Array.isArray(data) && data.length > 0) {
         const resultDetails = data.map((result) => ({
           id: result.id,
