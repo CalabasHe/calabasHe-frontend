@@ -147,9 +147,17 @@ const DocProfileMd = ({ doctor = [] }) => {
                   Write a review
                 </Link>
               </div>
-              <div onClick={() => handleLinkClick(rating)}>
+              <Link
+                  to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                  onClick={() => handleLinkClick(rating)}
+                  state={{
+                    message: [doctor.lastName, "doctor", doctor.id],
+                    from: `/review/${doctor.slug}`,
+                  }}
+                  className="text-xs lg:text-sm font-[600] text-[#205CD4]"
+                >
                 <Stars rating={rating} onRatingChange={handleRatingChange} />
-              </div>
+              </Link>
             </div>
 
             <section className="w-full py-4 lg:py-6 pb-6 lg:pb-8 px-4 rounded-lg border bg-white space-y-4 lg:space-y-6">
