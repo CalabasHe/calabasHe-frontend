@@ -107,7 +107,7 @@ const AllDoctorList = () => {
       setIsLoading(true);
       setFiltering(true);
       setSearchCriteria({ search_query, specialty, location });
-      const docData = await DoctorsSearch({ search_query, specialty, location, pagination});
+      const docData = await DoctorsSearch({ search_query, specialty, location, pagination: 1 });
 
       // Check for pagination availability
       setHasPreviousPage(!!docData.previous);
