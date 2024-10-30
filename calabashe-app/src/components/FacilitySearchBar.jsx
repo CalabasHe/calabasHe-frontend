@@ -61,7 +61,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                         value={facility}
                         onChange={handleFacilityChange}
                         placeholder="Facility"
-                        className="w-full pl-1 pr-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
+                        className="w-full px-2 md:pl-1 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
                     />
                 </div>
                 
