@@ -36,7 +36,6 @@ const FacilityCard = () => {
       try {
         setIsLoading(true);
         const facilityData = await fetchFacilities(page);
-        // console.log(facilityData)
         setHasPreviousPage(!!facilityData.previous);
         setHasNextPage(!!facilityData.next);
         if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
@@ -54,7 +53,6 @@ const FacilityCard = () => {
             reviewCount: facility.total_reviews,
             services: facility.services,
             isVerified: facility.is_verified,
-
           }));
           setFacilities(facilityDetails);
         } else {
@@ -65,8 +63,9 @@ const FacilityCard = () => {
         setError(error.message);
       } finally {
         setIsLoading(false);
-
-  useEffect(() => {
+      }
+    };  // Close the fetchFacilityData function here
+  
     if (filtering) {
       handleSearchSubmit(
         searchCriteria.facility,
