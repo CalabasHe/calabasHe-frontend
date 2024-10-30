@@ -137,7 +137,7 @@ const AllDoctorList = () => {
         if (search_query) searchParams.set("search_query", search_query);
         if (specialty) searchParams.set("specialty", specialty);
         if (location) searchParams.set("location", location);
-        searchParams.set("page", "1");
+        // searchParams.set("page", "1");
         navigate(`?${searchParams.toString()}`, { replace: true });
 
       } else {
