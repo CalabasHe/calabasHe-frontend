@@ -1,15 +1,21 @@
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const DoctorSearchBar = ({submitFunc}) => {
 
     const [doctorFacilityTreatment, setdoctorFacilityTreatment] = useState('');
     const [specialty, setSpecialty] = useState('');
     const [location, setLocation] = useState('');
 
+
+    useEffect(() => {
+        const url = window.location.href;
+        console.log(url);
+        setdoctorFacilityTreatment('')
+    },[])
+
     /** Handlers for values */
     const handleDoctorFacilityTreatment = (e) => {
         setdoctorFacilityTreatment(e.target.value);
-        //maybe debounce later
     }
 
     const handleSpecialty  = (e) =>{
@@ -26,7 +32,7 @@ const DoctorSearchBar = ({submitFunc}) => {
     }
 
     return (
-        <div className="max-w-[1100px] mx-auto block w-full pb-10">
+        <div className="max-w-[1100px] mx-auto block w-full pb-10 md:sticky md:top-[15%] z-30">
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
                 {/**Doctor filter conditions */}
                 <div className="flex items-center  pb-1 pt-2 w-full md:w-[45%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">

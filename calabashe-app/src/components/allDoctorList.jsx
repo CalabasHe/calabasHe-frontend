@@ -146,8 +146,7 @@ const AllDoctorList = () => {
         if (specialty) searchParams.set("specialty", specialty);
         if (location) searchParams.set("location", location);
         // searchParams.set("page", "1");
-        navigate(`?${searchParams.toString()}`, { replace: true });
-
+        navigate(`?${searchParams.toString()}&page=${page}`, { replace: true });
       } else {
         setDoctors([]); // Clear previous doctor data if no results are found
       }
