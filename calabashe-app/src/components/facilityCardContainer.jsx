@@ -30,39 +30,42 @@ const FacilityCard = () => {
   const [pagination, setPagination] = useState(getCurrentPage());
   const [searchPagination, setSearchPagination] = useState(1);
 
-  const fetchFacilityData = async (page) => {
-    try {
-      setFiltering(false);
-      setIsLoading(true);
-      const facilityData = await fetchFacilities(page);
-      setHasPreviousPage(!!facilityData.previous);
-      setHasNextPage(!!facilityData.next);
-      if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
-        const facilityDetails = facilityData.results.map((facility) => ({
-          id: facility.id,
-          name: facility.name,
-          email: facility.email,
-          type: facility.facility_type_name,
-          rating: facility.average_rating,
-          slug: facility.slug,
-          reviews: facility.reviews,
-          location: facility.location,
-          region: facility.region?.name,
-          reviewCount: facility.total_reviews,
-          services: facility.services,
-          isVerified: facility.is_verified,
-        }));
-        setFacilities(facilityDetails);
-      } else {
-        setFacilities([]);
+  useEffect(() => {
+    const fetchFacilityData = async (page) => {
+      try {
+        setIsLoading(true);
+        const facilityData = await fetchFacilities(page);
+        console.log(facilityData)
+        setHasPreviousPage(!!facilityData.previous);
+        setHasNextPage(!!facilityData.next);
+        if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
+          const facilityDetails = facilityData.results.map((facility) => ({
+            id: facility.id,
+            name: facility.name,
+            email: facility.email,
+            type: facility.facility_type_name,
+            rating: facility.average_rating,
+            slug: facility.slug,
+            reviews: facility.reviews,
+            location: facility.location,
+            logo: facility.logo,
+            region: facility.region?.name,
+            reviewCount: facility.total_reviews,
+            services: facility.services,
+            isVerified: facility.is_verified,
+
+          }));
+          setFacilities(facilityDetails);
+        } else {
+          setError("No results found");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
 
   useEffect(() => {
     if (filtering) {

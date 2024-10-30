@@ -202,7 +202,7 @@ const BannerSearch = () => {
       {showResults && (
         <div
           ref={resultsRef}
-          className={`absolute z-50 rounded-b-3xl py-4 space-y-6 shadow-lg bg-white w-full`}
+          className={`absolute z-50 rounded-b-3xl py-4 flex flex-col divide-y divide-emerald-400 space-y-2 shadow-lg bg-white w-full`}
         >
           {error && (
             <div className="px-4 py-2 text-center text-gray-500">{error}</div>
@@ -211,7 +211,7 @@ const BannerSearch = () => {
             <>
 
 {results.filter((result) => result.category).length > 0 && (
-                <div className="space-y-2 border-b border-emerald-400 pb-4 text-black">
+                <div className="space-y-2 pb-4 text-black">
                   <p className="px-4 text-lg text-slate-600 font-medium">Services</p>
                   {results
                     .filter((result) => result.category)
@@ -235,7 +235,7 @@ const BannerSearch = () => {
               )}
 
               {results.filter((result) => result.specialty).length > 0 && (
-                <div className="space-y-2 border-b border-emerald-400 pb-4">
+                <div className="space-y-2 py-2">
                   <p className="px-4 text-lg text-slate-600 font-medium">Doctors</p>
                   {results
                     .filter((result) => result.specialty)
@@ -271,7 +271,7 @@ const BannerSearch = () => {
               )}
 
               {results.filter((result) => !result.specialty).length > 0 && (
-                <div className="space-y-2">
+                <div className="space-y-2 pt-4">
                   <p className="px-4 text-lg text-slate-600 font-medium">Facilities</p>
                   {results
                     .filter((result) => !result.specialty && result.type)

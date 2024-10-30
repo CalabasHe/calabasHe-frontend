@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import StarRating from './ratingStars';
 import formatDate from '../utils/dateConversion';
+import HospitalIcon from '../assets/icons/hospital-icon.svg'
 
 const FacilityCardMd = ({ facility }) => {
   const go = useNavigate()
@@ -16,7 +17,14 @@ const FacilityCardMd = ({ facility }) => {
     >
      <section className='min-w-[25%] w-3/4 py-3 px-2 pb-3 flex flex-col justify-between'>
       <div className='flex gap-5'>
-        <div className='min-w-28 lg:min-w-36 size-28 lg:size-36 bg-gray-300 rounded-full'/>
+      <div className='min-w-28 lg:min-w-36 size-28 lg:size-36 flex items-center justify-center bg-gray-300 rounded-full'>
+          {
+            facility.logo ?
+            <img className='object-cover w-full h-full rounded-[inherit]' src={facility.logo} alt={`logo of ${facility.lastName}`}/>
+            :
+            <img className='md:size-14 lg:size-20' src={HospitalIcon} alt='default facility icon' />
+          }
+        </div>
         <div className='flex flex-col gap-2 truncate'>
           <div className='space-y-0.5'>
             <p className='font-bold text-xl lg:text-2xl overflow-hidden text-ellipsis whitespace-nowrap'>

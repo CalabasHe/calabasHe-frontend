@@ -181,11 +181,11 @@ const SearchBarMd = () => {
           style={{ maxHeight: '85vh' }}
         >
           <div className="overflow-y-auto scrollbar-thin flex-1">
-            <div className="pt-4 space-y-6">
+            <div className="pt-4 flex flex-col divide-y divide-emerald-400 space-y-6">
               {results.length > 0 && (
                 <>
                   {results.filter((result) => result.category).length > 0 && (
-                    <div className="space-y-2 border-b border-emerald-400 pb-4 text-black">
+                    <div className="space-y-2 pb-4 text-black">
                       <p className="px-4 text-lg text-slate-600 font-medium">Services</p>
                       {results
                         .filter((result) => result.category)
@@ -208,7 +208,7 @@ const SearchBarMd = () => {
                   )}
 
                   {results.filter((result) => result.specialty).length > 0 && (
-                    <div className="space-y-2 border-b border-emerald-400 pb-4 text-black">
+                    <div className="space-y-2 py-4 text-black">
                       <p className="px-4 text-lg text-slate-600 font-medium">Doctors</p>
                       {results
                         .filter((result) => result.specialty)
@@ -247,7 +247,7 @@ const SearchBarMd = () => {
                   )}
 
                   {results.filter((result) => !result.specialty && result.type).length > 0 && (
-                    <div className="space-y-2 text-black">
+                    <div className="space-y-2 pt-4 text-black">
                       <p className="px-4 text-lg text-slate-600 font-medium">Facilities</p>
                       {results
                         .filter((result) => !result.specialty && result.type)
