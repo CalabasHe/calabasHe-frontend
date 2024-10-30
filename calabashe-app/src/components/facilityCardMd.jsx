@@ -47,7 +47,7 @@ const FacilityCardMd = ({ facility }) => {
         </div>
       </div>
       <div className='w-full font-medium space-y-2 text-xs'>
-       <p>{facility.location}</p>
+       <p className='text-nowrap truncate'>{facility.location} - {facility.region}</p>
        <div className='w-full flex items-center gap-2'>
         <p className='text-[#5C6B88] font-normal'>Recommended for :</p>
         <div className='flex gap-2'>
