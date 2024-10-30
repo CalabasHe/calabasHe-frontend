@@ -59,7 +59,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
 
         <section className="w-full px-16 lg:px-[100px] pt-12 lg:pt-24 flex gap-2 lg:gap-4">
           <section className="flex flex-col gap-3 lg:gap-4 grow">
-            <div className="bg-white w-full p-2 lg:p-4 pl-4 flex items-center justify-between rounded-lg">
+            <div className="bg-white border w-full p-2 lg:p-4 pl-4 flex items-center justify-between rounded-lg">
               <div className="flex items-center gap-2 lg:gap-4">
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
 
@@ -87,7 +87,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
               </Link>
             </div>
 
-            <section className="w-full py-4 lg:py-6 pb-6 lg:pb-8 px-4 rounded-lg bg-white space-y-4 lg:space-y-6">
+            <section className="w-full py-4 lg:py-6 pb-6 lg:pb-8 px-4 rounded-lg border bg-white space-y-4 lg:space-y-6">
               <h3 className="text-base lg:text-lg font-bold"> Ratings</h3>
               <div className="space-y-6">
                 <p className="text-4xl md:text-5xl font-black">
@@ -151,7 +151,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
           {/* Right Side */}
 
           <section className="w-[46%] space-y-3 lg:space-y-4">
-            <div className="space-y-3 bg-white pt-8 lg:py-12 pb-4 px-4 lg:px-8 rounded-xl">
+            <div className="space-y-3 bg-white border pt-8 lg:py-12 pb-4 px-4 lg:px-8 rounded-xl">
               <section className="pb-8 lg:pb-14  border-b-2 space-y-3 lg:space-y-5">
                 <h3 className="text-lg lg:text-xl font-[800] ">
                   {facility.name}
@@ -212,7 +212,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
               </section>
             </div>
 
-            <div className="bg-white flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 rounded-xl">
+            <div className="bg-white border flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 rounded-xl">
               <div className="space-y-3 lg:space-y-4">
                 <h3 className="text-xl lg:2xl font-bold">
                   Share your experience

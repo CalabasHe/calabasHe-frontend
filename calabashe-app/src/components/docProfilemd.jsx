@@ -32,7 +32,7 @@ const DocProfileMd = ({ doctor = [] }) => {
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
-    console.log(rating)
+    // console.log(rating)
   };
 
   const showMore = () => {

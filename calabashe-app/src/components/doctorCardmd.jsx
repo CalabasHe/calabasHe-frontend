@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import StarRating from './ratingStars';
 import formatDate from '../utils/dateConversion';
 
@@ -11,7 +11,6 @@ const DoctorCardMd = ({ doctor }) => {
   return (
     <div
       key={doctor.id}
-      onClick={() => toProfile(doctor.slug)}
       className="max-[819px]:hidden cursor-pointer duration-300 border-2 bg-white shadow-md md:h-[240px] lg:h-[280px] max-w-[1100px] rounded-md w-[98%] px-4 lg:px-6 lg:py-1 flex justify-between md:gap-6"
     >
      <section className='min-w-[25%] w-3/4 py-3 px-2 pb-3 flex flex-col justify-between'>
@@ -122,9 +121,9 @@ const DoctorCardMd = ({ doctor }) => {
           </div>
           )
         }
-        <Link role='button'  className='bg-[#205CD4] text-center text-lg font-medium py-3.5 lg:py-4 rounded-md text-white w-full' to={`/doctors/${doctor.slug}`} >
+        <button onClick={() => toProfile(doctor.slug)} className='bg-[#205CD4] text-center text-lg font-medium py-3.5 lg:py-4 rounded-md text-white w-full' to={`/doctors/${doctor.slug}`} >
           View Profile
-        </Link>
+        </button>
      </section>
     </div>
   );
