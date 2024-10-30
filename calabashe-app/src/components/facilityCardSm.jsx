@@ -35,7 +35,7 @@ const FacilityCardSm = ({ facility }) => {
 
       <div className="px-3 flex-none h-[120px]">
         <section className='w-full font-medium'>
-          <p className='text-sm sm:text-base'>{facility.location}</p>
+          <p className='text-sm text-nowrap truncate sm:text-base'>{facility.location} - {facility.region}</p>
           <div className='mt-1'>
             <p className='text-[#5C6B88] text-sm sm:text-base'>Recommended for:</p>
             <div className='mt-2 text-xs sm:text-sm flex flex-wrap gap-2'>
