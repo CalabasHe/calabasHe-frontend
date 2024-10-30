@@ -5,16 +5,18 @@ import "../stylesheets/profile.css";
 import formatDate from "../utils/dateConversion";
 import { toast } from "sonner";
 import HandleAdjective from "../utils/handleRatingAdjective";
+import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileSm = ({ doctor = [] }) => {
   const go = useNavigate();
+ const [sliceNum, setSliceNum] = useState(10);
 
-  const handleLinkClick = () => {
-    if (!isLoggedIn) {
-      toast.info("Sign in to leave a review");
-    }
-  };
+  // const handleLinkClick = () => {
+  //   if (!isLoggedIn) {
+  //     toast.info("Sign in to leave a review");
+  //   }
+  // };
 
   const writeAReview = (lastName, slug, id) => {
     if (!isLoggedIn) {
@@ -27,6 +29,9 @@ const DocProfileSm = ({ doctor = [] }) => {
     go(isLoggedIn ? `/review/${slug}` : "/sign_in", { state });
   };
 
+  const showMore = () => {
+    setSliceNum(sliceNum + 6)
+  }
   const { isLoggedIn } = useAuth();
   return (
     <>
@@ -257,7 +262,31 @@ const DocProfileSm = ({ doctor = [] }) => {
                   </li>
                 </ul>
               </section>
+
+
+
             </div>
+              {
+              doctor.conditionsAndTreatments.length > 0 &&(
+              <section className="w-full space-y-3 border-t border-b px-2 py-5 my-4">
+                <div className="flex items-center gap-1">
+                  <svg className="size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.06641 12H3.60938L12 20.3906L18.8906 13.5H21.0117L12 22.5117L1.86328 12.3867C1.58984 12.1133 1.34766 11.8203 1.13672 11.5078C0.925781 11.1953 0.742188 10.8594 0.585938 10.5H3.43359L6.75 7.19531L12 12.4336L15.75 8.69531L17.5664 10.5H21.7266C21.9766 10.1016 22.168 9.67969 22.3008 9.23438C22.4336 8.78906 22.5 8.33203 22.5 7.86328C22.5 7.18359 22.375 6.55078 22.125 5.96484C21.875 5.37891 21.5273 4.87109 21.082 4.44141C20.6367 4.01172 20.1211 3.67188 19.5352 3.42188C18.9492 3.17188 18.3125 3.04688 17.625 3.04688C16.9688 3.04688 16.3867 3.14844 15.8789 3.35156C15.3711 3.55469 14.9023 3.82813 14.4727 4.17188C14.043 4.51563 13.6328 4.89453 13.2422 5.30859C12.8516 5.72266 12.4375 6.15625 12 6.60938C11.5781 6.1875 11.168 5.76172 10.7695 5.33203C10.3711 4.90234 9.95703 4.51563 9.52734 4.17188C9.09766 3.82813 8.625 3.54688 8.10938 3.32813C7.59375 3.10938 7.01562 3 6.375 3C5.70312 3 5.07422 3.125 4.48828 3.375C3.90234 3.625 3.38672 3.97266 2.94141 4.41797C2.49609 4.86328 2.14844 5.37891 1.89844 5.96484C1.64844 6.55078 1.51953 7.18359 1.51172 7.86328C1.51172 8.23047 1.55469 8.60938 1.64062 9H0.105469C0.0664062 8.8125 0.0429688 8.625 0.0351562 8.4375C0.0273438 8.25 0.0195312 8.0625 0.0117188 7.875C0.0117188 6.99219 0.175781 6.16406 0.503906 5.39063C0.832031 4.61719 1.28516 3.94141 1.86328 3.36328C2.44141 2.78516 3.11719 2.33203 3.89062 2.00391C4.66406 1.67578 5.49219 1.50781 6.375 1.5C7.02344 1.5 7.60156 1.57422 8.10938 1.72266C8.61719 1.87109 9.08594 2.07422 9.51562 2.33203C9.94531 2.58984 10.3594 2.90625 10.7578 3.28125C11.1562 3.65625 11.5703 4.05859 12 4.48828C12.4297 4.05078 12.8398 3.64844 13.2305 3.28125C13.6211 2.91406 14.0352 2.60156 14.4727 2.34375C14.9102 2.08594 15.3828 1.87891 15.8906 1.72266C16.3984 1.56641 16.9766 1.49219 17.625 1.5C18.5 1.5 19.3242 1.66406 20.0977 1.99219C20.8711 2.32031 21.543 2.77344 22.1133 3.35156C22.6836 3.92969 23.1367 4.60156 23.4727 5.36719C23.8086 6.13281 23.9766 6.95703 23.9766 7.83984C23.9766 8.59766 23.8438 9.33203 23.5781 10.043C23.3125 10.7539 22.9336 11.4062 22.4414 12H16.9336L15.75 10.8047L12 14.5664L6.75 9.30469L4.06641 12Z" fill="black"/>
+                  </svg>
+                  <p className="text-sm font-semibold">ALL CONDITIONS AND TREATMENTS</p>
+                </div>
+                <div className="w-full flex flex-col text-xs gap-2">
+                 {doctor.conditionsAndTreatments.slice(0,sliceNum).map((cAndT)=>(
+                    <p className="line-clamp-1" key={cAndT.id}>
+                      {cAndT.name}
+                    </p>
+                 ))}
+
+                </div>
+                <button onClick={() => showMore()} className={`${doctor.conditionsAndTreatments.length < sliceNum ? 'hidden' : ''} text-xs underline`}>Show more</button>
+              </section>
+              )
+            }
           </section>
 
             <div className="bg-white order-3  flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 border rounded-xl">
