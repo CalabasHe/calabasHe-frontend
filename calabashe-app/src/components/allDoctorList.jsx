@@ -32,6 +32,7 @@ const AllDoctorList = () => {
 
   const fetchDocData = async (page) => {
     try {
+      setFiltering(false);
       setIsLoading(true);
       const docData = await fetchDoctors(page);
       // console.log(docData)
@@ -88,7 +89,7 @@ const AllDoctorList = () => {
     if (filtering && hasNextPage) {
       setSearchPagination(searchPagination + 1);
     } else if (!filtering && hasNextPage) {
-      setPagination(pagination + 1);
+      handlePageChange(pagination+1)
     }
   };
 
@@ -96,7 +97,7 @@ const AllDoctorList = () => {
     if (filtering && hasPreviousPage) {
       setSearchPagination(searchPagination - 1);
     } else if (!filtering && hasPreviousPage) {
-      setPagination(pagination - 1);
+      handlePageChange(pagination-1);
     }
   };
 
@@ -105,7 +106,7 @@ const AllDoctorList = () => {
   const handleSearchSubmit = async (search_query, specialty, location, isNewSearch = true) => {
     try {
       if (isNewSearch) {
-        setPagination(1);  // Set to 1 for a new search but pass directly
+        setPagination(1);
         setSearchPagination(1);
       }
 
