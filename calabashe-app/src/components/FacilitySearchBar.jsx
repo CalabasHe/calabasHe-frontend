@@ -51,11 +51,11 @@ const FacilitySearchBar = ({ submitFunc }) => {
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4 md:sticky md:top-[15%] z-30">
-            <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
+            <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col items-center gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
                 
                 {/* Facility Input */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[45%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                    <Icon icon="icon-park-solid:hospital-three"  height={24} style={{ color: "black" }} className='md:ml-8 md:mr-1' />
+                    <Icon icon="icon-park-solid:hospital-three"  height={24} style={{ color: "black" }} className='md:mr-1 ml-2 md:ml-8'/>
                     <input
                         type="text"
                         value={facility}

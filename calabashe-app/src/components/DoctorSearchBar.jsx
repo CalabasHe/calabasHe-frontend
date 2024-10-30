@@ -8,11 +8,11 @@ const DoctorSearchBar = ({ submitFunc }) => {
 
     // Extract initial values from URL and trim any leading/trailing spaces
     const searchParams = new URLSearchParams(location.search);
-    const initialDoctorFacilityTreatment = (searchParams.get("doctorFacilityTreatment") || "").trim();
+    const initialSearchQuery = (searchParams.get("search_query") || "").trim();
     const initialSpecialty = (searchParams.get("specialty") || "").trim();
     const initialLocation = (searchParams.get("location") || "").trim();
 
-    const [doctorFacilityTreatment, setDoctorFacilityTreatment] = useState(initialDoctorFacilityTreatment);
+    const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
     const [specialty, setSpecialty] = useState(initialSpecialty);
     const [locationInput, setLocationInput] = useState(initialLocation);
 
@@ -20,12 +20,12 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const sanitizeInput = (value) => value.trim().replace(/\s+/g, " ");
 
     /** Update URL params when input changes */
-    const handleDoctorFacilityTreatment = (e) => {
+    const handleSearchQuery = (e) => {
         const value = sanitizeInput(e.target.value);
-        setDoctorFacilityTreatment(value);
+        setSearchQuery(value);
 
         const params = new URLSearchParams(location.search);
-        params.set("doctorFacilityTreatment", value);
+        params.set("search_query", value); // Update to use search_query
         navigate({ search: params.toString() }, { replace: true });
     };
 
@@ -49,21 +49,20 @@ const DoctorSearchBar = ({ submitFunc }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        submitFunc(doctorFacilityTreatment, specialty, locationInput);
+        submitFunc(searchQuery, specialty, locationInput);
     };
-
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4 md:sticky md:top-[15%] z-30">
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
-
+                
                 {/* Doctor filter conditions */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[45%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                    <Icon icon="material-symbols-light:ecg-heart-outline" height={24} style={{ color: "black" }} className=' ml-2 md:ml-8' />
+                    <Icon icon="material-symbols-light:ecg-heart-outline" height={24} style={{ color: "black" }} className='ml-2 md:ml-8' />
                     <input
                         type="text"
-                        value={doctorFacilityTreatment}
-                        onChange={handleDoctorFacilityTreatment}
+                        value={searchQuery} // Use searchQuery state
+                        onChange={handleSearchQuery} // Use handleSearchQuery function
                         placeholder="Doctor, condition, treatment..."
                         className="w-full pl-1 pr-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
                     />
@@ -103,6 +102,6 @@ const DoctorSearchBar = ({ submitFunc }) => {
             </form>
         </div>
     );
-}
+};
 
 export default DoctorSearchBar;
