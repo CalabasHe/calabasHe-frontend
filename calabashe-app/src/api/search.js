@@ -19,4 +19,15 @@ export const DoctorsSearch = async ({search_query, specialty, location, page}) =
     throw new Error('Error fetching data:', error);
   }
 }
+export const FacilitySearch = async ({facility, service, location, page}) => {
+  console.log(page);
+  const url = `https://calabashe-api.onrender.com/api/facility?facility=${facility}&region=${location}&service=${service}&page=${page}`;
+  try {
+    const response = await axios.get(`${url}`)
+    return response.data
+  } catch (error) {
+    throw new Error('Error fetching data:', error);
+  }
+}
+
 export default SearchData;
