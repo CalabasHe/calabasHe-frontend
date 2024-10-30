@@ -6,7 +6,7 @@ import HospitalIcon from '../assets/icons/hospital-icon.svg'
 const FacilityCardSm = ({ facility }) => {
   const go = useNavigate()
   const toProfile = (type,slug) => {
-    go(`/facilities/${type.toLowerCase() + 's/' + slug}`)
+    go(`/facilities/${type.toLowerCase().replace(' ', '-') + 's/' + slug}`)
   }
   
   return (
