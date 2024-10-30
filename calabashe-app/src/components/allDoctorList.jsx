@@ -28,9 +28,11 @@ const AllDoctorList = () => {
   };
 
   const [pagination, setPagination] = useState(getCurrentPage());
+  const [searchPagination, setSearchPagination] = useState(1);
 
   const fetchDocData = async (page) => {
     try {
+      setFiltering(false);
       setIsLoading(true);
       const docData = await fetchDoctors(page);
       // console.log(docData)
@@ -65,24 +67,18 @@ const AllDoctorList = () => {
   };
 
   useEffect(() => {
-    if (filtering)
-    {
-      //call search submit again
-      if (filtering) {
-        handleSearchSubmit(
-          searchCriteria.search_query,
-          searchCriteria.specialty,
-          searchCriteria.location,
-          pagination
-        );
-      } else {
-        fetchDocData(pagination);
-      }
+    if (filtering) {
+      handleSearchSubmit(
+        searchCriteria.search_query,
+        searchCriteria.specialty,
+        searchCriteria.location,
+        false
+      );
     } else {
-      fetchDocData(pagination); 
+      fetchDocData(pagination);
+      navigate(`?page=${pagination}`, { replace: true });
     }
-    navigate(`?page=${pagination}`, { replace: true });
-  }, [pagination, navigate]);
+  }, [pagination, searchPagination, filtering]);
 
   const handlePageChange = (newPage) => {
     setPagination(newPage);
@@ -90,24 +86,36 @@ const AllDoctorList = () => {
   };
 
   const handleNextPage = () => {
-    if (hasNextPage) {
-      handlePageChange(pagination + 1);
+    if (filtering && hasNextPage) {
+      setSearchPagination(searchPagination + 1);
+    } else if (!filtering && hasNextPage) {
+      handlePageChange(pagination+1)
     }
   };
 
   const handlePreviousPage = () => {
-    if (hasPreviousPage) {
-      handlePageChange(pagination - 1);
+    if (filtering && hasPreviousPage) {
+      setSearchPagination(searchPagination - 1);
+    } else if (!filtering && hasPreviousPage) {
+      handlePageChange(pagination-1);
     }
   };
 
 
-  const handleSearchSubmit = async (search_query, specialty, location) => {
+
+  const handleSearchSubmit = async (search_query, specialty, location, isNewSearch = true) => {
     try {
+      if (isNewSearch) {
+        setPagination(1);
+        setSearchPagination(1);
+      }
+
+      const page = isNewSearch ? 1 : searchPagination;
       setIsLoading(true);
       setFiltering(true);
+      setPagination(1);
       setSearchCriteria({ search_query, specialty, location });
-      const docData = await DoctorsSearch({ search_query, specialty, location, pagination});
+      const docData = await DoctorsSearch({ search_query, specialty, location, page });
 
       // Check for pagination availability
       setHasPreviousPage(!!docData.previous);
@@ -137,7 +145,7 @@ const AllDoctorList = () => {
         if (search_query) searchParams.set("search_query", search_query);
         if (specialty) searchParams.set("specialty", specialty);
         if (location) searchParams.set("location", location);
-        searchParams.set("page", "1");
+        // searchParams.set("page", "1");
         navigate(`?${searchParams.toString()}`, { replace: true });
 
       } else {
@@ -182,33 +190,41 @@ const AllDoctorList = () => {
       </div>
 
       <div className="min-[820px]:hidden w-full flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
-      {doctors.map((doctor) => (
-          <div key={doctor.id}  className="w-full flex flex-col items-center pt-4 ">
+        {doctors.map((doctor) => (
+          <div key={doctor.id} className="w-full flex flex-col items-center pt-4 ">
             <DoctorCard doctor={doctor} />
           </div>
         ))}
       </div>
 
       <div className="w-full flex justify-center my-8 md:my-12">
-        <button
-          onClick={handlePreviousPage}
-          className={`${hasPreviousPage
-              ? "flex border-r-0"
-              : !hasNextPage
-                ? "border-r"
-                : "hidden"
-          } text-base lg:text-lg border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold`}
-        >
-          Previous
-        </button>
-        <button
-          onClick={handleNextPage}
-          className={`${hasNextPage ? "flex border-r" : "hidden"
-            } text-base lg:text-lg border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}
-        >
-          Next Page
-        </button>
+        {filtering && doctors.length === 0 ? (
+          <p>No results found</p>
+        ) : (
+          <>
+            {/* Previous Button */}
+            {hasPreviousPage && doctors.length > 0 && (
+              <button
+                onClick={handlePreviousPage}
+                className="text-base lg:text-lg border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold"
+              >
+                Previous
+              </button>
+            )}
+
+            {/* Next Page Button */}
+            {hasNextPage && doctors.length > 0 && (
+              <button
+                onClick={handleNextPage}
+                className="text-base lg:text-lg border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]"
+              >
+                Next Page
+              </button>
+            )}
+          </>
+        )}
       </div>
+
     </div>
   );
 };
