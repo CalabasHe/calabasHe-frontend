@@ -46,6 +46,7 @@ const AllDoctorList = () => {
           rating: doc.average_rating,
           specialty: doc.specialty?.name,
           specialtyTag: doc.specialty?.tag,
+          image: doc.profile_image,
           slug: doc.slug,
           reviews: doc.reviews,
           reviewCount: doc.reviews_count,

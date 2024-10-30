@@ -27,6 +27,7 @@ const DocProfile = () => {
           rating: data.average_rating,
           specialty: data.specialty_name,
           specialtyTag: data.specialty_tag,
+          image: data.profile_image,
           slug: data.slug,
           patientsTellUs: data.reviews?.title,
           region: data.region_name,

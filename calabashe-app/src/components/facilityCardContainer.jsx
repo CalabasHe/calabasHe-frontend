@@ -26,7 +26,7 @@ const FacilityCard = () => {
       try {
         setIsLoading(true);
         const facilityData = await fetchFacilities(page);
-        // console.log(facilityData)
+        console.log(facilityData)
         setHasPreviousPage(!!facilityData.previous);
         setHasNextPage(!!facilityData.next);
         if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
@@ -39,6 +39,7 @@ const FacilityCard = () => {
             slug: facility.slug,
             reviews: facility.reviews,
             location: facility.location,
+            logo: facility.logo,
             region: facility.region?.name,
             reviewCount: facility.total_reviews,
             services: facility.services,
