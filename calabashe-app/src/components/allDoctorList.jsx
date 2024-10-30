@@ -190,7 +190,13 @@ const AllDoctorList = () => {
       </div>
 
       <div className="w-full flex justify-center my-8 md:my-12">
-        <button
+      { filtering && doctors.length === 0? 
+        (
+          <p>No results found</p>
+        ):
+        (
+          <>
+                    <button
           onClick={handlePreviousPage}
           className={`${hasPreviousPage
               ? "flex border-r-0"
@@ -208,6 +214,9 @@ const AllDoctorList = () => {
         >
           Next Page
         </button>
+          </>
+        )
+      }
       </div>
     </div>
   );
