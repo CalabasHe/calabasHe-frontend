@@ -107,7 +107,7 @@ const AllDoctorList = () => {
       setIsLoading(true);
       setFiltering(true);
       setSearchCriteria({ search_query, specialty, location });
-      const docData = await DoctorsSearch({ search_query, specialty, location, pagination});
+      const docData = await DoctorsSearch({ search_query, specialty, location, pagination: 1 });
 
       // Check for pagination availability
       setHasPreviousPage(!!docData.previous);
@@ -137,7 +137,7 @@ const AllDoctorList = () => {
         if (search_query) searchParams.set("search_query", search_query);
         if (specialty) searchParams.set("specialty", specialty);
         if (location) searchParams.set("location", location);
-        searchParams.set("page", "1");
+        // pagination > 1? searchParams.set("page", pagination): searchParams.set("page", 1)
         navigate(`?${searchParams.toString()}`, { replace: true });
 
       } else {
