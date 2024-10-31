@@ -84,7 +84,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                         type="text"
                         value={locationInput}
                         onChange={handleLocationChange}
-                        placeholder="Location, Region"
+                        placeholder="Location, region"
                         className="w-full px-2 border-r-0 border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
                     />
                 </div>
