@@ -65,7 +65,7 @@ const FacilityCard = () => {
         setIsLoading(false);
       }
     };  // Close the fetchFacilityData function here
-  
+
     if (filtering) {
       handleSearchSubmit(
         searchCriteria.facility,
@@ -189,13 +189,18 @@ const FacilityCard = () => {
         ))}
       </div>
 
-      <div className="flex border-r border-black my-8 md:my-12">
-        <button onClick={handlePreviousPage} className={`${hasPreviousPage ? 'flex' : 'hidden'} text-xs md:text-sm border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold`}>
-          Previous
-        </button>
-        <button onClick={handleNextPage} className={`${hasNextPage ? 'flex' : 'hidden'} text-xs md:text-sm border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}>
-          Next Page
-        </button>
+      <div className='my-8 md:my-12'>
+        {filtering && facilities.length === 0 ?
+          (<p>No results found</p>)
+          : (
+            <div className="flex border-r border-black">
+              <button onClick={handlePreviousPage} className={`${hasPreviousPage ? 'flex' : 'hidden'} text-xs md:text-sm border border-black py-1 lg:py-2 px-8 md:px-12 font-semibold`}>
+                Previous
+              </button>
+              <button onClick={handleNextPage} className={`${hasNextPage ? 'flex' : 'hidden'} text-xs md:text-sm border border-black px-8 md:px-12 py-1 lg:py-2 font-semibold text-[#0066FF]`}>
+                Next Page
+              </button></div>
+          )}
       </div>
     </>
   );

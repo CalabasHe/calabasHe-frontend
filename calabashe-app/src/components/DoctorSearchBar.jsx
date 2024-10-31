@@ -58,7 +58,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                 
                 {/* Doctor filter conditions */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[45%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                    <Icon icon="material-symbols-light:ecg-heart-outline" height={24} style={{ color: "black" }} className='ml-2 md:ml-8' />
+                    <Icon icon="material-symbols-light:ecg-heart-sharp" height={24} style={{ color: "black" }} className='ml-2 md:ml-8' />
                     <input
                         type="text"
                         value={searchQuery} // Use searchQuery state
@@ -70,7 +70,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
 
                 {/* Specialty */}
                 <div className="flex items-center pb-1 pt-2 w-full md:w-[28%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                    <Icon icon="stash:person-light" style={{ color: "black" }} height={24} className='ml-2' />
+                    <Icon icon="material-symbols:person" style={{ color: "black" }} height={24} className='ml-2' />
                     <input
                         type="text"
                         placeholder="Specialty"
