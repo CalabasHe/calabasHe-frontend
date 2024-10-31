@@ -20,7 +20,7 @@ const ReviewCard = ({ review }) => (
     </div>
     
     <p className="font-medium text-sm md:text-base mt-2">
-      {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed</span> 
+      {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed </span> 
       <Link to={review.type === 'doctor' ? '/doctors/' + review.slug : '/facilities/' + review.facilityType + 's/' + review.slug} className="hover:underline font-bold">
         {review.type === "doctor" ? `Dr. ${review.subject.split(' ')[0]}` : review.subject}
       </Link>
