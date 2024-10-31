@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { fetchCurrentReviews } from "../api/getCategoriesData";
@@ -6,6 +7,8 @@ import StarRating from "./ratingStars";
 import { FaUser } from "react-icons/fa";
 import '../stylesheets/reviews.css';
 import { FadeInOut } from "./ComponentAnimations";
+
+const MAX_REVIEWS = 20;
 
 const ReviewCard = ({ review }) => (
   <div className="hover:scale-105 duration-200 cursor-pointer max-h-[200px] h-fit min-w-[260px] overflow-hidden select-none rounded-lg bg-white border px-3 md:px-4 py-4">
@@ -17,7 +20,8 @@ const ReviewCard = ({ review }) => (
     </div>
     
     <p className="font-medium text-sm md:text-base mt-2">
-      {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed</span> <Link  to={review.type === 'doctor' ? '/doctors/'+ review.slug : '/facilities/'+review.facilityType+'s/'+review.slug} className="hover:underline font-bold">
+      {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed</span> 
+      <Link to={review.type === 'doctor' ? '/doctors/' + review.slug : '/facilities/' + review.facilityType + 's/' + review.slug} className="hover:underline font-bold">
         {review.type === "doctor" ? `Dr. ${review.subject.split(' ')[0]}` : review.subject}
       </Link>
     </p>
@@ -27,8 +31,9 @@ const ReviewCard = ({ review }) => (
 );
 
 const RecentReviews = () => {
-  const [reviews, setReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const storedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const [reviews, setReviews] = useState(storedReviews);
+  const [isLoading, setIsLoading] = useState(storedReviews.length === 0);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
   const reviewIntervalRef = useRef(null);
@@ -36,29 +41,28 @@ const RecentReviews = () => {
 
   const handleMouseEnter = useCallback(() => {
     isHovered.current = true;
-    if (reviewIntervalRef.current) {
-      clearInterval(reviewIntervalRef.current);
-    }
+    if (reviewIntervalRef.current) clearInterval(reviewIntervalRef.current);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     isHovered.current = false;
     if (reviews.length > 0) {
       reviewIntervalRef.current = setInterval(() => {
-        setOffset((prevOffset) => {
-          const newOffset = prevOffset + 1;
-          return newOffset >= reviews.length ? 0 : newOffset;
-        });
+        setOffset((prevOffset) => (prevOffset + 1) % reviews.length);
       }, 7000);
     }
   }, [reviews.length]);
 
-  useEffect(() => {
-    const fetchReview = async () => {
-      try {
-        const data = await fetchCurrentReviews();
-        if (Array.isArray(data) && data.length > 0) {
-          const reviewDetails = data.map((review) => ({
+  const updateLocalStorage = (newReviews) => {
+    const limitedReviews = newReviews.slice(0, MAX_REVIEWS);
+    localStorage.setItem("reviews", JSON.stringify(limitedReviews));
+  };
+
+  const fetchReviewsFromAPI = async () => {
+    try {
+      const data = await fetchCurrentReviews();
+      const reviewDetails = (Array.isArray(data) && data.length > 0)
+        ? data.map((review) => ({
             id: review.id, 
             rating: review.rating,
             description: review.description,  
@@ -68,40 +72,43 @@ const RecentReviews = () => {
             user: review.user,
             slug: review.subject_slug,
             facilityType: review?.facility_type_slug
-          }));
-          setReviews(reviewDetails);
-        } else {
-          setReviews([]); 
-        }
-      } catch (err) {
-        console.error('Error fetching reviews:', err);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+          }))
+        : [];
+      return reviewDetails;
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      setError("Failed to load reviews.");
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    const loadReviews = async () => {
+      const apiReviews = await fetchReviewsFromAPI();
+      if (apiReviews.length !== reviews.length || JSON.stringify(apiReviews) !== JSON.stringify(reviews)) {
+        setReviews(apiReviews);
+        updateLocalStorage(apiReviews);
       }
+      setIsLoading(false);
     };
 
-    fetchReview();
-    const fetchInterval = setInterval(fetchReview, 120000);
+    if (storedReviews.length === 0) {
+      loadReviews();
+    } else {
+      setIsLoading(false);
+    }
 
+    const fetchInterval = setInterval(loadReviews, 120000);
     return () => clearInterval(fetchInterval);
   }, []);
 
   useEffect(() => {
     if (reviews.length > 0 && !isHovered.current) {
       reviewIntervalRef.current = setInterval(() => {
-        setOffset((prevOffset) => {
-          const newOffset = prevOffset + 1;
-          return newOffset >= reviews.length ? 0 : newOffset;
-        });
+        setOffset((prevOffset) => (prevOffset + 1) % reviews.length);
       }, 7000);
     }
-
-    return () => {
-      if (reviewIntervalRef.current) {
-        clearInterval(reviewIntervalRef.current);
-      }
-    };
+    return () => clearInterval(reviewIntervalRef.current);
   }, [reviews.length]);
 
   if (isLoading) return (
@@ -141,6 +148,6 @@ const RecentReviews = () => {
       </div>
     </FadeInOut>
   );
-}
+};
 
 export default RecentReviews;
