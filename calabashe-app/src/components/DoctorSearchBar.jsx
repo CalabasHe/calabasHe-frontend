@@ -24,36 +24,39 @@ const DoctorSearchBar = ({ submitFunc }) => {
         const value = sanitizeInput(e.target.value);
         setSearchQuery(value);
 
-        const params = new URLSearchParams(location.search);
-        params.set("search_query", value); // Update to use search_query
-        navigate({ search: params.toString() }, { replace: true });
+        // const params = new URLSearchParams(location.search);
+        // navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleSpecialty = (e) => {
         const value = sanitizeInput(e.target.value);
         setSpecialty(value);
 
-        const params = new URLSearchParams(location.search);
-        params.set("specialty", value);
-        navigate({ search: params.toString() }, { replace: true });
+        // const params = new URLSearchParams(location.search);
+        
+        // navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleLocation = (e) => {
         const value = sanitizeInput(e.target.value);
         setLocationInput(value);
 
-        const params = new URLSearchParams(location.search);
-        params.set("location", value);
-        navigate({ search: params.toString() }, { replace: true });
+        // 
+
+        // navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const params = new URLSearchParams(location.search);
+        params.set("location", location);
+        params.set("specialty", specialty);
+        params.set("search_query", searchQuery);
         submitFunc(searchQuery, specialty, locationInput);
     };
 
     return (
-        <div className="max-w-[1100px] mx-auto block w-full pb-4 md:sticky md:top-[15%] z-30">
+        <div className="max-w-[1100px] mx-auto block w-full pb-4">
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
                 
                 {/* Doctor filter conditions */}
@@ -61,8 +64,8 @@ const DoctorSearchBar = ({ submitFunc }) => {
                     <Icon icon="material-symbols-light:ecg-heart-sharp" height={24} style={{ color: "black" }} className='ml-2 md:ml-8' />
                     <input
                         type="text"
-                        value={searchQuery} // Use searchQuery state
-                        onChange={handleSearchQuery} // Use handleSearchQuery function
+                        value={searchQuery} 
+                        onChange={handleSearchQuery}
                         placeholder="Doctor, condition, treatment..."
                         className="w-full pl-1 pr-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
                     />

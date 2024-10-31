@@ -21,36 +21,39 @@ const FacilitySearchBar = ({ submitFunc }) => {
         const value = e.target.value;
         setFacility(value);
 
-        const params = new URLSearchParams(location.search);
-        params.set("facility", value);
-        navigate({ search: params.toString() }, { replace: true });
+        // const params = new URLSearchParams(location.search);
+        // params.set("facility", value);
+        // navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleServiceChange = (e) => {
         const value = e.target.value;
         setService(value);
 
-        const params = new URLSearchParams(location.search);
-        params.set("service", value);
-        navigate({ search: params.toString() }, { replace: true });
+        // const params = new URLSearchParams(location.search);
+        // params.set("service", value);
+        // navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleLocationChange = (e) => {
         const value = e.target.value;
         setLocationInput(value);
 
-        const params = new URLSearchParams(location.search);
-        params.set("location", value);
-        navigate({ search: params.toString() }, { replace: true });
+        // const params = new URLSearchParams(location.search);
+        // navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const params = new URLSearchParams(location.search)
+        params.set("facility", facility);
+        params.set("service", service);
+        params.set("location", "location")
         submitFunc(facility, service, locationInput);
     };
 
     return (
-        <div className="max-w-[1100px] mx-auto block w-full pb-4 md:sticky md:top-[15%] z-30">
+        <div className="max-w-[1100px] mx-auto block w-full pb-4">
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col items-center gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
                 
                 {/* Facility Input */}
