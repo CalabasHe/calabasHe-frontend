@@ -11,7 +11,7 @@ export const SearchQuery = ({ conditionSuggestions, onSelect }) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-10 w-full mt-1 shadow-lg z-10 bg-white rounded-md overflow-y-auto scrollbar-thin max-h-[400px]"
+                    className="absolute top-10 w-full mt-1 shadow-lg z-20 bg-white rounded-md overflow-y-auto scrollbar-thin max-h-[400px]"
                     onMouseDown={(e) => e.preventDefault()}
                 >
                     <h3 className="text-gray-600 font-semibold m-2">Conditions</h3>
@@ -47,7 +47,7 @@ export const SpecialtySuggestions = ({ specialtySuggests, onSelect }) => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-10 w-full mt-1 shadow-lg z-10 bg-white rounded-md overflow-y-auto scrollbar-thin max-h-[400px]"
+                    className="absolute top-10 w-full mt-1 shadow-lg z-20 bg-white rounded-md overflow-y-auto scrollbar-thin max-h-[400px]"
                     onMouseDown={(e) => e.preventDefault()}
                 >
                     <h3 className="text-gray-600 font-semibold m-2">Specialties</h3>

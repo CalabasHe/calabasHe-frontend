@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getFacilities } from '../api/getSuggestions';
 
 const FacilitySearchBar = ({ submitFunc }) => {
     const navigate = useNavigate();
@@ -16,11 +17,19 @@ const FacilitySearchBar = ({ submitFunc }) => {
     const [service, setService] = useState(initialService);
     const [locationInput, setLocationInput] = useState(initialLocation);
 
+    const [suggestions, setSuggestions] = useState({
+        allFacilites: [],
+        allServices: [],
+        allLocations: []
+    });
+
     /** Update URL params when input changes */
     const handleFacilityChange = (e) => {
         const value = e.target.value;
         setFacility(value);
 
+        // const suggestions = getFacilities(value)
+        // console.log(suggestions)
         // const params = new URLSearchParams(location.search);
         // params.set("facility", value);
         // navigate({ search: params.toString() }, { replace: true });

@@ -63,7 +63,6 @@ const DoctorSearchBar = ({ submitFunc }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log((locationInput.length !== 0 || specialty.length) !== 0 && searchQuery.length !== 0)
         if ((locationInput.length !== 0 || specialty.length) !== 0 || searchQuery.length !== 0) {
             const params = new URLSearchParams(location.search);
             params.set("location", locationInput);
@@ -73,6 +72,14 @@ const DoctorSearchBar = ({ submitFunc }) => {
             submitFunc(searchQuery, specialty, locationInput);
         }
     };
+
+    //user presses enter key, submit
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit(e);
+        }
+    };
+
 
     const onSpecialtySelected = (suggestion) => {
         setSpecialty(suggestion);
@@ -136,12 +143,15 @@ const DoctorSearchBar = ({ submitFunc }) => {
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4">
-            <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
+            <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit} >
                 <div className='w-full md:w-[70%] flex flex-col md:flex-row'>
                     <motion.div
-                        animate={{ width: activeInput === 'specialty' ? '0%' : '100%' }}
+                        animate={{
+                            width: activeInput === 'specialty' ? '0%' : '100%',
+                            opacity: activeInput === 'specialty' ? 0 : 1
+                        }}
                         transition={{ duration: 0.2 }}
-                        className='w-full md:w-[45%]'
+                        className={`w-full md:w-[45%]  ${activeInput === 'specialty' ? 'hidden' : 'block'}`}
                     >
                         <div ref={searchContainerRef} className='w-full flex flex-col relative'>
                             <div className="flex items-center w-full pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0" >
@@ -152,6 +162,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     onChange={handleSearchQuery}
                                     placeholder="Doctor, condition, treatment..."
                                     className="w-full pl-1 pr-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
+                                    onKeyDown={handleKeyDown}
                                 />
                                 {searchQuery && (
                                     <button onClick={clearSearchQuery} className="absolute md:left-[95%] left-[90%]">
@@ -169,7 +180,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                             opacity: activeInput === 'search' ? 0 : 1,
                         }}
                         transition={{ duration: 0.2 }}
-                        className='w-full md:w-[30%] flex-grow'
+                        className={`w-full md:w-[45%]  ${activeInput === 'search' ? 'hidden' : 'block'}`}
                     >
                         <div ref={specialtyContainerRef} className='w-full flex flex-col relative'>
                             <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
@@ -180,6 +191,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     value={specialty}
                                     onChange={handleSpecialty}
                                     className="w-full px-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
+                                    onKeyDown={handleKeyDown}
                                 />
                                 {specialty && (
                                     <button onClick={clearSpecialty} className="absolute md:left-[92%] left-[90%]">
@@ -192,7 +204,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                     </motion.div>
                 </div>
 
-                <div ref={locationInputRef}  className="flex items-center pb-1 pt-2 w-full md:w-[30%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0 relative">
+                <div ref={locationInputRef} className="flex items-center pb-1 pt-2 w-full md:w-[30%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0 relative">
                     <div className='flex w-full items-center'>
                         <Icon icon="gridicons:location" style={{ color: "black" }} height={24} className='ml-2' />
                         <input
@@ -201,10 +213,11 @@ const DoctorSearchBar = ({ submitFunc }) => {
                             onChange={handleLocation}
                             placeholder="Location, region"
                             className="w-full px-2 border-r-0 border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
+                            onKeyDown={handleKeyDown}
                         />
                         {locationInput && (
                             (
-                                <button onClick={clearLocation} className="absolute md:left-[92%] left-[90%]">
+                                <button onClick={clearLocation} className="absolute md:left-[92%] left-[90%] pb-1">
                                     <Icon icon="ic:baseline-close" style={{ color: "gray" }} height={20} />
                                 </button>
                             )

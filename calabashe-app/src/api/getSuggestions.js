@@ -4,7 +4,9 @@ let specialtiesCache = JSON.parse(localStorage.getItem('specialtiesCache')) || {
 let locationsCache = JSON.parse(localStorage.getItem('locationsCache')) || {};
 let conditionsNextPage = localStorage.getItem('conditionsNextPage') || 'https://calabashe-api.onrender.com/api/conditions/';
 let specialtiesFetched = Boolean(Object.keys(specialtiesCache).length); // Track if specialties are already loaded
-let facilityServicePage = JSON.parse(localStorage.getItem('facilityNextPage')) || 'https://calabashe-api.onrender.com/api/facilities';
+let facilitiesCache = JSON.parse(localStorage.getItem('facilitiesCache')) || {};
+let servicesCache = JSON.parse(localStorage.getItem('servicesCache')) || {};
+let facilityNextPage = localStorage.getItem('facilityNextPage') || 'https://calabashe-api.onrender.com/api/facilities';
 
 // Ghana regions for location cache
 const ghanaRegions = [
@@ -47,6 +49,28 @@ const fetchPaginatedConditions = async () => {
     localStorage.setItem('conditionsNextPage', data.next || '');
 };
 
+// Function to fetch facilities and their services
+const fetchFacilities = async () => {
+    if (!facilityNextPage) return;
+
+    const response = await fetch(facilityNextPage);
+    const data = await response.json();
+
+    data.results.forEach(facility => {
+        // Store facility name
+        facilitiesCache[facility.name.toLowerCase()] = facility.name;
+        // Store services
+        servicesCache[facility.name.toLowerCase()] = facility.services.map(service => service.name);
+    });
+
+    localStorage.setItem('facilitiesCache', JSON.stringify(facilitiesCache));
+    localStorage.setItem('servicesCache', JSON.stringify(servicesCache));
+    
+    // Update the next page
+    facilityNextPage = data.next;
+    localStorage.setItem('facilityNextPage', data.next || '');
+};
+
 // Fetch specialties once and cache them
 const fetchSpecialties = async () => {
     if (specialtiesFetched) return;
@@ -85,4 +109,30 @@ export const getSpecialties = async (value) => {
     const lowercaseValue = value.toLowerCase();
 
     return Object.values(specialtiesCache).filter(specialty => specialty.toLowerCase().includes(lowercaseValue));
+};
+
+// Function to get facilities based on input
+export const getFacilities = async (value) => {
+    await fetchFacilities(); // Fetch facilities if not cached
+    const lowercaseValue = value.toLowerCase();
+
+    return Object.values(facilitiesCache).filter(facility => 
+        facility.toLowerCase().includes(lowercaseValue)
+    );
+};
+
+// Function to get services based on facility name
+export const getServices = async (facilityName, value) => {
+    await fetchFacilities(); // Ensure facilities and services are fetched
+
+    const lowercaseFacilityName = facilityName.toLowerCase();
+    const lowercaseValue = value.toLowerCase();
+
+    // Get services for the specified facility
+    const services = servicesCache[lowercaseFacilityName] || [];
+
+    // Filter services based on the input value
+    return services.filter(service => 
+        service.toLowerCase().includes(lowercaseValue)
+    );
 };
