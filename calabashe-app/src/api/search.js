@@ -25,6 +25,10 @@ export const FacilitySearch = async ({facility, service, location, page}) => {
   try {
     const response = await axios.get(`${url}`)
     // console.log(response.data);
+
+    //cache for searching
+    let facilitiesCache
+
     return response.data
   } catch (error) {
     throw new Error('Error fetching data:', error);

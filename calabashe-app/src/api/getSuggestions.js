@@ -1,8 +1,30 @@
 // Initialize caches from localStorage if available
 let conditionsCache = JSON.parse(localStorage.getItem('conditionsCache')) || {};
 let specialtiesCache = JSON.parse(localStorage.getItem('specialtiesCache')) || {};
+let locationsCache = JSON.parse(localStorage.getItem('locationsCache')) || {};
 let conditionsNextPage = localStorage.getItem('conditionsNextPage') || 'https://calabashe-api.onrender.com/api/conditions/';
 let specialtiesFetched = Boolean(Object.keys(specialtiesCache).length); // Track if specialties are already loaded
+let facilityServicePage = JSON.parse(localStorage.getItem('facilityNextPage')) || 'https://calabashe-api.onrender.com/api/facilities';
+
+// Ghana regions for location cache
+const ghanaRegions = [
+    "Greater Accra", "Ashanti", "Central", "Western", 
+    "Eastern", "Northern", "Upper East", "Upper West", 
+    "Volta", "Bono", "Bono East", "Ahafo", "Savannah", 
+    "North East", "Western North", "Oti"
+];
+
+// Store regions in localStorage if not already cached
+if (!Object.keys(locationsCache).length) {
+    ghanaRegions.forEach(region => locationsCache[region.toLowerCase()] = region);
+    localStorage.setItem('locationsCache', JSON.stringify(locationsCache));
+}
+
+// Function to get locations from cache based on input
+export const getLocations = (value) => {
+    const lowercaseValue = value.toLowerCase();
+    return Object.values(locationsCache).filter(location => location.toLowerCase().includes(lowercaseValue));
+};
 
 // Helper function to fetch paginated data and update cache and localStorage
 const fetchPaginatedConditions = async () => {
