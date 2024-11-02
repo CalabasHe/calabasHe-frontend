@@ -21,10 +21,14 @@ export const DoctorsSearch = async ({search_query, specialty, location, page}) =
 }
 export const FacilitySearch = async ({facility, service, location, page}) => {
   // console.log(page);
-  const url = `https://calabashe-api.onrender.com/api/facilities?facility=${facility}&location=${location}&service=${service}&page=${page}`;
+  const url = `https://calabashe-api.onrender.com/api/facilities?search_query=${facility}&location=${location}&service=${service}&page=${page}`;
   try {
     const response = await axios.get(`${url}`)
     // console.log(response.data);
+
+    //cache for searching
+    let facilitiesCache
+
     return response.data
   } catch (error) {
     throw new Error('Error fetching data:', error);
