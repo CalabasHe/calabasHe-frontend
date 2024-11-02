@@ -30,7 +30,7 @@ if (!Object.keys(locationsCache).length) {
 // Function to get locations from cache based on input
 export const getLocations = (value) => {
     const lowercaseValue = value.toLowerCase();
-    return Object.values(locationsCache).filter(location => location.toLowerCase().includes(lowercaseValue));
+    return Object.values(locationsCache).filter(location => location.toLowerCase().startsWith(lowercaseValue));
 };
 
 // Helper function to fetch paginated data and update cache and localStorage

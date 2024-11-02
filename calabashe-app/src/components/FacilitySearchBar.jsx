@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getFacilities, getLocations, getServices } from '../api/getSuggestions';
 import { Suggestions } from './suggestions';
+import { motion } from 'framer-motion';
 
 const FacilitySearchBar = ({ submitFunc }) => {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
     const [facility, setFacility] = useState(initialFacility);
     const [service, setService] = useState(initialService);
     const [locationInput, setLocationInput] = useState(initialLocation);
+    const [activeInput, setActiveInput] = useState(null);
 
     const [suggestions, setSuggestions] = useState({
         allFacilities: [],
@@ -31,8 +33,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
         const value = e.target.value;
         setFacility(value);
         if (value.trim()) {
-            const facilityResults = await getFacilities(value)
-            console.log(facilityResults)
+            const facilityResults = await getFacilities(value);
             setSuggestions(prev => ({ ...prev, allFacilities: facilityResults }));
         } else {
             setSuggestions(prev => ({ ...prev, allFacilities: [] }));
@@ -133,55 +134,84 @@ const FacilitySearchBar = ({ submitFunc }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    useEffect(() => {
+        if (facility && !service) {
+            setActiveInput('facility');
+        } else if (!facility && service) {
+            setActiveInput('service');
+        } else {
+            setActiveInput(null);
+        }
+    }, [facility, service]);
+
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4">
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
-                
-                {/* Facility Input */}
-                <div ref={facilityContainerRef} className="w-full md:w-[45%] flex flex-col relative">
-                    <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                        <Icon icon="icon-park-solid:hospital-three" height={24} style={{ color: "black" }} className='md:mr-1 ml-2 md:ml-8'/>
-                        <input
-                            type="text"
-                            value={facility}
-                            onChange={handleFacilityChange}
-                            placeholder="Facility"
-                            className="w-full px-2 md:pl-1 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
-                            onKeyDown={handleKeyDown}
-                        />
-                        {facility && (
-                            <button onClick={clearFacility} className="absolute md:left-[92%] left-[90%]">
-                                <Icon icon="ic:baseline-close" style={{ color: "gray" }} height={20} />
-                            </button>
-                        )}
-                    </div>
-                    <Suggestions suggests={suggestions.allFacilities} onSelect={onFacilitySelected}  suggestionName={"Facility"}/>
-                </div>
-                
-                {/* Service Input */}
-                <div ref={serviceContainerRef} className="w-full md:w-[28%] flex flex-col relative">
-                    <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                        <Icon icon="ri:service-fill" style={{ color: "black" }} height={24} className='ml-2'/>
-                        <input
-                            type="text"
-                            placeholder="Service"
-                            value={service}
-                            onChange={handleServiceChange}
-                            className="w-full px-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
-                            onKeyDown={handleKeyDown}
-                        />
-                        {service && (
-                            <button onClick={clearService} className="absolute md:left-[92%] left-[90%]">
-                                <Icon icon="ic:baseline-close" style={{ color: "gray" }} height={20} />
-                            </button>
-                        )}
-                    </div>
-                    <Suggestions suggests={suggestions.allServices} onSelect={onServiceSelected}  suggestionName={"services"}/>
+                <div className="w-full md:w-[70%] flex flex-col md:flex-row">
+                    {/* Facility Input */}
+                    <motion.div
+                        animate={{
+                            width: activeInput === 'service' ? '0%' : '100%',
+                            opacity: activeInput === 'service' ? 0 : 1
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className={`w-full md:w-[60%] ${activeInput === 'service' ? 'hidden' : 'block'}`}
+                    >
+                        <div ref={facilityContainerRef} className="w-full flex flex-col relative">
+                            <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
+                                <Icon icon="icon-park-solid:hospital-three" height={24} style={{ color: "black" }} className='md:mr-1 ml-2 md:ml-8'/>
+                                <input
+                                    type="text"
+                                    value={facility}
+                                    onChange={handleFacilityChange}
+                                    placeholder="Facility"
+                                    className="w-full px-2 md:pl-1 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
+                                    onKeyDown={handleKeyDown}
+                                />
+                                {facility && (
+                                    <button onClick={clearFacility} className="absolute md:left-[92%] left-[90%]">
+                                        <Icon icon="ic:baseline-close" style={{ color: "gray" }} height={20} />
+                                    </button>
+                                )}
+                            </div>
+                            <Suggestions suggests={suggestions.allFacilities} onSelect={onFacilitySelected} suggestionName={"Facility"}/>
+                        </div>
+                    </motion.div>
+
+                    {/* Service Input */}
+                    <motion.div
+                        animate={{
+                            width: activeInput === 'facility' ? '0%' : '100%',
+                            opacity: activeInput === 'facility' ? 0 : 1
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className={`w-full md:w-[40%] ${activeInput === 'facility' ? 'hidden' : 'block'}`}
+                    >
+                        <div ref={serviceContainerRef} className="w-full flex flex-col relative">
+                            <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
+                                <Icon icon="ri:service-fill" style={{ color: "black" }} height={24} className='ml-2'/>
+                                <input
+                                    type="text"
+                                    placeholder="Service"
+                                    value={service}
+                                    onChange={handleServiceChange}
+                                    className="w-full px-2 md:border-r-[0.5px] border-gray-300 placeholder-zinc-600 font-[400] outline-none border-0"
+                                    onKeyDown={handleKeyDown}
+                                />
+                                {service && (
+                                    <button onClick={clearService} className="absolute md:left-[92%] left-[90%]">
+                                        <Icon icon="ic:baseline-close" style={{ color: "gray" }} height={20} />
+                                    </button>
+                                )}
+                            </div>
+                            <Suggestions suggests={suggestions.allServices} onSelect={onServiceSelected} suggestionName={"services"}/>
+                        </div>
+                    </motion.div>
                 </div>
 
                 {/* Location Input */}
-                <div ref={locationContainerRef} className="w-full md:w-[22%] flex flex-col relative">
-                    <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
+                <div ref={locationContainerRef} className="flex items-center pb-1 pt-2 w-full md:w-[30%] border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0 relative">
+                    <div className="flex w-full items-center">
                         <Icon icon="gridicons:location" style={{ color: "black" }} height={24} className='ml-2' />
                         <input
                             type="text"
