@@ -2,11 +2,16 @@
 let conditionsCache = JSON.parse(localStorage.getItem('conditionsCache')) || {};
 let specialtiesCache = JSON.parse(localStorage.getItem('specialtiesCache')) || {};
 let locationsCache = JSON.parse(localStorage.getItem('locationsCache')) || {};
-let conditionsNextPage = localStorage.getItem('conditionsNextPage') || 'https://calabashe-api.onrender.com/api/conditions/';
-let specialtiesFetched = Boolean(Object.keys(specialtiesCache).length); // Track if specialties are already loaded
 let facilitiesCache = JSON.parse(localStorage.getItem('facilitiesCache')) || {};
 let servicesCache = JSON.parse(localStorage.getItem('servicesCache')) || {};
+
+let conditionsNextPage = localStorage.getItem('conditionsNextPage') || 'https://calabashe-api.onrender.com/api/conditions/';
 let facilityNextPage = localStorage.getItem('facilityNextPage') || 'https://calabashe-api.onrender.com/api/facilities';
+let servicesNextPage = localStorage.getItem('servicesNextPage') || 'https://calabashe-api.onrender.com/api/services';
+
+//not paginated
+let specialtiesFetched = Boolean(Object.keys(specialtiesCache).length);
+
 
 // Ghana regions for location cache
 const ghanaRegions = [
@@ -49,26 +54,36 @@ const fetchPaginatedConditions = async () => {
     localStorage.setItem('conditionsNextPage', data.next || '');
 };
 
-// Function to fetch facilities and their services
-const fetchFacilities = async () => {
-    if (!facilityNextPage) return;
+
+// Helper function to fetch paginated data and update cache and localStorage
+const fetchPaginatedFacilities = async () => {
+    if (!facilityNextPage) return; // Stop if there’s no next page
 
     const response = await fetch(facilityNextPage);
     const data = await response.json();
 
-    data.results.forEach(facility => {
-        // Store facility name
-        facilitiesCache[facility.name.toLowerCase()] = facility.name;
-        // Store services
-        servicesCache[facility.name.toLowerCase()] = facility.services.map(service => service.name);
-    });
-
+    // Update cache and localStorage with new conditions
+    data.results.forEach(facility => facilitiesCache[facility.name.toLowerCase()] = facility.name);
     localStorage.setItem('facilitiesCache', JSON.stringify(facilitiesCache));
-    localStorage.setItem('servicesCache', JSON.stringify(servicesCache));
-    
-    // Update the next page
+
+    // Update next page in state and localStorage
     facilityNextPage = data.next;
     localStorage.setItem('facilityNextPage', data.next || '');
+};
+
+// Helper function to fetch paginated data and update cache and localStorage
+export const fetchPaginatedServices = async () => {
+    if (!servicesNextPage) return; // Stop if there’s no next page
+
+    const response = await fetch(servicesNextPage);
+    const data = await response.json();
+    
+    // Update cache and localStorage with new conditions
+    data.results.forEach(service => {
+        servicesCache[service.name.toLowerCase()] = service.name
+    });
+    localStorage.setItem('servicesCache', JSON.stringify({}));
+
 };
 
 // Fetch specialties once and cache them
@@ -100,7 +115,7 @@ export const getConditions = async (value) => {
         await fetchPaginatedConditions();
     }
 
-    return Object.values(conditionsCache).filter(condition => condition.toLowerCase().includes(lowercaseValue));
+    return Object.values(conditionsCache).filter(condition => condition.toLowerCase().startsWith(lowercaseValue));
 };
 
 // Function to get specialties, only fetched once
@@ -108,31 +123,28 @@ export const getSpecialties = async (value) => {
     await fetchSpecialties();
     const lowercaseValue = value.toLowerCase();
 
-    return Object.values(specialtiesCache).filter(specialty => specialty.toLowerCase().includes(lowercaseValue));
+    return Object.values(specialtiesCache).filter(specialty => specialty.toLowerCase().startsWith(lowercaseValue));
 };
 
-// Function to get facilities based on input
+// Function to get facilites, with pagination if needed
 export const getFacilities = async (value) => {
-    await fetchFacilities(); // Fetch facilities if not cached
     const lowercaseValue = value.toLowerCase();
 
-    return Object.values(facilitiesCache).filter(facility => 
-        facility.toLowerCase().includes(lowercaseValue)
-    );
+    // Check if cache has items starting with the same letter as input
+    while (
+        facilityNextPage &&
+        !Object.keys(facilitiesCache).some(facility => facility.startsWith(lowercaseValue[0]))
+    ) {
+        await fetchPaginatedFacilities();
+    }
+    return Object.values(facilitiesCache).filter(facility => facility.toLowerCase().startsWith(lowercaseValue));
 };
 
-// Function to get services based on facility name
-export const getServices = async (facilityName, value) => {
-    await fetchFacilities(); // Ensure facilities and services are fetched
-
-    const lowercaseFacilityName = facilityName.toLowerCase();
+export const getServices = async (value) => {
     const lowercaseValue = value.toLowerCase();
 
-    // Get services for the specified facility
-    const services = servicesCache[lowercaseFacilityName] || [];
-
-    // Filter services based on the input value
-    return services.filter(service => 
-        service.toLowerCase().includes(lowercaseValue)
-    );
+    // Check if cache has items starting with the same letter as input
+        await fetchPaginatedServices();
+    // console.log(servicesCache)
+    return Object.values(servicesCache).filter(service => service.toLowerCase().startsWith(lowercaseValue));
 };

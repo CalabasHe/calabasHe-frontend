@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getConditions, getLocations, getSpecialties } from '../api/getSuggestions';
-import { LocationSuggestions, SearchQuery, SpecialtySuggestions } from './suggestions';
+import { Suggestions} from './suggestions';
 import { motion } from 'framer-motion';
 
 const DoctorSearchBar = ({ submitFunc }) => {
@@ -150,7 +150,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                             width: activeInput === 'specialty' ? '0%' : '100%',
                             opacity: activeInput === 'specialty' ? 0 : 1
                         }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.3 }}
                         className={`w-full md:w-[45%]  ${activeInput === 'specialty' ? 'hidden' : 'block'}`}
                     >
                         <div ref={searchContainerRef} className='w-full flex flex-col relative'>
@@ -170,7 +170,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                            <SearchQuery conditionSuggestions={suggestions.allConditions} onSelect={onConditionSelected} />
+                            <Suggestions suggests={suggestions.allConditions} onSelect={onConditionSelected} suggestionName={"Conditions"} />
                         </div>
                     </motion.div>
 
@@ -179,7 +179,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                             width: activeInput === 'search' ? '0%' : '100%',
                             opacity: activeInput === 'search' ? 0 : 1,
                         }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.3 }}
                         className={`w-full md:w-[45%]  ${activeInput === 'search' ? 'hidden' : 'block'}`}
                     >
                         <div ref={specialtyContainerRef} className='w-full flex flex-col relative'>
@@ -199,7 +199,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                            <SpecialtySuggestions specialtySuggests={suggestions.allSpecialties} onSelect={onSpecialtySelected} />
+                            <Suggestions suggests={suggestions.allSpecialties} onSelect={onSpecialtySelected} suggestionName={"Specialties"}/>
                         </div>
                     </motion.div>
                 </div>
@@ -223,7 +223,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                             )
                         )}
                     </div>
-                    <LocationSuggestions locationSuggests={suggestions.allLocations} onSelect={onLocationSelected} />
+                    <Suggestions suggests={suggestions.allLocations} onSelect={onLocationSelected} suggestionName={"Location"} />
                 </div>
 
                 <div className="mt-3 md:mt-0 flex items-center px-3 py-2 w-full md:w-[8%] lg:w-[4%] bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
