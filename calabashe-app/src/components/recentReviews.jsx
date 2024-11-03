@@ -48,7 +48,7 @@ const RecentReviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const scrollAmount = 1;
-  const maxIndex = Math.max(0, Math.ceil(reviews.length / 2) - 2);
+  const maxIndex = Math.max(0, Math.ceil(reviews.length / 2)-3);
 
   const handleScroll = useCallback((direction) => {
     setCurrentIndex(prev => {
@@ -121,7 +121,7 @@ const RecentReviews = () => {
 
   return (
     <FadeInOut>
-      <div className="w-full mt-2 lg:mt-6 lg:mx-4 lg:mr-2 space-y-3 lg:space-y-8 pb-2 lg:pb-6">
+      <div className="w-full mt-2 lg:mt-6 lg:mx-4 lg:mr-2 space-y-3 lg:space-y-8 pb-4 lg:pb-8">
         <div className="w-full lg:px-4 xl:px-12 lg:flex items-center justify-between">
           <h1 className="text-center md:text-2xl text-xl font-bold">Recent Reviews</h1>
           <div className="flex gap-2">
@@ -149,9 +149,9 @@ const RecentReviews = () => {
            
           </div> */}
 
-          <div className="w-full overflow-x-auto snap-x snap-mandatory lg:overflow-x-hidden pt-2 lg:px-4">
+          <div className="w-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory lg:overflow-x-hidden pt-2 lg:px-4">
             <div 
-              className="grid grid-rows-2 auto-cols-[260px] grid-flow-col gap-2 lg:transition-transform lg:duration-300"
+              className="grid grid-rows-2 pb-4 auto-cols-[260px] grid-flow-col gap-2 lg:transition-transform lg:duration-300"
               style={{ 
                 transform: `translateX(-${currentIndex * 268}px)`,
               }}
