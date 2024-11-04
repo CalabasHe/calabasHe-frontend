@@ -23,7 +23,7 @@ export const Suggestions = ({ suggests, onSelect, suggestionName}) => {
                                 duration: 0.2,
                                 delay: index * 0.05
                             }}
-                            className="border border-gray-300 p-3 mb-1 hover:bg-blue-100 cursor-pointer transition duration-150 ease-in-out rounded-md"
+                            className="border-b-2 border-gray-100  px-2 py-2  mb-1 hover:bg-green-200 cursor-pointer transition duration-150 ease-in-out"
                             onMouseDown={() => onSelect(suggestion)}
                         >
                             {suggestion}

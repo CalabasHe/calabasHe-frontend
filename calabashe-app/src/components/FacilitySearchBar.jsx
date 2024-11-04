@@ -12,7 +12,6 @@ const FacilitySearchBar = ({ submitFunc }) => {
     const serviceContainerRef = useRef(null);
     const locationContainerRef = useRef(null);
 
-    // Extract initial values from URL
     const searchParams = new URLSearchParams(location.search);
     const initialFacility = (searchParams.get("facility") || "").trim();
     const initialService = (searchParams.get("service") || "").trim();
