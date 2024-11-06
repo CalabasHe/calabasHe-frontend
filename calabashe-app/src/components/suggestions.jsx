@@ -62,7 +62,7 @@ const SuggestionList = ({ title, suggestions, onSelect }) => {
               duration: 0.2,
               delay: index * 0.05
             }}
-            className="border-b border-gray-100 px-3 py-2 hover:bg-green-100 cursor-pointer transition duration-150 ease-in-out"
+            className="border-b border-gray-200 px-3 py-2 hover:bg-green-300 cursor-pointer transition duration-150 ease-in-out"
             onMouseDown={() => onSelect(suggestion)}
           >
             {suggestion}
