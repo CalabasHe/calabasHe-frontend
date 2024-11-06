@@ -13,6 +13,7 @@ import DocProfile from "./pages/DocProfile";
 import FacilityProfile from "./pages/FacilityProfile";
 import { BannerVisibilityProvider } from "./context/BannerVisibilityContext";
 import SearchResultsPage from "./pages/SearchResultsPage";
+import ForgotPassword from "./pages/ForgotPassword";
 import AccountClaim from "./pages/AccountClaim";
 import SubServices from "./pages/SubServices";
 import ServiceProviders from "./pages/ServiceProviders";
@@ -53,6 +54,7 @@ function App() {
               <Route path="/doctors/:slug" element={<DocProfile />} />
               <Route path="/sign_up" element={<SignUp />} />
               <Route path="/sign_in" element={<SignIn />} />
+              <Route path="/forgot_password" element={<ForgotPassword/>} />
               <Route path="/verification" element={<VerifyUser />} />
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />

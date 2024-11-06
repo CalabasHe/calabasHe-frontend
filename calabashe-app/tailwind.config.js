@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundClip: {
+        text: 'text',
+      },
       fontFamily: {
         'poppins': ["Poppins", 'sans-serif']
       },
@@ -13,6 +16,10 @@ export default {
         'custom-yellow': '#FEE330'
       },
     },
+    variants: {
+      backgroundClip: ['responsive', 'hover', 'focus'],
+    },
+    plugins: [],
   },
   plugins: [
     function({ addUtilities }) {

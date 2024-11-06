@@ -14,7 +14,8 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const [buttonText, setButtonText] = useState("Sign In");
+  const [isHidden, setIsHidden] = useState(true)
+  const [buttonText, setButtonText] = useState('Sign In');
   const [disableForm, setDisableForm] = useState(false);
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const SignIn = () => {
       setPasswordHidden(true);
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,6 +72,7 @@ const SignIn = () => {
               error.non_field_errors[0].includes("Incorrect password")
             ) {
               errorMessage = "Incorrect password. Try again";
+              setIsHidden(false)
             }
           }
           setError(errorMessage);
@@ -194,6 +197,7 @@ const SignIn = () => {
                       </svg>
                     </button>
                   </div>
+                <Link to='/forgot_password' className={`font-medium text-xs md:text-sm text-transparent bg-gradient-to-r from-orange-600 to-yellow-500 bg-clip-text w-fit p-1 rounded-md `}>Forgot password?</Link>
                 </div>
                 {/* {error && <p className="text-red-500 text-sm md:text-base text-semibold text-left">{error}</p>}
                     {success && <p className="text-green-500 text-sm md:text-base text-semibold text-left">{success}</p>} */}
