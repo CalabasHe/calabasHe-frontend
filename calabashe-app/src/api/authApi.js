@@ -102,7 +102,7 @@ export const forgotPassword = async ({ email }) => {
     const response = await axios.post(FORGOT_PASSWORD_URL, {
       email
     });
-    console.log(response.data)
+    // console.log(response.data)
     return response.data;
   }catch (error) {
     if (error.response && error.response.data) {
