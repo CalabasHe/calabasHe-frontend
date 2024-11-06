@@ -35,7 +35,7 @@ const AllDoctorList = () => {
       setFiltering(false);
       setIsLoading(true);
       const docData = await fetchDoctors(page);
-      // console.log(docData)
+      //  console.log(docData)
       setHasPreviousPage(!!docData.previous);
       setHasNextPage(!!docData.next);
       if (Array.isArray(docData.results) && docData.results.length > 0) {
@@ -52,7 +52,7 @@ const AllDoctorList = () => {
           reviewCount: doc.reviews_count,
           verified: doc.is_verified,
           region: doc.region_name,
-          recommendedFor: doc.specialty?.conditions_and_treatments,
+          recommendedFor: doc.conditions_and_treatments,
           experience: doc.years_of_experience
         }));
         setDoctors(doctorDetails);
