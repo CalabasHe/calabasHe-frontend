@@ -1,5 +1,4 @@
-import React from 'react';
-
+// eslint-disable-next-line react/prop-types
 const StarRating = ({ rating, profile = false, search = false }) => {
   // Convert rating to a number and ensure it's within 0-5 range
   const numericRating = Math.min(5, Math.max(0, Number(rating) || 0));
@@ -29,8 +28,8 @@ const StarRating = ({ rating, profile = false, search = false }) => {
         </div>
         <svg
           className={`${
-            profile ? 'w-6 h-6 md:w-10 md:h-10' : 'w-4 h-4 md:w-6 md:h-6 lg:w-4 lg:h-4'
-          } ${search && 'md:w-3 md:h-3 lg:w-4 lg:h-4'} relative z-10`}
+            profile ? 'w-6 h-6 md:w-10 md:h-10' : 'w-6 h-6 lg:w-7 lg:h-7'
+          } ${search && 'md:w-3 md:h-3 lg:size-3.5 xl:w-4 xl:h-4'} relative z-10`}
           fill="white"
           viewBox="0 0 43 37"
           xmlns="http://www.w3.org/2000/svg"

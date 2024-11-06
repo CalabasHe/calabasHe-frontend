@@ -1,23 +1,22 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { verifyCode } from "../api/authApi";
 import Countdown from "../utils/verificationtimer";
 import { useAuth } from "../hooks/useAuth";
 import { toast } from "sonner";
 
 // eslint-disable-next-line react/prop-types
-const VerifyUser = ({ locationState=[] ,email, duration, startTimer }) => {
-  const [verificationCode, setVerificationCode] = useState(new Array(6).fill(""));
+const VerifyUser = ({ locationState = [], email, duration, startTimer }) => {
+  const [verificationCode, setVerificationCode] = useState(
+    new Array(6).fill("")
+  );
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(true);
- 
 
   const navigate = useNavigate();
   const inputRefs = useRef([]);
-  const { login } = useAuth()
-
-  
+  const { login } = useAuth();
 
   useEffect(() => {
     if (inputRefs.current[0]) {
@@ -27,27 +26,27 @@ const VerifyUser = ({ locationState=[] ,email, duration, startTimer }) => {
 
   const handleChange = (e, index) => {
     const { value } = e.target;
-  
+
     // checks if the user is entering a number
     // concatenates the number inputs into one code
-    if (/^\d$/.test(value)) {  
+    if (/^\d$/.test(value)) {
       setVerificationCode((prevCode) => {
         const newCode = [...prevCode];
         newCode[index] = value;
         const updatedCode = newCode.join("");
-  
+
         // Automatically verify if all 6 digits are entered
         if (updatedCode.length === 6) {
           handleVerify(updatedCode);
         }
         return newCode;
       });
-  
+
       // Moves focus to the next input if the box in focus not at the last one
       if (index < inputRefs.current.length - 1) {
         inputRefs.current[index + 1].focus();
       }
-    } 
+    }
     // If the user is clearing the input (backspace)
     else if (value === "") {
       setVerificationCode((prevCode) => {
@@ -55,40 +54,36 @@ const VerifyUser = ({ locationState=[] ,email, duration, startTimer }) => {
         newCode[index] = value;
         return newCode;
       });
-  
+
       // Move focus to the previous input
       if (index > 0) {
         inputRefs.current[index - 1].focus();
       }
     }
   };
-  
 
   const handleVerify = async (code) => {
-    toast.promise(
-      verifyCode({ email, verification_code: code }),
-      {
-        loading: 'Verifying code...',
-        success: (response) => {
-          setSuccess("Verification successful! Your account is now active.");
-          setError("");
-          setVerificationCode(new Array(6).fill(""));
-          setIsModalOpen(false);
-          login(response.access, response.refresh);
-          const destination = locationState?.from || '/';
-          navigate(destination, { state: locationState });
-          return "Verification successful! Your account is now active.";
-        },
-        error : (error) => {
-          if (error.status === 400) {
-            setError("Incorrect verification code! Try again");
-          } else {
-            setError(error?.message || 'Failed to verify code');
-          }
-          return error?.message || "Incorrect verification code! Try again";
-        },
-      }
-    );
+    toast.promise(verifyCode({ email, verification_code: code }), {
+      loading: "Verifying code...",
+      success: (response) => {
+        setSuccess("Verification successful! Your account is now active.");
+        setError("");
+        setVerificationCode(new Array(6).fill(""));
+        setIsModalOpen(false);
+        login(response.access, response.refresh);
+        const destination = locationState?.from || "/";
+        navigate(destination, { state: locationState });
+        return "Verification successful! Your account is now active.";
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          setError("Incorrect verification code! Try again");
+        } else {
+          setError(error?.message || "Failed to verify code");
+        }
+        return error?.message || "Incorrect verification code! Try again";
+      },
+    });
   };
 
   if (!isModalOpen) return null;
@@ -97,8 +92,13 @@ const VerifyUser = ({ locationState=[] ,email, duration, startTimer }) => {
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-lg">
-          <form className="flex flex-col gap-4 items-center" onSubmit={(e) => e.preventDefault()}>
-            <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">Enter verification code</h2>
+          <form
+            className="flex flex-col gap-4 items-center"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">
+              Enter verification code
+            </h2>
             <div className="flex gap-x-3" data-hs-pin-input="">
               {[...Array(6)].map((_, index) => (
                 <input

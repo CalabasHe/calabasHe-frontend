@@ -66,7 +66,7 @@ const AccountClaimForm = () => {
           return 'Claim sent successfully';
         },
         error: (error) => {
-          console.log(error)
+          console.error(error)
           let errorMessage = "Claim failed";
             if (error.form_email && error.form_email[0].includes('form email already exists')) {
               errorMessage = "An initial form with this email already exists";

@@ -6,7 +6,7 @@ import AnimatePage from "../components/AnimatePage";
 
 const SearchResultsPage = () => {
   return (
-    <>
+    <div className="2xl:container mx-auto 2xl:border-x">
       <Header />
       <AnimatePage>
         <SearchResultsPageLG />
@@ -14,7 +14,7 @@ const SearchResultsPage = () => {
       </AnimatePage>
 
       <Footer />
-    </>
+    </div>
   );
 };
 
