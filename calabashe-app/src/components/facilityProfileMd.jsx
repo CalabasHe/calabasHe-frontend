@@ -57,8 +57,8 @@ const FacilityProfileMd = ({ facility = [] }) => {
           </div>
         </section>
 
-        <section className="w-full px-16 lg:px-[100px] pt-12 lg:pt-24 flex gap-2 lg:gap-4">
-          <section className="flex flex-col gap-3 lg:gap-4 grow">
+        <section className="w-full  px-16 lg:px-[100px] pt-12 lg:pt-24 flex gap-2 lg:gap-4">
+          <section className="flex max-w-[57%] flex-col gap-3 lg:gap-4 grow">
             <div className="bg-white border w-full p-2 lg:p-4 pl-4 flex items-center justify-between rounded-lg">
               <div className="flex items-center gap-2 lg:gap-4">
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
