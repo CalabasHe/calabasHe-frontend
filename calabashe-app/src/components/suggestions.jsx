@@ -13,7 +13,7 @@ export const Suggestions = ({ suggests, onSelect, suggestionName }) => {
                     className="absolute top-10 w-full mt-1 shadow-lg z-20 bg-white rounded-md overflow-y-auto scrollbar-thin max-h-[400px]"
                     onMouseDown={(e) => e.preventDefault()}
                 >
-                    <h3 className="text-gray-600 font-semibold m-2">{suggestionName}</h3>
+                    <h3 className="text-gray-600 bold m-2">{suggestionName}</h3>
                     {suggests.map((suggestion, index) => (
                         <motion.div
                             key={index}
@@ -23,7 +23,7 @@ export const Suggestions = ({ suggests, onSelect, suggestionName }) => {
                                 duration: 0.2,
                                 delay: index * 0.05
                             }}
-                            className="border-b-2 border-gray-100  px-2 py-2  mb-1 hover:bg-green-200 cursor-pointer transition duration-150 ease-in-out"
+                            className="border-b-[1.5px] text-gray-900 border-gray-200 px-3 py-2 hover:bg-green-300 cursor-pointer transition duration-150 ease-in-out"
                             onMouseDown={() => onSelect(suggestion)}
                         >
                             {suggestion}
@@ -48,7 +48,7 @@ const SuggestionList = ({ title, suggestions, onSelect }) => {
       onMouseDown={(e) => e.preventDefault()}
     >
       <div className="sticky top-0 bg-white z-10 border-b border-gray-100">
-        <h3 className="text-gray-600 font-semibold p-3">
+        <h3 className="text-gray-600 font-semibold p-3 shadow-sm">
           {title}
         </h3>
       </div>
@@ -62,7 +62,7 @@ const SuggestionList = ({ title, suggestions, onSelect }) => {
               duration: 0.2,
               delay: index * 0.05
             }}
-            className="border-b border-gray-200 px-3 py-2 hover:bg-green-300 cursor-pointer transition duration-150 ease-in-out"
+            className="border-b-[1.5px] text-zinc-800 border-gray-300 px-3 py-2 hover:bg-green-300 cursor-pointer transition duration-150 ease-in-out"
             onMouseDown={() => onSelect(suggestion)}
           >
             {suggestion}
