@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getConditions, getLocations, getSpecialties } from '../api/getSuggestions';
-import { Suggestions} from './suggestions';
+import { getConditions, getDoctorsNames, getLocations, getSpecialties } from '../api/getSuggestions';
+import { Suggestions,QuerySuggestions } from './suggestions';
 import { motion } from 'framer-motion';
 
 const DoctorSearchBar = ({ submitFunc }) => {
@@ -22,6 +22,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const [locationInput, setLocationInput] = useState(initialLocation);
     const [suggestions, setSuggestions] = useState({
         allConditions: [],
+        allDoctorsNames: [],
         allSpecialties: [],
         allLocations: []
     });
@@ -32,9 +33,10 @@ const DoctorSearchBar = ({ submitFunc }) => {
         setSearchQuery(value);
         if (value.trim()) {
             const allConditions = await getConditions(value);
-            setSuggestions(prev => ({ ...prev, allConditions }));
+            const allDoctorsNames = await getDoctorsNames(value);
+            setSuggestions(prev => ({ ...prev, allConditions, allDoctorsNames }));
         } else {
-            setSuggestions(prev => ({ ...prev, allConditions: [] }));
+            setSuggestions(prev => ({ ...prev, allConditions: [], allDoctorsNames: [] }));
         }
     };
 
@@ -89,6 +91,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const onConditionSelected = (suggestion) => {
         setSearchQuery(suggestion);
         setSuggestions(prev => ({ ...prev, allConditions: [] }));
+        setSuggestions(prev => ({ ...prev, allDoctorsNames: [] }));
     };
 
     const onLocationSelected = (suggestions) => {
@@ -99,7 +102,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const clearSearchQuery = (e) => {
         e.preventDefault();
         setSearchQuery('');
-        setSuggestions(prev => ({ ...prev, allConditions: [] }));
+        setSuggestions(prev => ({ ...prev, allConditions: [],allDoctorsNames: [] }));
     };
 
     const clearSpecialty = (e) => {
@@ -118,6 +121,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
         const handleClickOutside = (event) => {
             if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
                 setSuggestions(prev => ({ ...prev, allConditions: [] }));
+                setSuggestions(prev => ({ ...prev, allDoctorsNames: [] }));
             }
             if (specialtyContainerRef.current && !specialtyContainerRef.current.contains(event.target)) {
                 setSuggestions(prev => ({ ...prev, allSpecialties: [] }));
@@ -170,7 +174,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                            <Suggestions suggests={suggestions.allConditions} onSelect={onConditionSelected} suggestionName={"Conditions"} />
+                                <QuerySuggestions docSuggests={suggestions.allDoctorsNames} conditionSuggests={suggestions.allConditions} onSelect={onConditionSelected}/>
                         </div>
                     </motion.div>
 
@@ -199,7 +203,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                            <Suggestions suggests={suggestions.allSpecialties} onSelect={onSpecialtySelected} suggestionName={"Specialties"}/>
+                            <Suggestions suggests={suggestions.allSpecialties} onSelect={onSpecialtySelected} suggestionName={"Specialties"} />
                         </div>
                     </motion.div>
                 </div>

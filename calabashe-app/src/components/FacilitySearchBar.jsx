@@ -12,7 +12,6 @@ const FacilitySearchBar = ({ submitFunc }) => {
     const serviceContainerRef = useRef(null);
     const locationContainerRef = useRef(null);
 
-    // Extract initial values from URL
     const searchParams = new URLSearchParams(location.search);
     const initialFacility = (searchParams.get("facility") || "").trim();
     const initialService = (searchParams.get("service") || "").trim();
@@ -145,9 +144,9 @@ const FacilitySearchBar = ({ submitFunc }) => {
     }, [facility, service]);
 
     return (
-        <div className="max-w-[1100px] mx-auto block w-full pb-4">
-            <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
-                <div className="w-full md:w-[70%] flex flex-col md:flex-row">
+        <div className="max-w-[1100px] mx-auto block w-full pb-3 mt-4 md:mt-0">
+            <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-3 md:flex-row text-black py-4 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
+                <div className="w-full md:w-[70%] flex flex-col md:flex-row gap-2">
                     {/* Facility Input */}
                     <motion.div
                         animate={{
