@@ -4,10 +4,12 @@ let specialtiesCache = JSON.parse(localStorage.getItem('specialtiesCache')) || {
 let locationsCache = JSON.parse(localStorage.getItem('locationsCache')) || {};
 let facilitiesCache = JSON.parse(localStorage.getItem('facilitiesCache')) || {};
 let servicesCache = JSON.parse(localStorage.getItem('servicesCache')) || {};
+let doctorsNamesCache = JSON.parse(localStorage.getItem('doctorsNamesCache')) || {};
 
 let conditionsNextPage = localStorage.getItem('conditionsNextPage') || 'https://calabashe-api.onrender.com/api/conditions/';
 let facilityNextPage = localStorage.getItem('facilityNextPage') || 'https://calabashe-api.onrender.com/api/facilities';
 let servicesNextPage = localStorage.getItem('servicesNextPage') || 'https://calabashe-api.onrender.com/api/services';
+let doctorsNamesNextPage = localStorage.getItem('doctorsNamesNextPage') || 'https://calabashe-api.onrender.com/api/doctors/names';
 
 //not paginated
 let specialtiesFetched = Boolean(Object.keys(specialtiesCache).length);
@@ -52,6 +54,24 @@ const fetchPaginatedConditions = async () => {
 
     conditionsNextPage = data.next;
     localStorage.setItem('conditionsNextPage', data.next || '');
+};
+
+const fetchPaginatedDoctorsNames = async () => {
+    if (!doctorsNamesNextPage) return;
+
+    const response = await fetch(doctorsNamesNextPage);
+    const data = await response.json();
+
+    const fullNames = data.results.map(item => {
+        const fullName = item.first_name + " " + item.last_name;
+        return fullName;
+    });
+    fullNames.forEach(name => doctorsNamesCache[name.toLowerCase()] = name);
+    localStorage.setItem('doctorsNamesCache', JSON.stringify(doctorsNamesCache));
+
+
+    doctorsNamesNextPage = data.next;
+    localStorage.setItem('doctorsNamesNextPage', data.next || '');
 };
 
 
@@ -136,3 +156,10 @@ export const getServices = async (value) => {
     // console.log(servicesCache)
     return Object.values(servicesCache).filter(service => service.toLowerCase().startsWith(lowercaseValue));
 };
+
+export const getDoctorsNames = async (value) => {
+    const lowercaseValue = value.toLowerCase();
+    // console.log(value)
+    await fetchPaginatedDoctorsNames();
+    return Object.values(doctorsNamesCache).filter(name => name.toLowerCase().startsWith(lowercaseValue));
+}
