@@ -236,7 +236,7 @@ const SearchResultsPageLG = () => {
                   facilities.map((result) => (
                     <div
                       key={result.id}
-                      className="w-full space-y-3 max-w-[700px] rounded-lg border border-[#d9d9d9] bg-white cursor-pointer"
+                      className="w-full space-y-3 max-w-[700px] rounded-lg border border-[#d9d9d9] bg-white cursor-pointer hover:shadow-md"
                       onClick={(e) => {
                         if (e.target.tagName.toLowerCase() !== 'button' && e.target.tagName.toLowerCase() !== 'a') {
                           navigate(`/facilities/${result.type}/${result.slug}`);
@@ -391,7 +391,7 @@ const SearchResultsPageLG = () => {
                     {doctors.map((result) => (
                       <div
                         key={result.id}
-                        className="w-full space-y-3 max-w-[700px] rounded-lg mb-4 border border-[#d9d9d9] bg-white"
+                        className="w-full space-y-3 max-w-[700px] rounded-lg mb-4 border border-[#d9d9d9] bg-white hover:shadow-md"
                         onClick={(e) => {
                           //item clicked is child
                           if (e.target.tagName.toLowerCase() !== 'button' && e.target.tagName.toLowerCase() !== 'a') {
