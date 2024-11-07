@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Allow: /facilities
 Allow: /doctors
-Allow: /account_claim
 Allow: /services
 
 Disallow: /review
@@ -10,5 +9,6 @@ Disallow: /sign_up
 Disallow: /sign_in
 Disallow: /verification
 Disallow: /forgot_password
+Disallow: /initial_form
 
 Sitemap: https://calabashe.com/sitemap.xml
