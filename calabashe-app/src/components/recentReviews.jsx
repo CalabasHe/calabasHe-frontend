@@ -11,21 +11,23 @@ const MAX_REVIEWS = 30;
 
 const ReviewCard = ({ review }) => (
   <div className="hover:scale-105 duration-200 cursor-pointer max-h-[200px] h-fit w-[260px] overflow-hidden select-none rounded-lg bg-white border px-3 md:px-4 py-4">
-    <div className="flex gap-4 items-center">
-      <div className="p-1 pb-[1px] rounded-full border-2 border-black">
-        <FaUser className="rounded-[50%] w-6 h-6 md:w-8 md:h-8" />
+    <Link to={review.type === 'doctor' ? '/doctors/' + review.slug : '/facilities/' + review.facilityType + 's/' + review.slug} className="w-full" >
+      <div className="flex gap-4 items-center">
+        <div className="p-1 pb-[1px] rounded-full border-2 border-black">
+          <FaUser className="rounded-[50%] w-6 h-6 md:w-8 md:h-8" />
+        </div>
+        <StarRating rating={review.rating} />
       </div>
-      <StarRating rating={review.rating} />
-    </div>
-    
-    <p className="font-medium text-sm md:text-base mt-2">
-      {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed </span> 
-      <Link to={review.type === 'doctor' ? '/doctors/' + review.slug : '/facilities/' + review.facilityType + 's/' + review.slug} className="hover:underline font-bold">
-        {review.type === "doctor" ? `Dr. ${review.subject.split(' ')[0]}` : review.subject}
-      </Link>
-    </p>
 
-    <p className="text-xs md:text-sm line-clamp-3 mt-2">&quot;{review.description}&quot;</p>
+      <p className="font-medium text-sm md:text-base mt-2">
+        {review.user} <span className="text-slate-500 text-xs md:text-sm font-normal">reviewed </span>
+        <span className="font-bold">
+          {review.type === "doctor" ? `Dr. ${review.subject.split(' ')[0]}` : review.subject}
+        </span>
+      </p>
+
+      <p className="text-xs md:text-sm line-clamp-3 mt-2">&quot;{review.description}&quot;</p>
+    </Link>
   </div>
 );
 
@@ -48,7 +50,7 @@ const RecentReviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const scrollAmount = 1;
-  const maxIndex = Math.max(0, Math.ceil(reviews.length / 2)-3);
+  const maxIndex = Math.max(0, Math.ceil(reviews.length / 2) - 3);
 
   const handleScroll = useCallback((direction) => {
     setCurrentIndex(prev => {
@@ -70,16 +72,16 @@ const RecentReviews = () => {
       const data = await fetchCurrentReviews();
       const reviewDetails = (Array.isArray(data) && data.length > 0)
         ? data.map((review) => ({
-            id: review.id, 
-            rating: review.rating,
-            description: review.description,  
-            subject: review.subject,
-            type: review.review_type,
-            date: formatDate(review.created_at.split('T')[0]),
-            user: review.user,
-            slug: review.subject_slug,
-            facilityType: review?.facility_type_slug
-          }))
+          id: review.id,
+          rating: review.rating,
+          description: review.description,
+          subject: review.subject,
+          type: review.review_type,
+          date: formatDate(review.created_at.split('T')[0]),
+          user: review.user,
+          slug: review.subject_slug,
+          facilityType: review?.facility_type_slug
+        }))
         : [];
       return reviewDetails;
     } catch (err) {
@@ -125,13 +127,13 @@ const RecentReviews = () => {
         <div className="w-full lg:px-4 xl:px-12 lg:flex items-center justify-between">
           <h1 className="text-center md:text-2xl text-xl font-bold">Recent Reviews</h1>
           <div className="flex gap-2">
-              <NavigationButton 
-                direction="left" 
-                onClick={() => handleScroll('left')}
-                disabled={currentIndex === 0}
-              /> 
-              <NavigationButton 
-              direction="right" 
+            <NavigationButton
+              direction="left"
+              onClick={() => handleScroll('left')}
+              disabled={currentIndex === 0}
+            />
+            <NavigationButton
+              direction="right"
               onClick={() => handleScroll('right')}
               disabled={currentIndex >= maxIndex}
             />
@@ -150,9 +152,9 @@ const RecentReviews = () => {
           </div> */}
 
           <div className="w-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory lg:overflow-x-hidden pt-2 lg:px-4">
-            <div 
+            <div
               className="grid grid-rows-2 pb-4 auto-cols-[260px] grid-flow-col gap-2 lg:transition-transform lg:duration-300"
-              style={{ 
+              style={{
                 transform: `translateX(-${currentIndex * 268}px)`,
               }}
             >
