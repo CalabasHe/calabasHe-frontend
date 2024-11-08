@@ -17,7 +17,7 @@ const FacilityCardSm = ({ facility }) => {
         <div className='min-w-[120px] w-[33%] md:w-[30%] h-[140px] flex items-center justify-center sm:h-[180px] md:h-[190px] bg-gray-300/70 rounded-sm'>
           {
             facility.logo ?
-            <img className='object-cover w-full h-full rounded-[inherit]' src={facility.logo} alt={`logo of ${facility.name}`}/>
+            <img className='object-cover shadow-md w-full h-full rounded-[inherit]' src={facility.logo} alt={`logo of ${facility.name}`}/>
             :
             <img className='size-16 sm:size-24' src={HospitalIcon} alt='default facility icon' />
           }

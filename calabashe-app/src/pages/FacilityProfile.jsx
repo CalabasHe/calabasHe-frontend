@@ -35,6 +35,7 @@ const FacilityProfile = () => {
           services: data.services,
           type: data.facility_type_name,
           image: data.image_thumbnail,
+          logo: data.logo,
           slug: data.slug,
           description: data.description,
           ratingPercentages: data.rating_percentages,
