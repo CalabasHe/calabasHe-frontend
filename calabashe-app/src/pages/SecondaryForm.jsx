@@ -5,6 +5,19 @@ const SecondaryForms = () => {
   const [currentYear] = useState(new Date().getFullYear());
   const [selectedYear, setSelectedYear] = useState("");
   const [hasSpecialty, setHasSpecialty] = useState('No')
+
+  const[formData, setFormData] = useState({
+    firstName : "",
+    lastName: "",
+    userHasSpecialty : hasSpecialty,
+    certificationYear: null,
+    digitalConsultation: "",
+    hasAward: "",
+    internationalExperience: "",
+    inPersonConsultation: "",
+    resarchPublicationExperience: "",
+    medicalAssociationAffiliation: "",
+  })
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -31,16 +44,20 @@ const SecondaryForms = () => {
   return (
     <div className="2xl:container mx-auto">
       <Header />
-      <main className="mt-[10vh] lg:mt-[15vh] w-full  px-2 md:px-8 lg:px-16 space-y-8">
+      <main className="my-[10vh] lg:my-[15vh] w-full  px-2 md:px-8 lg:px-16 space-y-8">
         <h2 className="font-semibold lg:text-lg underline select-none">
           Fill the following forms to get your profile set up <span className="hidden md:flex"><br/></span> on Calabashe
         </h2>
 
         <form className="flex flex-col w-full md:w-[80vw] md:max-w-[800px] gap-6 lg:gap-5 select-none">
 
+          <section className="">
+
+          </section>
+
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              1. When did you begin practicing?
+              3. When did you begin practicing?
             </label>
             <div className="relative flex justify-between" ref={dropdownRef}>
               <div
@@ -73,15 +90,15 @@ const SecondaryForms = () => {
 
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label htmlFor="chooseSpecialty" className="text-sm md:text-base cursor-default">
-              2.  Do you have any specialties or sub-specialties?
+              4.  Do you have any specialties or sub-specialties?
             </label>
-            <div className="lg:flex lg:gap-3 space-y-3 ">
-              <div id="chooseSpecialty" className="w-full text-xs border flex px-8 divide-x py-2.5 gap-5 items-center border-black">
+            <div className="md:flex md:gap-3  max-md:space-y-3">
+              <div id="chooseSpecialty" className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
                 <span className="flex items-center gap-2">
                   <input type="radio" className="w-2" name="hasSpecialty" id="userHasSpecialty" onClick={(e) => setHasSpecialty(e.target.value)} value={'Yes'} />
                   <label htmlFor="userHasSpecialty">Yes</label>
                 </span>
-                <span className="flex items-center gap-2 pl-5">
+                <span className="flex items-center gap-2 pl-5 md:pl-5">
                   <input type="radio" className="w-2" name="hasSpecialty" id="userHasNoSpecialty" onClick={(e) => setHasSpecialty(e.target.value)} value={'No'} />
                   <label htmlFor="userHasNoSpecialty">No</label>
                 </span>
@@ -95,7 +112,7 @@ const SecondaryForms = () => {
           </section>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              3. Select treatments and procedures you provide.
+              5. Select treatments and procedures you provide.
             </label>
             <div className="">
               
@@ -104,7 +121,7 @@ const SecondaryForms = () => {
           <div className="flex flex-col lg:flex-row lg:gap-3 gap-4 ">
             <section className="flex flex-col gap-1 max-h-[300px]">
               <label className="text-sm md:text-base cursor-default">
-                4. Where do you currently practice?
+                6. Where do you currently practice?
               </label>
               <div className="">
                 
@@ -112,7 +129,7 @@ const SecondaryForms = () => {
             </section>
             <section className="flex flex-col gap-1 max-h-[300px]">
               <label className="text-sm md:text-base cursor-default">
-              5. What is the location of your current clinic?
+              7. What is the location of your current clinic?
               </label>
               <div className="">
                 
@@ -122,7 +139,25 @@ const SecondaryForms = () => {
           </div>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              6. Would you be open to consulting digitally on Calabashe?
+              8. Would you be open to consulting digitally on Calabashe?
+            </label>
+            <div id="chooseSpecialty" className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
+            <span className="flex items-center gap-2">
+                  <input type="radio" className="w-2" name="digitalConsultation" id="consultationYes" onClick={(e) =>  setFormData((prev) => ({...prev, digitalConsultation: e.target.value}))} value={'Yes'} />
+                  <label htmlFor="consultationYes">Yes</label>
+                </span>
+                <span className="flex items-center gap-2 pl-5 md:pl-5">
+                  <input type="radio" className="w-2" name="digitalConsultation" id="consultationNo" onClick={(e) =>  setFormData((prev) => ({...prev, digitalConsultation: e.target.value}))} value={'No'} />
+                  <label htmlFor="consultationNo">No</label>
+                </span>
+              </div>
+            <div className="">
+              
+            </div>
+          </section>
+          <section className="flex flex-col gap-1 max-h-[300px]">
+            <label className="text-sm md:text-base cursor-default">
+              9. Upload a professional photo for your Calabashe profile?
             </label>
             <div className="">
               
@@ -130,7 +165,34 @@ const SecondaryForms = () => {
           </section>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              7. Upload a professional photo for your Calabashe profile?
+              10. What languages do you speak?
+            </label>
+            
+            <div className="">
+              
+            </div>
+          </section>
+          <section className="flex flex-col gap-1 max-h-[300px]">
+            <label className="text-sm md:text-base cursor-default">
+              11. Are you affiliated with any professional medical associations?
+            </label>
+            <div id="chooseSpecialty" className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
+                <span className="flex items-center gap-2">
+                  <input type="radio" className="w-2" name="medicalAffiliation" id="userHasMedicalAffiliation" onClick={(e) => setFormData((prev) => ({...prev, medicalAssociationAffiliation: e.target.value}))} value={'Yes'} />
+                  <label htmlFor="userHasMedicalAffiliation">Yes</label>
+                </span>
+                <span className="flex items-center gap-2 pl-5 md:pl-5">
+                  <input type="radio" className="w-2" name="medicalAffiliation" id="userHasNoMedicalAffiliation" onClick={(e) =>  setFormData((prev) => ({...prev, medicalAssociationAffiliation: e.target.value}))} value={'No'} />
+                  <label htmlFor="userHasNoMedicalAffiliation">No</label>
+                </span>
+              </div>
+            <div className="">
+              
+            </div>
+          </section>
+          <section className="flex flex-col gap-1 max-h-[300px]">
+            <label className="text-sm md:text-base cursor-default">
+              12. What is your highest level of medical education?
             </label>
             <div className="">
               
@@ -138,7 +200,25 @@ const SecondaryForms = () => {
           </section>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              8. What languages do you speak?
+              13. Have you received any special awards or recognitions in your field?
+            </label>
+            <div id="chooseSpecialty" className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
+                <span className="flex items-center gap-2">
+                  <input type="radio" className="w-2" name="hasAward" id="userHasAward" onClick={(e) =>  setFormData((prev) => ({...prev, hasAward: e.target.value}))} value={'Yes'} />
+                  <label htmlFor="userHasAward">Yes</label>
+                </span>
+                <span className="flex items-center gap-2 pl-5 md:pl-5">
+                  <input type="radio" className="w-2" name="hasAward" id="userHasNoAward" onClick={(e) =>  setFormData((prev) => ({...prev, hasAward: e.target.value}))} value={'No'} />
+                  <label htmlFor="userHasNoAward">No</label>
+                </span>
+              </div>
+            <div className="">
+              
+            </div>
+          </section>
+          <section className="flex flex-col gap-1 max-h-[300px]">
+            <label className="text-sm md:text-base cursor-default">
+              14. What is your consultation fee range?
             </label>
             <div className="">
               
@@ -146,7 +226,7 @@ const SecondaryForms = () => {
           </section>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              9. Are you affiliated with any professional medical associations?
+              15. Do you offer any special services or programs (e.g., wellness programs, preventive care)?
             </label>
             <div className="">
               
@@ -154,7 +234,25 @@ const SecondaryForms = () => {
           </section>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              10. What is your highest level of medical education?
+              16. Do you have experience with international patients or expatriates?
+            </label>
+            <div id="chooseSpecialty" className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
+                <span className="flex items-center gap-2">
+                  <input type="radio" className="w-2" name="internationalExperience" id="userHasInternationalExperience" onClick={(e) =>  setFormData((prev) => ({...prev, internationalExperience: e.target.value}))} value={'Yes'} />
+                  <label htmlFor="userHasInternationalExperience">Yes</label>
+                </span>
+                <span className="flex items-center gap-2 pl-5 md:pl-5">
+                  <input type="radio" className="w-2" name="internationalExperience" id="userHasNoInternationalExperience" onClick={(e) =>  setFormData((prev) => ({...prev, internationalExperience: e.target.value}))} value={'No'} />
+                  <label htmlFor="userHasNoInternationalExperience">No</label>
+                </span>
+              </div>
+            <div className="">
+              
+            </div>
+          </section>
+          <section className="flex flex-col gap-1 max-h-[300px]">
+            <label className="text-sm md:text-base cursor-default">
+              17. What are your typical working hours and available days?
             </label>
             <div className="">
               
@@ -162,56 +260,36 @@ const SecondaryForms = () => {
           </section>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              11. Have you received any special awards or recognitions in your field?
+              18. Are you able to consult in-person outside of your clinic (e.g., home visits)??
             </label>
+            <div id="chooseSpecialty" className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
+                <span className="flex items-center gap-2">
+                  <input type="radio" className="w-2" name="inPersonConsultation" id="inPersonConsultation" onClick={(e) =>  setFormData((prev) => ({...prev, inPersonConsultation: e.target.value}))} value={'Yes'} />
+                  <label htmlFor="inPersonConsultation">Yes</label>
+                </span>
+                <span className="flex items-center gap-2 pl-5 md:pl-5">
+                  <input type="radio" className="w-2" name="inPersonConsultation" id="noInPersonConsultation" onClick={(e) =>  setFormData((prev) => ({...prev, inPersonConsultation: e.target.value}))} value={'No'} />
+                  <label htmlFor="noInPersonConsultation">No</label>
+                </span>
+              </div>
             <div className="">
               
             </div>
           </section>
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              12. What is your consultation fee range?
+              19. Do you have any publications or research experience?
             </label>
-            <div className="">
-              
-            </div>
-          </section>
-          <section className="flex flex-col gap-1 max-h-[300px]">
-            <label className="text-sm md:text-base cursor-default">
-              13. Do you offer any special services or programs (e.g., wellness programs, preventive care)?
-            </label>
-            <div className="">
-              
-            </div>
-          </section>
-          <section className="flex flex-col gap-1 max-h-[300px]">
-            <label className="text-sm md:text-base cursor-default">
-              14. Do you have experience with international patients or expatriates?
-            </label>
-            <div className="">
-              
-            </div>
-          </section>
-          <section className="flex flex-col gap-1 max-h-[300px]">
-            <label className="text-sm md:text-base cursor-default">
-              15. What are your typical working hours and available days?
-            </label>
-            <div className="">
-              
-            </div>
-          </section>
-          <section className="flex flex-col gap-1 max-h-[300px]">
-            <label className="text-sm md:text-base cursor-default">
-              16. Are you able to consult in-person outside of your clinic (e.g., home visits)??
-            </label>
-            <div className="">
-              
-            </div>
-          </section>
-          <section className="flex flex-col gap-1 max-h-[300px]">
-            <label className="text-sm md:text-base cursor-default">
-              17. Do you have any publications or research experience?
-            </label>
+            <div id="chooseSpecialty" className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
+                <span className="flex items-center gap-2">
+                  <input type="radio" className="w-2" name="hasPublication" id="userHasPublication" onClick={(e) =>  setFormData((prev) => ({...prev, resarchPublicationExperience: e.target.value}))} value={'Yes'} />
+                  <label htmlFor="userHasPublication">Yes</label>
+                </span>
+                <span className="flex items-center gap-2 pl-5 md:pl-5">
+                  <input type="radio" className="w-2" name="hasPublication" id="userHasNoPublication" onClick={(e) =>  setFormData((prev) => ({...prev, medicalAssociationAffiliation: e.target.value}))} value={'No'} />
+                  <label htmlFor="userHasNoPublication">No</label>
+                </span>
+              </div>
             <div className="">
               
             </div>
