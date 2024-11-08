@@ -61,15 +61,13 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
     reviews: result.reviews,
     reviewCount: result.total_reviews,
   });
-  
 
-
-  const performSearch = useCallback(async (searchParam) => {
+  const performSearch = async (searchParam) => {
     if (!searchParam) return [];
     try {
       const data = await SearchData(searchParam);
       if (Array.isArray(data) && data.length > 0) {
-        const resultDetails = data.map((result) =>mapResultDetails(result));
+        const resultDetails = data.map((result) => mapResultDetails(result));
         return resultDetails;
       } else {
         setError("No results found");
@@ -80,7 +78,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
       setError("An error occurred while searching");
       return [];
     }
-  }, []);
+  };
 
   const resetSearchState = () => {
     setSearchParam("");
@@ -210,8 +208,9 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
                       <div className="flex gap-1 items-end ">
                         <StarRating rating={result.rating} />
                         <p className="text-xs font-semibold">
-                          {result.rating > 0 ? result.rating.toFixed(1) : ""}
+                          {typeof result.rating === "number" && result.rating > 0 ? result.rating.toFixed(1) : ""}
                         </p>
+
                       </div>
                     ) : ''
                   }
