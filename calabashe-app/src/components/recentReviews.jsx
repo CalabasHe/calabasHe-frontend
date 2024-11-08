@@ -149,7 +149,7 @@ const RecentReviews = () => {
            
           </div> */}
 
-          <div className="w-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory lg:overflow-x-hidden pt-2 lg:px-4">
+          <div className="w-full overflow-x-auto overflow-y-hidden scrollbar-thin snap-x snap-mandatory lg:overflow-x-hidden pt-2 lg:px-4">
             <div 
               className="grid grid-rows-2 pb-4 auto-cols-[260px] grid-flow-col gap-2 lg:transition-transform lg:duration-300"
               style={{ 
