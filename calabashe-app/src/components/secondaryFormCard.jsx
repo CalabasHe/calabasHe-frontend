@@ -56,8 +56,6 @@ const SecondaryFormCard = () => {
         getSpecialties(),
         getServices()
       ]);
-
-      console.log(serviceData)
   
       const treatmentNames = treatmentsData.map((treatment) => treatment.name);
       const specialtyNames = specialtyData.map((specialty) => specialty.name);
