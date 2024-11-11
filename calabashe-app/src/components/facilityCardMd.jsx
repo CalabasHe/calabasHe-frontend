@@ -20,12 +20,12 @@ const FacilityCardMd = ({ facility }) => {
       <div className='min-w-28 lg:min-w-36 size-28 lg:size-36 flex items-center justify-center bg-gray-300 rounded-full'>
           {
             facility.logo ?
-            <img className='object-cover w-full h-full rounded-[inherit]' src={facility.logo} alt={`logo of ${facility.lastName}`}/>
+            <img className='object-cover shadow-md w-full h-full rounded-[inherit]' src={facility.logo} alt={`logo of ${facility.lastName}`}/>
             :
             <img className='md:size-14 lg:size-20' src={HospitalIcon} alt='default facility icon' />
           }
         </div>
-        <div className='flex flex-col gap-2 truncate'>
+        <div className='flex flex-col pt-1 gap-2 truncate'>
           <div className='space-y-0.5'>
             <p className='font-bold text-xl lg:text-2xl overflow-hidden text-ellipsis whitespace-nowrap'>
               {facility.name}

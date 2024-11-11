@@ -36,8 +36,8 @@ const FacilityProfileSm = ({ facility = [] }) => {
           <section className="w-full px-2 pt-12 pb-6 flex gap-6  items-center bg-white border-b">
             <div className="size-24 rounded-full bg-gray-300/40 flex items-center justify-center">
             {
-            facility.image ?
-            <img className='object-cover w-full h-full rounded-[inherit]' src={facility.image} alt={`image of ${facility.name}`}/>
+            facility.logo ?
+            <img className='object-cover shadow-md w-full h-full rounded-[inherit]' src={facility.logo} alt={`image of ${facility.name}`}/>
             :
             <img className='size-12' src={HospitalIcon} alt='default facility icon' />
           }

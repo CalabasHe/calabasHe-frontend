@@ -171,7 +171,7 @@ const BannerSearch = () => {
       className="relative z-30"
       ref={bannerRef}
     >
-      <div
+      <form onSubmit={handleSearchClick}
         className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white max-w-[100%] ${
           showResults
             ? "rounded-b-none border-b border-gray-200 rounded-t-3xl"
@@ -197,7 +197,7 @@ const BannerSearch = () => {
         >
           Search
         </button>
-      </div>
+      </form>
 
       {showResults && (
         <div

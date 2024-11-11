@@ -30,8 +30,8 @@ const FacilityProfileMd = ({ facility = [] }) => {
         <section className="px-16 lg:px-[100px] pt-12 pb-6 flex gap-6 lg:gap-8 items-center bg-white">
         <div className="relative size-36 lg:size-44 rounded-full mr-2 xl:mr-0 bg-gray-300/40 flex items-center justify-center">
           {
-            facility.image ?
-            <img className='object-cover w-full h-full rounded-[inherit]' src={facility.image} alt={`image of ${facility.name}`}/>
+            facility.logo ?
+            <img className='object-cover shadow-md w-full h-full rounded-[inherit]' src={facility.logo} alt={`image of ${facility.name}`}/>
             :
             <img className='size-16 lg:size-24' src={HospitalIcon} alt='default facility icon' />
           }

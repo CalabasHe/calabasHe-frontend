@@ -1,4 +1,4 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import ExploreCategories from "../components/Categories";
 import StarRating from "./ratingStars";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ const SearchResultsPageLG = () => {
     searchParam: "",
     results: [],
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (results) {
@@ -113,41 +114,37 @@ const SearchResultsPageLG = () => {
               <p className="font-semibold">Select Rating:</p>
               <div className="flex  justify-center mt-4">
                 <button
-                  className={`border-[#000000] min-w-fit px-4 py-2 text-[#205CD4] font-semibold rounded-tl-lg rounded-bl-lg ${
-                    selectedRating === "Any"
-                      ? "bg-[#d7e3fa] border-[#000000] border-t-2 border-l-2 border-b-2"
-                      : "border-t-2 border-l-2 border-b-2"
-                  }`}
+                  className={`border-[#000000] min-w-fit px-4 py-2 text-[#205CD4] font-semibold rounded-tl-lg rounded-bl-lg ${selectedRating === "Any"
+                    ? "bg-[#d7e3fa] border-[#000000] border-t-2 border-l-2 border-b-2"
+                    : "border-t-2 border-l-2 border-b-2"
+                    }`}
                   onClick={() => setSelectedRating("Any")}
                 >
                   Any
                 </button>
                 <button
-                  className={`border-[#000000] font-semibold min-w-fit text-[#205CD4] px-4 py-2 ${
-                    selectedRating === "3.0"
-                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
-                      : "border-t-2 border-b-2 border-l-2"
-                  }`}
+                  className={`border-[#000000] font-semibold min-w-fit text-[#205CD4] px-4 py-2 ${selectedRating === "3.0"
+                    ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
+                    : "border-t-2 border-b-2 border-l-2"
+                    }`}
                   onClick={() => setSelectedRating("3.0")}
                 >
                   3.0 ★
                 </button>
                 <button
-                  className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-[#205CD4] ${
-                    selectedRating === "4.0"
-                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
-                      : "border-t-2 border-b-2 border-l-2"
-                  }`}
+                  className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-[#205CD4] ${selectedRating === "4.0"
+                    ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
+                    : "border-t-2 border-b-2 border-l-2"
+                    }`}
                   onClick={() => setSelectedRating("4.0")}
                 >
                   4.0 ★
                 </button>
                 <button
-                  className={`border-[#000000] min-w-fit font-semibold text-[#205CD4] px-4 py-2 rounded-tr-lg rounded-br-lg ${
-                    selectedRating === "4.5"
-                      ? "bg-[#d7e3fa] border-t-2 border-r-2 border-b-2 border-l-2 rounded-tr-lg rounded-br-lg"
-                      : "border-t-2 border-r-2 border-b-2 border-l-2"
-                  }`}
+                  className={`border-[#000000] min-w-fit font-semibold text-[#205CD4] px-4 py-2 rounded-tr-lg rounded-br-lg ${selectedRating === "4.5"
+                    ? "bg-[#d7e3fa] border-t-2 border-r-2 border-b-2 border-l-2 rounded-tr-lg rounded-br-lg"
+                    : "border-t-2 border-r-2 border-b-2 border-l-2"
+                    }`}
                   onClick={() => setSelectedRating("4.5")}
                 >
                   4.5 ★
@@ -180,41 +177,37 @@ const SearchResultsPageLG = () => {
               <p className="font-semibold">Rating</p>
               <div className="flex mt-4 ">
                 <button
-                  className={`border-[#000000] min-w-fit px-4 py-2 text-[#205CD4] font-semibold rounded-tl-lg rounded-bl-lg  ${
-                    selectedRating === "Any"
-                      ? "bg-[#d7e3fa] border-[#000000] border-t-2 border-l-2 border-b-2"
-                      : "border-t-2 border-l-2 border-b-2 rounded-tl-lg rounded-bl-lg"
-                  }`}
+                  className={`border-[#000000] min-w-fit px-4 py-2 text-[#205CD4] font-semibold rounded-tl-lg rounded-bl-lg  ${selectedRating === "Any"
+                    ? "bg-[#d7e3fa] border-[#000000] border-t-2 border-l-2 border-b-2"
+                    : "border-t-2 border-l-2 border-b-2 rounded-tl-lg rounded-bl-lg"
+                    }`}
                   onClick={() => setSelectedRating("Any")}
                 >
                   Any
                 </button>
                 <button
-                  className={`border-[#000000] font-semibold min-w-fit text-black px-4 py-2 ${
-                    selectedRating === "3.0"
-                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
-                      : "border-t-2 border-b-2 border-l-2"
-                  }`}
+                  className={`border-[#000000] font-semibold min-w-fit text-black px-4 py-2 ${selectedRating === "3.0"
+                    ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2"
+                    : "border-t-2 border-b-2 border-l-2"
+                    }`}
                   onClick={() => setSelectedRating("3.0")}
                 >
                   3.0 ★
                 </button>
                 <button
-                  className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-black  ${
-                    selectedRating === "4.0"
-                      ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2 "
-                      : "border-t-2 border-b-2 border-l-2"
-                  }`}
+                  className={`border-[#000000] min-w-fit px-4 py-2 font-semibold text-black  ${selectedRating === "4.0"
+                    ? "bg-[#d7e3fa] border-t-2 border-b-2 border-l-2 "
+                    : "border-t-2 border-b-2 border-l-2"
+                    }`}
                   onClick={() => setSelectedRating("4.0")}
                 >
                   4.0 ★
                 </button>
                 <button
-                  className={`border-[#000000] min-w-fit font-semibold text-black px-4 py-2 rounded-tr-lg rounded-br-lg ${
-                    selectedRating === "4.5"
-                      ? "bg-[#d7e3fa] border-t-2 border-r-2 border-b-2 border-l-2  rounded-tr-lg rounded-br-lg"
-                      : "border-t-2 border-r-2 border-b-2 border-l-2"
-                  }`}
+                  className={`border-[#000000] min-w-fit font-semibold text-black px-4 py-2 rounded-tr-lg rounded-br-lg ${selectedRating === "4.5"
+                    ? "bg-[#d7e3fa] border-t-2 border-r-2 border-b-2 border-l-2  rounded-tr-lg rounded-br-lg"
+                    : "border-t-2 border-r-2 border-b-2 border-l-2"
+                    }`}
                   onClick={() => setSelectedRating("4.5")}
                 >
                   4.5 ★
@@ -243,27 +236,31 @@ const SearchResultsPageLG = () => {
                   facilities.map((result) => (
                     <div
                       key={result.id}
-                      className="w-full space-y-3 max-w-[700px] rounded-lg border border-[#d9d9d9] bg-white"
+                      className="w-full space-y-3 max-w-[700px] rounded-lg border border-[#d9d9d9] bg-white cursor-pointer hover:shadow-md"
+                      onClick={(e) => {
+                        if (e.target.tagName.toLowerCase() !== 'button' && e.target.tagName.toLowerCase() !== 'a') {
+                          navigate(`/facilities/${result.type}/${result.slug}`);
+                        }
+                      }}
                     >
                       <div className="w-full h-auto bg-white rounded-[8px] p-4 flex flex-col lg:flex-row gap-4 items-start">
                         {/* Image placeholder for doctor/facility */}
                         <div className="w-[89px] h-[94px] bg-[#d9d9d9] rounded-[8px]" />
 
                         {/* Name and link */}
-                        <div className="flex-1">
-                          <Link
-                            to={`/facilities/${result.type}/${result.slug}`}
+                        <Link to={`/facilities/${result.type}/${result.slug}`} className="flex-1">
+                          <div
                           >
                             <h2 className="font-poppins text-lg  md:text-base text-[16px] font-semibold leading-[24px]">
                               {result.name}
                             </h2>
-                          </Link>
+                          </div>
                           <p className="text-xs md:text-sm font-light">
                             {result.type}
                           </p>
 
                           {/* Rating */}
-                          <div className="flex gap-[4px] mt-2">
+                          <div className="flex gap-[4px] mt-2 cursor-default w-max">
                             <StarRating rating={result.rating} />
                           </div>
 
@@ -272,12 +269,15 @@ const SearchResultsPageLG = () => {
                             {result.reviewCount || "No"}{" "}
                             {result.reviewCount === 1 ? "review" : "reviews"}
                           </span>
-                        </div>
+                        </Link>
 
                         {/* Latest Reviews Link */}
                         <div className="">
                           <button
-                            onClick={() => toggleAccordion(result.id)}
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent click event from bubbling up
+                              toggleAccordion(result.id);
+                            }}
                             className="text-[#205cd4] text-lg focus:outline-none"
                           >
                             {openAccordion === result.id
@@ -391,9 +391,15 @@ const SearchResultsPageLG = () => {
                     {doctors.map((result) => (
                       <div
                         key={result.id}
-                        className="w-full space-y-3 max-w-[700px] rounded-lg mb-4 border border-[#d9d9d9] bg-white"
+                        className="w-full space-y-3 max-w-[700px] rounded-lg mb-4 border border-[#d9d9d9] bg-white hover:shadow-md"
+                        onClick={(e) => {
+                          //item clicked is child
+                          if (e.target.tagName.toLowerCase() !== 'button' && e.target.tagName.toLowerCase() !== 'a') {
+                            navigate(`/doctors/${result.slug}`);
+                          }
+                        }}
                       >
-                        <div className="w-full h-auto bg-white rounded-[8px] p-4 flex flex-col lg:flex-row gap-4 items-start">
+                        <div className="w-full h-auto bg-white rounded-[8px] p-4 flex flex-col lg:flex-row gap-4 items-start cursor-pointer">
                           {/* Image placeholder for doctor/facility */}
                           <svg
                             className="size-24 fill-gray-700"
@@ -403,12 +409,12 @@ const SearchResultsPageLG = () => {
                             <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
                           </svg>
                           {/* Name and link */}
-                          <div className="flex-1">
-                            <Link to={`/doctors/${result.slug}`}>
+                          <Link className="flex-1" to={`/doctors/${result.slug}`}>
+                            <div>
                               <h2 className="font-poppins text-lg  md:text-base font-semibold leading-[24px]">
                                 Dr. {result.firstName} {result.lastName}
                               </h2>
-                            </Link>
+                            </div>
                             <p className="text-xs md:text-sm font-light">
                               {result.specialty}
                             </p>
@@ -423,7 +429,7 @@ const SearchResultsPageLG = () => {
                               {result.reviewCount || "No"}{" "}
                               {result.reviewCount === 1 ? "review" : "reviews"}
                             </span>
-                          </div>
+                          </Link>
 
                           {/* Latest Reviews Link */}
                           <div className="">
