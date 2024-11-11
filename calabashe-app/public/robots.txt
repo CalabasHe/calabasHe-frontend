@@ -5,10 +5,11 @@ Allow: /doctors
 Allow: /services
 
 Disallow: /review
+Disallow: /initial_form
 Disallow: /sign_up
 Disallow: /sign_in
 Disallow: /verification
 Disallow: /forgot_password
-Disallow: /initial_form
+Disallow: /secondary_form
 
 Sitemap: https://calabashe.com/sitemap.xml
