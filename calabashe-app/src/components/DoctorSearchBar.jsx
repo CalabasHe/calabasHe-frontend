@@ -12,15 +12,9 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const specialtyContainerRef = useRef(null);
     const locationInputRef = useRef(null);
 
-    const searchParams = new URLSearchParams(location.search);
-    const initialSearchQuery = (searchParams.get("search_query") || "").trim();
-    const initialSpecialty = (searchParams.get("specialty") || "").trim();
-    const initialLocation = (searchParams.get("location") || "").trim();
-
-
-    const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
-    const [specialty, setSpecialty] = useState(initialSpecialty);
-    const [locationInput, setLocationInput] = useState(initialLocation);
+    const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("search_query") || "");
+    const [specialty, setSpecialty] = useState(new URLSearchParams(location.search).get("specialty") || "");
+    const [locationInput, setLocationInput] = useState(new URLSearchParams(location.search).get("location") || "");
     const [suggestions, setSuggestions] = useState({
         allConditions: [],
         allDoctorsNames: [],
@@ -28,6 +22,23 @@ const DoctorSearchBar = ({ submitFunc }) => {
         allLocations: []
     });
     const [activeInput, setActiveInput] = useState(null);
+
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        setSearchQuery(searchParams.get("search_query") || "");
+        setSpecialty(searchParams.get("specialty") || "");
+        setLocationInput(searchParams.get("location") || "");
+      }, [location.search]);
+
+    const updateUrl = () => {
+        const searchParams = new URLSearchParams();
+        if (searchQuery) searchParams.set("search_query", searchQuery);
+        if (specialty) searchParams.set("specialty", specialty);
+        if (locationInput) searchParams.set("location", locationInput);
+    
+        navigate(`?${searchParams.toString()}`, { replace: true });
+      };
 
     const handleSearchQuery = async (e) => {
         const value = e.target.value;
@@ -67,6 +78,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if ((locationInput.length !== 0 || specialty.length) !== 0 || searchQuery.length !== 0) {
+            updateUrl();
             const params = new URLSearchParams(location.search);
             params.set("location", locationInput);
             params.set("specialty", specialty);
@@ -79,6 +91,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     //user presses enter key, submit
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
+            updateUrl();
             handleSubmit(e);
         }
     };

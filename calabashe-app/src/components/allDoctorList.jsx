@@ -153,9 +153,7 @@ const AllDoctorList = () => {
         if (search_query) searchParams.set("search_query", search_query);
         if (specialty) searchParams.set("specialty", specialty);
         if (location) searchParams.set("location", location);
-
-        const queryString = searchParams.toString();
-        navigate(`?${queryString}${queryString ? `&page=${page}` : `page=${page}`}`, { replace: true });
+        
         const doctorDetails = docData.results.map((doc) => ({
           id: doc.id,
           firstName: doc.first_name,
