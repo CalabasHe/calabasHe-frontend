@@ -2,10 +2,11 @@ import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getConditions, getDoctorsNames, getLocations, getSpecialties } from '../api/getSuggestions';
-import { Suggestions,QuerySuggestions } from './suggestions';
+import { Suggestions, QuerySuggestions } from './suggestions';
 import { motion } from 'framer-motion';
+import Alert from './alert';
 
-const DoctorSearchBar = ({ submitFunc }) => {
+const DoctorSearchBar = ({ submitFunc}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const searchContainerRef = useRef(null);
@@ -22,23 +23,16 @@ const DoctorSearchBar = ({ submitFunc }) => {
         allLocations: []
     });
     const [activeInput, setActiveInput] = useState(null);
-
+    const [alert, setAlert] = useState(false);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         setSearchQuery(searchParams.get("search_query") || "");
         setSpecialty(searchParams.get("specialty") || "");
         setLocationInput(searchParams.get("location") || "");
-      }, [location.search]);
 
-    const updateUrl = () => {
-        const searchParams = new URLSearchParams();
-        if (searchQuery) searchParams.set("search_query", searchQuery);
-        if (specialty) searchParams.set("specialty", specialty);
-        if (locationInput) searchParams.set("location", locationInput);
-    
-        navigate(`?${searchParams.toString()}`, { replace: true });
-      };
+    }, [location.search]);
+
 
     const handleSearchQuery = async (e) => {
         const value = e.target.value;
@@ -78,7 +72,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if ((locationInput.length !== 0 || specialty.length) !== 0 || searchQuery.length !== 0) {
-            updateUrl();
+            setAlert(false)
             const params = new URLSearchParams(location.search);
             params.set("location", locationInput);
             params.set("specialty", specialty);
@@ -86,12 +80,14 @@ const DoctorSearchBar = ({ submitFunc }) => {
             setSuggestions({ allConditions: [], allSpecialties: [] });
             submitFunc(searchQuery, specialty, locationInput);
         }
+        else {
+            setAlert(true)
+        }
     };
 
     //user presses enter key, submit
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            updateUrl();
             handleSubmit(e);
         }
     };
@@ -116,7 +112,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const clearSearchQuery = (e) => {
         e.preventDefault();
         setSearchQuery('');
-        setSuggestions(prev => ({ ...prev, allConditions: [],allDoctorsNames: [] }));
+        setSuggestions(prev => ({ ...prev, allConditions: [], allDoctorsNames: [] }));
     };
 
     const clearSpecialty = (e) => {
@@ -161,6 +157,9 @@ const DoctorSearchBar = ({ submitFunc }) => {
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4">
+            <div className='md:w-[40%] mx-auto'>
+                <Alert message={"Enter a Doctor, Condition, or Location to search"} show={alert}/>
+            </div>
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit} >
                 <div className='w-full md:w-[70%] flex flex-col md:flex-row'>
                     <motion.div
@@ -188,7 +187,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                                <QuerySuggestions docSuggests={suggestions.allDoctorsNames} conditionSuggests={suggestions.allConditions} onSelect={onConditionSelected}/>
+                            <QuerySuggestions docSuggests={suggestions.allDoctorsNames} conditionSuggests={suggestions.allConditions} onSelect={onConditionSelected} />
                         </div>
                     </motion.div>
 

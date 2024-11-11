@@ -127,9 +127,20 @@ const AllDoctorList = () => {
 
   const handleSearchSubmit = async (search_query, specialty, location, isNewSearch = true) => {
     try {
+      if ((!search_query || !specialty || !location && searchPagination !== 1)) {
+        navigate("/doctors")
+      }
       search_query = search_query.trim()
       specialty = specialty.trim()
       location = location.trim()
+
+      const searchParams = new URLSearchParams();
+      if (search_query) searchParams.set("search_query", search_query);
+      if (specialty) searchParams.set("specialty", specialty);
+      if (location) searchParams.set("location", location);
+
+      navigate(`?${searchParams.toString()}&page=${searchPagination}`, { replace: true });
+
       if (isNewSearch) {
         setPagination(1);
         setSearchPagination(1);
@@ -149,11 +160,8 @@ const AllDoctorList = () => {
       // Validate and process doctor data
       if (Array.isArray(docData?.results) && docData.results.length > 0) {
         // Update URL to reflect the search filters
-        const searchParams = new URLSearchParams();
-        if (search_query) searchParams.set("search_query", search_query);
-        if (specialty) searchParams.set("specialty", specialty);
-        if (location) searchParams.set("location", location);
-        
+
+
         const doctorDetails = docData.results.map((doc) => ({
           id: doc.id,
           firstName: doc.first_name,
@@ -203,7 +211,7 @@ const AllDoctorList = () => {
         <DoctorCard key={doctor.id} doctor={doctor} />
       ))
       } */}
-      <DoctorSearchBar submitFunc={handleSearchSubmit} />
+      <DoctorSearchBar submitFunc={handleSearchSubmit }/>
       <div className="max-[819px]:hidden w-full  max-w-[1100px] flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
         {doctors.map((doctor) => (
           <div key={doctor.id} className="w-full flex flex-col items-center pt-6 ">

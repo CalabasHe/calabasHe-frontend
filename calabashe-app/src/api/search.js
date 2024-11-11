@@ -14,7 +14,9 @@ export const DoctorsSearch = async ({search_query, specialty, location, page}) =
   const url = `https://calabashe-api.onrender.com/api/doctors?search_query=${search_query}&region=${location}&specialty=${specialty}&page=${page}`;
   try {
     const response = await axios.get(`${url}`)
+    
     return response.data
+
   } catch (error) {
     throw new Error('Error fetching data:', error);
   }
