@@ -13,14 +13,28 @@ const AllDoctorList = () => {
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [filtering, setFiltering] = useState(false);
-  const [searchCriteria, setSearchCriteria] = useState({
-    search_query: "",
-    specialty: "",
-    location: ""
-  });
 
   const navigate = useNavigate();
   const location = useLocation();
+  // const scrollPosition = useRef(0);
+
+
+  // const saveScrollPosition = () => {
+  //   scrollPosition.current = window.scrollY;
+  // };
+
+  // const restoreScrollPosition = () => {
+  //   window.scrollTo(0, scrollPosition.current);
+  // };
+
+  const searchParams = new URLSearchParams(location.search);
+
+  const [searchCriteria, setSearchCriteria] = useState({
+    search_query: (searchParams.get("search_query") || "").trim(),
+    specialty: (searchParams.get("specialty") || "").trim(),
+    location: (searchParams.get("location") || "").trim(),
+    page: parseInt((searchParams.get("page") || "1").trim(), 10)
+  });
 
   const getCurrentPage = () => {
     const searchParams = new URLSearchParams(location.search);
@@ -28,7 +42,7 @@ const AllDoctorList = () => {
   };
 
   const [pagination, setPagination] = useState(getCurrentPage());
-  const [searchPagination, setSearchPagination] = useState(1);
+  const [searchPagination, setSearchPagination] = useState(searchCriteria.page);
 
   const fetchDocData = async (page) => {
     try {
@@ -68,7 +82,16 @@ const AllDoctorList = () => {
   };
 
   useEffect(() => {
-    if (filtering) {
+    console.log(searchPagination)
+    if (searchCriteria.search_query !== '' || searchCriteria.location !== '' || searchCriteria.specialty !== '') {
+      handleSearchSubmit(
+        searchCriteria.search_query,
+        searchCriteria.specialty,
+        searchCriteria.location,
+        false
+      );
+    }
+    else if (filtering) {
       handleSearchSubmit(
         searchCriteria.search_query,
         searchCriteria.specialty,
@@ -102,9 +125,6 @@ const AllDoctorList = () => {
     }
   };
 
-
-
-
   const handleSearchSubmit = async (search_query, specialty, location, isNewSearch = true) => {
     try {
       search_query = search_query.trim()
@@ -119,7 +139,7 @@ const AllDoctorList = () => {
       setIsLoading(true);
       setFiltering(true);
       setPagination(1);
-      setSearchCriteria({ search_query, specialty, location });
+      setSearchCriteria({ search_query, specialty, location, page });
       const docData = await DoctorsSearch({ search_query, specialty, location, page });
 
       // Check for pagination availability
@@ -128,6 +148,14 @@ const AllDoctorList = () => {
 
       // Validate and process doctor data
       if (Array.isArray(docData?.results) && docData.results.length > 0) {
+        // Update URL to reflect the search filters
+        const searchParams = new URLSearchParams();
+        if (search_query) searchParams.set("search_query", search_query);
+        if (specialty) searchParams.set("specialty", specialty);
+        if (location) searchParams.set("location", location);
+
+        const queryString = searchParams.toString();
+        navigate(`?${queryString}${queryString ? `&page=${page}` : `page=${page}`}`, { replace: true });
         const doctorDetails = docData.results.map((doc) => ({
           id: doc.id,
           firstName: doc.first_name,
@@ -144,15 +172,6 @@ const AllDoctorList = () => {
           experience: doc.years_of_experience || 0,
         }));
         setDoctors(doctorDetails);
-
-        // Update URL to reflect the search filters
-        const searchParams = new URLSearchParams();
-        if (search_query) searchParams.set("search_query", search_query);
-        if (specialty) searchParams.set("specialty", specialty);
-        if (location) searchParams.set("location", location);
-
-        const queryString = searchParams.toString();
-        navigate(`?${queryString}${queryString ? `&page=${page}` : `page=${page}`}`, { replace: true });
 
       } else {
         setDoctors([]); // Clear previous doctor data if no results are found

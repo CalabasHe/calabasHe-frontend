@@ -17,6 +17,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const initialSpecialty = (searchParams.get("specialty") || "").trim();
     const initialLocation = (searchParams.get("location") || "").trim();
 
+
     const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
     const [specialty, setSpecialty] = useState(initialSpecialty);
     const [locationInput, setLocationInput] = useState(initialLocation);
