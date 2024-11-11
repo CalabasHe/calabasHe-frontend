@@ -1,4 +1,4 @@
-import { fetchConditions } from "../secondaryFormData"
+import { fetchConditions, fetchServices, fetchSpecialties } from "../secondaryFormData"
 
 export const getConditions = async () => {
   try {
@@ -6,6 +6,28 @@ export const getConditions = async () => {
     return conditions.results;
   } catch (error) {
     console.error(error);
-    return []; // Fallback to an empty array if there's an error
+    return []; 
   }
 };
+
+
+export const getSpecialties = async () => {
+  try {
+    const specialties = await fetchSpecialties();
+    return specialties.results;
+  } catch (error) {
+    console.error(error);
+    return []; 
+  }
+};
+
+export const getServices = async () => {
+  try {
+    const services = await fetchServices();
+    return services.results;
+  } catch (error) {
+    console.error(error);
+    return []; 
+  }
+};
+

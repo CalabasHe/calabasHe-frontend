@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { getConditions } from "../api/functions/secondaryform";
+import { getConditions, getServices, getSpecialties } from "../api/functions/secondaryform";
+import { FaPaperclip } from "react-icons/fa";
 
 const SecondaryFormCard = () => {
   const [currentYear] = useState(new Date().getFullYear());
@@ -7,6 +8,7 @@ const SecondaryFormCard = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    email: "",
     userHasSpecialty: "",
     certificationYear: "",
     digitalConsultation: "",
@@ -26,10 +28,6 @@ const SecondaryFormCard = () => {
     workingHours: "",
   });
 
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
-
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRefs = useRef({});
 
@@ -38,25 +36,48 @@ const SecondaryFormCard = () => {
     (_, i) => 1950 + i
   );
 
-  // useEffect(() => {
-  //   const wei = async () => {
-  //     const weiPartTwo = await getConditions()
-  //     console.log(weiPartTwo)
-  //   }
-  // }, [])
-
-  const dropdownOptions = {
+  const [dropdownOptions, setDropdownOptions] = useState({
     certificationYear: years,
-    // treatments: getConditions(),
+    treatments: [],
+    specialties: [],
     currentPractice: ["Location 1", "Location 2", "Location 3"],
     clinicLocation: ["Clinic 1", "Clinic 2", "Clinic 3"],
-    profilePhoto: ["Upload Photo"],
     languages: ["English", "Spanish", "French"],
     education: ["MD", "DO", "MBBS"],
-    consultationFee: ["$50-100", "$100-150", "$150-200"],
-    specialServices: ["Service 1", "Service 2", "Service 3"],
+    consultationFee: ["GHS 20-80", "GHS 81-120", "GHS 121-160", "GHS 161+"],
+    services: [],
     workingHours: ["9AM-5PM", "10AM-6PM", "8AM-4PM"],
-  };
+  });
+
+  async function fetchAndSetDropdownOptions() {
+    try {
+      const [treatmentsData, specialtyData, serviceData] = await Promise.all([
+        getConditions(),
+        getSpecialties(),
+        getServices()
+      ]);
+
+      console.log(serviceData)
+  
+      const treatmentNames = treatmentsData.map((treatment) => treatment.name);
+      const specialtyNames = specialtyData.map((specialty) => specialty.name);
+      const serviceNames = serviceData.map((service) => service.name);
+
+      setDropdownOptions((prevOptions) => ({
+        ...prevOptions,
+        treatments: treatmentNames,
+        specialties: specialtyNames, 
+        services: serviceNames,
+      }));
+    } catch (error) {
+      console.error("Error fetching dropdown options:", error);
+    }
+  }
+  
+
+  useEffect(() => {
+    fetchAndSetDropdownOptions();
+  }, []);
 
   const handleDropdownSelect = (dropdownName, value) => {
     setFormData((prev) => ({
@@ -112,7 +133,7 @@ const SecondaryFormCard = () => {
           </div>
           {openDropdown === name && (
             <div
-              className="absolute z-10 mt-2 max-h-[200px] w-full overflow-y-auto bg-white border border-gray-300 divide-y-2 rounded-md shadow-md scrollbar-thin"
+              className="absolute z-10 mt-2 max-h-[300px] w-full overflow-y-auto bg-white border border-gray-300 divide-y-2 rounded-md shadow-md scrollbar-thin"
               role="listbox"
               aria-labelledby={dropdownId}
             >
@@ -121,8 +142,9 @@ const SecondaryFormCard = () => {
                   key={option}
                   id={`${dropdownId}-option-${index}`}
                   onClick={() => handleDropdownSelect(name, option)}
-                  className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+                  className="py-2 px-4 text-xs lg:text-sm hover:bg-gray-100 cursor-pointer"
                   role="option"
+                  required
                 >
                   {option}
                 </div>
@@ -137,24 +159,77 @@ const SecondaryFormCard = () => {
   return (
     <div className="w-full flex flex-col gap-7">
       <h2 className="font-semibold lg:text-lg underline select-none">
-        Fill the following forms to get your profile set up <br /> on Calabashe
+        <span className="hidden md:flex">
+          {" "}
+          Fill the following forms to get your profile set up <br /> on
+          Calabashe
+        </span>
+        <span className="md:hidden ">
+          {" "}
+          Fill the following forms to get your profile set up on Calabashe
+        </span>
       </h2>
 
       <form className="flex flex-col w-full md:w-[80vw] md:max-w-[800px] gap-6 lg:gap-5 select-none">
-        
         <section className="flex flex-col gap-1">
-        <label htmlFor="fullName" className="text-sm md:text-base cursor-default">
+          <label
+            htmlFor="fullName"
+            className="text-sm md:text-base cursor-default"
+          >
             1. Enter your full name
-            <div id="fullName" className="lg:flex max-lg:space-y-3 gap-4 ">
-              <input id="firstName" type="text" required className="bg-inherit px-4 py-1 focus:outline-none" placeholder="enter first name" />
-              <input id="lastName" type="text" required className="bg-inherit px-4 py-1 focus:outline-none" placeholder="enter last name" />
-            </div>
           </label>
-          <div>
-
+          <div id="fullName" className="lg:flex max-lg:space-y-3 md:space-x-3 ">
+            <input
+              id="firstName"
+              type="text"
+              required
+              className="bg-inherit px-4 py-1  max-lg:placeholder:text-xs lg:placeholder:text-sm focus:outline-none"
+              placeholder="enter first name"
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  firstName: e.target.value,
+                }))
+              }
+            />
+            <input
+              id="lastName"
+              type="text"
+              required
+              className="bg-inherit px-4 py-1  max-lg:placeholder:text-xs lg:placeholder:text-sm focus:outline-none"
+              placeholder="enter last name"
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  lastName: e.target.value,
+                }))
+              }
+            />
           </div>
         </section>
-        
+
+        <section className="flex flex-col gap-1">
+          <label
+            htmlFor="fullName"
+            className="text-sm md:text-base cursor-default"
+          >
+            2. Enter email
+          </label>
+          <input
+            id="email"
+            type="email"
+            required
+            className="bg-inherit max-lg:placeholder:text-xs lg:placeholder:text-sm px-4 py-1 focus:outline-none"
+            placeholder="enter your email"
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                email: e.target.value,
+              }))
+            }
+          />
+        </section>
+
         {renderDropdown(
           "certificationYear",
           "3. When did you begin practicing?"
@@ -166,10 +241,10 @@ const SecondaryFormCard = () => {
           </label>
           <div className="md:flex md:gap-3 max-md:space-y-3">
             <div className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 ">
                 <input
                   type="radio"
-                  className="w-2"
+                  className="w-2 cursor-pointer"
                   name="hasSpecialty"
                   id="specialty-yes"
                   required
@@ -181,7 +256,7 @@ const SecondaryFormCard = () => {
               <span className="flex items-center gap-2 pl-5 md:pl-5">
                 <input
                   type="radio"
-                  className="w-2"
+                  className="w-2 cursor-pointer"
                   name="hasSpecialty"
                   id="specialty-no"
                   required
@@ -194,9 +269,11 @@ const SecondaryFormCard = () => {
             <div
               className={`${
                 hasSpecialty === "No" && "hidden"
-              } max-lg:text-xs px-4 py-2.5 w-full border border-black`}
+              }  w-full `}
             >
-              Specify here
+               {renderDropdown(
+                "specialties"
+            )}
             </div>
           </div>
         </section>
@@ -206,13 +283,16 @@ const SecondaryFormCard = () => {
           "5. Select treatments and procedures you provide."
         )}
 
-        <div className="flex flex-col lg:flex-row lg:gap-6 gap-4">
+        <div className="flex flex-col lg:flex-row lg:gap-5 gap-6">
           {renderDropdown(
             "currentPractice",
             "6. Where do you currently practice?"
           )}
-          <div className="space-y-1">
-            <label htmlFor="clinicLocation">
+          <div className="flex flex-col gap-1">
+            <label
+              className="text-sm md:text-base cursor-default"
+              htmlFor="clinicLocation"
+            >
               7. What is the location of your current clinic?
             </label>
             <input
@@ -227,7 +307,7 @@ const SecondaryFormCard = () => {
               type="text"
               required
               placeholder="enter clinic location"
-              className="focus:outline-none bg-inherit px-4 py-2"
+              className="focus:outline-none bg-inherit px-4 py-1 lg:py-2  max-lg:placeholder:text-xs lg:placeholder:text-sm"
             />
           </div>
         </div>
@@ -274,10 +354,40 @@ const SecondaryFormCard = () => {
           </div>
         </section>
 
-        {renderDropdown(
-          "profilePhoto",
-          "9. Upload a professional photo for your Calabashe profile?"
-        )}
+        <section className="flex flex-col gap-1 max-h-[300px]">
+          <label className="text-sm md:text-base cursor-default">
+            9. Upload a professional photo for your Calabashe profile?
+          </label>
+          <div className="w-full text-xs border bg-white flex px-8 md divide-x py-2 gap-5 items-center border-black">
+            <span className="flex items-center gap-2">
+              <input
+                type="file"
+                className="hidden w-full"
+                name="profilePhoto"
+                id="profile-photo"
+                accept="image/*" 
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    setFormData((prev) => ({
+                      ...prev,
+                      profilePhoto: file,
+                    }));
+                  }
+                }}
+              />
+              <label htmlFor="profile-photo" className="cursor-pointer">
+                {formData.profilePhoto ? 
+                  <span className="font-medium text-green-600">Image attached</span> :
+                  <div className="flex gap-2 items-center">
+                    <FaPaperclip className="rotate-45"/>
+                    Attach your image here
+                  </div>             
+                }
+              </label>
+            </span>
+          </div>
+        </section>
         {renderDropdown("languages", "10. What languages do you speak?")}
 
         <section className="flex flex-col gap-1 max-h-[300px]">
@@ -369,7 +479,7 @@ const SecondaryFormCard = () => {
           "14. What is your consultation fee range?"
         )}
         {renderDropdown(
-          "specialServices",
+          "services",
           "15. Do you offer any special services or programs (e.g., wellness programs, preventive care)?"
         )}
 
