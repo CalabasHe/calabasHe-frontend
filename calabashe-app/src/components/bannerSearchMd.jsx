@@ -72,6 +72,8 @@ const BannerSearch = () => {
           specialty: result.specialty?.name,
           specialtyTag: result.specialty?.tag,
           type: result.facility_type_name,
+          image: result.profile_image,
+          logo:result.logo,
           typeSlug: result.facility_type_name?.toLowerCase(),
           name: result.name,
           slug: result.slug,

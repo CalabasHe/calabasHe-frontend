@@ -57,6 +57,8 @@ const SearchBarMd = () => {
           id: result.id,
           firstName: result.first_name,
           lastName: result.last_name,
+          image: result.profile_image,
+          logo:result.logo,
           rating: result.average_rating && result.average_rating.toFixed(1),
           specialty: result.specialty?.name,
           specialtyTag: result.specialty?.tag,

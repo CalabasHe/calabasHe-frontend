@@ -52,6 +52,8 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
     rating: result.average_rating && result.average_rating.toFixed(1),
     specialty: result.specialty?.name,
     specialtyTag: result.specialty?.tag,
+    image: result.profile_image,
+          logo:result.logo,
     type: result.facility_type_name,
     typeSlug: result.facility_type_name?.toLowerCase(),
     name: result.name,
