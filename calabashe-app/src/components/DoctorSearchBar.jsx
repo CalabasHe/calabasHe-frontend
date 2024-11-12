@@ -2,24 +2,20 @@ import { Icon } from '@iconify/react';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getConditions, getDoctorsNames, getLocations, getSpecialties } from '../api/getSuggestions';
-import { Suggestions,QuerySuggestions } from './suggestions';
+import { Suggestions, QuerySuggestions } from './suggestions';
 import { motion } from 'framer-motion';
+import Alert from './alert';
 
-const DoctorSearchBar = ({ submitFunc }) => {
+const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const searchContainerRef = useRef(null);
     const specialtyContainerRef = useRef(null);
     const locationInputRef = useRef(null);
 
-    const searchParams = new URLSearchParams(location.search);
-    const initialSearchQuery = (searchParams.get("search_query") || "").trim();
-    const initialSpecialty = (searchParams.get("specialty") || "").trim();
-    const initialLocation = (searchParams.get("location") || "").trim();
-
-    const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
-    const [specialty, setSpecialty] = useState(initialSpecialty);
-    const [locationInput, setLocationInput] = useState(initialLocation);
+    const [searchQuery, setSearchQuery] = useState(new URLSearchParams(location.search).get("search_query") || "");
+    const [specialty, setSpecialty] = useState(new URLSearchParams(location.search).get("specialty") || "");
+    const [locationInput, setLocationInput] = useState(new URLSearchParams(location.search).get("location") || "");
     const [suggestions, setSuggestions] = useState({
         allConditions: [],
         allDoctorsNames: [],
@@ -27,6 +23,16 @@ const DoctorSearchBar = ({ submitFunc }) => {
         allLocations: []
     });
     const [activeInput, setActiveInput] = useState(null);
+    const [alert, setAlert] = useState(false);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        setSearchQuery(searchParams.get("search_query") || "");
+        setSpecialty(searchParams.get("specialty") || "");
+        setLocationInput(searchParams.get("location") || "");
+
+    }, [location.search]);
+
 
     const handleSearchQuery = async (e) => {
         const value = e.target.value;
@@ -66,6 +72,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if ((locationInput.length !== 0 || specialty.length) !== 0 || searchQuery.length !== 0) {
+            setAlert(false)
             const params = new URLSearchParams(location.search);
             params.set("location", locationInput);
             params.set("specialty", specialty);
@@ -73,7 +80,17 @@ const DoctorSearchBar = ({ submitFunc }) => {
             setSuggestions({ allConditions: [], allSpecialties: [] });
             submitFunc(searchQuery, specialty, locationInput);
         }
+        else {
+            setAlert(true)
+        }
     };
+
+    
+    const handleReset = (e) => {
+        e.preventDefault();
+        resetFunc();
+        // setAlert(!alert)
+    }
 
     //user presses enter key, submit
     const handleKeyDown = (e) => {
@@ -102,7 +119,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
     const clearSearchQuery = (e) => {
         e.preventDefault();
         setSearchQuery('');
-        setSuggestions(prev => ({ ...prev, allConditions: [],allDoctorsNames: [] }));
+        setSuggestions(prev => ({ ...prev, allConditions: [], allDoctorsNames: [] }));
     };
 
     const clearSpecialty = (e) => {
@@ -147,6 +164,9 @@ const DoctorSearchBar = ({ submitFunc }) => {
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4">
+            <div className='md:w-[40%] mx-auto'>
+                <Alert message={"Enter a Doctor, Condition, or Location to search"} show={alert}/>
+            </div>
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-2 md:flex-row text-black py-6 px-2 md:p-0 border-black" onSubmit={handleSubmit} >
                 <div className='w-full md:w-[70%] flex flex-col md:flex-row'>
                     <motion.div
@@ -174,7 +194,7 @@ const DoctorSearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                                <QuerySuggestions docSuggests={suggestions.allDoctorsNames} conditionSuggests={suggestions.allConditions} onSelect={onConditionSelected}/>
+                            <QuerySuggestions docSuggests={suggestions.allDoctorsNames} conditionSuggests={suggestions.allConditions} onSelect={onConditionSelected} />
                         </div>
                     </motion.div>
 
@@ -230,11 +250,18 @@ const DoctorSearchBar = ({ submitFunc }) => {
                     <Suggestions suggests={suggestions.allLocations} onSelect={onLocationSelected} suggestionName={"Location"} />
                 </div>
 
-                <div className="mt-3 md:mt-0 flex items-center px-3 py-2 w-full md:w-[8%] lg:w-[4%] bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
-                    <button type="submit" size="icon" className="w-full text-center">
-                        <span className="hidden md:block"><Icon icon="circum:search" style={{ color: "black" }} height={24} /></span>
-                        <span className="md:hidden font-bold">Find a doctor</span>
-                    </button>
+                <div className='flex items-center flex-col md:flex-row md:w-[15%] lg:w-[12%] gap-1 py-1 md:py-0'>
+                    <div className='bg-custom-yellow hover:bg-yellow-400 rounded-md md:border-0 md:bg-white md:hover:bg-white w-full py-2'>
+                        <button size="icon" className="w-full text-center" onClick={handleReset}>
+                            <span className='font-semibold md:font-normal'>Reset</span>
+                        </button>
+                    </div>
+                    <div className="mt-3 md:mt-0 flex items-center justify-center px-3 py-2 w-full md:w-[85%]  bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
+                        <button type="submit" size="icon" className="w-full text-center mx-auto items-center">
+                            <span className="hidden md:block"><Icon icon="circum:search" style={{ color: "black" }} height={24} className='mx-auto'/></span>
+                            <span className="md:hidden font-bold">Find a doctor</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
