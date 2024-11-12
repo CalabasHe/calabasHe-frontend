@@ -13,14 +13,20 @@ const FacilityCard = () => {
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [filtering, setFiltering] = useState(false);
-  const [searchCriteria, setSearchCriteria] = useState({
-    facility: "",
-    service: "",
-    location: "",
-  });
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+
+  const [searchCriteria, setSearchCriteria] = useState({
+    search_query: (searchParams.get("facility") || "").trim(),
+    service: (searchParams.get("service") || "").trim(),
+    location: (searchParams.get("location") || "").trim(),
+    page: parseInt((searchParams.get("page") || "1").trim(), 10)
+  });
+
+
 
   const getCurrentPage = () => {
     const searchParams = new URLSearchParams(location.search);
@@ -31,44 +37,49 @@ const FacilityCard = () => {
   const [searchPagination, setSearchPagination] = useState(1);
 
 
-  useEffect(() => {
-    const fetchFacilityData = async (page) => {
-      try {
-        setIsLoading(true);
-        const facilityData = await fetchFacilities(page);
-        setHasPreviousPage(!!facilityData.previous);
-        setHasNextPage(!!facilityData.next);
-        if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
-          const facilityDetails = facilityData.results.map((facility) => ({
-            id: facility.id,
-            name: facility.name,
-            email: facility.email,
-            type: facility.facility_type_name,
-            rating: facility.average_rating,
-            slug: facility.slug,
-            reviews: facility.reviews,
-            location: facility.location,
-            logo: facility.logo,
-            region: facility.region?.name,
-            reviewCount: facility.total_reviews,
-            services: facility.services,
-            isVerified: facility.is_verified,
-          }));
-          setFacilities(facilityDetails);
-        } else {
-          setError("No results found");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
+  const fetchFacilityData = async (page) => {
+    try {
+      setIsLoading(true);
+      const facilityData = await fetchFacilities(page);
+      setHasPreviousPage(!!facilityData.previous);
+      setHasNextPage(!!facilityData.next);
+      
+      if (Array.isArray(facilityData.results) && facilityData.results.length > 0) {
+        const facilityDetails = facilityData.results.map((facility) => ({
+          id: facility.id,
+          name: facility.name,
+          email: facility.email,
+          type: facility.facility_type_name,
+          rating: facility.average_rating,
+          slug: facility.slug,
+          reviews: facility.reviews,
+          location: facility.location,
+          logo: facility.logo,
+          region: facility.region?.name,
+          reviewCount: facility.total_reviews,
+          services: facility.services,
+          isVerified: facility.is_verified,
+        }));
+        setFacilities(facilityDetails);
+      } else {
+        setError("No results found");
       }
-    };  // Close the fetchFacilityData function here
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    if (filtering) {
+  useEffect(() => {  
+    const hasSearchCriteria = 
+      searchCriteria.search_query !== '' || 
+      searchCriteria.location !== '' || 
+      searchCriteria.service !== '';
+    if (hasSearchCriteria || filtering) {
       handleSearchSubmit(
-        searchCriteria.facility,
+        searchCriteria.search_query,
         searchCriteria.service,
         searchCriteria.location,
         false
@@ -78,6 +89,7 @@ const FacilityCard = () => {
       navigate(`?page=${pagination}`, { replace: true });
     }
   }, [pagination, searchPagination, filtering]);
+  
 
   const handlePageChange = (newPage) => {
     setPagination(newPage);
@@ -100,10 +112,29 @@ const FacilityCard = () => {
     }
   };
 
+  const handleReset = () => {
+    if (filtering) {
+      setFiltering(false);
+      setSearchCriteria({
+        search_query: "",
+        service: "",
+        location: "",
+        page: 1,
+      });
+      setPagination(1);
+      setSearchPagination(1);
+      fetchFacilityData(1);
+
+      navigate("/facilities?page=1", { replace: true });
+    }
+  };
+
   const handleSearchSubmit = async (facility, service, location, isNewSearch = true) => {
+    // console.log(facility, service, location)
     facility = facility.trim();
     service = service.trim();
     location = location.trim();
+    const search_query = facility;
     try {
       if (isNewSearch) {
         setPagination(1);
@@ -112,7 +143,7 @@ const FacilityCard = () => {
       const page = isNewSearch ? 1 : searchPagination;
       setIsLoading(true);
       setFiltering(true);
-      setSearchCriteria({ facility, service, location });
+      setSearchCriteria({ search_query, service, location });
       const facilityData = await FacilitySearch({ facility, service, location, page });
 
       setHasPreviousPage(!!facilityData.previous);
@@ -172,7 +203,7 @@ const FacilityCard = () => {
 
   return (
     <>
-      <FacilitySearchBar submitFunc={handleSearchSubmit} />
+      <FacilitySearchBar submitFunc={handleSearchSubmit} resetFunc={handleReset}/>
       <div className="max-[819px]:hidden w-full max-w-[1100px] flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
         {facilities.map((facility) => (
           <div key={facility.id} className="w-full flex flex-col items-center pt-6">
