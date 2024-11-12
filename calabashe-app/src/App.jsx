@@ -18,6 +18,7 @@ import AccountClaim from "./pages/AccountClaim";
 import SubServices from "./pages/SubServices";
 import ServiceProviders from "./pages/ServiceProviders";
 import { SpecialtyProvider } from "./context/specialtyContext";
+import SecondaryForms from "./pages/SecondaryForm";
 
 function App() {
   const location = useLocation();
@@ -58,6 +59,7 @@ function App() {
               <Route path="/verification" element={<VerifyUser />} />
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />
+              <Route path="/secondary_form" element={<SecondaryForms/>} />
               <Route path="*" element={<NoResult/>} />
             </Routes>
           </AnimatePresence>

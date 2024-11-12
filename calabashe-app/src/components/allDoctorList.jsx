@@ -170,6 +170,7 @@ const AllDoctorList = () => {
           specialty: doc.specialty?.name || "N/A",
           specialtyTag: doc.specialty?.tag || "N/A",
           slug: doc.slug,
+          image: doc.profile_image,
           reviews: doc.reviews || [],
           reviewCount: doc.reviews_count || 0,
           verified: doc.is_verified,
