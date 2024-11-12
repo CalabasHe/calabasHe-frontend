@@ -88,7 +88,7 @@ const FacilityCard = () => {
       fetchFacilityData(pagination);
       navigate(`?page=${pagination}`, { replace: true });
     }
-  }, [pagination, searchPagination, filtering, searchCriteria]);
+  }, [pagination, searchPagination, filtering]);
   
 
   const handlePageChange = (newPage) => {
