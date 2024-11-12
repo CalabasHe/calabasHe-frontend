@@ -1,7 +1,4 @@
 const Alert = ({ message, show }) => {
-  const handleClose = () => {
-    console.log(show)
-  }
 
   return (
     show &&

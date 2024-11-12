@@ -82,7 +82,7 @@ const AllDoctorList = () => {
   };
 
   useEffect(() => {
-    console.log(searchPagination)
+    // console.log(searchPagination)
     if (searchCriteria.search_query !== '' || searchCriteria.location !== '' || searchCriteria.specialty !== '') {
       handleSearchSubmit(
         searchCriteria.search_query,

@@ -15,7 +15,7 @@ export const DoctorsSearch = async ({search_query, specialty, location, page}) =
   try {
     const response = await axios.get(`${url}`)
     
-    console.log(response.data.results)
+    // console.log(response.data.results)
     return response.data
 
   } catch (error) {

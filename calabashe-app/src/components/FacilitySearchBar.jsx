@@ -4,29 +4,35 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { getFacilities, getLocations, getServices } from '../api/getSuggestions';
 import { Suggestions } from './suggestions';
 import { motion } from 'framer-motion';
+import Alert from './alert';
 
-const FacilitySearchBar = ({ submitFunc }) => {
+const FacilitySearchBar = ({ submitFunc, resetFunc }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const facilityContainerRef = useRef(null);
     const serviceContainerRef = useRef(null);
     const locationContainerRef = useRef(null);
 
-    const searchParams = new URLSearchParams(location.search);
-    const initialFacility = (searchParams.get("facility") || "").trim();
-    const initialService = (searchParams.get("service") || "").trim();
-    const initialLocation = (searchParams.get("location") || "").trim();
 
-    const [facility, setFacility] = useState(initialFacility);
-    const [service, setService] = useState(initialService);
-    const [locationInput, setLocationInput] = useState(initialLocation);
+    const [facility, setFacility] = useState(new URLSearchParams(location.search).get("facility") || "");
+    const [service, setService] = useState(new URLSearchParams(location.search).get("service") || "");
+    const [locationInput, setLocationInput] = useState(new URLSearchParams(location.search).get("location") || "")
     const [activeInput, setActiveInput] = useState(null);
-
+    const [alert, setAlert] = useState(false);
     const [suggestions, setSuggestions] = useState({
         allFacilities: [],
         allServices: [],
         allLocations: []
     });
+
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        setFacility(searchParams.get("facility") || "");
+        setService(searchParams.get("service") || "");
+        setLocationInput(searchParams.get("location") || "");
+
+    }, [location.search]);
 
     const handleFacilityChange = async (e) => {
         const value = e.target.value;
@@ -64,6 +70,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (facility.trim() || service.trim() || locationInput.trim()) {
+            setAlert(false)
             const params = new URLSearchParams(location.search);
             params.set("facility", facility);
             params.set("service", service);
@@ -73,9 +80,18 @@ const FacilitySearchBar = ({ submitFunc }) => {
                 allServices: [],
                 allLocations: []
             });
+
             submitFunc(facility, service, locationInput);
         }
+        else {
+            setAlert(true)
+        }
     };
+
+    const handleReset = (e) => {
+        e.preventDefault()
+        resetFunc()
+    }
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -145,6 +161,9 @@ const FacilitySearchBar = ({ submitFunc }) => {
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-3 mt-4 md:mt-0">
+            <div className='md:w-[40%] mx-auto'>
+                <Alert message={"Enter a Facility, Service or Location to search"} show={alert} />
+            </div>
             <form className="duration-300 border-2 bg-white max-w-[1100px] rounded-md w-[98%] md:w-[97%] mx-auto flex flex-col gap-3 md:flex-row text-black py-4 px-2 md:p-0 border-black" onSubmit={handleSubmit}>
                 <div className="w-full md:w-[70%] flex flex-col md:flex-row gap-2">
                     {/* Facility Input */}
@@ -158,7 +177,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                     >
                         <div ref={facilityContainerRef} className="w-full flex flex-col relative">
                             <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                                <Icon icon="icon-park-solid:hospital-three" height={24} style={{ color: "black" }} className='md:mr-1 ml-2 md:ml-8'/>
+                                <Icon icon="icon-park-solid:hospital-three" height={24} style={{ color: "black" }} className='md:mr-1 ml-2 md:ml-8' />
                                 <input
                                     type="text"
                                     value={facility}
@@ -173,7 +192,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                            <Suggestions suggests={suggestions.allFacilities} onSelect={onFacilitySelected} suggestionName={"Facility"}/>
+                            <Suggestions suggests={suggestions.allFacilities} onSelect={onFacilitySelected} suggestionName={"Facility"} />
                         </div>
                     </motion.div>
 
@@ -188,7 +207,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                     >
                         <div ref={serviceContainerRef} className="w-full flex flex-col relative">
                             <div className="flex items-center pb-1 pt-2 border-0 border-b-[0.5px] md:border-0 border-gray-300 md:border-r-0">
-                                <Icon icon="ri:service-fill" style={{ color: "black" }} height={24} className='ml-2'/>
+                                <Icon icon="ri:service-fill" style={{ color: "black" }} height={24} className='ml-2' />
                                 <input
                                     type="text"
                                     placeholder="Service"
@@ -203,7 +222,7 @@ const FacilitySearchBar = ({ submitFunc }) => {
                                     </button>
                                 )}
                             </div>
-                            <Suggestions suggests={suggestions.allServices} onSelect={onServiceSelected} suggestionName={"services"}/>
+                            <Suggestions suggests={suggestions.allServices} onSelect={onServiceSelected} suggestionName={"services"} />
                         </div>
                     </motion.div>
                 </div>
@@ -230,11 +249,18 @@ const FacilitySearchBar = ({ submitFunc }) => {
                 </div>
 
                 {/* Search Button */}
-                <div className="mt-3 md:mt-0 flex items-center px-3 py-2 w-full md:w-[8%] lg:w-[4%] bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
-                    <button type="submit" size="icon" className="w-full text-center">
-                        <span className="hidden md:block"><Icon icon="circum:search" style={{ color: "black" }} height={24} /></span>
-                        <span className="md:hidden font-bold">Find a facility</span>
-                    </button>
+                <div className='flex items-center flex-col md:flex-row md:w-[15%] lg:w-[12%] gap-1 py-1 md:py-0'>
+                    <div className='bg-custom-yellow hover:bg-yellow-400 rounded-md md:border-0 md:bg-white md:hover:bg-white w-full py-2'>
+                        <button size="icon" className="w-full text-center" onClick={handleReset}>
+                            <span className='font-semibold md:font-normal'>Reset</span>
+                        </button>
+                    </div>
+                    <div className="mt-3 md:mt-0 flex items-center justify-center px-3 py-2 w-full md:w-[85%]  bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
+                        <button type="submit" size="icon" className="w-full text-center mx-auto items-center">
+                            <span className="hidden md:block"><Icon icon="circum:search" style={{ color: "black" }} height={24} className='mx-auto' /></span>
+                            <span className="md:hidden font-bold">Find facility</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
