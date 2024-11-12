@@ -6,7 +6,7 @@ import { Suggestions, QuerySuggestions } from './suggestions';
 import { motion } from 'framer-motion';
 import Alert from './alert';
 
-const DoctorSearchBar = ({ submitFunc}) => {
+const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const searchContainerRef = useRef(null);
@@ -84,6 +84,13 @@ const DoctorSearchBar = ({ submitFunc}) => {
             setAlert(true)
         }
     };
+
+    
+    const handleReset = (e) => {
+        e.preventDefault();
+        resetFunc();
+        // setAlert(!alert)
+    }
 
     //user presses enter key, submit
     const handleKeyDown = (e) => {
@@ -243,11 +250,18 @@ const DoctorSearchBar = ({ submitFunc}) => {
                     <Suggestions suggests={suggestions.allLocations} onSelect={onLocationSelected} suggestionName={"Location"} />
                 </div>
 
-                <div className="mt-3 md:mt-0 flex items-center px-3 py-2 w-full md:w-[8%] lg:w-[4%] bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
-                    <button type="submit" size="icon" className="w-full text-center">
-                        <span className="hidden md:block"><Icon icon="circum:search" style={{ color: "black" }} height={24} /></span>
-                        <span className="md:hidden font-bold">Find a doctor</span>
-                    </button>
+                <div className='flex items-center flex-col md:flex-row md:w-[15%] lg:w-[12%] gap-1 py-1 md:py-0'>
+                    <div className='bg-custom-yellow hover:bg-yellow-400 rounded-md md:border-0 md:bg-white md:hover:bg-white w-full py-2'>
+                        <button size="icon" className="w-full text-center" onClick={handleReset}>
+                            <span className='font-semibold md:font-normal'>Reset</span>
+                        </button>
+                    </div>
+                    <div className="mt-3 md:mt-0 flex items-center justify-center px-3 py-2 w-full md:w-[85%]  bg-custom-yellow hover:bg-yellow-400 md:rounded-l-none rounded-md">
+                        <button type="submit" size="icon" className="w-full text-center mx-auto items-center">
+                            <span className="hidden md:block"><Icon icon="circum:search" style={{ color: "black" }} height={24} className='mx-auto'/></span>
+                            <span className="md:hidden font-bold">Find a doctor</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

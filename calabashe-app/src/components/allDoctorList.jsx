@@ -125,6 +125,23 @@ const AllDoctorList = () => {
     }
   };
 
+  const handleReset = () => {
+    if (filtering) {
+      setFiltering(false);
+      setSearchCriteria({
+        search_query: "",
+        specialty: "",
+        location: "",
+        page: 1,
+      });
+      setPagination(1);
+      setSearchPagination(1);
+      fetchDocData(1);
+
+      navigate("/doctors?page=1", { replace: true });
+    }
+  };
+
   const handleSearchSubmit = async (search_query, specialty, location, isNewSearch = true) => {
     try {
       if ((!search_query || !specialty || !location && searchPagination !== 1)) {
@@ -212,7 +229,7 @@ const AllDoctorList = () => {
         <DoctorCard key={doctor.id} doctor={doctor} />
       ))
       } */}
-      <DoctorSearchBar submitFunc={handleSearchSubmit }/>
+      <DoctorSearchBar submitFunc={handleSearchSubmit } resetFunc={handleReset}/>
       <div className="max-[819px]:hidden w-full  max-w-[1100px] flex flex-col gap-6 items-center divide-y divide-[#D9D9D9]">
         {doctors.map((doctor) => (
           <div key={doctor.id} className="w-full flex flex-col items-center pt-6 ">
