@@ -192,7 +192,7 @@ const AllDoctorList = () => {
           reviewCount: doc.reviews_count || 0,
           verified: doc.is_verified,
           region: doc.region_name || "N/A",
-          recommendedFor: doc.specialty?.conditions_and_treatments || [],
+          recommendedFor: doc.conditions_and_treatments || [],
           experience: doc.years_of_experience || 0,
         }));
         setDoctors(doctorDetails);
