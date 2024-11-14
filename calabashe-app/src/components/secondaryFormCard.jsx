@@ -40,7 +40,7 @@ const SecondaryFormCard = () => {
     certificationYear: years,
     treatments: [],
     specialties: [],
-    currentPractice: ["Location 1", "Location 2", "Location 3"],
+    currentPractice: ["1", "2", "3", "4+",],
     clinicLocation: ["Clinic 1", "Clinic 2", "Clinic 3"],
     languages: ["English", "Spanish", "French"],
     education: ["MD", "DO", "MBBS"],
@@ -237,8 +237,8 @@ const SecondaryFormCard = () => {
           <label className="text-sm md:text-base cursor-default">
             4. Do you have any specialties or sub-specialties?
           </label>
-          <div className="md:flex md:gap-3 max-md:space-y-3">
-            <div className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
+          <div className="md:flex md:flex-row gap-3 max-md:space-y-3">
+            <div className="w-full text-xs border flex px-8 divide-x py-2 lg:py-3 gap-5 items-center border-black">
               <span className="flex items-center gap-2 ">
                 <input
                   type="radio"
@@ -276,17 +276,17 @@ const SecondaryFormCard = () => {
           </div>
         </section>
 
-        {renderDropdown(
+        {/* {renderDropdown(
           "treatments",
           "5. Select treatments and procedures you provide."
-        )}
+        )} */}
 
         <div className="flex flex-col lg:flex-row lg:gap-5 gap-6">
           {renderDropdown(
             "currentPractice",
-            "6. Where do you currently practice?"
+            "6. How many clinics do you currently practice at?"
           )}
-          <div className="flex flex-col gap-1">
+          {/* <div className="flex flex-col gap-1">
             <label
               className="text-sm md:text-base cursor-default"
               htmlFor="clinicLocation"
@@ -307,7 +307,7 @@ const SecondaryFormCard = () => {
               placeholder="enter clinic location"
               className="focus:outline-none bg-inherit px-4 py-1 lg:py-2  max-lg:placeholder:text-xs lg:placeholder:text-sm"
             />
-          </div>
+          </div> */}
         </div>
 
         <section className="flex flex-col gap-1 max-h-[300px]">
@@ -388,7 +388,7 @@ const SecondaryFormCard = () => {
         </section>
         {renderDropdown("languages", "10. What languages do you speak?")}
 
-        <section className="flex flex-col gap-1 max-h-[300px]">
+        {/* <section className="flex flex-col gap-1 max-h-[300px]">
           <label className="text-sm md:text-base cursor-default">
             11. Are you affiliated with any professional medical associations?
           </label>
@@ -433,7 +433,7 @@ const SecondaryFormCard = () => {
         {renderDropdown(
           "education",
           "12. What is your highest level of medical education?"
-        )}
+        )} */}
 
         <section className="flex flex-col gap-1 max-h-[300px]">
           <label className="text-sm md:text-base cursor-default">
@@ -472,16 +472,17 @@ const SecondaryFormCard = () => {
           </div>
         </section>
 
-        {renderDropdown(
+        {/* {renderDropdown(
           "consultationFee",
           "14. What is your consultation fee range?"
-        )}
-        {renderDropdown(
+        )} */}
+
+        {/* {renderDropdown(
           "services",
           "15. Do you offer any special services or programs (e.g., wellness programs, preventive care)?"
-        )}
+        )} */}
 
-        <section className="flex flex-col gap-1 max-h-[300px]">
+        {/* <section className="flex flex-col gap-1 max-h-[300px]">
           <label className="text-sm md:text-base cursor-default">
             16. Do you have experience with international patients or
             expatriates?
@@ -522,12 +523,12 @@ const SecondaryFormCard = () => {
               <label htmlFor="international-no">No</label>
             </span>
           </div>
-        </section>
+        </section> */}
 
-        {renderDropdown(
+        {/* {renderDropdown(
           "workingHours",
           "17. What are your typical working hours and available days?"
-        )}
+        )} */}
 
         <section className="flex flex-col gap-1 max-h-[300px]">
           <label className="text-sm md:text-base cursor-default">
