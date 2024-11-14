@@ -90,18 +90,9 @@ const ForgotPassword = () => {
       setIsHidden(false);
       setDisableForm(false);
       toast.success('A six-digit code has been sent to your email');
-    } catch (error) {
-      let errorMessage = "An unexpected error occurred";
-      if (error.response && error.response.data) {
-        const errorDetail = error.response.data;
-        if (Array.isArray(errorDetail) && errorDetail.length > 0) {
-          errorMessage = errorDetail[0];
-        } else if (errorDetail.error) {
-          errorMessage = errorDetail.error;
-        }
-      }
-      toast.error(errorMessage);
-      setDisableForm(false);
+    } catch(error) {  
+        toast.error(error.response.data[0].split("'")[1] || 'An unexpected error occured');
+        setDisableForm(false);
     }
   };
 

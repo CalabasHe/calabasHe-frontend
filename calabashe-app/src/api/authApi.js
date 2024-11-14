@@ -105,11 +105,10 @@ export const forgotPassword = async ({ email }) => {
     // console.log(response.data)
     return response.data;
   }catch (error) {
-    if (error.response && error.response.data) {
-      throw error.response;
-    } else {
-      throw new Error('An unexpected error occurred');
+    if (axios.isAxiosError(error)) {
+      throw error;
     }
+    throw new Error('An unexpected error occured');
   }
 };
 
