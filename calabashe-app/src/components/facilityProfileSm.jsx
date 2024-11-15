@@ -13,20 +13,14 @@ const FacilityProfileSm = ({ facility = [] }) => {
   const go = useNavigate();
   const { isLoggedIn } = useAuth();
   const handleLinkClick = () => {
-    if (!isLoggedIn) {
-      toast.info("Sign in to leave a review");
-    }
   };
 
   const writeAReview = (name, slug, id) => {
-    if (!isLoggedIn) {
-      toast.info("Sign in to leave a review");
-    }
     const state = {
       message: [name, "facility", id],
       from: `/review/${slug}`,
     };
-    go(isLoggedIn ? `/review/${slug}` : "/sign_in", { state });
+    go(`/review/${slug}`, { state });
   };
 
   return (
@@ -224,8 +218,7 @@ const FacilityProfileSm = ({ facility = [] }) => {
               </div>
 
               <Link
-                to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
-                onClick={handleLinkClick}
+                to={`/review/${facility.slug}`}
                 state={{
                   message: [facility.lastName, "facility", facility.id],
                   from: `/review/${facility.slug}`,

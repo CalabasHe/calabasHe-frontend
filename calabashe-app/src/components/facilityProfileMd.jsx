@@ -15,11 +15,6 @@ const FacilityProfileMd = ({ facility = [] }) => {
   const [rating, setRating] = useState();
   const { isLoggedIn } = useAuth();
 
-  const handleLinkClick = () => {
-    if (!isLoggedIn) {
-      toast.info("Sign in to leave a review");
-    }
-  };
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -64,10 +59,9 @@ const FacilityProfileMd = ({ facility = [] }) => {
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
 
                 <Link
-                  to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
-                  onClick={handleLinkClick}
+                  to={`/review/${facility.slug}`}
                   state={{
-                    message: [facility.lastName, "facility", facility.id],
+                    message: [facility.name, "facility", facility.id],
                     from: `/review/${facility.slug}`,
                   }}
                   className="text-xs lg:text-sm font-[600] text-[#205CD4]"
@@ -76,10 +70,9 @@ const FacilityProfileMd = ({ facility = [] }) => {
                 </Link>
               </div>
               <Link
-                to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
-                onClick={handleLinkClick}
+                to={`/review/${facility.slug}`}
                 state={{
-                  message: [facility.lastName, "facility", facility.id],
+                  message: [facility.name, "facility", facility.id],
                   from: `/review/${facility.slug}`,
                 }}
               >
@@ -225,8 +218,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
               </div>
 
               <Link
-                to={isLoggedIn ? `/review/${facility.slug}` : "/sign_in"}
-                onClick={handleLinkClick}
+                to={`/review/${facility.slug}`}
                 state={{
                   message: [facility.name, "facility", facility.id],
                   from: `/review/${facility.slug}`,

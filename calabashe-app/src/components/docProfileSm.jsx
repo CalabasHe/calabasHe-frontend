@@ -19,14 +19,11 @@ const DocProfileSm = ({ doctor = [] }) => {
   // };
 
   const writeAReview = (lastName, slug, id) => {
-    if (!isLoggedIn) {
-      toast.info("Sign in to leave a review");
-    }
     const state = {
       message: [lastName, "doctor", id],
       from: `/review/${slug}`,
     };
-    go(isLoggedIn ? `/review/${slug}` : "/sign_in", { state });
+    go(`/review/${slug}`, { state });
   };
 
   const showMore = () => {

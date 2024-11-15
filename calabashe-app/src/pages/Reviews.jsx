@@ -7,6 +7,9 @@ import Header from "../components/Header";
 import Stars from "../components/Star";
 import { getUserId } from "../utils/getUserId";
 import { toast } from "sonner";
+import { useAuth } from "../hooks/useAuth";
+import ReviewPopUp from "../components/ReviewPopUp";
+import { guestReviews } from "../api/anonReviews";
 
 const Review = () => {
   const [title, setTitle] = useState("");
@@ -15,12 +18,13 @@ const Review = () => {
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
   const location = useLocation();
   const go = useNavigate();
+  const isLoggedIn = useAuth();
 
   const prevLocationState = useRef(null);
   const { ratings } = location.state || {};
-
   if (ratings) {
     setRating(ratings);
   }
@@ -29,16 +33,16 @@ const Review = () => {
     const fetchUserId = async () => {
       const userId = await getUserId();
       setUser(userId);
-
-      if (prevLocationState.current?.message !== location.state?.message) {
-        const [revieweeName, revieweeType, revieweeId] =
-          location.state?.message || [];
-        setReviewee({ name: revieweeName, type: revieweeType, id: revieweeId });
-        // setRating(reviewee.rating)
-        // console.log(ratings)
-        prevLocationState.current = location.state;
-      }
     };
+
+    if (prevLocationState.current?.message !== location.state?.message) {
+      const [revieweeName, revieweeType, revieweeId] =
+        location.state?.message || [];
+      setReviewee({ name: revieweeName, type: revieweeType, id: revieweeId });
+      // setRating(reviewee.rating)
+      // console.log(ratings)
+      prevLocationState.current = location.state;
+    }
     fetchUserId();
   }, [location.state]);
 
@@ -46,26 +50,7 @@ const Review = () => {
     setRating(newRating);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (title.length < 5) {
-      toast.error("Title must be at least 5 characters long");
-      return;
-    } else if (description.length < 10) {
-      toast.error("Review must be at least 10 characters long");
-      return;
-    }
-
-    if (rating === 0) {
-      toast.error("Kindly rate the doctor");
-      return;
-    } else if (!user) {
-      toast.error("Sign in to leave a review");
-      go("/sign_in");
-      return;
-    }
-
+  const submitReview = async () => {
     try {
       setIsSubmitting(true);
       if (reviewee.type === "doctor") {
@@ -104,10 +89,52 @@ const Review = () => {
       toast.info(errorMessage);
       go("/");
     }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (title.length < 5) {
+      toast.error("Title must be at least 5 characters long");
+      return;
+    } else if (description.length < 10) {
+      toast.error("Review must be at least 10 characters long");
+      return;
+    }
+
+    if (rating === 0) {
+      toast.error("Kindly rate the doctor");
+      return;
+    }
+    // else if (!user) {
+    //   toast.error("Sign in to leave a review");
+    //   go("/sign_in");
+    //   return;
+    // }
+
+    if (isLoggedIn.isLoggedIn) {
+      submitReview();
+    }
+    else {
+      setShowPopUp(true);
+    }
   };
 
+  const submitGuestReview = async (username, email) => {
+    if (reviewee.type === "doctor") {
+      await guestReviews({ email, username, rating, title, description, doctor: reviewee.id });
+    }
+    else if (reviewee.type === "facility") {
+      await guestReviews({ email, username, rating, title, description, facility: reviewee.id });
+    }
+  };
+
+  const hidePopUp = () => {
+    setShowPopUp(false);
+  }
+
   return (
-    <div className="2xl:container mx-auto 2xl:border-x">
+    <div className="relative 2xl:container mx-auto 2xl:border-x">
       <Header />
       <FadeInOut>
         <div className="z-0 absolute top-[60px] sm:top-[73px] w-[29%]  bg-[#04DA8D] h-16 max-w-[110px] sm:max-w-[180px] sm:h-24"></div>
@@ -119,7 +146,7 @@ const Review = () => {
           </h1>
         </aside>
       </FadeInOut>
-
+      <ReviewPopUp showPopUp={showPopUp} hidePopUp={hidePopUp} submitGuestReview={submitGuestReview} />
       <main className="w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-2  pb-8 flex flex-col gap-12 items-center ">
         <section className="p-4 px-2 md:px-12 lg:px-16 md:py-8 lg:py-12 md:border space-y-2 bg-white shadow-md border rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] ">
           <div className="w-full flex flex-col gap-2">
@@ -231,6 +258,5 @@ const Review = () => {
       <Footer />
     </div>
   );
-};
-
+}
 export default Review;
