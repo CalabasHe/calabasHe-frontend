@@ -5,7 +5,6 @@ export const guestReviews = async (reviewDetails) => {
    const response = await axios.post(
     `${baseUrl}reviews/guest/`,
     reviewDetails)
-    console.log(response)
 }
 
 export const verifyGuestIdentity = async (verificationDetails) => {

@@ -121,11 +121,16 @@ const Review = () => {
   };
 
   const submitGuestReview = async (username, email) => {
-    if (reviewee.type === "doctor") {
-      await guestReviews({ email, username, rating, title, description, doctor: reviewee.id });
+    try {
+      if (reviewee.type === "doctor") {
+        await guestReviews({ email, username, rating, title, description, doctor: reviewee.id });
+      }
+      else if (reviewee.type === "facility") {
+        await guestReviews({ email, username, rating, title, description, facility: reviewee.id });
+      }
     }
-    else if (reviewee.type === "facility") {
-      await guestReviews({ email, username, rating, title, description, facility: reviewee.id });
+    catch  {
+      toast.error('Invalid email')
     }
   };
 

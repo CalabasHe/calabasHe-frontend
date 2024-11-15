@@ -95,7 +95,8 @@ export const fetchReviewCount = async () => {
 export const fetchCurrentReviews = async () => {
   try {
     const response = await axios.get(`/api/reviews/combined-reviews/`);
-    return response.data.results.reviews;
+    // console.log(response.data.results);
+    return response.data.results;
   } catch (error) {
     throw new Error('Error fetching doctors:', error);
   }
