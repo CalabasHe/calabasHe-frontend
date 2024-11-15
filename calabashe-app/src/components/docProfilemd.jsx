@@ -16,10 +16,6 @@ const DocProfileMd = ({ doctor = [] }) => {
   const [sliceNum, setSliceNum] = useState(18);
 
   const handleLinkClick = (newRating) => {
-    if (!isLoggedIn) {
-      toast.info("Sign in to leave a review");
-      return
-    }
     setRating(newRating);
     navigate(`/review/${doctor.slug}`, {
       state: {
@@ -136,7 +132,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                 <div className="w-8 lg:w-12 h-8 lg:h-12 bg-gray-300/40 rounded-full"></div>
 
                 <Link
-                  to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                  to={`/review/${doctor.slug}`}
                   onClick={() => handleLinkClick(rating)}
                   state={{
                     message: [doctor.lastName, "doctor", doctor.id],
@@ -148,7 +144,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                 </Link>
               </div>
               <Link
-                  to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
+                  to={`/review/${doctor.slug}`}
                   onClick={() => handleLinkClick(rating)}
                   state={{
                     message: [doctor.lastName, "doctor", doctor.id],
@@ -319,12 +315,12 @@ const DocProfileMd = ({ doctor = [] }) => {
               </div>
 
               <Link
-                to={isLoggedIn ? `/review/${doctor.slug}` : "/sign_in"}
-                onClick={handleLinkClick}
-                state={{
-                  message: [doctor.lastName, "doctor", doctor.id],
-                  from: `/review/${doctor.slug}`,
-                }}
+                  to={`/review/${doctor.slug}`}
+                  onClick={() => handleLinkClick(rating)}
+                  state={{
+                    message: [doctor.lastName, "doctor", doctor.id],
+                    from: `/review/${doctor.slug}`,
+                  }}
                 className="w-full  hover:scale-[1.01] duration-100"
               >
                 <button

@@ -81,7 +81,6 @@ const DocProfile = () => {
           <DocProfileSm doctor={doctor} />
           <DocProfileMd doctor={doctor} />
         </AnimatePage>
-
         <Footer />
       </div>
     </div>

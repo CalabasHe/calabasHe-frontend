@@ -100,7 +100,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     const code = codeDigits.join('');
 
-    if(code.length === 6){
+    if (code.length === 6) {
       setDisableForm(true);
       if (!passwordError && !confirmPasswordError && password === confirmPassword) {
         try {
@@ -126,7 +126,7 @@ const ForgotPassword = () => {
         toast.error("Please correct the errors before submitting.");
         setDisableForm(false);
       }
-    } else{
+    } else {
       toast.warning('Invalid Code Length')
     }
 
@@ -137,29 +137,29 @@ const ForgotPassword = () => {
     <>
       <Header />
       <form className={`${isHidden ? '' : 'hidden'} h-screen w-screen flex items-center justify-center`} onSubmit={handleSubmit}>
-          <div className="w-[85%] max-w-[500px] flex flex-col rounded-lg gap-7 md:gap-10 p-6 py-8 bg-[#E9E9D8]">
-            <h2 className="text-center text-xl md:text-2xl">Reset Password</h2>
-            <div className="space-y-7 md:space-y-8">
-              <div className=" w-full space-y-1.5">
-                <label className="font-normal text-sm md:text-base lg:text-lg" htmlFor="account_email"> Your Email</label>
-                <input
-                  onChange={e => setEmail(e.target.value)}
-                  className="w-full border rounded px-1 py-2 md:py-3 bg-inherit placeholder:text-sm focus:outline-none"
-                  value={email}
-                  type="email"
-                  autoComplete="off"
-                  spellCheck="false"
-                  id="account_email"
-                  placeholder="Enter calabashe account email"
-                  required
-                  disabled={disableForm}
-                  aria-label="Email"
-                />
-              </div>
-              <button className="bg-[#FEE330] w-full py-2 self-center text-lg font-semibold rounded-md" type="submit" disabled={disableForm}>Request reset code</button>
+        <div className="w-[85%] max-w-[500px] flex flex-col rounded-lg gap-7 md:gap-10 p-6 py-8 bg-[#E9E9D8]">
+          <h2 className="text-center text-xl md:text-2xl">Reset Password</h2>
+          <div className="space-y-7 md:space-y-8">
+            <div className=" w-full space-y-1.5">
+              <label className="font-normal text-sm md:text-base lg:text-lg" htmlFor="account_email"> Your Email</label>
+              <input
+                onChange={e => setEmail(e.target.value)}
+                className="w-full border rounded px-1 py-2 md:py-3 bg-inherit placeholder:text-sm focus:outline-none"
+                value={email}
+                type="email"
+                autoComplete="off"
+                spellCheck="false"
+                id="account_email"
+                placeholder="Enter calabashe account email"
+                required
+                disabled={disableForm}
+                aria-label="Email"
+              />
             </div>
-              <Link className="text-center text-lg text-[#205CD4] underline" to={'/sign_in'}>Back to login page</Link>
+            <button className="bg-[#FEE330] w-full py-2 self-center text-lg font-semibold rounded-md" type="submit" disabled={disableForm}>Request reset code</button>
           </div>
+          <Link className="text-center text-lg text-[#205CD4] underline" to={'/sign_in'}>Back to login page</Link>
+        </div>
       </form>
 
       <form onSubmit={handleReset} className={`${isHidden ? 'hidden' : ''} pt-8 h-screen w-screen flex flex-col gap-4 items-center justify-center`}>
@@ -167,7 +167,7 @@ const ForgotPassword = () => {
           <div className="w-full flex flex-col gap-8 p-6 py-8 bg-white/10">
             <h2 className="text-center text-lg md:text-xl">Reset Password</h2>
             <div className="w-full flex flex-col gap-6">
-              <div  className=" order-2 flex flex-col gap-1">
+              <div className=" order-2 flex flex-col gap-1">
                 <label htmlFor="new_password" className="text-sm md:text-base">New password</label>
                 <input
                   onChange={handlePasswordChange}
@@ -199,23 +199,23 @@ const ForgotPassword = () => {
               <div className="flex flex-col gap-1">
                 <label className="text-sm md:text-base" htmlFor="reset-code"> Enter password reset code</label>
                 <div className="w-full flex justify-between gap-2">
-        {codeDigits.map((_, index) => (
-          <input
-            key={index}
-            onChange={(e) => handleCodeChange(e, index)}
-            onKeyDown={(e) => handleCodeChange(e, index)}
-            value={codeDigits[index]}
-            className="w-10 md:size-14 h-10 border-black bg-inherit border-1 rounded-md text-center text-lg font-medium focus:outline-none"
-            type="text"
-            inputMode="numeric"
-            maxLength={1}
-            id={`reset-code-${index}`}
-          />
-        ))}
-      </div>
+                  {codeDigits.map((_, index) => (
+                    <input
+                      key={index}
+                      onChange={(e) => handleCodeChange(e, index)}
+                      onKeyDown={(e) => handleCodeChange(e, index)}
+                      value={codeDigits[index]}
+                      className="w-10 md:size-14 h-10 border-black bg-inherit border-1 rounded-md text-center text-lg font-medium focus:outline-none"
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={1}
+                      id={`reset-code-${index}`}
+                    />
+                  ))}
+                </div>
 
               </div>
-        <button className="bg-[#FEE330] order-5 w-full mt-5 py-2 self-center text-lg font-semibold rounded-md" type="submit" disabled={disableForm} > Reset password </button>
+              <button className="bg-[#FEE330] order-5 w-full mt-5 py-2 self-center text-lg font-semibold rounded-md" type="submit" disabled={disableForm} > Reset password </button>
             </div>
           </div>
         </div>
