@@ -111,17 +111,18 @@ const AccountClaimForm = () => {
         <h2 className="text-lg font-semibold mb-1">Are you a doctor?</h2>
         <section className="space-y-3 relative text-base placeholder:text-[#ABABAB] placeholder:text-xs">
           <div className="flex justify-evenly gap-5 h-12 sm:h-14 2xl:h-16">
-            <div id="firstName-field" className="firstName-field z-0 cursor-pointer relative w-1/2 h-full">
+            <div className="z-0 cursor-pointer relative w-1/2 h-full">
               <input
                 onChange={handleChange}
                 value={formData.firstName}
                 name="firstName"
                 type="text"
-                className="w-full cursor-pointer h-full rounded-md px-4 focus:outline-none"
-                placeholder={formData.firstName}
+                className="w-full  h-full rounded-md px-4 focus:outline-none"
+                placeholder="First name *"
                 aria-label="Enter first name"
                 spellCheck="false"
-                disabled={true}
+                disabled={disableForm}
+                required
               />
               <span className="firstNameBubble absolute shadow-xl text-lg font-semibold border-2 rounded-md top-0 w-full">{formData.firstName}</span>
             </div>
@@ -132,14 +133,15 @@ const AccountClaimForm = () => {
                 value={formData.lastName}
                 name="lastName"
                 type="text"
-                className="w-full relative -z-1 cursor-pointer h-full rounded-md px-4 focus:outline-none"
+                className="w-full relative -z-1 h-full rounded-md px-4 focus:outline-none"
                 placeholder="Last name *"
                 aria-label="Enter last name"
                 spellCheck="false"
-                disabled={true}
+                disabled={disableForm}
+                required
               />
 
-<span className="lastNameBubble absolute z-30 shadow-xl border-2 font-semibold  text-lg rounded-md top-0 w-full">{formData.lastName}</span>
+{/* <span className="lastNameBubble absolute z-30 shadow-xl border-2 font-semibold  text-lg rounded-md top-0 w-full">{formData.lastName}</span> */}
             </div>
           </div>
           <input
@@ -218,7 +220,7 @@ const AccountClaimForm = () => {
           />
         </svg>
         <div className="hidden lg:inline-block absolute -bottom-[55px] size-[300px] -right-[100px]">
-          <img src={Pill}/>
+          <img src={Pill} alt="Pill"/>
         </div>
       </form>
 

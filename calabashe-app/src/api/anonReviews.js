@@ -5,11 +5,12 @@ export const guestReviews = async (reviewDetails) => {
    const response = await axios.post(
     `${baseUrl}reviews/guest/`,
     reviewDetails)
+    return response
 }
 
 export const verifyGuestIdentity = async (verificationDetails) => {
     const response = await axios.post( 
-        `${baseUrl}reviews/verify/`, // weird behaviour when not using this one
+        `${baseUrl}reviews/verify/`,
         verificationDetails
     )
     return response
