@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import banner_image from '../assets/images/join.jpg'
 const ListPractice = () => {
     return (
-        <div className="flex flex-col md:flex-row  gap-5 md:gap-10 w-[93%] max-w-[1100px] md:pb-16 mb-10 md:mb-5">
-            <div className='md:w-[60%] rounded-sm '>
-                <img src={banner_image} alt="Join calabashe" className='w-full' />
+        <div className="flex flex-col md:flex-row gap-5 md:gap-10 w-[93%] max-w-[1100px] mb-16 border-t border-r border-gray-100 rounded-lg shadow-md">
+            <div 
+                className="md:w-1/2 rounded-l-lg bg-cover bg-center"
+                style={{ backgroundImage: `url(${banner_image})` }}
+            >
             </div>
-            <div className='md:w-1/2 md:self-center leading-10 md:leading-[3rem] pb-5'>
+            <div className='md:w-1/2 md:self-center leading-10 md:leading-[3rem] pb-5 pr-1 rounded-r-lg'>
                 <h3 className='font-semibold md:font-bold my-7 text-2xl uppercase'>Calabashe for Doctors and Clinics</h3>
                 <ul className="flex flex-col gap-2 md:list-none list-disc w-full">
                     <li className="my-0 w-[87%] md:w-full mx-auto">Are you a provider interested in reaching new patients?</li>
@@ -19,7 +21,8 @@ const ListPractice = () => {
                     List your practice on Calabashe
                 </Link>
             </div>
-        </div>);
+        </div>
+    )
 }
 
 export default ListPractice;
