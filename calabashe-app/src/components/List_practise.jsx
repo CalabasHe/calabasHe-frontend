@@ -4,7 +4,7 @@ const ListPractice = () => {
     return (
         <div className="flex flex-col md:flex-row gap-5 md:gap-10 w-[93%] max-w-[1100px] mb-16 border-t border-r border-gray-100 rounded-lg shadow-md">
             <div 
-                className="md:w-1/2 rounded-l-lg bg-cover bg-center"
+                className="md:w-1/2 rounded-l-lg bg-cover bg-center min-h-[400px] md:min-h-[auto]"
                 style={{ backgroundImage: `url(${banner_image})` }}
             >
             </div>
