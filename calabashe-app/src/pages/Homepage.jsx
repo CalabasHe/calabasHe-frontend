@@ -4,7 +4,7 @@ import DoctorQuote from "../components/DoctorQuote";
 import FaqSection from "../components/Faq";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import ListPractice from "../components/List_practise";
+import JoinUs from "../components/JoinUs";
 import RecentReviews from "../components/recentReviews";
 
 const Home = () => {
@@ -24,7 +24,7 @@ const Home = () => {
         <RecentReviews />
         <DoctorQuote />
         <FaqSection />
-        <ListPractice/>
+        <JoinUs/>
       </main>
       <Footer />
     </div>
