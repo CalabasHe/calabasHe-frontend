@@ -10,7 +10,7 @@ const ListPractice = () => {
             </div>
             <div className='md:w-1/2 md:self-center leading-10 md:leading-[3rem] pb-5 pr-1 rounded-r-lg'>
                 <h3 className='font-semibold md:font-bold my-7 text-2xl uppercase'>Calabashe for Doctors and Clinics</h3>
-                <ul className="flex flex-col gap-2 md:list-none list-disc w-full">
+                <ul className="flex flex-col gap-2 list-disc w-full">
                     <li className="my-0 w-[87%] md:w-full mx-auto">Are you a provider interested in reaching new patients?</li>
                     <li className="my-0 w-[87%] md:w-full mx-auto">Do you want to offer online consultations to your patients?</li>
                     <li className="my-0 w-[87%] md:w-full mx-auto"> Reach patients in your area looking for a new provider?</li>
