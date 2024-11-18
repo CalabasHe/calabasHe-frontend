@@ -131,7 +131,6 @@ const Review = () => {
     }
     catch  {
       toast.error('Invalid email')
-      setP
       return;
     }
   };
