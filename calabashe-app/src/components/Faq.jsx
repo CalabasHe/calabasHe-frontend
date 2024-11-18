@@ -1,7 +1,6 @@
 const FaqSection = () => {
   return (
-    <>
-      <section className="w-full flex flex-col items-center p-3 py-8 md:py-16 space-y-6 md:space-y-7">
+      <section className="w-full flex flex-col items-center p-3 py-8 md:py-16 space-y-6 md:space-y-7 border-b border-gray-200">
         <h2 className="w-full text-center font-semibold text-lg sm:text-xl md:text-2xl">
           Frequently Asked Questions
         </h2>
@@ -33,7 +32,6 @@ const FaqSection = () => {
           </article>
         </div>
       </section>
-    </>
   );
 };
 
