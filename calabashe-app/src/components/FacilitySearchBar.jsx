@@ -5,6 +5,7 @@ import { getFacilities, getLocations, getServices } from '../api/getSuggestions'
 import { Suggestions } from './suggestions';
 import { motion } from 'framer-motion';
 import Alert from './alert';
+import { debounce } from 'lodash';
 
 const FacilitySearchBar = ({ submitFunc, resetFunc }) => {
     const navigate = useNavigate();
@@ -34,36 +35,37 @@ const FacilitySearchBar = ({ submitFunc, resetFunc }) => {
 
     }, [location.search]);
 
-    const handleFacilityChange = async (e) => {
+    const handleFacilityChange = (e) => {
         const value = e.target.value;
         setFacility(value);
         if (value.trim()) {
-            const facilityResults = await getFacilities(value);
-            setSuggestions(prev => ({ ...prev, allFacilities: facilityResults }));
+            debouncedGetFacilities(value)
         } else {
             setSuggestions(prev => ({ ...prev, allFacilities: [] }));
+            debouncedGetFacilities.cancel()
         }
     };
 
-    const handleServiceChange = async (e) => {
+    const handleServiceChange = (e) => {
         const value = e.target.value;
         setService(value);
         if (value.trim()) {
-            const serviceResults = await getServices(value);
-            setSuggestions(prev => ({ ...prev, allServices: serviceResults }));
+            debouncedGetServices(value);
         } else {
             setSuggestions(prev => ({ ...prev, allServices: [] }));
+            debouncedGetServices.cancel()
         }
     };
 
     const handleLocation = (e) => {
         const value = e.target.value;
         setLocationInput(value);
+        
         if (value.trim()) {
-            const locationResults = getLocations(value);
-            setSuggestions(prev => ({ ...prev, allLocations: locationResults }));
+            debouncedGetLocations(value);
         } else {
             setSuggestions(prev => ({ ...prev, allLocations: [] }));
+            debouncedGetLocations.cancel();
         }
     };
 
@@ -158,6 +160,44 @@ const FacilitySearchBar = ({ submitFunc, resetFunc }) => {
             setActiveInput(null);
         }
     }, [facility, service]);
+
+    const debouncedGetFacilities = useRef(
+        debounce(async (value) => {
+            if (!value.trim()) {
+                setSuggestions(prev => ({ ...prev, allFacilities: [] }));
+                return;
+            }
+
+            const allFacilities = await getFacilities(value);
+            setSuggestions(prev => ({ ...prev, allFacilities }));
+        }, 300)
+    ).current;
+
+    const debouncedGetServices = useRef(
+        debounce(async (value) => {
+            if (!value.trim()) {
+                setSuggestions(prev => ({ ...prev, allServices: [] }));
+                return;
+            }
+
+            const allServices = await getServices(value);
+            setSuggestions(prev => ({ ...prev, allServices }));
+        }, 300)
+    ).current;
+
+    const debouncedGetLocations = useRef(
+        debounce(async (value) => {
+            if (!value.trim()) {
+                setSuggestions(prev => ({ ...prev, allLocations: [] }));
+                return;
+            }
+
+            const allLocations = await getLocations(value);
+            setSuggestions(prev => ({ ...prev, allLocations }));
+        }, 300)
+    ).current;
+
+
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-3 mt-4 md:mt-0">
