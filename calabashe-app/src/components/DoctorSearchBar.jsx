@@ -5,11 +5,7 @@ import { getConditions, getDoctorsNames, getLocations, getSpecialties } from '..
 import { Suggestions, QuerySuggestions } from './suggestions';
 import { motion } from 'framer-motion';
 import Alert from './alert';
-<<<<<<< HEAD
-import { useDebounce } from '../hooks/useDebounce';
-=======
 import { debounce } from 'lodash';
->>>>>>> 0de7c3fec07de323455f65902ba4450e6dfe60e5
 
 const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
     const navigate = useNavigate();
