@@ -5,7 +5,11 @@ import { getConditions, getDoctorsNames, getLocations, getSpecialties } from '..
 import { Suggestions, QuerySuggestions } from './suggestions';
 import { motion } from 'framer-motion';
 import Alert from './alert';
+<<<<<<< HEAD
 import { useDebounce } from '../hooks/useDebounce';
+=======
+import { debounce } from 'lodash';
+>>>>>>> 0de7c3fec07de323455f65902ba4450e6dfe60e5
 
 const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
     const navigate = useNavigate();
@@ -34,40 +38,43 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
 
     }, [location.search]);
 
-
-
     const handleSearchQuery = (e) => {
         const value = e.target.value;
         setSearchQuery(value);
-        if (value.trim() !== '') {
-            debouncedGetConditions(value);
+        
+        if (value.trim()) {
+            debouncedGetSearchQuery(value);
         } else {
             setSuggestions(prev => ({ 
                 ...prev, 
                 allConditions: [], 
                 allDoctorsNames: [] 
             }));
+            debouncedGetSearchQuery.cancel();
         }
     };
 
     const handleSpecialty = (e) => {
         const value = e.target.value;
         setSpecialty(value);
-        if (value.trim() !== '') {
+        
+        if (value.trim()) {
             debouncedGetSpecialties(value);
         } else {
             setSuggestions(prev => ({ ...prev, allSpecialties: [] }));
+            debouncedGetSpecialties.cancel();
         }
     };
 
     const handleLocation = (e) => {
         const value = e.target.value;
         setLocationInput(value);
-
-        if (value.trim() !== '') {
+        
+        if (value.trim()) {
             debouncedGetLocations(value);
         } else {
             setSuggestions(prev => ({ ...prev, allLocations: [] }));
+            debouncedGetLocations.cancel();
         }
     };
 
@@ -164,28 +171,48 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
         }
     }, [searchQuery, specialty]);
 
-    //debouncing
-    const debouncedGetConditions = useDebounce((value) => {
-        const fetchSuggestions = async () => {
+
+
+    const debouncedGetSearchQuery = useRef(
+        debounce(async (value) => {
+            if (!value.trim()) {
+                setSuggestions(prev => ({ 
+                    ...prev, 
+                    allConditions: [], 
+                    allDoctorsNames: [] 
+                }));
+                return;
+            }
+
             const allConditions = await getConditions(value);
             const allDoctorsNames = await getDoctorsNames(value);
             setSuggestions(prev => ({ ...prev, allConditions, allDoctorsNames }));
-        };
-        fetchSuggestions();
-    }, 300);
+        }, 300)
+    ).current;
 
-    const debouncedGetSpecialties = useDebounce((value) => {
-        const fetchSpecialtySuggestions = async () => {
+    const debouncedGetSpecialties = useRef(
+        debounce(async (value) => {
+            if (!value.trim()) {
+                setSuggestions(prev => ({ ...prev, allSpecialties: [] }));
+                return;
+            }
+
             const allSpecialties = await getSpecialties(value);
             setSuggestions(prev => ({ ...prev, allSpecialties }));
-        };
-        fetchSpecialtySuggestions();
-    }, 300);
+        }, 300)
+    ).current;
 
-    const debouncedGetLocations = useDebounce((value) => {
-        const allLocations = getLocations(value);
-        setSuggestions(prev => ({ ...prev, allLocations }));
-    }, 300);
+    const debouncedGetLocations = useRef(
+        debounce((value) => {
+            if (!value.trim()) {
+                setSuggestions(prev => ({ ...prev, allLocations: [] }));
+                return;
+            }
+            const allLocations = getLocations(value);
+            setSuggestions(prev => ({ ...prev, allLocations }));
+        }, 300)
+    ).current;
+    
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4">
