@@ -120,6 +120,10 @@ const fetchSpecialties = async () => {
 
 export const getConditions = async (value) => {
     const lowercaseValue = value.toLowerCase();
+    
+    if (Object.keys(conditionsCache).some(condition => condition.startsWith(lowercaseValue[0]))) {
+        return Object.values(conditionsCache).filter(condition => condition.toLowerCase().startsWith(lowercaseValue));
+    }
 
     while (
         conditionsNextPage &&
@@ -159,7 +163,17 @@ export const getServices = async (value) => {
 
 export const getDoctorsNames = async (value) => {
     const lowercaseValue = value.toLowerCase();
-    // console.log(value)
-    await fetchPaginatedDoctorsNames();
+
+    if (Object.keys(doctorsNamesCache).some(name => name.startsWith(lowercaseValue[0]))) {
+        return Object.values(doctorsNamesCache).filter(name => name.toLowerCase().startsWith(lowercaseValue));
+    }
+
+    while (
+        doctorsNamesNextPage &&
+        !Object.keys(doctorsNamesCache).some(name => name.startsWith(lowercaseValue[0]))
+    ) {
+        await fetchPaginatedDoctorsNames();
+    }
+
     return Object.values(doctorsNamesCache).filter(name => name.toLowerCase().startsWith(lowercaseValue));
-}
+};

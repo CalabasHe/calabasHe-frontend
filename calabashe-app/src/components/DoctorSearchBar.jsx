@@ -34,15 +34,20 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
     }, [location.search]);
 
 
+
     const handleSearchQuery = async (e) => {
         const value = e.target.value;
         setSearchQuery(value);
-        if (value.trim()) {
+        if (value.trim() !== '') {
             const allConditions = await getConditions(value);
             const allDoctorsNames = await getDoctorsNames(value);
             setSuggestions(prev => ({ ...prev, allConditions, allDoctorsNames }));
         } else {
-            setSuggestions(prev => ({ ...prev, allConditions: [], allDoctorsNames: [] }));
+            setSuggestions(prev => ({ 
+                ...prev, 
+                allConditions: [], 
+                allDoctorsNames: [] 
+            }));
         }
     };
 
