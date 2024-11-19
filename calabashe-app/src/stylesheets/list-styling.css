@@ -1,0 +1,23 @@
+.list-image-checkmark {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-image-checkmark li {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.list-image-checkmark li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0,0,256,256"><g fill="%23027862" fill-rule="nonzero"><g transform="scale(10.66667,10.66667)"><path d="M12,1c-6.0625,0 -11,4.9375 -11,11c0,6.0625 4.9375,11 11,11c6.0625,0 11,-4.9375 11,-11c0,-6.0625 -4.9375,-11 -11,-11zM12,3c4.98047,0 9,4.01953 9,9c0,4.98047 -4.01953,9 -9,9c-4.98047,0 -9,-4.01953 -9,-9c0,-4.98047 4.01953,-9 9,-9zM17.40625,8.1875l-6.40625,6.375l-3.28125,-3.28125l-1.4375,1.4375l4,4l0.71875,0.6875l0.71875,-0.6875l7.09375,-7.125z"></path></g></g></svg>') no-repeat center;
+    background-size: contain;
+}
+
