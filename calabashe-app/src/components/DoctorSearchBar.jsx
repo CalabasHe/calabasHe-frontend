@@ -5,6 +5,7 @@ import { getConditions, getDoctorsNames, getLocations, getSpecialties } from '..
 import { Suggestions, QuerySuggestions } from './suggestions';
 import { motion } from 'framer-motion';
 import Alert from './alert';
+import { useDebounce } from '../hooks/useDebounce';
 
 const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
     const navigate = useNavigate();
@@ -35,13 +36,11 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
 
 
 
-    const handleSearchQuery = async (e) => {
+    const handleSearchQuery = (e) => {
         const value = e.target.value;
         setSearchQuery(value);
         if (value.trim() !== '') {
-            const allConditions = await getConditions(value);
-            const allDoctorsNames = await getDoctorsNames(value);
-            setSuggestions(prev => ({ ...prev, allConditions, allDoctorsNames }));
+            debouncedGetConditions(value);
         } else {
             setSuggestions(prev => ({ 
                 ...prev, 
@@ -51,12 +50,11 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
         }
     };
 
-    const handleSpecialty = async (e) => {
+    const handleSpecialty = (e) => {
         const value = e.target.value;
         setSpecialty(value);
-        if (value.trim()) {
-            const allSpecialties = await getSpecialties(value);
-            setSuggestions(prev => ({ ...prev, allSpecialties }));
+        if (value.trim() !== '') {
+            debouncedGetSpecialties(value);
         } else {
             setSuggestions(prev => ({ ...prev, allSpecialties: [] }));
         }
@@ -66,9 +64,8 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
         const value = e.target.value;
         setLocationInput(value);
 
-        if (value.trim()) {
-            const allLocations = getLocations(value);
-            setSuggestions(prev => ({ ...prev, allLocations }));
+        if (value.trim() !== '') {
+            debouncedGetLocations(value);
         } else {
             setSuggestions(prev => ({ ...prev, allLocations: [] }));
         }
@@ -166,6 +163,29 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
             setActiveInput(null);
         }
     }, [searchQuery, specialty]);
+
+    //debouncing
+    const debouncedGetConditions = useDebounce((value) => {
+        const fetchSuggestions = async () => {
+            const allConditions = await getConditions(value);
+            const allDoctorsNames = await getDoctorsNames(value);
+            setSuggestions(prev => ({ ...prev, allConditions, allDoctorsNames }));
+        };
+        fetchSuggestions();
+    }, 300);
+
+    const debouncedGetSpecialties = useDebounce((value) => {
+        const fetchSpecialtySuggestions = async () => {
+            const allSpecialties = await getSpecialties(value);
+            setSuggestions(prev => ({ ...prev, allSpecialties }));
+        };
+        fetchSpecialtySuggestions();
+    }, 300);
+
+    const debouncedGetLocations = useDebounce((value) => {
+        const allLocations = getLocations(value);
+        setSuggestions(prev => ({ ...prev, allLocations }));
+    }, 300);
 
     return (
         <div className="max-w-[1100px] mx-auto block w-full pb-4">
