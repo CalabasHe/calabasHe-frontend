@@ -267,6 +267,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               type="text"
               placeholder="Search for Doctors, Hospitals or Services"
               spellCheck="false"
+              autoComplete="off"
             />
             <button
               className="self-end h-[fit-content] pt-1"
