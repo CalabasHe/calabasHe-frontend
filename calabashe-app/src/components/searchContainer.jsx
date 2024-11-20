@@ -1,26 +1,18 @@
 import { useState } from "react";
 import SearchButtonSm from './searchButton';
 import SearchBarSm from './searchBarSm';
-
+import { useBannerVisibility } from "../context/BannerVisibilityContext";
 const SearchContainer = () => {
-  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
-
-  const handleSearchClick = () => {
-    setIsSearchBarVisible(true);
-  };
-
-  const handleSearchBarClose = () => {
-    setIsSearchBarVisible(false);
-  };
+  const { isSearchBarVisible, showSearchBar, hideSearchBar } = useBannerVisibility();
 
   return (
     <div>
-      <SearchButtonSm onSearchClick={handleSearchClick} />
+      <SearchButtonSm onSearchClick={showSearchBar} />
       <SearchBarSm 
         isVisible={isSearchBarVisible} 
-        onClose={handleSearchBarClose}
+        onClose={hideSearchBar}
         display={isSearchBarVisible ? "block" : "hidden"}
-        setDisplay={(value) => setIsSearchBarVisible(value === "block")}
+        setDisplay={(value) => value === "block" ? showSearchBar() : hideSearchBar()}
       />
     </div>
   );

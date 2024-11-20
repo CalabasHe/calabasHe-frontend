@@ -1,6 +1,8 @@
 import checkmark from "../assets/icons/checkmark.svg"
 import { Link } from "react-router-dom";
+import { useBannerVisibility } from "../context/BannerVisibilityContext";
 const WhyUs = () => {
+    const { showSearchBar } = useBannerVisibility();
     return (
         <div className="w-[90%] mb:w-[43%] max-w-[650px]  mb-12 border border-gray-50 mx-auto ">
             <h1 className="font-bold text-2xl w-max mx-auto mb-5">Why Calabashe</h1>
@@ -22,7 +24,8 @@ const WhyUs = () => {
                     Review doctors to let others know and choose
                 </li>
             </ul>
-            <Link className="rounded-full my-8 p-3 bg-green-700 block w-[50%] md:w-[35%] text-center text-white font-bold mx-auto">Leave a  Review</Link>
+            <button  onClick={showSearchBar} className="rounded-full my-8 p-3 bg-green-700 block w-[50%] md:w-[35%] text-center text-white font-bold mx-auto"
+            >Leave a  Review</button>
         </div >
     );
 }
