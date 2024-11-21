@@ -35,7 +35,7 @@ const NavigationButton = ({ direction, onClick, disabled }) => (
   <button
     onClick={onClick}
     disabled={disabled}
-    className={`hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    className={`hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 disabled:border-none border border-green-700 transition-colors ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
     aria-label={`Scroll ${direction}`}
   >
     {direction === 'left' ? <FaChevronLeft /> : <FaChevronRight />}

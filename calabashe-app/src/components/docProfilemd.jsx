@@ -240,7 +240,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                 {doctor.reviews.slice(0, 4).map((review) => (
                   <div
                     key={review.id}
-                    className="w-full border shadow-md bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
+                    className="w-full border bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
                   >
                     <div className="flex justify-between items-center ">
                       <StarRating rating={review.rating} />
