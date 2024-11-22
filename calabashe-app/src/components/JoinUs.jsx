@@ -7,7 +7,7 @@ const JoinUs = () => {
         <div className='w-full flex items-center justify-center py-14 mb-5'>
             <div className="flex flex-col md:flex-row gap-5 md:gap-10 w-[93%] max-w-[1100px] h-full border-t border-r border-gray-100 rounded-lg shadow-md border bg-white">
                 <div
-                    className="md:w-1/2 rounded-t-lg md:rounded-l-lg bg-cover bg-center min-h-[400px] md:min-h-[auto]"
+                    className="md:w-1/2 rounded-t-lg md:rounded-r-none md:rounded-l-lg bg-cover bg-center min-h-[400px] md:min-h-[auto]"
                     style={{ backgroundImage: `url(${banner_image})` }}
                 >
                 </div>
