@@ -1,4 +1,6 @@
 // Initialize caches from localStorage if available
+import Fuse from "fuse.js";
+import FuzzySort from "fuzzysort"
 let conditionsCache = JSON.parse(localStorage.getItem('conditionsCache')) || {};
 let specialtiesCache = JSON.parse(localStorage.getItem('specialtiesCache')) || {};
 let locationsCache = JSON.parse(localStorage.getItem('locationsCache')) || {};
@@ -29,93 +31,130 @@ if (!Object.keys(locationsCache).length) {
     localStorage.setItem('locationsCache', JSON.stringify(locationsCache));
 }
 
+// for one word values
+const fuseSearch = (objArr, searchString) => {
+    const options = {
+        threshold: 0.3, // Lower values = stricter matches
+        isCaseSensitive: false,
+      };
+    const arr = Object.keys(objArr);
+    const fuse = new Fuse(arr, options);
+    const results = fuse.search(searchString);
+    return results.map(result => objArr[result.item]);
+}
+
+// for spaced values
+const fuzzySort = (objArr, searchString) => {
+    const arr = Object.keys(objArr);
+    const results = FuzzySort.go(searchString, arr, {threshold: -10000});
+    return results.map(result => objArr[result.target]);
+}
+
 
 export const getLocations = (value) => {
-    const lowercaseValue = value.toLowerCase();
-    return Object.values(locationsCache).filter(location => location.toLowerCase().startsWith(lowercaseValue));
+    return fuseSearch(locationsCache, value);
 };
 
 
 const fetchPaginatedConditions = async () => {
     if (!conditionsNextPage) return;
 
-    const response = await fetch(conditionsNextPage);
-    const data = await response.json();
-
-    const newConditions = data.results.map(item => {
-        const bracketIndex = item.name.indexOf('(');
-        return bracketIndex !== -1 ? item.name.slice(0, bracketIndex) : item.name;
-    });
-
-
-    newConditions.forEach(condition => conditionsCache[condition.toLowerCase()] = condition);
-    localStorage.setItem('conditionsCache', JSON.stringify(conditionsCache));
-
-
-    conditionsNextPage = data.next;
-    localStorage.setItem('conditionsNextPage', data.next || '');
+    try {
+        const response = await fetch(conditionsNextPage);
+        const data = await response.json();
+    
+        const newConditions = data.results.map(item => {
+            const bracketIndex = item.name.indexOf('(');
+            return bracketIndex !== -1 ? item.name.slice(0, bracketIndex) : item.name;
+        });
+    
+    
+        newConditions.forEach(condition => conditionsCache[condition.toLowerCase()] = condition);
+        localStorage.setItem('conditionsCache', JSON.stringify(conditionsCache));
+    
+    
+        conditionsNextPage = data.next;
+        localStorage.setItem('conditionsNextPage', data.next || '');
+    } catch (error) {
+        throw error
+    }
 };
 
 const fetchPaginatedDoctorsNames = async () => {
     if (!doctorsNamesNextPage) return;
 
-    const response = await fetch(doctorsNamesNextPage);
-    const data = await response.json();
-
-    const fullNames = data.results.map(item => {
-        const fullName = item.first_name + " " + item.last_name;
-        return fullName;
-    });
-    fullNames.forEach(name => doctorsNamesCache[name.toLowerCase()] = name);
-    localStorage.setItem('doctorsNamesCache', JSON.stringify(doctorsNamesCache));
-
-
-    doctorsNamesNextPage = data.next;
-    localStorage.setItem('doctorsNamesNextPage', data.next || '');
+    try {
+        const response = await fetch(doctorsNamesNextPage);
+        const data = await response.json();
+    
+        const fullNames = data.results.map(item => {
+            const fullName = item.first_name + " " + item.last_name;
+            return fullName;
+        });
+        fullNames.forEach(name => doctorsNamesCache[name.toLowerCase()] = name);
+        localStorage.setItem('doctorsNamesCache', JSON.stringify(doctorsNamesCache));
+    
+    
+        doctorsNamesNextPage = data.next;
+        localStorage.setItem('doctorsNamesNextPage', data.next || '');
+    } catch (err) {
+        throw err;
+    }
 };
 
 
 const fetchPaginatedFacilities = async () => {
     if (!facilityNextPage) return; 
 
-    const response = await fetch(facilityNextPage);
-    const data = await response.json();
-
-
-    data.results.forEach(facility => facilitiesCache[facility.name.toLowerCase()] = facility.name);
-    localStorage.setItem('facilitiesCache', JSON.stringify(facilitiesCache));
-
-    facilityNextPage = data.next;
-    localStorage.setItem('facilityNextPage', data.next || '');
+    try {
+        const response = await fetch(facilityNextPage);
+        const data = await response.json();
+    
+    
+        data.results.forEach(facility => facilitiesCache[facility.name.toLowerCase()] = facility.name);
+        localStorage.setItem('facilitiesCache', JSON.stringify(facilitiesCache));
+    
+        facilityNextPage = data.next;
+        localStorage.setItem('facilityNextPage', data.next || '');
+    } catch (err) {
+        throw err
+    }
 };
 
 export const fetchPaginatedServices = async () => {
     if (!servicesNextPage) return;
-    const response = await fetch(servicesNextPage);
-    const data = await response.json();
+    try {
+        const response = await fetch(servicesNextPage);
+        const data = await response.json();
+        
     
-
-    data.results.forEach(service => {
-        servicesCache[service.name.toLowerCase()] = service.name
-    });
-    localStorage.setItem('servicesCache', JSON.stringify({}));
-
+        data.results.forEach(service => {
+            servicesCache[service.name.toLowerCase()] = service.name
+        });
+        localStorage.setItem('servicesCache', JSON.stringify(servicesCache))
+    } catch(err) {
+        throw err;
+    }
 };
 
 const fetchSpecialties = async () => {
     if (specialtiesFetched) return;
 
-    const response = await fetch('https://calabashe-api.onrender.com/api/specialties/');
-    const data = await response.json();
-
-    data.results.forEach(item => {
-        const bracketIndex = item.name.indexOf('(');
-        const specialty = bracketIndex !== -1 ? item.name.slice(0, bracketIndex) : item.name;
-        specialtiesCache[specialty.toLowerCase()] = specialty;
-    });
-
-    localStorage.setItem('specialtiesCache', JSON.stringify(specialtiesCache));
-    specialtiesFetched = true;
+    try {
+        const response = await fetch('https://calabashe-api.onrender.com/api/specialties/');
+        const data = await response.json();
+    
+        data.results.forEach(item => {
+            const bracketIndex = item.name.indexOf('(');
+            const specialty = bracketIndex !== -1 ? item.name.slice(0, bracketIndex) : item.name;
+            specialtiesCache[specialty.toLowerCase()] = specialty;
+        });
+    
+        localStorage.setItem('specialtiesCache', JSON.stringify(specialtiesCache));
+        specialtiesFetched = true;
+    } catch (err) {
+        throw err;
+    }
 };
 
 export const getConditions = async (value) => {
@@ -132,41 +171,34 @@ export const getConditions = async (value) => {
         await fetchPaginatedConditions();
     }
 
-    return Object.values(conditionsCache).filter(condition => condition.toLowerCase().startsWith(lowercaseValue));
+    return fuseSearch(conditionsCache, value);
 };
 
 export const getSpecialties = async (value) => {
     await fetchSpecialties();
-    const lowercaseValue = value.toLowerCase();
-
-    return Object.values(specialtiesCache).filter(specialty => specialty.toLowerCase().startsWith(lowercaseValue));
+    return fuseSearch(specialtiesCache, value)
 };
 
 export const getFacilities = async (value) => {
     const lowercaseValue = value.toLowerCase();
-
     while (
         facilityNextPage &&
         !Object.keys(facilitiesCache).some(facility => facility.startsWith(lowercaseValue[0]))
     ) {
         await fetchPaginatedFacilities();
     }
-    return Object.values(facilitiesCache).filter(facility => facility.toLowerCase().startsWith(lowercaseValue));
+    return fuseSearch(facilitiesCache, value);
 };
 
 export const getServices = async (value) => {
-    const lowercaseValue = value.toLowerCase();
+    // const lowercaseValue = value.toLowerCase();
         await fetchPaginatedServices();
     // console.log(servicesCache)
-    return Object.values(servicesCache).filter(service => service.toLowerCase().startsWith(lowercaseValue));
+    return fuseSearch(servicesCache, value);
 };
 
 export const getDoctorsNames = async (value) => {
     const lowercaseValue = value.toLowerCase();
-
-    if (Object.keys(doctorsNamesCache).some(name => name.startsWith(lowercaseValue[0]))) {
-        return Object.values(doctorsNamesCache).filter(name => name.toLowerCase().startsWith(lowercaseValue));
-    }
 
     while (
         doctorsNamesNextPage &&
@@ -174,6 +206,6 @@ export const getDoctorsNames = async (value) => {
     ) {
         await fetchPaginatedDoctorsNames();
     }
-
-    return Object.values(doctorsNamesCache).filter(name => name.toLowerCase().startsWith(lowercaseValue));
+    
+    return fuzzySort(doctorsNamesCache, value);
 };

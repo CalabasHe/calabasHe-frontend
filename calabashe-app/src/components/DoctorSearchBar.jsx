@@ -299,7 +299,7 @@ const DoctorSearchBar = ({ submitFunc, resetFunc}) => {
                 </div>
 
                 <div className='flex items-center flex-col md:flex-row md:w-[15%] lg:w-[12%] gap-1 py-1 md:py-0'>
-                    <div className='bg-custom-yellow hover:bg-yellow-400 rounded-md md:border-0 md:bg-white md:hover:bg-white w-full py-2'>
+                    <div className='bg-yellow-100 hover:bg-yellow-400 rounded-md md:border-0 md:bg-white md:hover:bg-white w-full py-2'>
                         <button size="icon" className="w-full text-center" onClick={handleReset}>
                             <span className='font-semibold md:font-normal'>Reset</span>
                         </button>

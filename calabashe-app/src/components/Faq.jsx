@@ -5,7 +5,7 @@ const FaqSection = () => {
           Frequently Asked Questions
         </h2>
         <div className="max-w-[450px] md:max-w-[80%] lg:max-w-[1100px] space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <article className="duration-300 cursor-pointer transform-gpu antialiased flex flex-col md:hover:scale-105 md:hover:ring ring-green-100 items-center gap-2 p-4 bg-white py-6 rounded-lg shadow-md">
+          <article className="duration-300 cursor-pointer transform-gpu antialiased flex flex-col md:hover:scale-105 md:hover:ring ring-green-300  items-center gap-2 p-4 bg-white py-6 rounded-lg shadow-md">
             <div className="duration-300">
               <h3 className="pt-3 pb-7 text-sm md:text-base text-center font-medium">
                 How can I rate a doctor?
@@ -13,7 +13,7 @@ const FaqSection = () => {
               <p className="text-xs md:text-sm text-center">{`After visiting a doctor, log into your account, find the doctor's page and click on 'Rate This Doctor' to start your review.`}</p>
             </div>
           </article>
-          <article className="duration-200 cursor-pointer transform-gpu antialiased flex flex-col md:hover:scale-105 md:hover:ring ring-green-100 items-center gap-2 p-4 bg-white py-6 rounded-lg shadow-md">
+          <article className="duration-200 cursor-pointer transform-gpu antialiased flex flex-col md:hover:scale-105 md:hover:ring ring-green-300  items-center gap-2 p-4 bg-white py-6 rounded-lg shadow-md">
             <div className="duration-300">
               <h3 className="pt-3 pb-7 text-sm md:text-base text-center font-medium">
                 How many reviews can I make a day?
@@ -22,7 +22,7 @@ const FaqSection = () => {
             </div>
           </article>
 
-          <article className="duration-200 cursor-pointer transform-gpu antialiased flex flex-col md:hover:scale-105 md:hover:ring ring-green-100 items-center gap-2 p-4 bg-white py-6 rounded-lg shadow-md">
+          <article className="duration-200 cursor-pointer transform-gpu antialiased flex flex-col md:hover:scale-105 md:hover:ring ring-green-300 items-center gap-2 p-4 bg-white py-6 rounded-lg shadow-md">
             <div className="duration-300">
               <h3 className="pt-3 pb-7 text-sm md:text-base text-center font-medium">
                 Is this service really free?
