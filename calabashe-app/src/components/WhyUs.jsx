@@ -5,7 +5,7 @@ const WhyUs = () => {
     const { showSearchBar } = useBannerVisibility();
     return (
         <div className="w-[90%] mb:w-[43%] max-w-[650px]  mb-12 border border-gray-50 mx-auto ">
-            <h1 className="font-bold text-2xl w-max mx-auto mb-5">Why Calabashe&nbsp;?</h1>
+            <h1 className="font-bold text-2xl w-max mx-auto mb-5">Why Calabashe?</h1>
             <ul className="flex flex-col gap-6 w-full list-none shadow-md px-10 py-12 rounded-xl bg-white">
                 <li className="my-0 w-[87%] md:w-full mx-auto flex items-center gap-2">
                     <img src={checkmark} alt="checkmark" aria-hidden className='md:w-5 self-start pt-[0.2rem] md:pt-0 md:self-center' />

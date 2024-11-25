@@ -10,7 +10,8 @@ export default {
         text: 'text',
       },
       fontFamily: {
-        'poppins': ["Poppins", 'sans-serif']
+        'poppins': ["Poppins", 'sans-serif'],
+        'yellow-tail': ['Yellowtail', 'sans-serif'],
       },
       colors: {
         'custom-yellow': '#FEE330'
