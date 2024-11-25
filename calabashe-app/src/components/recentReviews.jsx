@@ -93,23 +93,92 @@ const RecentReviews = () => {
 
   useEffect(() => {
     const loadReviews = async () => {
-      const apiReviews = await fetchReviewsFromAPI();
-      if (apiReviews.length !== reviews.length || JSON.stringify(apiReviews) !== JSON.stringify(reviews)) {
-        setReviews(apiReviews);
-        updateLocalStorage(apiReviews);
+      try {
+        const apiReviews = await fetchReviewsFromAPI();
+
+        if (JSON.stringify(apiReviews) !== JSON.stringify(reviews)) {
+          setReviews(apiReviews);
+          updateLocalStorage(apiReviews);
+        }
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+        setError("Failed to load reviews.");
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
-    if (storedReviews.length === 0) {
+    if (!storedReviews.length) {
+      setIsLoading(true);
       loadReviews();
-    } else {
-      setIsLoading(false);
     }
 
     const fetchInterval = setInterval(loadReviews, 120000);
     return () => clearInterval(fetchInterval);
   }, []);
+
+  useEffect(() => {
+    const loadReviews = async () => {
+      try {
+        const apiReviews = await fetchReviewsFromAPI();
+
+        // Check if reviews differ before updating state and localStorage
+        if (JSON.stringify(apiReviews) !== JSON.stringify(reviews)) {
+          setReviews(apiReviews);
+          updateLocalStorage(apiReviews);
+        }
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+        setError("Failed to load reviews.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Initial fetch if no stored reviews
+    if (!storedReviews.length) {
+      setIsLoading(true);
+      loadReviews();
+    }
+
+    // Refetch reviews every 2 minutes
+    const fetchInterval = setInterval(loadReviews, 120000);
+
+    return () => clearInterval(fetchInterval);
+  }, [reviews]); // Add `reviews` as a dependency
+
+  // Listen for local storage changes (for cross-tab synchronization)
+  useEffect(() => {
+    const syncReviews = () => {
+      const localReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      if (JSON.stringify(localReviews) !== JSON.stringify(reviews)) {
+        setReviews(localReviews);
+      }
+    };
+
+    window.addEventListener("storage", syncReviews);
+
+    return () => {
+      window.removeEventListener("storage", syncReviews);
+    };
+  }, [reviews]);
+
+  useEffect(() => {
+    const syncReviews = () => {
+      const localReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      if (JSON.stringify(localReviews) !== JSON.stringify(reviews)) {
+        setReviews(localReviews);
+      }
+    };
+    
+    window.addEventListener("storage", syncReviews);
+
+    return () => {
+      window.removeEventListener("storage", syncReviews);
+    };
+  }, [reviews]);
+
+
 
   if (isLoading) return (
     <div className="h-[120px] w-full flex items-center justify-center">
@@ -152,7 +221,7 @@ const RecentReviews = () => {
           </div> */}
 
           <div className="w-full overflow-x-auto overflow-y-hidden scrollbar-thin snap-x snap-mandatory lg:overflow-x-hidden pt-2 lg:px-4">
-            <div 
+            <div
               className="grid grid-rows-2 pb-4 auto-cols-[260px] grid-flow-col gap-2 lg:transition-transform lg:duration-300"
               style={{
                 transform: `translateX(-${currentIndex * 268}px)`,

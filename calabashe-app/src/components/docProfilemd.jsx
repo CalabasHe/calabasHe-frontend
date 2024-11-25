@@ -236,8 +236,8 @@ const DocProfileMd = ({ doctor = [] }) => {
             )}
 
             <section className="w-full ">
-              <div className="w-full flex flex-col gap-4  lg:gap-6 ">
-                {doctor.reviews.slice(0, 4).map((review) => (
+              <div className="w-full flex flex-col gap-4  lg:gap-6 h-[400px] overflow-y-auto scrollbar-thin">
+                {doctor.reviews.slice(0, 10).map((review) => (
                   <div
                     key={review.id}
                     className="w-full border bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "

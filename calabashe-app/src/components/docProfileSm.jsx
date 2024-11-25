@@ -201,8 +201,8 @@ const DocProfileSm = ({ doctor = [] }) => {
                 All reviews have been left by actual patients.
               </p>
             )}
-            <div className="flex flex-col gap-4 md:gap-8">
-              {doctor.reviews.slice(0, 4).map((review) => (
+            <div className="flex flex-col gap-4 md:gap-8 h-[300px] overflow-auto scrollbar-thin">
+              {doctor.reviews.slice(0, 10).map((review) => (
                 <div
                   key={review.id}
                   className="w-full border bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
