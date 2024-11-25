@@ -23,7 +23,7 @@ function Footer() {
           <div className="flex flex-col gap-10 text-sm text-white">
             <p className="text-lg font-semibold">
               {" "}
-              ©{currentYear}, <span className="text-xl font-bold">CalabasHe</span>{" "}
+              ©{currentYear}, <span className="text-xl font-bold"><span className="font-yellow-tail text-2xl mx-[0.2rem]">C</span>alabasHe</span>{" "}
             </p>
 
             <section className="subpixel-antialiased flex flex-col gap-6 leading-relaxed  md:grid md:grid-cols-2 md:gap-7 lg:gap-8 ">
