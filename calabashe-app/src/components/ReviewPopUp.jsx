@@ -16,15 +16,21 @@ const ReviewPopUp = ({ showPopUp, hidePopUp, submitGuestReview, syncReviews }) =
 	const [email, setEmail] = useState('');
 	const [error, setError] = useState('');
 	const [disabled, setDisabled] = useState(false);
-	const [isModified, setIsModified] = useState(false);
+	const [codesRequested, setCodesRequested] = useState(0);
+	const [oldMail, setOldMail] = useState("");
 	const go = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
 		try {
-			await submitGuestReview(username, email);
-			setSubmitStatus(true);
+			setOldMail(email);
+			if (oldMail !== email && codesRequested <= 5) {
+				await submitGuestReview(username, email);
+				setSubmitStatus(true);
+			} else {
+				setError("Enter the latest requested codes.")
+			}
 		}
 		catch (err) {
 			resetInputs();
@@ -38,14 +44,12 @@ const ReviewPopUp = ({ showPopUp, hidePopUp, submitGuestReview, syncReviews }) =
 		e.preventDefault();
 		setDisabled(true);
 		const verification_code = codeDigits.join('');
-
 		if (verification_code.length !== 6) {
 			setError("Invalid verification code");
 			return;
 		}
-
+		
 		try {
-
 			const response = await verifyGuestIdentity({ email, verification_code });
 
 			if (response && response.status === 200) {
@@ -109,13 +113,6 @@ const ReviewPopUp = ({ showPopUp, hidePopUp, submitGuestReview, syncReviews }) =
 			{submitStatus ? (
 				<form className="bg-white w-[92%] md:w-[50%] shadow-md rounded-md z-30 py-3 relative flex flex-col" onSubmit={verifyCode} onKeyDown={handleKeyDown}>
 					<div className="p-2 flex items-center justify-between w-full">
-						<button className="hover:bg-green-400 p-2 ml-auto" onClick={() => {
-							setIsLoading(false);
-							setSubmitStatus(false);
-						}
-						}>
-							<BiArrowBack size={23} className="mx-auto" />
-						</button>
 						<h1 className="text-lg flex-grow text-center ml-10">Verify Email</h1>
 						<button className="hover:bg-green-400 p-2 ml-auto" onClick={() => {
 							hidePopUp()
@@ -200,6 +197,7 @@ const ReviewPopUp = ({ showPopUp, hidePopUp, submitGuestReview, syncReviews }) =
 											onChange={handleEmail}
 										/>
 									</div>
+									
 									<button
 										className="bg-[#FEE330] w-full py-2 text-lg font-semibold rounded-md"
 										type="submit"
