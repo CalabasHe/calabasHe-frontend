@@ -19,6 +19,7 @@ import SubServices from "./pages/SubServices";
 import ServiceProviders from "./pages/ServiceProviders";
 import { SpecialtyProvider } from "./context/specialtyContext";
 import SecondaryForms from "./pages/SecondaryForm";
+import About from "./pages/AboutUs";
 
 function App() {
   const location = useLocation();
@@ -51,6 +52,7 @@ function App() {
                 path="/services/:subservices/:providers"
                 element={<ServiceProviders />}
               />
+              <Route path="/about" element={<About/>}/>
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors/:slug" element={<DocProfile />} />
               <Route path="/sign_up" element={<SignUp />} />
