@@ -14,7 +14,8 @@ export default {
         'yellow-tail': ['Yellowtail', 'sans-serif'],
       },
       colors: {
-        'custom-yellow': '#FEE330'
+        'custom-yellow': '#FEE330',
+        'custom-green':'#5FC79C'
       }
   },
   variants: {
