@@ -8,13 +8,9 @@ const AboutSection = () => {
                 <img src={mainImage} alt="Banner Image" className='w-full' />
             </div>
             <div className='flex gap-3 flex-col w-[75%] md:w-[50%] mx-auto text-xl md:text-3xl'>
-                <p>At Calabashe, we believe everyone
-                    deserves access to trusted healthcare
-                    services and professionals. </p>
-                <p>That’s why we’ve created Ghana’s first
-                    platform where patients
-                    can seamlessly connect with doctors, clinics,
-                    and hospitals for the care they need.</p>
+                <p>
+                Calabashe enhances Ghanaian healthcare with reviews, connects patients and providers, and makes telemedicine and quality care easily accessible.
+                </p>
             </div>
             <div className='leading-loose'>
                 <div className='bg-orange-200 flex flex-col w-full md:flex-row px-12 py-20 gap-7 md:gap-5 justify-center items-center min-w-[500px] md:text-start'>
@@ -36,7 +32,7 @@ const AboutSection = () => {
                     </div>
                     <div className='w-[90%] md:w-[50%] self-start pt-5 mx-auto order-2 md:order-1'>
                         <h1 className='text-5xl md:text-6xl font-semibold mb-2 flex gap-2 flex-col'><span>Navigating</span> <span>healthcare</span></h1>
-                        <p className='text-xl leading-9 '>In Ghana can be challenging, from finding the right specialist to booking appointments. Calabashe simplifies this process by providing a one-stop platform that profiles Ghanaian healthcare professionals and facilities. Patients can easily browse reviews, compare services, and make informed decisions with confidence.</p>
+                        <p className='text-xl leading-9 '>It can be challenging to find the right specialist to book an appointment. Calabashe simplifies this process by providing a one-stop platform that profiles Ghanaian healthcare professionals and facilities. Patients can easily browse reviews, compare services, and make informed decisions with confidence.</p>
                     </div>
                 </div>
                 <div className='flex flex-col w-full md:flex-row px-12 py-20 gap-7 md:gap-5 justify-center items-center min-w-[500px] md:text-start bg-custom-green'>
