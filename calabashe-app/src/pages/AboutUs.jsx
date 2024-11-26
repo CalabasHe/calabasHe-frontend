@@ -11,16 +11,15 @@ import WhyUs from "../components/WhyUs";
 
 const About = () => {
   return (
-<div className="bg-red-50">
-
-<div className="overflow-hidden 2xl:container mx-auto 2xl:border-x">
-  <Header />
-  <main className="bg-[#FCFBF2] w-full mt-8 flex flex-col gap-4 md:gap-6 items-center">
-    <AboutSection/>
-  </main>
-  <Footer />
-</div>
-</div>
+    <div className="bg-red-50">
+      <div className="overflow-hidden 2xl:container mx-auto 2xl:border-x">
+        <Header />
+        <main className="bg-[#FCFBF2] w-full mt-8 flex flex-col gap-4 md:gap-6 items-center">
+          <AboutSection />
+        </main>
+        <Footer />
+      </div>
+    </div>
   );
 };
 
