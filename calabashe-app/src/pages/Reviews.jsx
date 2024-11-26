@@ -92,7 +92,6 @@ const Review = () => {
 
   const syncReviews = async () => {
     const apiReviews = await fetchReviewsFromAPI();
-    console.log(apiReviews);
     updateLocalStorage(apiReviews);
     window.dispatchEvent(new Event("storage"));
     return apiReviews;
