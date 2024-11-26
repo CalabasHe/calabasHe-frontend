@@ -10,6 +10,11 @@ import { toast } from "sonner";
 import { useAuth } from "../hooks/useAuth";
 import ReviewPopUp from "../components/ReviewPopUp";
 import { guestReviews } from "../api/anonReviews";
+import { fetchCurrentReviews } from "../api/getCategoriesData";
+import formatDate from "../utils/dateConversion";
+
+
+const MAX_REVIEWS = 30;
 
 const Review = () => {
   const [title, setTitle] = useState("");
@@ -25,9 +30,13 @@ const Review = () => {
 
   const prevLocationState = useRef(null);
   const { ratings } = location.state || {};
-  if (ratings) {
-    setRating(ratings);
-  }
+
+  useEffect(() => {
+    if (ratings) {
+      setRating(ratings);
+    }
+  }, [ratings]);
+
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -50,6 +59,44 @@ const Review = () => {
     setRating(newRating);
   };
 
+  const updateLocalStorage = (newReviews) => {
+    const limitedReviews = newReviews.slice(0, MAX_REVIEWS);
+    console.log(localStorage.getItem("reviews"));
+    localStorage.setItem("reviews", JSON.stringify(limitedReviews));
+
+  };
+
+  const fetchReviewsFromAPI = async () => {
+    try {
+      const data = await fetchCurrentReviews();
+      const reviewDetails = (Array.isArray(data) && data.length > 0)
+        ? data.map((review) => ({
+          id: review.id,
+          rating: review.rating,
+          description: review.description,
+          subject: review.subject,
+          type: review.review_type,
+          date: formatDate(review.created_at.split('T')[0]),
+          user: review.user,
+          slug: review.subject_slug,
+          facilityType: review?.facility_type_slug,
+        }))
+        : [];
+      return reviewDetails;
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      setError("Failed to load reviews.");
+      return [];
+    }
+  };
+
+  const syncReviews = async () => {
+    const apiReviews = await fetchReviewsFromAPI();
+    updateLocalStorage(apiReviews);
+    window.dispatchEvent(new Event("storage"));
+    return apiReviews;
+  };
+
   const submitReview = async () => {
     try {
       setIsSubmitting(true);
@@ -70,8 +117,8 @@ const Review = () => {
           facility: reviewee.id,
         });
       }
-
       toast.success("Review successful");
+      await syncReviews();
       go("/");
     } catch (error) {
       setIsSubmitting(false);
@@ -129,9 +176,10 @@ const Review = () => {
         await guestReviews({ email, username, rating, title, description, facility: reviewee.id });
       }
     }
-    catch  {
-      toast.error('Invalid email')
-      return;
+    catch (err) {
+      setShowPopUp(false);
+      toast.error(err.message);
+      throw err;
     }
   };
 
@@ -152,7 +200,7 @@ const Review = () => {
           </h1>
         </aside>
       </FadeInOut>
-      <ReviewPopUp showPopUp={showPopUp} hidePopUp={hidePopUp} submitGuestReview={submitGuestReview} />
+      <ReviewPopUp showPopUp={showPopUp} hidePopUp={hidePopUp} submitGuestReview={submitGuestReview}  syncReviews={syncReviews}/>
       <main className="w-full mt-12 sm:mt-[80px] lg:mt-[105px] px-2  pb-8 flex flex-col gap-12 items-center ">
         <section className="p-4 px-2 md:px-12 lg:px-16 md:py-8 lg:py-12 md:border space-y-2 bg-white shadow-md border rounded-2xl w-full max-sm:max-w-[500px] md:w-[80%] md:max-w-[700px] ">
           <div className="w-full flex flex-col gap-2">
