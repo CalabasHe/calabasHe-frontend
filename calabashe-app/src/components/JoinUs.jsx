@@ -11,7 +11,7 @@ const JoinUs = () => {
                     style={{ backgroundImage: `url(${banner_image})` }}
                 >
                 </div>
-                <div className='md:w-1/2 md:self-center leading-10 md:leading-[3rem] pb-5 pr-1 rounded-r-lg '>
+                <div className='md:w-1/2 md:self-center leading-8 md:leading-[3rem] pb-5 pr-1 rounded-r-lg '>
                     <h3 className='font-semibold md:font-bold my-7 text-2xl uppercase text-center md:text-start'>Calabashe for Doctors and Clinics</h3>
                     <ul className="flex flex-col gap-2 w-full list-none">
                         <li className="my-0 w-[87%] md:w-full mx-auto flex items-center gap-2">

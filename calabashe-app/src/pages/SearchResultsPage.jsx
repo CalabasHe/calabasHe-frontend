@@ -12,7 +12,6 @@ const SearchResultsPage = () => {
         <SearchResultsPageLG />
         <SearchResultsPageSM />
       </AnimatePage>
-
       <Footer />
     </div>
   );

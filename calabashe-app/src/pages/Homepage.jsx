@@ -5,7 +5,9 @@ import FaqSection from "../components/Faq";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import JoinUs from "../components/JoinUs";
+import Offering from "../components/Offering";
 import RecentReviews from "../components/recentReviews";
+import TopSearched from "../components/topSearched";
 import WhyUs from "../components/WhyUs";
 
 const Home = () => {
@@ -23,8 +25,10 @@ const Home = () => {
               <h1 className="z-1 mt-4 text-4xl sm:text-6xl font-black animate-bounce ">Calabas<span className="text-[#04DA8D]">He</span></h1>  */}
           <ExploreCategories />
           <RecentReviews />
+          <Offering/>
           <WhyUs/>
-          <DoctorQuote />
+          <TopSearched/>
+          {/* <DoctorQuote /> */}
           <FaqSection />
           <JoinUs />
         </main>
