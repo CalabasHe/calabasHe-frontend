@@ -22,7 +22,7 @@ const Offering = () => {
                 >
                     <div className="p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">
                         <h3 className="font-semibold text-xl">Instant video consultation</h3>
-                        <p>Connect with 60s</p>
+                        <p>Connect within 60s</p>
                     </div>
                 </div>
 
