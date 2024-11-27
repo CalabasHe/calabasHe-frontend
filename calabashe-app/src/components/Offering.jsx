@@ -4,7 +4,7 @@ import near_you from '../assets/images/near_you.png'
 import surgery from '../assets/images/surgeries.png'
 const imageStyle = {
     width: '100%',
-    height: '300px', 
+    height: '300px',
     objectFit: 'cover',
     backgroundPosition: 'center'
 }
@@ -27,13 +27,16 @@ const Offering = () => {
                 </div>
 
                 <div
-                    className='shadow-md rounded-2xl flex-col mx-auto md:mx-0 w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%] bg-contain bg-no-repeat relative bg-[#98CBD6] md:bg-center lg:bg-top'
+                    className='shadow-md rounded-2xl flex-col mx-auto md:mx-0 w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%] bg-contain bg-no-repeat relative bg-[#98CBD6] bg-center'
                     style={{ backgroundImage: `url(${near_you})` }}
                 >
-                    <div className="p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">
-                        <h3 className="font-semibold text-xl">Find doctors near you</h3>
-                        <p>Confirmed appointment</p>
+                    <div className="absolute inset-x-0 bottom-0 p-4 bg-white rounded-b-2xl">
+                        <div className="max-w-[90%] mx-auto">
+                            <h3 className="font-semibold text-xl">Find doctors near you</h3>
+                            <p>Confirmed appointment</p>
+                        </div>
                     </div>
+
                 </div>
 
                 <div
