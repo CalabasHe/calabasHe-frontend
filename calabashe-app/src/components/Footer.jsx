@@ -20,7 +20,7 @@ function Footer() {
     <>
       <AnimateY>
 
-        <footer className="flex grow m-0 w-full bg-black px-6 py-12 md:px-14 lg:px-[10%]">
+        <footer className="flex grow m-0 w-full bg-black p-2 lg:py-8 md:p-4 px-2 md:px-12 lg:pl-16 leading-loose">
           <div className="flex flex-col gap-10 text-sm text-white">
             <p className="text-lg font-semibold">
               {" "}
