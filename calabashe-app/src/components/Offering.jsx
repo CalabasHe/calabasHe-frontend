@@ -2,12 +2,7 @@
 import consultation from '../assets/images/consult.png'
 import near_you from '../assets/images/near_you.png'
 import surgery from '../assets/images/surgeries.png'
-const imageStyle = {
-    width: '100%',
-    height: '300px',
-    objectFit: 'cover',
-    backgroundPosition: 'center'
-}
+
 
 
 
@@ -15,9 +10,9 @@ const Offering = () => {
     return (
         <div className="mb-5 w-full">
             <h1 className="text-3xl font-semibold mb-10 text-center">Our Offering</h1>
-            <div className="flex flex-col md:flex-row mx-auto w-full justify-center gap-10">
+            <div className="flex flex-col md:flex-row mx-auto w-full justify-center gap-4 md:gap-10">
                 <div
-                    className='shadow-md rounded-2xl flex-col mx-auto md:mx-0 w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%] bg-contain bg-no-repeat relative bg-blue-300 bg-bottom'
+                     className='shadow-md rounded-2xl flex-col  md:mx-0 mx-auto w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%] bg-contain bg-no-repeat relative bg-[#98CBD6] bg-center'
                     style={{ backgroundImage: `url(${consultation})` }}
                 >
                     <div className="p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">
@@ -27,7 +22,7 @@ const Offering = () => {
                 </div>
 
                 <div
-                    className='shadow-md rounded-2xl flex-col mx-auto md:mx-0 w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%] bg-contain bg-no-repeat relative bg-[#98CBD6] bg-center'
+                    className='shadow-md rounded-2xl flex-col  md:mx-0 mx-auto  w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%] bg-contain bg-no-repeat relative bg-[#98CBD6] bg-center'
                     style={{ backgroundImage: `url(${near_you})` }}
                 >
                     <div className="absolute inset-x-0 bottom-0 p-4 bg-white rounded-b-2xl">
@@ -40,7 +35,7 @@ const Offering = () => {
                 </div>
 
                 <div
-                    className='shadow-md rounded-2xl flex-col mx-auto md:mx-0 w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%]  bg-contain bg-no-repeat relative bg-[#D7DAFC] md:bg-center lg:bg-top'
+                    className='hidden md:block shadow-md rounded-2xl flex-col mx-auto md:mx-0 w-[65%] md:w-[28%] min-h-[23rem] lg:w-[20%]  bg-contain bg-no-repeat relative bg-[#D7DAFC] md:bg-center'
                     style={{ backgroundImage: `url(${surgery})` }}
                 >
                     <div className="p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">

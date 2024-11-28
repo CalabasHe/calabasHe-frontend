@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { getSpecialties } from '../api/getSpecialties';
 
-// Import images
 import primary_care from '../assets/icons/primary_care.svg';
 import dentist from '../assets/icons/dentistry.svg';
 import ob_gyn from '../assets/icons/ob-gyn.svg';
@@ -47,7 +46,7 @@ const TopSearched = () => {
                     reviewCount: result.total_reviews,
                 }))
                 : [];
-            navigate("/results", {
+            navigate(`/results?search=${name}`, {
                 state: {
                     searchParam: name,
                     results: formattedResults,
@@ -66,7 +65,7 @@ const TopSearched = () => {
             </h1>
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 md:gap-4 w-[70%] md:w-[80%] mx-auto'>
                 {SPECIALTIES.map((specialty, idx) => (
-                    <div 
+                    <div  
                         key={idx}
                         onClick={() => handleSpecialtySearch(specialty.name, specialty.slug)}
                         className='flex items-center justify-center flex-col border-[0.5px] bg-green-200 w-full mx-auto gap-3 p-5 md:gap-5 cursor-pointer rounded-lg border-emerald-800'
