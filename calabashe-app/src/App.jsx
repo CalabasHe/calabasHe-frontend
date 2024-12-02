@@ -20,6 +20,7 @@ import ServiceProviders from "./pages/ServiceProviders";
 import { SpecialtyProvider } from "./context/specialtyContext";
 import SecondaryForms from "./pages/SecondaryForm";
 import About from "./pages/AboutUs";
+import ProvidersLogin from "./pages/ProvidersLogin";
 
 function App() {
   const location = useLocation();
@@ -52,6 +53,7 @@ function App() {
                 path="/services/:subservices/:providers"
                 element={<ServiceProviders />}
               />
+               <Route path="/providers_login"element={<ProvidersLogin/>}/>
               <Route path="/about" element={<About/>}/>
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors/:slug" element={<DocProfile />} />
@@ -63,6 +65,7 @@ function App() {
               <Route path="/initial_form" element={<AccountClaim />} />
               <Route path="/secondary_form" element={<SecondaryForms/>} />
               <Route path="*" element={<NoResult/>} />
+             
             </Routes>
           </AnimatePresence>
         </BannerVisibilityProvider>
