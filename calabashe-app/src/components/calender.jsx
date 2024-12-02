@@ -29,7 +29,7 @@ const Calender = () => {
     }
 
     return (
-        <div className='w-[90%] mx-auto p-5'>
+        <div className='w-full rounded-xl bg-white mx-auto p-5 border'>
             <h2 className="text-start font-bold text-2xl mb-5">Available Appointments</h2>
             <div className="flex gap-2 items-center">
                 <span className="h-3 w-3 rounded-full bg-green-600"></span>
@@ -41,13 +41,13 @@ const Calender = () => {
             </div>
             {/* Calender start */}
             <div className="mt-5">
-                <div className="flex justify-between">
+                <div className="flex justify-between w-[93%]">
                     <h2 className="text-start font-bold">{format(firstDayCurrentMonth, 'MMMM yyy')}</h2>
                     <div className="flex">
                         <button
                             type="button"
                             onClick={prevMonth}
-                            className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                            className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500  hover:border border-green-500 rounded-full"
                         >
                             <span className="sr-only">Previous month</span>
                             <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
@@ -55,20 +55,20 @@ const Calender = () => {
                         <button
                             onClick={nextMonth}
                             type="button"
-                            className="-my-1.5 -mr-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+                            className="-my-1.5 -mr-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500  hover:border border-green-500 rounded-full"
                         >
                             <span className="sr-only">Next month</span>
                             <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
                         </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-7 items-center justify-center text-start text-sm ml-0  w-full font-semibold mt-3">
+                <div className="grid grid-cols-7 items-center justify-center text-start text-sm ml-0 w-full font-semibold mt-3">
                     <div>Sun</div>
                     <div>Mon</div>
                     <div>Tue</div>
                     <div>Wed</div>
                     <div>Thurs</div>
-                    <div>Fri</div>
+                    <div className="pl-2">Fri</div>
                     <div>Sat</div>
                 </div>
                 <div className="grid grid-cols-7 text-sm ml-0 text-start w-full font-semibold mt-3">

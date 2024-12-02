@@ -289,8 +289,7 @@ const DocProfileSm = ({ doctor = [] }) => {
               )
             }
           </section>
-
-            <div className="bg-white order-3  flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 border rounded-xl">
+            <div className="order-3">
               <Calender/>
             </div>
         </section>
