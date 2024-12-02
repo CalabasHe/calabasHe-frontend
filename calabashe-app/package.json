@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@heroicons/react": "^1.0.6",
     "axios": "^1.7.7",
     "calabashe-app": "file:",
+    "date-fns": "^2.30.0",
     "framer-motion": "^11.3.24",
     "fuse.js": "^7.0.0",
     "fuzzysort": "^3.1.0",

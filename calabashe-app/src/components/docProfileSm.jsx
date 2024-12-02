@@ -6,6 +6,7 @@ import formatDate from "../utils/dateConversion";
 import { toast } from "sonner";
 import HandleAdjective from "../utils/handleRatingAdjective";
 import { useState } from "react";
+import Calender from "./calender";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileSm = ({ doctor = [] }) => {
@@ -290,39 +291,7 @@ const DocProfileSm = ({ doctor = [] }) => {
           </section>
 
             <div className="bg-white order-3  flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 border rounded-xl">
-              <div className="space-y-3 lg:space-y-4">
-                <h3 className="text-xl lg:2xl font-bold">
-                  Share your experience
-                </h3>
-                <p className="text-sm lg:text-base">
-                  We value your feedback and look forward to hearing about your
-                  experiences with our services. Your insights help us improve
-                  and provide the best care possible.
-                </p>
-              </div>
-              <button
-                onClick={() =>
-                  writeAReview(doctor.lastName, doctor.slug, doctor.id)
-                }
-                className="w-full hover:scale-[1.01] duration-100 mt-4 flex items-center justify-center gap-2 text-lg font-bold bg-[#FEE330] px-2 py-3 rounded-md"
-                aria-label={`Leave a review for Dr. ${doctor.slug}`}
-              >
-                <p className="text-center text-lg lg:text-xl font-bold">
-                  Leave a Review
-                </p>
-                <svg
-                  width="25"
-                  height="26"
-                  viewBox="0 0 30 31"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M27 0.968994H3C1.35 0.968994 0 2.31899 0 3.96899V30.969L6 24.969H27C28.65 24.969 30 23.619 30 21.969V3.96899C30 2.31899 28.65 0.968994 27 0.968994ZM6 18.969V15.264L16.32 4.94399C16.62 4.64399 17.085 4.64399 17.385 4.94399L20.04 7.59899C20.34 7.89899 20.34 8.36399 20.04 8.66399L9.705 18.969H6ZM22.5 18.969H12.75L15.75 15.969H22.5C23.325 15.969 24 16.644 24 17.469C24 18.294 23.325 18.969 22.5 18.969Z"
-                    fill="black"
-                  />
-                </svg>
-              </button>
+              <Calender/>
             </div>
         </section>
       </main>
