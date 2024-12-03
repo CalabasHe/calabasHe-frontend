@@ -264,17 +264,25 @@ const DocProfileMd = ({ doctor = [] }) => {
                 <h3 className="text-lg lg:text-xl font-[800] ">
                   About Dr. {doctor.firstName}{" "}
                 </h3>
-                <p className="text-sm lg:text-base leading-relaxed">
-                  Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
-                  medical doctor practicing General Medicine.
-                  <br />
-                  In Ghana, General Practitioners (GPs) provide primary
-                  healthcare, handling a wide range of conditions and referring
-                  patients to specialists when needed. GPs complete six years of
-                  medical school and a two-year housemanship, gaining practical
-                  experience before receiving full licensing from the Medical
-                  and Dental Council of Ghana.
-                </p>
+                <div className="text-sm lg:text-base leading-relaxed">
+                  {(doctor.about.length > 0)? 
+                  (
+                    doctor.about
+                  ):
+                  (
+                   <p>
+                     Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
+                    medical doctor practicing General Medicine.
+                    <br />
+                    In Ghana, General Practitioners (GPs) provide primary
+                    healthcare, handling a wide range of conditions and referring
+                    patients to specialists when needed. GPs complete six years of
+                    medical school and a two-year housemanship, gaining practical
+                    experience before receiving full licensing from the Medical
+                    and Dental Council of Ghana.
+                   </p>
+                  )}
+                </div>
               </section>
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">
