@@ -1,5 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 const ProviderLoginForm = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handlePassword = (e) => {
+        setPassword(e.target.value);
+    }
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(email, password);
+    }
     return (
         <main className="my-8">
             <div className="-z-10 absolute top-[5%] md:top-[15%] -right-0">
@@ -17,6 +33,7 @@ const ProviderLoginForm = () => {
                 <h2 className="pb-3 text-xl">To Login , enter your credentials</h2>
                 <form
                     className="relative z-20 pt-4 pr-4 pl-0 pb-14 lg:pb-10 w-full flex flex-col gap-6 rounded-lg"
+                    onSubmit={handleSubmit}
                 >
                     <div className="space-y-3 text-base">
                         <label htmlFor="email">Email Address</label>
@@ -28,6 +45,8 @@ const ProviderLoginForm = () => {
                             aria-label="Enter your email address"
                             autoComplete="off"
                             spellCheck="false"
+                            value={email}
+                            onChange={handleEmail}
                         />
                     </div>
 
@@ -41,6 +60,8 @@ const ProviderLoginForm = () => {
                             aria-label="Enter your password"
                             autoComplete="off"
                             spellCheck="false"
+                            value={password}
+                            onChange={handlePassword}
                         />
                     </div>
                     <button

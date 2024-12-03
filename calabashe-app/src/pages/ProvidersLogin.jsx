@@ -4,9 +4,9 @@ import ProviderLoginForm from "../components/ProvidersLoginForm";
 
 const ProvidersLogin = () => {
   return (
-    <div className="z-50 bg-red-50  overflow-hidden relative w-full min-h-screen h-max flex flex-col items-center justify-center pt-32">
+    <div className="z-50 bg-red-50  overflow-hidden relative w-full max-h-none min-h-screen flex flex-col flex-1 items-center justify-center pt-32">
     <Header />
-    <main>
+    <main className="flex flex-1">
     <ProviderLoginForm/>
     </main>
     <Footer />
