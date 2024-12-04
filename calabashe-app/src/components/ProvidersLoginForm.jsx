@@ -1,8 +1,24 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { loginDoctor } from "../api/providerLogin";
+import { toast } from "sonner";
+import { useAuth } from "../hooks/useAuth";
 const ProviderLoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [buttonText, setButtonText] = useState("Sign In");
+    const [success, setSuccess] = useState(null);
+    const {login} = useAuth();
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const [fullState, setFullState] = useState(location.state || {});
+
+    useEffect(() => {
+      if (location.state) {
+        setFullState(location.state);
+      }
+    }, [location.state]);
 
     const handlePassword = (e) => {
         setPassword(e.target.value);
@@ -12,9 +28,45 @@ const ProviderLoginForm = () => {
         setEmail(e.target.value);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        setIsDisabled(true);
         e.preventDefault();
-        console.log(email, password);
+        return toast.promise(
+            async () => {
+              const response = await loginDoctor({ email, password });
+              console.log(response);
+              login(response.access, response.refresh);
+              const destination = fullState?.from || "/";
+              navigate(destination, { state: fullState });
+              return "Sign in successful";
+            },
+            {
+              loading: "Signing in...",
+              success: (message) => {
+                setSuccess(message);
+                return "Welcome Back!";
+              },
+              error: (error) => {
+                console.log(error)
+                let errorMessage = "An unexpected error occurred";
+                if (error.non_field_errors) {
+                  if (error.non_field_errors[0].includes("No account")) {
+                    errorMessage = "Account doesn't exist";
+                  } else if (
+                    error.non_field_errors[0].includes("Incorrect password")
+                  ) {
+                    errorMessage = "Incorrect password. Try again";
+                  }
+                }
+                setError(errorMessage);
+                return errorMessage;
+              },
+              finally: () => {
+                setIsDisabled(false);
+                setButtonText("Sign In");
+              },
+            }
+          );
     }
     return (
         <main className="my-8">
@@ -43,10 +95,10 @@ const ProviderLoginForm = () => {
                             className="w-full rounded-md h-12 px-2 md:px-4 focus:outline-none"
                             required
                             aria-label="Enter your email address"
-                            autoComplete="off"
                             spellCheck="false"
                             value={email}
                             onChange={handleEmail}
+                            disabled={isDisabled}
                         />
                     </div>
 
@@ -58,20 +110,21 @@ const ProviderLoginForm = () => {
                             className="w-full rounded-md h-12 px-4 focus:outline-none"
                             required
                             aria-label="Enter your password"
-                            autoComplete="off"
                             spellCheck="false"
                             value={password}
                             onChange={handlePassword}
+                            disabled={isDisabled}
                         />
                     </div>
                     <button
-                        className="mt-3 text-base border bg-[#FEE330] w-full  rounded-lg font-semibold p-3 self-center"
+                        className="mt-3 text-base border disabled:bg-yellow-600 bg-[#FEE330] w-full  rounded-lg font-semibold p-3 self-center"
                         type="submit"
+                        disabled={isDisabled}
                     >
-                        Sign in
+                        {buttonText}
                     </button>
 
-                    <Link className="text-center">
+                    <Link className="text-center" to={"/forgot_password"} state={{type: "doctor"}}>
                         Forgot Password?
                     </Link>
                 </form>

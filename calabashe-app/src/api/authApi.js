@@ -108,7 +108,7 @@ export const forgotPassword = async ({ email }) => {
     if (axios.isAxiosError(error)) {
       throw error;
     }
-    throw new Error('An unexpected error occured');
+    throw new Error('An unexpected error occurred');
   }
 };
 
