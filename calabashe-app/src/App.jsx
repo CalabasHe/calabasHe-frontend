@@ -20,9 +20,16 @@ import ServiceProviders from "./pages/ServiceProviders";
 import { SpecialtyProvider } from "./context/specialtyContext";
 import SecondaryForms from "./pages/SecondaryForm";
 import About from "./pages/AboutUs";
+import ReactGA from "react-ga4";
+
+
 
 function App() {
   const location = useLocation();
+  ReactGA.initialize("G-CERGHJ3S9L");
+
+  ReactGA.send({ hitType: "pageview", page: "/", title: "HomePage" });
+
 
   const NoResult = () => {
     return(
