@@ -21,6 +21,7 @@ import { SpecialtyProvider } from "./context/specialtyContext";
 import SecondaryForms from "./pages/SecondaryForm";
 import About from "./pages/AboutUs";
 import ReactGA from "react-ga4";
+import { useEffect } from "react";
 
 
 
