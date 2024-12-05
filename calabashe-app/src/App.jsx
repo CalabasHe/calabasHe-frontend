@@ -22,6 +22,7 @@ import SecondaryForms from "./pages/SecondaryForm";
 import About from "./pages/AboutUs";
 import ReactGA from "react-ga4";
 import { useEffect } from "react";
+import {initGA, logPageView} from "./utils/analytics.jsx";
 
 
 
@@ -29,13 +30,13 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    ReactGA.initialize('G-CERGHJ3S9L');
+    initGA()
   }, []);
 
   useEffect(() => {
-    ReactGA.send({ hitType: 'pageview', page: location.pathname });
+   logPageView()
   }, [location]);
-  
+
 
   const NoResult = () => {
     return (
