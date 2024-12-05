@@ -26,13 +26,18 @@ import ReactGA from "react-ga4";
 
 function App() {
   const location = useLocation();
-  ReactGA.initialize("G-CERGHJ3S9L");
 
-  ReactGA.send({ hitType: "pageview", page: "/", title: "HomePage" });
+  useEffect(() => {
+    ReactGA.initialize('G-CERGHJ3S9L');
+  }, []);
 
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: location.pathname });
+  }, [location]);
+  
 
   const NoResult = () => {
-    return(
+    return (
       <div className="w-full h-screen flex flex-col lg:text-lg gap-2 items-center justify-center">
         <h2>Nothing to see here 😶‍🌫️😶‍🌫️</h2>
         <Link className="text-emerald-500 font-semibold hover:underline" to={'/'}>&lt;&lt; Go home</Link>
@@ -59,17 +64,17 @@ function App() {
                 path="/services/:subservices/:providers"
                 element={<ServiceProviders />}
               />
-              <Route path="/about" element={<About/>}/>
+              <Route path="/about" element={<About />} />
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors/:slug" element={<DocProfile />} />
               <Route path="/sign_up" element={<SignUp />} />
               <Route path="/sign_in" element={<SignIn />} />
-              <Route path="/forgot_password" element={<ForgotPassword/>} />
+              <Route path="/forgot_password" element={<ForgotPassword />} />
               <Route path="/verification" element={<VerifyUser />} />
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />
-              <Route path="/secondary_form" element={<SecondaryForms/>} />
-              <Route path="*" element={<NoResult/>} />
+              <Route path="/secondary_form" element={<SecondaryForms />} />
+              <Route path="*" element={<NoResult />} />
             </Routes>
           </AnimatePresence>
         </BannerVisibilityProvider>
