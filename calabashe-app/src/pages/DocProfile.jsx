@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import { useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchDoctorBySlug } from "../api/getProfileData";
 import Footer from "../components/Footer";
@@ -13,32 +13,45 @@ const DocProfile = () => {
   const [doctor, setDoctor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const go = useNavigate();
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
         const data = await fetchDoctorBySlug(slug);
-        // console.log('API Response:', data);
+        if(!data){
+          go('/doctors');
+          return;
+        }
         const doctorDetails = {
           qrCode: data.qr_code,
           id: data.id,
           firstName: data.first_name,
           lastName: data.last_name,
           rating: data.average_rating,
-          specialty: data.specialty?.name,
+          specialty: data.specialty_name,
+          specialtyTag: data.specialty?.tag,
+          image: data.profile_image,
           slug: data.slug,
           patientsTellUs: data.reviews?.title,
-          location: data.region?.name,
+          region: data.region_name,
           ratingPercentages: data.rating_percentages,
           reviews: data.reviews,
           totalReviews: data.total_reviews,
-          verified: data.is_verified
+          verified: data.is_verified,
+          conditionsAndTreatments: data.conditions_and_treatments,
+          about: data.about
         };
         // console.log('Processed doctor details:', doctorDetails);
         setDoctor(doctorDetails);
-      } catch (err) {
+      }  catch (err) {
+        if (err.response?.status === 404) {
+          setError('Doctor not found');
+          go('/doctors');
+        } else {
+          setError('An error occurred while fetching doctor details');
+        }
         console.error("Error fetching doctor:", err);
-        setError(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -58,18 +71,19 @@ const DocProfile = () => {
         </h1>
       </div>
     );
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="w-full h-screen flex items-center justify-center text-center">{error}</div>;
 
   return (
-    <>
-      <Header />
-      <AnimatePage>
-        <DocProfileSm doctor={doctor} />
-        <DocProfileMd doctor={doctor} />
-      </AnimatePage>
-
-      <Footer />
-    </>
+    <div className="">
+      <div className="min-h-screen 2xl:container 2xl:border-x mx-auto">
+        <Header />
+        <AnimatePage>
+          <DocProfileSm doctor={doctor} />
+          <DocProfileMd doctor={doctor} />
+        </AnimatePage>
+        <Footer />
+      </div>
+    </div>
   );
 };
 

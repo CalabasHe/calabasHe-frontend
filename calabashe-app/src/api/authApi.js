@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const SIGNUP_URL = 'https://calabashe-api.onrender.com/api/auth/signup/';
 const VERIFY_URL = 'https://calabashe-api.onrender.com/api/auth/verify-code/';
+const FORGOT_PASSWORD_URL = 'https://calabashe-api.onrender.com/api/auth/forget-password/';
+const RESET_PASSWORD_URL = 'https://calabashe-api.onrender.com/api/auth/reset-password/';
 const LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/login/';
 const CLAIMS_URL = 'https://calabashe-api.onrender.com/api/forms/';
 const GOOGLE_LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/google/';
@@ -92,4 +94,38 @@ export const accountClaims = async ({ first_name, last_name, phone, specialty, f
     }
   }
 
+};
+
+
+export const forgotPassword = async ({ email }) => {
+  try {
+    const response = await axios.post(FORGOT_PASSWORD_URL, {
+      email
+    });
+    // console.log(response.data)
+    return response.data;
+  }catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw error;
+    }
+    throw new Error('An unexpected error occured');
+  }
+};
+
+export const resetPassword = async ({ token, code, password }) => {
+  try {
+    const response = await axios.post(RESET_PASSWORD_URL, {
+      token,
+      code,
+      password
+    });
+    // console.log(response.data)
+    return response.data;
+  }catch (error) {
+    if (error.response && error.response.data) {
+      throw error.response;
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
+  }
 };

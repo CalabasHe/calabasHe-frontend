@@ -1,120 +1,110 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBannerVisibility } from "../context/BannerVisibilityContext";
 import "../stylesheets/headerSearch.css";
-import StarRating from "./rating";
-import SearchData from "../api/search";
-import SearchData from "../api/search";
+import StarRating from "./ratingStars";
+import SearchData from "../api/search"; 
 import debounce from "lodash/debounce";
 
 const SearchBarMd = () => {
   const [isFocused, setIsFocused] = useState(false);
   const { isBannerHidden } = useBannerVisibility();
   const [searchParam, setSearchParam] = useState("");
+  const [debouncedSearchParam, setDebouncedSearchParam] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const latestSearchPromise = useRef(null);
-
-  const navigate = useNavigate();
-
   const [showResults, setShowResults] = useState(false);
   const searchRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleClickOutside = useCallback((event) => {
+    if (
+      searchRef.current &&
+      !searchRef.current.contains(event.target) &&
+      !event.target.closest("#headerSearchBar")
+    ) {
+      setShowResults(false);
+      setSearchParam("");
+    }
+  }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target) &&
-        !event.target.closest("#headerSearchBar")
-      ) {
-        setShowResults(false);
-      }
-    };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
-  const performSearch = async (value) => {
-    if (!value) {
-      setResults([]);
-      setError("");
-      return [];
-    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetSearch = useCallback(
+    debounce((value) => {
+      setDebouncedSearchParam(value);
+    }, 500),
+    []
+  );
 
-    setIsLoading(true);
-    const currentPromise = SearchData(value);
-    latestSearchPromise.current = currentPromise;
+  useEffect(() => {
+    debouncedSetSearch(searchParam);
+    return () => debouncedSetSearch.cancel();
+  }, [searchParam, debouncedSetSearch]);
 
+  const performSearch = useCallback(async (searchParam) => {
+    if (!searchParam) return [];
     try {
-      const data = await currentPromise;
-      if (currentPromise !== latestSearchPromise.current) {
-        // A newer search has started, discard this result
-        return [];
-      }
-
+      const data = await SearchData(searchParam);
       if (Array.isArray(data) && data.length > 0) {
         const resultDetails = data.map((result) => ({
           id: result.id,
           firstName: result.first_name,
           lastName: result.last_name,
+          image: result.profile_image,
+          logo:result.logo,
           rating: result.average_rating && result.average_rating.toFixed(1),
           specialty: result.specialty?.name,
-          type: result.facility_type?.name,
+          specialtyTag: result.specialty?.tag,
+          type: result.facility_type_name,
+          typeSlug: result.facility_type_name?.toLowerCase(),
           name: result.name,
           slug: result.slug,
+          category: result.category_name,
+          categorySlug: result.category_slug,
           reviews: result.reviews,
           reviewCount: result.total_reviews,
         }));
-        setResults(resultDetails);
-        setShowResults(true);
-        setError("");
         return resultDetails;
       } else {
-        setResults([]);
         setError("No results found");
         return [];
       }
     } catch (error) {
-      if (currentPromise === latestSearchPromise.current) {
-        console.error(error);
-        setError("An error occurred while searching");
-      }
+      console.error(error);
+      setError("An error occurred while searching");
       return [];
-    } finally {
-      if (currentPromise === latestSearchPromise.current) {
-        setIsLoading(false);
-      }
     }
-  };
-
-  const debouncedSearch = useCallback(
-    debounce((value) => performSearch(value), 300),
-    []
-  );
+  }, []);
 
   useEffect(() => {
-    debouncedSearch(searchParam);
-    return () => debouncedSearch.cancel();
-  }, [searchParam, debouncedSearch]);
+    (async () => {
+      const results = await performSearch(debouncedSearchParam);
+      setResults(results);
+      setShowResults(results.length > 0);
+    })();
+  }, [debouncedSearchParam, performSearch]);
 
   const handleLinkClick = (result) => {
-    setShowResults(false); // Hide results immediately
+    setShowResults(false);
     const path = result.type
-      ? `/facilities/${result.type}s/${result.slug}`
+      ? `/facilities/${result.typeSlug}s/${result.slug}`
       : result.specialty
       ? `/doctors/${result.slug}`
-      : `/services`;
+      : `/services/${result.categorySlug}/${result.slug}`;
     navigate(path);
   };
 
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      setShowResults(false); // Hide results immediately
+      setShowResults(false);
       const searchResults = await performSearch(searchParam);
       navigate("/results", { state: { searchParam, results: searchResults } });
     }
@@ -123,13 +113,18 @@ const SearchBarMd = () => {
   const handleSearchClick = async (e) => {
     e.preventDefault();
     if (!searchParam) return;
-    setShowResults(false); // Hide results immediately
+    setShowResults(false);
     const searchResults = await performSearch(searchParam);
     navigate("/results", { state: { searchParam, results: searchResults } });
   };
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
+
+  const handleShowResults = (e) => {
+    e.preventDefault();
+    navigate("/results", { state: { searchParam, results } });
+  };
 
   return (
     <div
@@ -155,12 +150,12 @@ const SearchBarMd = () => {
         autoComplete="off"
         value={searchParam}
       />
-      <Link to="#" onClick={handleSearchClick}>
+      <button onClick={handleSearchClick}>
         <svg
           id="headerSearchIcon"
           className={`${
             isFocused ? "focused" : "stroke-[#828282]"
-          } w-5 lg:w-6 h-5 lg:h-6 mt-2`}
+          } w-5 lg:w-6 h-5 lg:h-6`}
           width="32"
           height="32"
           viewBox="0 0 32 32"
@@ -179,47 +174,133 @@ const SearchBarMd = () => {
             strokeLinejoin="round"
           />
         </svg>
-      </Link>
+      </button>
 
       {showResults && (
         <div
           ref={searchRef}
-          className="cursor-pointer flex flex-col scrollbar-hide w-full absolute text-black max-h-[300px] overflow-x-hidden left-0 right-0 top-full mt-1 z-50 rounded-b-3xl pt-4 space-y-4 shadow-lg bg-white"
+          className="absolute z-50 rounded-b-3xl bg-white w-full left-0 top-full flex flex-col"
+          style={{ maxHeight: '85vh' }}
         >
-          <div className="overflow-y-scroll scroll-smooth scrollbar-hide">
-            {results.slice(0, 10).map((result) => (
-              <div
-                onClick={() => handleLinkClick(result)}
-                key={result.id}
-                className="hover:bg-blue-100 py-3 px-4 "
-              >
-                <div className="flex gap-2 justify-between">
-                  <p className="font-bold text-sm lg:text-base truncate ">
-                    {result.specialty
-                      ? "Dr. " + result.firstName + " " + result.lastName
-                      : result.name}
-                  </p>
-                  <div className="flex gap-1 text-gray-500 items-center">
-                    <p className="text-xs">{result.rating}</p>
-                    <StarRating rating={result.rating} search={true} />
-                  </div>
-                </div>
+          <div className="overflow-y-auto scrollbar-thin flex-1">
+            <div className="pt-4 flex flex-col divide-y divide-emerald-400 space-y-6">
+              {results.length > 0 && (
+                <>
+                  {results.filter((result) => result.category).length > 0 && (
+                    <div className="space-y-2 pb-4 text-black">
+                      <p className="px-4 text-lg text-slate-600 font-medium">Services</p>
+                      {results
+                        .filter((result) => result.category)
+                        .slice(0,4)
+                        .map((result) => (
+                          <div
+                            onClick={() => handleLinkClick(result)}
+                            key={result.id}
+                            className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
+                          >
+                            <p className="font-bold text-sm lg:text-base truncate">
+                              {result.name}
+                            </p>
+                            <div className="text-xs text-gray-500">
+                              <p>{result.category}</p>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
 
-                <div className="text-xs flex justify-between text-gray-500">
-                  <p>{result.specialty ? result.specialty : result.type}</p>
-                  <p>
-                    {result.reviewCount ? result.reviewCount : "0"}{" "}
-                    {result.reviewCount === 1 ? "review" : "reviews"}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div onClick={handleSearchClick}>
-            <div className="w-full py-2 text-white text-center bg-[#0070FF]">
-              Show all results <span className="ml-2">&rarr;</span>
+                  {results.filter((result) => result.specialty).length > 0 && (
+                    <div className="space-y-2 py-4 text-black">
+                      <p className="px-4 text-lg text-slate-600 font-medium">Doctors</p>
+                      {results
+                        .filter((result) => result.specialty)
+                        .slice(0, 4)
+                        .map((result) => (
+                          <div
+                            onClick={() => handleLinkClick(result)}
+                            key={result.id}
+                            className="hover:bg-blue-100 text-black cursor-pointer pt-3 px-4"
+                          >
+                            <div className="flex gap-2 justify-between">
+                              <p className="font-bold text-sm lg:text-base truncate">
+                                {"Dr. " + result.firstName + " " + result.lastName}
+                              </p>
+                              <div className="flex gap-1 text-gray-500 items-center">
+                                <p className="text-xs">{result.rating}</p>
+                                {result.reviewCount > 0 && (
+                                  <StarRating rating={result.rating} search={true} />
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-xs flex justify-between text-gray-500">
+                              <p>{result.specialtyTag}</p>
+                              {result.reviewCount > 0 ? (
+                                <p>
+                                  {result.reviewCount ? result.reviewCount : "0"}{" "}
+                                  {result.reviewCount === 1 ? "review" : "reviews"}
+                                </p>
+                              ) : (
+                                <p className="font-semibold italic text-gray-600">No reviews</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+
+                  {results.filter((result) => !result.specialty && result.type).length > 0 && (
+                    <div className="space-y-2 pt-4 text-black">
+                      <p className="px-4 text-lg text-slate-600 font-medium">Facilities</p>
+                      {results
+                        .filter((result) => !result.specialty && result.type)
+                        .slice(0, 4)
+                        .map((result) => (
+                          <div
+                            onClick={() => handleLinkClick(result)}
+                            key={result.id}
+                            className="hover:bg-blue-100 text-black cursor-pointer py-3 px-4"
+                          >
+                            <div className="flex gap-2 justify-between">
+                              <p className="font-bold text-sm lg:text-base truncate">
+                                {result.name}
+                              </p>
+                              <div className="flex gap-1 text-gray-500 items-center">
+                                <p className="text-xs">{result.rating}</p>
+                                {result.reviewCount > 0 && (
+                                  <StarRating rating={result.rating} search={true} />
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-xs flex justify-between text-gray-500">
+                              <p>{result.type}</p>
+                              {result.reviewCount > 0 ? (
+                                <p>
+                                  {result.reviewCount ? result.reviewCount : "0"}{" "}
+                                  {result.reviewCount === 1 ? "review" : "reviews"}
+                                </p>
+                              ) : (
+                                <p className="font-semibold italic text-gray-600">No reviews</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
+
+          {results.length > 4 && (
+            <div className="sticky bottom-0 w-full">
+              <div 
+                onClick={handleShowResults}
+                className="w-full cursor-pointer py-3 text-white text-center bg-[#0070FF] rounded-b-3xl"
+              >
+                Show all results <span className="ml-2">&rarr;</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

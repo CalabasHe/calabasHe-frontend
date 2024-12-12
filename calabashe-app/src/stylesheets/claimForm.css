@@ -20,3 +20,8 @@
 .lastName-field:hover .lastNameBubble{
   display: block;
 }
+
+.firstName-field:focus .firstNameBubble,
+.lastName-field:focus .lastNameBubble{
+  display: none;
+}

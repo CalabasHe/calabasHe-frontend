@@ -1,5 +1,6 @@
 import { FaMailBulk, FaMapPin, FaPhoneAlt } from "react-icons/fa";
 import { AnimateY } from "./ComponentAnimations";
+import { Link } from "react-router-dom";
 
 const getCurrentYear = () => new Date().getFullYear();
 const currentYear = getCurrentYear();
@@ -19,24 +20,28 @@ function Footer() {
     <>
       <AnimateY>
 
-        <footer className="flex grow m-0 w-full bg-black px-6 py-12 md:px-14 lg:px-[10%]">
+        <footer className="flex grow m-0 w-full bg-black p-2 lg:py-8 md:p-4 px-2 md:px-12 lg:pl-16 leading-loose">
           <div className="flex flex-col gap-10 text-sm text-white">
             <p className="text-lg font-semibold">
               {" "}
-              ©{currentYear}, <span className="text-xl font-bold">CalabasHe</span>{" "}
+              ©{currentYear}, <span className="text-xl font-bold"><span className="font-yellow-tail text-2xl mx-[0.2rem]">C</span>alabasHe</span>{" "}
             </p>
 
-            <section className="subpixel-antialiased flex flex-col gap-6 leading-relaxed  md:grid md:grid-cols-2 md:gap-7 lg:gap-8 ">
-              <article>
+            <section className="subpixel-antialiased flex flex-col gap-6 p-2 leading-relaxed  md:grid md:grid-cols-2 md:gap-7 lg:gap-8 ">
+              <div>
+              <article className="mb-3">
               Calabashe is a platform where everyone can share their experiences with doctors and clinics. 
               By sharing your reviews, you help others make informed healthcare choices and encourage better service from medical professionals. 
               </article>
-
+              <Link to={"/about"} className="mt-4 hover:underline border border-white p-2 rounded-md">About Us</Link>
+              </div>
+              
               <address className="flex flex-col gap-4 text-xs lg:text-sm">
                 <a className="flex items-center gap-2 "  href={`tel:${companyInfo.phoneNumber}`} target="_blank" title="calabashe phone number" ><FaPhoneAlt/> <span> {companyInfo.phoneNumber}</span></a>
                 <a className="flex items-center gap-2 " href={`mailto:${companyInfo.email}`} target="_blank" title="calabashe email" ><FaMailBulk/> <span>{companyInfo.email}</span></a>
                 <p className="flex items-center gap-2 "><FaMapPin/> <span>{companyInfo.city}, {companyInfo.country}</span> </p>
               </address>
+              
             </section>
 
             <aside className="flex flex-col md:flex-row gap-3">

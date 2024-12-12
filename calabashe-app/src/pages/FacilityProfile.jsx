@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import { useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchFacilityBySlug } from "../api/getProfileData";
 import Footer from "../components/Footer";
@@ -13,21 +13,29 @@ const FacilityProfile = () => {
   const [facility, setFacility] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const go = useNavigate();
 
   useEffect(() => {
     const fetchFacility = async () => {
       try {
-        const data = await fetchFacilityBySlug(type, slug);
+        const data = await fetchFacilityBySlug(slug);
+          if(!data){
+            go('/facilities');
+            return;
+          }
         // console.log('API Response:', data);
         const FacilityDetails = {
           id: data.id,
           name: data.name,
           contact: data.phone,
-          location: data.location,
+          region: data.region?.name,
           address: data.address,
+          location: data.location,
           rating: data.average_rating,
           services: data.services,
-          type: data.facility_type.name,
+          type: data.facility_type_name,
+          image: data.image_thumbnail,
+          logo: data.logo,
           slug: data.slug,
           description: data.description,
           ratingPercentages: data.rating_percentages,
@@ -37,7 +45,13 @@ const FacilityProfile = () => {
         // console.log('Processed facility details:', FacilityDetails);
         setFacility(FacilityDetails);
       } catch (err) {
-        setError(err.message);
+        if (err.response?.status === 404) {
+          setError('Facility not found');
+          go('/facilities');
+        } else {
+          setError('An error occurred while fetching facilities details');
+        }
+        console.error("Error fetching doctor:", err);
       } finally {
         setIsLoading(false);
       }
@@ -57,10 +71,10 @@ const FacilityProfile = () => {
         </h1>
       </div>
     );
-  if (error) return <div>{error}</div>;
+  if (error) return <div className="w-full h-screen flex items-center justify-center text-center">{error}</div>;
 
   return (
-    <>
+    <div className="2xl:container mx-auto 2xl:border-x">
       <Header />
       <AnimatePage>
         <main>
@@ -70,7 +84,7 @@ const FacilityProfile = () => {
       </AnimatePage>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

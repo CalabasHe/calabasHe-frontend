@@ -4,13 +4,30 @@ const BannerVisibilityContext = createContext();
 
 export const BannerVisibilityProvider = ({ children }) => {
   const [isBannerHidden, setIsBannerHidden] = useState(false);
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
 
   const updateBannerVisibility = (isHidden) => {
     setIsBannerHidden(isHidden);
   };
 
+  const showSearchBar = () => {
+    setIsSearchBarVisible(true);
+  };
+
+  const hideSearchBar = () => {
+    setIsSearchBarVisible(false);
+  };
+
   return (
-    <BannerVisibilityContext.Provider value={{ isBannerHidden, updateBannerVisibility }}>
+    <BannerVisibilityContext.Provider
+      value={{
+        isBannerHidden,
+        updateBannerVisibility,
+        isSearchBarVisible,
+        showSearchBar,
+        hideSearchBar,
+      }}
+    >
       {children}
     </BannerVisibilityContext.Provider>
   );

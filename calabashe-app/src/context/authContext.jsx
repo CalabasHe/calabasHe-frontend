@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(true);
   };
 
+
   const logout = () => {
     // window.location.reload()
     removeCookie('accessToken');
