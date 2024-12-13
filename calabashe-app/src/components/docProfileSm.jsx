@@ -20,6 +20,7 @@ const DocProfileSm = ({ doctor = [] }) => {
   // };
 
   const [popUpDetails] = useState({
+    id: doctor.id,
     image: doctor.image,
     name: `Dr. ${doctor.lastName}`,
     rating: doctor.rating,
@@ -205,27 +206,31 @@ const DocProfileSm = ({ doctor = [] }) => {
                 No reviews yet
               </p>
             ) : (
-              <p className="text-sm md:text-base border-b border-[#D0D0D0] pb-4">
-                All reviews have been left by actual patients.
-              </p>
-            )}
-            <div className="flex flex-col gap-4 md:gap-8 h-[300px] overflow-auto scrollbar-thin">
-              {doctor.reviews.slice(0, 10).map((review) => (
-                <div
-                  key={review.id}
-                  className="w-full border bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
-                >
-                  <div className="flex justify-between items-center ">
-                    <StarRating rating={review.rating} />
-                    <p className="text-xs text-[#333333] opacity-50">
-                      {formatDate(review.created_at.split("T")[0])}
-                    </p>
-                  </div>
+              <>
+                <p className="text-sm md:text-base border-b border-[#D0D0D0] pb-4">
+                  All reviews have been left by actual patients.
+                </p>
+                <div className="flex flex-col gap-4 md:gap-8 h-[300px] overflow-auto scrollbar-thin">
+                  {doctor.reviews.slice(0, 10).map((review) => (
+                    <div
+                      key={review.id}
+                      className="w-full border bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
+                    >
+                      <div className="flex justify-between items-center ">
+                        <StarRating rating={review.rating} />
+                        <p className="text-xs text-[#333333] opacity-50">
+                          {formatDate(review.created_at.split("T")[0])}
+                        </p>
+                      </div>
 
-                  <p className="text-sm ">{review.description}</p>
+                      <p className="text-sm ">{review.description}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+
+            )}
+
           </section>
 
           {/* About Section */}
@@ -297,7 +302,7 @@ const DocProfileSm = ({ doctor = [] }) => {
             }
           </section>
           <div className="order-3">
-            <Calender  popUpDetails={popUpDetails} />
+          {doctor.email &&  <Calender popUpDetails={popUpDetails}/>}
           </div>
         </section>
       </main>

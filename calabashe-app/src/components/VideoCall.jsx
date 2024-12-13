@@ -12,6 +12,7 @@ const VideoCall = () => {
           <ClipLoader size={30}/>
         </div>)
   }
+  
   return (
       <StreamTheme>
         <SpeakerLayout participantsBarPosition='bottom' />

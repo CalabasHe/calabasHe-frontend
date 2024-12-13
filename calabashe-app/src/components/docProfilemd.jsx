@@ -17,14 +17,13 @@ const DocProfileMd = ({ doctor = [] }) => {
   const [sliceNum, setSliceNum] = useState(18);
 
   const [popUpDetails] = useState({
+    id: doctor.id,
     image: doctor.image,
     name: `Dr. ${doctor.lastName}`,
     rating: doctor.rating,
     totalReviews: doctor.totalReviews,
     email: doctor.email,
   });
-
-  console.log(popUpDetails)
 
   const handleLinkClick = (newRating) => {
     setRating(newRating);

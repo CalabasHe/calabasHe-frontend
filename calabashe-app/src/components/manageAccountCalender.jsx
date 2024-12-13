@@ -1,23 +1,18 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isFuture, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
+import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
 import { useEffect, useState } from "react";
-import Appointment_popup from "./appointment_popup.jsx";
 import { createTimeSlot, getTimeSlots } from "../api/bookings.js";
 
-const Calender = ({ popUpDetails }) => {
+const ManageAccountCalender = ({handleDaySelected}) => {
     const today = startOfToday();
-    const [showPopUp, setShowPopUp] = useState(false);
-    const [results, setResults] = useState(null);
 
 
     const [selectedDay, setSelectedDay] = useState(today);
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyy'));
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
-    const [meetingDays, setMeetingDays] = useState([]);
 
-    const handlePopUp = (val = false) => {
-        setShowPopUp(val);
-    }
+    
+
 
     let days = eachDayOfInterval({
         start: firstDayCurrentMonth,
@@ -38,56 +33,12 @@ const Calender = ({ popUpDetails }) => {
         return classes.filter(Boolean).join(' ').toString();
     }
 
-    const showTimeSlots = async () => {
-            try {
-                const results = await getTimeSlots(popUpDetails.email);
-                setResults(results.results)
-            } catch (error) {
-                console.error('Caught error when awaiting:', error);
-            }
-    }
-
-
-    const handleDaySelected = async (selectedDay) => {
-        setSelectedDay(selectedDay);
-        setShowPopUp(true);
-    };
-    useEffect(() => {
-        showTimeSlots()
-    }, []);
-
-
-    useEffect(() => {
-        if (results && Array.isArray(results)) {
-            console.log(results);
-            const days = results.map((day) => {
-                const date = new Date(
-                    parseInt(day.year),
-                    parseInt(day.month) - 1,
-                    parseInt(day.day_of_month)
-                );
-                    return date
-            });
-            if (selectedDay) {
-                const isSelected = days.some(day => isSameDay(day, selectedDay));
-                setMeetingDays(days);
-            }
-        }
-    }, [results]);
 
 
     return (
-        <div className='w-full rounded-xl bg-white mx-auto p-5 border'>
-            <Appointment_popup results={results} showPopUp={showPopUp} handlePopUp={handlePopUp} popUpDetails={popUpDetails} daySelected={selectedDay} />
-            <h2 className="text-start font-bold text-2xl mb-5">Available Appointments</h2>
-            <div className="flex gap-2 items-center">
-                <span className="h-3 w-3 rounded-full bg-green-600"></span>
-                <p className="text-sm">Available for appointments</p>
-            </div>
-            <div className="flex gap-2 items-center">
-                <span className="h-3 w-3 rounded-full bg-gray-400"></span>
-                <p className="text-sm">Unavailable for appointments</p>
-            </div>
+        <div className='w-full rounded-xl mx-auto p-5'>
+            <h2 className="text-start font-bold text-2xl mb-2">Availability</h2>
+            <h3 className="text-start font-semibold text-xl mb-2">Select time and date</h3>
             {/* Calender start */}
             <div className="mt-5">
                 <div className="flex justify-between w-[93%]">
@@ -122,21 +73,15 @@ const Calender = ({ popUpDetails }) => {
                 </div>
                 <div className="grid grid-cols-7 text-sm ml-0 text-start w-full font-semibold mt-3">
                     {days.map((day, idx) => {
-                        const isMeetingDay = meetingDays.some(meetingDay =>
-                            isSameDay(meetingDay, day)
-                        );
                         return <div
                             key={day.toString()}
                             className={(idx === 0 && colStartClasses[getDay(day)]).toString()}
                         >
                             <button type="button"
                                 onClick={() => handleDaySelected(day)}
-                                disabled = {!isMeetingDay}
                                 className={
                                     classNames(
                                         isEqual(day, selectedDay) && 'bg-green-800',
-                                        isMeetingDay && 'bg-green-500',
-                                        !isMeetingDay && 'bg-gray-200',
                                         !isEqual(day, selectedDay) &&
                                         isToday(day) &&
                                         'text-red-500',
@@ -156,7 +101,7 @@ const Calender = ({ popUpDetails }) => {
                                         (isEqual(day, selectedDay) || isToday(day)) &&
                                         'font-semibold text-red-500',
                                         isEqual(day, selectedDay) && 'text-white',
-                                        "grid grid-cols-7 items-center justify-center text-center w-8 h-8 text-sm font-semibold mt-3 disabled:cursor-not-allowed"
+                                        "grid grid-cols-7 items-center justify-center text-center w-8 h-8 text-sm font-semibold mt-3"
                                     )
                                 }>
                                 <time dateTime={format(day, 'yyyy-MM-dd')} className="w-8 mx-auto">
@@ -171,7 +116,7 @@ const Calender = ({ popUpDetails }) => {
     )
 }
 
-export default Calender;
+export default ManageAccountCalender;
 
 let colStartClasses = [
     '',
