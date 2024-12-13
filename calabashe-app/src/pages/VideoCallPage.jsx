@@ -17,19 +17,29 @@ const VideoCallPage = () => {
   
   let client;
   const access = getCookie("accessToken");
+  const userType = localStorage.getItem("userType");
+  const email = localStorage.getItem("email");
+
   const handleJoinCall = async () => {
     try {
-      const response = await axios.post(API_URL, 
-        { userId: "b1909b91-826b-4bb8-b392-45a73cb0a78e" }, // Data
-        {
-          headers: {
-            Authorization: `Bearer ${access}`
-          },
-        }
-      );      
+      let response;
+      if (userType === "doctor") {
+        response = await axios.post(API_URL, 
+          { email},
+        );  
+      } else {
+        response = await axios.post(API_URL, 
+          { user_id: "b1909b91-826b-4bb8-b392-45a73cb0a78e"},
+          {
+            headers: {
+              Authorization: `Bearer ${access}`
+            },
+          }
+        );  
+      } 
       
       const token = response.data.token;
-      console.log(token);
+      // console.log(token);
       const client = new StreamVideoClient({ apiKey, token, });
       await client.connectUser({id: "b1909b91-826b-4bb8-b392-45a73cb0a78e"}, token);
       
@@ -57,11 +67,11 @@ const VideoCallPage = () => {
                 <div>
                   <input
                       type='text'
-                      placeholder='Enter call Id'
+                      placeholder='Enter User Id'
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
                   />
-                  <input type='text' placeholder='Enter Username' value={callId}
+                  <input type='text' placeholder='Enter Call Id' value={callId}
                          onChange={(e) => setCallId(e.target.value)}/>
                   <button onClick={handleJoinCall}>Join Call</button>
                 </div>
