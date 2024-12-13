@@ -40,7 +40,8 @@ const DocProfile = () => {
           totalReviews: data.total_reviews,
           verified: data.is_verified,
           conditionsAndTreatments: data.conditions_and_treatments,
-          about: data.about
+          about: data.about,
+          email: data.email,
         };
         // console.log('Processed doctor details:', doctorDetails);
         setDoctor(doctorDetails);

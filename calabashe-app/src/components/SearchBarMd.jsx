@@ -5,6 +5,7 @@ import "../stylesheets/headerSearch.css";
 import StarRating from "./ratingStars";
 import SearchData from "../api/search"; 
 import debounce from "lodash/debounce";
+import { useAuth } from "../hooks/useAuth";
 
 const SearchBarMd = () => {
   const [isFocused, setIsFocused] = useState(false);

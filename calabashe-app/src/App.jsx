@@ -21,6 +21,9 @@ import { SpecialtyProvider } from "./context/specialtyContext";
 import SecondaryForms from "./pages/SecondaryForm";
 import About from "./pages/AboutUs";
 import ProvidersLogin from "./pages/ProvidersLogin";
+import ManageAccount from "./pages/ManageAccount";
+import PrivateRoutes from "./components/privateRoutes.jsx";
+import VideoCallPage from "./pages/VideoCallPage.jsx";
 
 function App() {
   const location = useLocation();
@@ -40,6 +43,9 @@ function App() {
         <BannerVisibilityProvider>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
+              <Route element={<PrivateRoutes />}>
+                <Route path="/manage_account" element={<ManageAccount />} />
+              </Route>
               <Route index element={<Home />} />
               <Route path="/review/:slug" element={<Review />} />
               <Route path="/facilities" element={<Facilities />} />
@@ -64,8 +70,9 @@ function App() {
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />
               <Route path="/secondary_form" element={<SecondaryForms/>} />
+              <Route path="/video_call" element={<VideoCallPage/>}/>
               <Route path="*" element={<NoResult/>} />
-             
+
             </Routes>
           </AnimatePresence>
         </BannerVisibilityProvider>

@@ -1,13 +1,23 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Appointment_popup from "./appointment_popup.jsx";
+import { createTimeSlot, getTimeSlots } from "../api/bookings.js";
 
-const Calender = () => {
+const Calender = ({ popUpDetails }) => {
     const today = startOfToday();
+    const [showPopUp, setShowPopUp] = useState(false);
+    const [results, setResults] = useState(null);
+
+
     const [selectedDay, setSelectedDay] = useState(today);
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyy'));
-    let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
+    let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
+    const [meetingDays, setMeetingDays] = useState([]);
 
+    const handlePopUp = (val = false) => {
+        setShowPopUp(val);
+    }
 
     let days = eachDayOfInterval({
         start: firstDayCurrentMonth,
@@ -25,11 +35,50 @@ const Calender = () => {
     }
 
     function classNames(...classes) {
-        return classes.filter(Boolean).join(' ').toString()
+        return classes.filter(Boolean).join(' ').toString();
     }
+
+    const showTimeSlots = async () => {
+            try {
+                const results = await getTimeSlots(popUpDetails.email);
+                setResults(results.results)
+            } catch (error) {
+                console.error('Caught error when awaiting:', error);
+            }
+    }
+
+
+    const handleDaySelected = async (selectedDay) => {
+        setSelectedDay(selectedDay);
+        setShowPopUp(true);
+    };
+
+    useEffect(() => {
+        showTimeSlots();
+    }, []);
+
+
+    useEffect(() => {
+        if (results && Array.isArray(results)) {
+            const days = results.map((day) => {
+                return new Date(
+                    parseInt(day.year),
+                    parseInt(day.month) - 1,
+                    parseInt(day.day_of_month)
+                );
+            });
+
+            if (selectedDay) {
+                const isSelected = days.some(day => isSameDay(day, selectedDay));
+                setMeetingDays(days);
+            }
+        }
+    }, [results]);
+
 
     return (
         <div className='w-full rounded-xl bg-white mx-auto p-5 border'>
+            <Appointment_popup results={results} showPopUp={showPopUp} handlePopUp={handlePopUp} popUpDetails={popUpDetails} daySelected={selectedDay} />
             <h2 className="text-start font-bold text-2xl mb-5">Available Appointments</h2>
             <div className="flex gap-2 items-center">
                 <span className="h-3 w-3 rounded-full bg-green-600"></span>
@@ -73,35 +122,43 @@ const Calender = () => {
                 </div>
                 <div className="grid grid-cols-7 text-sm ml-0 text-start w-full font-semibold mt-3">
                     {days.map((day, idx) => {
+                        const isMeetingDay = meetingDays.some(meetingDay =>
+                            isSameDay(meetingDay, day)
+                        );
+                        console.log(isMeetingDay);
                         return <div
                             key={day.toString()}
-                            className={idx === 0 && colStartClasses[getDay(day)]}
+                            className={(idx === 0 && colStartClasses[getDay(day)]).toString()}
                         >
-                            <button type="button" className={
-                                classNames(
-                                    isEqual(day, selectedDay) && 'text-white bg-green-500',
-                                    !isEqual(day, selectedDay) &&
-                                    isToday(day) &&
-                                    'text-red-500',
-                                    !isEqual(day, selectedDay) &&
-                                    !isToday(day) &&
-                                    isSameMonth(day, firstDayCurrentMonth) &&
-                                    'text-gray-900',
-                                    !isEqual(day, selectedDay) &&
-                                    !isToday(day) &&
-                                    !isSameMonth(day, firstDayCurrentMonth) &&
-                                    'text-gray-400',
-                                    isEqual(day, selectedDay) && isToday(day) && 'text-red-500',
-                                    isEqual(day, selectedDay) &&
-                                    !isToday(day) &&
-                                    'bg-gray-900',
-                                    !isEqual(day, selectedDay) && 'hover:bg-green-300',
-                                    (isEqual(day, selectedDay) || isToday(day)) &&
-                                    'font-semibold',
-                                    "grid grid-cols-7 items-center justify-center text-center w-8 h-8 text-sm font-semibold mt-3"
-                                )
-
-                            }>
+                            <button type="button"
+                                onClick={() => handleDaySelected(day)}
+                                className={
+                                    classNames(
+                                        isEqual(day, selectedDay) && 'bg-green-800',
+                                        isMeetingDay && 'bg-green-500',
+                                        !isMeetingDay && 'bg-gray-200',
+                                        !isEqual(day, selectedDay) &&
+                                        isToday(day) &&
+                                        'text-red-500',
+                                        !isEqual(day, selectedDay) &&
+                                        !isToday(day) &&
+                                        isSameMonth(day, firstDayCurrentMonth) &&
+                                        'text-gray-900',
+                                        !isEqual(day, selectedDay) &&
+                                        !isToday(day) &&
+                                        !isSameMonth(day, firstDayCurrentMonth) &&
+                                        'text-gray-400',
+                                        isEqual(day, selectedDay) && isToday(day) && 'text-red-500',
+                                        isEqual(day, selectedDay) &&
+                                        !isToday(day) &&
+                                        'bg-gray-900',
+                                        !isEqual(day, selectedDay) && 'hover:bg-green-300',
+                                        (isEqual(day, selectedDay) || isToday(day)) &&
+                                        'font-semibold text-red-500',
+                                        isEqual(day, selectedDay) && 'text-white',
+                                        "grid grid-cols-7 items-center justify-center text-center w-8 h-8 text-sm font-semibold mt-3"
+                                    )
+                                }>
                                 <time dateTime={format(day, 'yyyy-MM-dd')} className="w-8 mx-auto">
                                     {format(day, 'd')}
                                 </time>

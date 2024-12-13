@@ -5,11 +5,12 @@ import { useAuth } from '../hooks/useAuth';
 import SearchBarSm from './searchBarSm';
 
 const Menu = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, userType } = useAuth();
   const [isChecked, setIsChecked] = useState(false);
   const [display, setDisplay] = useState('hidden')
   const menuRef = useRef(null);
   const checkboxRef = useRef(null);
+
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -62,8 +63,17 @@ const Menu = () => {
       <aside className="navmenu antialiased font-semibold text-sm rounded-bl-md">
         <ul>
           {isLoggedIn ?
-            <span aria-label="logout" className='px-4' onClick={logout}> Logout</span> :
-            <Link to='/sign_in' className='w-full px-4' onClick={handleLinkClick}>Sign In</Link>
+            <>
+              {userType ?
+               <Link to={"/manage_account"} className='px-4'>Profile</Link> :
+                <>
+                  <span aria-label="logout" className='px-4' onClick={logout}> Logout</span>
+                </>}
+            </> :
+            <>
+              <Link to='/sign_in' className='w-full px-4' onClick={handleLinkClick}>Sign In for Patients</Link>
+              <Link className='w-full px-4' to="/providers_login">Sign in for Providers</Link>
+            </>
           }
           <Link className='px-4' to="/facilities" onClick={handleLinkClick} id="hospital-link">
             <span>Facilities</span>

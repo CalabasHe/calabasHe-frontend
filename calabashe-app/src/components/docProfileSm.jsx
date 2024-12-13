@@ -19,6 +19,15 @@ const DocProfileSm = ({ doctor = [] }) => {
   //   }
   // };
 
+  const [popUpDetails] = useState({
+    image: doctor.image,
+    name: `Dr. ${doctor.lastName}`,
+    rating: doctor.rating,
+    totalReviews: doctor.totalReviews,
+    email: doctor.email,
+  });
+
+
   const writeAReview = (lastName, slug, id) => {
     const state = {
       message: [lastName, "doctor", id],
@@ -288,7 +297,7 @@ const DocProfileSm = ({ doctor = [] }) => {
             }
           </section>
           <div className="order-3">
-            <Calender />
+            <Calender  popUpDetails={popUpDetails} />
           </div>
         </section>
       </main>

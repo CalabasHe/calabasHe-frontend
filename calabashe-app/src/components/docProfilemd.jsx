@@ -16,13 +16,24 @@ const DocProfileMd = ({ doctor = [] }) => {
   const navigate = useNavigate()
   const [sliceNum, setSliceNum] = useState(18);
 
+  const [popUpDetails] = useState({
+    image: doctor.image,
+    name: `Dr. ${doctor.lastName}`,
+    rating: doctor.rating,
+    totalReviews: doctor.totalReviews,
+    email: doctor.email,
+  });
+
+  console.log(popUpDetails)
+
   const handleLinkClick = (newRating) => {
     setRating(newRating);
     navigate(`/review/${doctor.slug}`, {
       state: {
         message: [doctor.lastName, "doctor", doctor.id],
         from: `/review/${doctor.slug}`,
-        ratings: newRating
+        ratings: newRating,
+        reviews: doctor.totalReviews
       }
     });
   };
@@ -310,7 +321,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                 </ul>
               </section>
             </div>
-            <Calender/>
+           {doctor.email &&  <Calender popUpDetails={popUpDetails}/>}
           </section>
         </section>
       </main>

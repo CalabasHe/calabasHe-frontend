@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
 
 const MdScreenMenu = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, userType } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -34,19 +34,25 @@ const MdScreenMenu = () => {
         {/* <li className="md-link"> <Link to='/services'>Services</Link></li> */}
         <li className="md-link"> {
           isLoggedIn ?
-            <span aria-label="logout" onClick={logout}> Logout</span>
+          <>
+          {userType ?
+           <Link to={"/manage_account"} className='pr-4'>Profile</Link> :
+            <>
+              <span aria-label="logout" className='px-4' onClick={logout}> Logout</span>
+            </>}
+        </> 
             : (
               <div className="relative" ref={dropdownRef}>
                 <button onClick={toggleDropDown}>Sign in</button>
                 {isOpen &&
                   <div className="absolute -right-2 top-8 w-80 h-48 flex flex-col gap-4 bg-white text-md text-zinc-700 px-8 p-4 rounded-lg">
-                    <Link to={"/sign_in"} className="border-b-2 border-gray-200 px-2 py-1 hover:cursor-pointer hover:underline underline-offset-1 decoration-slate-500">
+                    <Link to={"/sign_in"} className="border-b-2 border-gray-200 px-2 py-1 hover:cursor-pointer decoration-slate-500">
                       <h3 className="text-base mb-2">Patients</h3>
-                      <p className="text-sm pt-1 pb-3">Log in</p>
+                      <p className="text-sm pt-1 pb-3 hover:underline">Log in</p>
                     </Link>
-                    <Link to={"/providers_login"} className="px-2 py-1 hover:cursor-pointer hover:underline underline-offset-1 decoration-slate-500">
+                    <Link to={"/providers_login"} className="px-2 py-1 hover:cursor-pointer decoration-slate-500">
                       <h3 className="text-base mb-2">Providers</h3>
-                      <p className="text-sm pb-3">Log in</p>
+                      <p className="text-sm pb-3 hover:underline">Log in</p>
                     </Link>
                   </div>}
               </div>
