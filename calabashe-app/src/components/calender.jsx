@@ -96,6 +96,10 @@ const Calender = ({ popUpDetails }) => {
                 <span className="h-3 w-3 rounded-full bg-gray-400"></span>
                 <p className="text-sm">Unavailable for appointments</p>
             </div>
+            <div className="flex gap-2 items-center">
+                <span className="h-3 w-3 rounded-full bg-green-800"></span>
+                <p className="text-sm">Selected Day</p>
+            </div>
             {/* Calender start */}
             <div className="mt-5">
                 <div className="flex justify-between w-[93%]">
