@@ -3,15 +3,14 @@ import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay,
 import { useEffect, useState } from "react";
 import { createTimeSlot, getTimeSlots } from "../api/bookings.js";
 
-const ManageAccountCalender = ({handleDaySelected}) => {
+const ManageAccountCalender = ({ handleDaySelected }) => {
     const today = startOfToday();
 
-
     const [selectedDay, setSelectedDay] = useState(today);
+
+
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyy'));
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
-
-    
 
 
     let days = eachDayOfInterval({
@@ -33,14 +32,12 @@ const ManageAccountCalender = ({handleDaySelected}) => {
         return classes.filter(Boolean).join(' ').toString();
     }
 
-
-
     return (
         <div className='w-full rounded-xl mx-auto p-5'>
             <h2 className="text-start font-bold text-2xl mb-2">Availability</h2>
             <h3 className="text-start font-semibold text-xl mb-2">Select time and date</h3>
             {/* Calender start */}
-            <div className="mt-5">
+            <div className="mt-5 w-full">
                 <div className="flex justify-between w-[93%]">
                     <h2 className="text-start font-bold">{format(firstDayCurrentMonth, 'MMMM yyy')}</h2>
                     <div className="flex">
@@ -62,13 +59,13 @@ const ManageAccountCalender = ({handleDaySelected}) => {
                         </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-7 items-center justify-center text-start text-sm ml-0 w-full font-semibold mt-3">
+                <div className="grid grid-cols-7 items-center justify-center text-start text-xs md:text-sm ml-0 w-full font-semibold mt-3 md:gap-0">
                     <div>Sun</div>
                     <div>Mon</div>
                     <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thurs</div>
-                    <div className="pl-2">Fri</div>
+                    <div className="mr-2 md:mr-0">Wed</div>
+                    <div className="ml-1 md:ml-0">Thrs</div>
+                    <div>Fri</div>
                     <div>Sat</div>
                 </div>
                 <div className="grid grid-cols-7 text-sm ml-0 text-start w-full font-semibold mt-3">
@@ -78,7 +75,11 @@ const ManageAccountCalender = ({handleDaySelected}) => {
                             className={(idx === 0 && colStartClasses[getDay(day)]).toString()}
                         >
                             <button type="button"
-                                onClick={() => handleDaySelected(day)}
+                                onClick={() => {
+                                    handleDaySelected(day);
+                                    setSelectedDay(day);
+                                }
+                                }
                                 className={
                                     classNames(
                                         isEqual(day, selectedDay) && 'bg-green-800',

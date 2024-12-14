@@ -14,25 +14,36 @@ import { toast } from "sonner";
 // eslint-disable-next-line react/prop-types
 const Appointment_popup = ({ results, showPopUp, handlePopUp, popUpDetails, daySelected }) => {
 
-  const handleBookingSelected = async(day) => {
+  const handleBookingSelected = async (day) => {
     try {
-      await bookDoctor({doctor: popUpDetails.id, booking_date: format(day, 'yyy-M-d'), booking_time:format(day, 'HH:mm') });
+      await bookDoctor({ doctor: popUpDetails.id, booking_date: format(day, 'yyy-M-d'), booking_time: format(day, 'HH:mm') });
       handlePopUp(false);
     } catch (err) {
       if (err.status === 401) {
         toast.error("Please login to book");
       } else {
         toast.error("An error occurred while booking");
-      }   
+      }
     }
   }
+
+  useEffect(() => {
+    if (showPopUp) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showPopUp]);
 
   return (
     showPopUp &&
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
-      <div className="bg-white w-[93%] md:w-[60%] lg:w-[40%] h-max shadow-md rounded-md z-30 px-2 py-3 relative flex flex-col">
+      <div className="bg-white w-[93%] md:w-[60%] lg:w-[40%] h-max max-h-[500px] overflow-y-scroll scrollbar-thin shadow-md rounded-md z-30 px-2 py-3 relative flex flex-col">
         <button onClick={() => handlePopUp(false)} >
-        <CgClose size={20} className="mx-5 text-xl cursor-pointer opacity-50 hover:opacity-100" />
+          <CgClose size={20} className="mx-5 text-xl cursor-pointer opacity-50 hover:opacity-100" />
         </button>
         <h3 className="font-bold text-xl mx-5 my-4">Book an appointment</h3>
         <div className="flex w-full md:w-[90%] mx-auto pb-4 border-b-2 border-stone-400">
@@ -68,7 +79,7 @@ const Appointment_popup = ({ results, showPopUp, handlePopUp, popUpDetails, dayS
           <h3 className="font-semibold">Available appointments</h3>
           <p className="text-sm text-stone-500">Click to book for free</p>
           <div className="">
-            <TimeSlots results={results} daySelected={daySelected} handleBookingSelected={handleBookingSelected}/>
+            <TimeSlots results={results} daySelected={daySelected} handleBookingSelected={handleBookingSelected} />
           </div>
         </div>
       </div>

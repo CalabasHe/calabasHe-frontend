@@ -1,3 +1,4 @@
+import {  } from './../components/SelectableTimes';
 import { useAuth } from "../hooks/useAuth";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -6,50 +7,12 @@ import { useNavigate } from "react-router-dom";
 import ResetPassword from "../components/ResetPassword.jsx";
 import { useEffect, useState } from "react";
 import ManageAccountCalender from "../components/manageAccountCalender.jsx";
-import { addMinutes, parse, format, startOfToday } from 'date-fns';
+import { addMinutes, parse, format, startOfToday, subMinutes } from 'date-fns';
 import { toast } from "sonner";
 import { createTimeSlot } from "../api/bookings.js";
+import SelectableTimes from './../components/SelectableTimes';
+import { generateTimeIntervals } from '../utils/timeUtils.jsx';
 
-function generateTimeIntervals(initial = '09:00', timeInterval = 30, end = '17:00') {
-    const startTime = parse(initial, 'HH:mm', new Date());
-    const endTime = parse(end, 'HH:mm', new Date());
-    const intervals = [];
-
-    let currentTime = startTime;
-    while (currentTime <= endTime) {
-        intervals.push(format(currentTime, 'HH:mm'));
-        currentTime = addMinutes(currentTime, timeInterval);
-    }
-
-    return intervals;
-}
-
-const SelectableTimes = ({ handleSelectedTime, timeInterval, startTime, endTime}) => {
-    const [timeRanges, setTimeRange] = useState(generateTimeIntervals(startTime, timeInterval));
-
-    useEffect(() => {
-        setTimeRange(generateTimeIntervals(startTime, timeInterval, endTime));
-    }, [startTime, timeInterval, endTime]);
-
-    const [isSelected, setIsSelected] = useState(null);
-    return (
-        <div className="h-[300px] w-full mx-auto grid grid-cols-5 items-center place-content-center gap-10">
-            {timeRanges.map(time => {
-                return (
-                    <button
-                        key={time}
-                        onClick={() => {
-                            handleSelectedTime(time);
-                            setIsSelected(time);
-                        }}
-                        className={`border border-black text-center ${isSelected === time ? 'bg-green-600' : ''}`}>
-                        {time}
-                    </button>
-                )
-            })}
-        </div>
-    )
-}
 
 const ManageAccount = () => {
     const { logout, userProfile } = useAuth();
@@ -78,7 +41,9 @@ const ManageAccount = () => {
         logout();
         navigate("/");
     }
+
     const handleDaySelected = (day) => {
+        console.log("hello");
         setSelectedDay(day);
     }
 
@@ -102,11 +67,11 @@ const ManageAccount = () => {
         }
     }
     return (
-        <div className="z-50 bg-red-50  overflow-hidden relative w-full max-h-none min-h-screen flex flex-col flex-1 items-center justify-center pt-16">
+        <div className="z-50 bg-red-50 overflow-hidden relative w-full max-h-none min-h-screen flex flex-col flex-1 items-center justify-center pt-16">
             <Header />
             <div className="w-full flex flex-1 flex-col items-center justify-center">
                 <ResetPassword showPopUp={showPopUp} handlePopUp={handlePopUp} />
-                <main className="flex items-center md:items-start flex-col md:flex-row w-[80%]  my-8  container  max-h-[500px] rounded-lg border border-black p-5 pl-8">
+                <main className="flex items-center md:items-start flex-col md:flex-row w-[80%] my-8 container  max-h-[450px] rounded-lg border border-black p-5 pl-8">
                     <div className="w-full md:w-1/3 md:ml-16">
                         <div className="max-h-[300px] w-[85%] md:w-[95%] mx-auto aspect-square">
                             <img
@@ -128,24 +93,25 @@ const ManageAccount = () => {
                         <button onClick={handleLogout} className="mt-3 text-base md:text-xl">Sign Out</button>
                     </div>
                 </main>
-                <div className="w-[80%] md:w-full lg:w-[80%] mx-auto border border-black min-h-[400px] mb-5 rounded-lg flex items-center flex-col md:flex-row">
-                    <div className="w-[80%]  mx-auto md:w-[45%] p-3 flex flex-col gap-4">
-                        <ManageAccountCalender handleDaySelected={handleDaySelected} />
+                {/** AVAILABILITY */}
+                <div className="w-[85%] md:w-full lg:w-[80%] md:mx-auto border border-black min-h-[400px] mb-5 rounded-lg flex items-center flex-col md:flex-row">
+                    <div className="w-full mx-auto md:w-[45%] p-3 flex flex-col gap-4">
+                        <ManageAccountCalender selectedDay={selectedDay} handleDaySelected={handleDaySelected} />
                         <button className="bg-custom-yellow font-extrabold  text-center p-2 rounded-lg w-[85%] mx-auto"
                             onClick={handleMarkAvailable}
                         >Mark available</button>
                     </div>
-                    <div className="w-[80%] mt-4 mb:mt-0 md:w-1/2 ">
-                        <div className="flex w-full gap-4">
-                            <div className="w-[30%] scrollbar-thin  flex flex-col justify-between">
-                                <label htmlFor="start-select" className="block text-base font-semibold text-gray-700 mb-2">
+                    <div className="w-[85%] md:mx-auto mt-4 mb:mt-0 md:w-1/2 justify-self-start p-3">
+                        <div className="flex md:items-center justify-center w-full gap-3">
+                            <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
+                                <label htmlFor="start-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
                                     Starting time
                                 </label>
                                 <select
                                     id="start-select"
                                     value={selectedStartTime}
                                     onChange={(e) => setSelectedStartTime(e.target.value)}
-                                    className="w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                 >
                                     {startTime.map((time) => (
                                         <option key={time} value={time}>
@@ -157,14 +123,14 @@ const ManageAccount = () => {
                             
                             {/**End time */}
                             <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
-                                <label htmlFor="end-select" className="block text-base font-semibold text-gray-700 mb-2">
+                                <label htmlFor="end-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
                                     Ending time
                                 </label>
                                 <select
                                     id="end-select"
                                     value={selectedEndTime}
                                     onChange={(e) => setSelectedEndTime(e.target.value)}
-                                    className="w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                 >
                                     
                                     {startTime.map((time) => (
@@ -177,14 +143,14 @@ const ManageAccount = () => {
 
                             {/** Intervals */}
                             <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
-                                <label htmlFor="interval-select" className="block text-base font-semibold text-gray-700 mb-2">
+                                <label htmlFor="interval-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
                                     Interval
                                 </label>
                                 <select
                                     id="interval-select"
                                     value={selectedInterval}
                                     onChange={(e) => setSelectedInterval(e.target.value)}
-                                    className="w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                    className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                 >
                                    
                                     {selectableIntervals.map((interval) => (

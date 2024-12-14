@@ -7,13 +7,13 @@ import Footer from "../components/Footer.jsx";
 import axios from "axios";
 import { getCookie } from "../utils/cookies.jsx";
 
-const API_URL = 'https://calabashe-api.onrender.com/api/bookings/create-token/';
-// const API_URL = 'http://localhost:3000/token';
+// const API_URL = 'https://calabashe-api.onrender.com/api/bookings/create-token/';
+const API_URL = 'http://localhost:3000/token';
 const VideoCallPage = () => {
   const [call, setCall] = useState(null);
   const [userId, setUserId] = useState('');
   const [callId, setCallId] = useState('');
-  const apiKey ="5p5srr7vwkd3";
+  const apiKey ="sk52bzg3hgfh";
   
   let client;
   const access = getCookie("accessToken");
@@ -25,7 +25,7 @@ const VideoCallPage = () => {
       let response;
       if (userType === "doctor") {
         response = await axios.post(API_URL, 
-          { email},
+          { email }
         );  
       } else {
         response = await axios.post(API_URL, 
@@ -37,10 +37,9 @@ const VideoCallPage = () => {
           }
         );  
       } 
-      
       const token = response.data.token;
-      // console.log(token);
-      const client = new StreamVideoClient({ apiKey, token, });
+
+      const client = new StreamVideoClient({ apiKey, token});
       await client.connectUser({id: "b1909b91-826b-4bb8-b392-45a73cb0a78e"}, token);
       
       const newCall = client.call('default', callId);
