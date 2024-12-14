@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
+import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isPast, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
 import { useEffect, useState } from "react";
 import { createTimeSlot, getTimeSlots } from "../api/bookings.js";
 
@@ -70,15 +70,18 @@ const ManageAccountCalender = ({ handleDaySelected }) => {
                 </div>
                 <div className="grid grid-cols-7 text-sm ml-0 text-start w-full font-semibold mt-3">
                     {days.map((day, idx) => {
+                        const past = isPast(day) && !isToday(day);
                         return <div
                             key={day.toString()}
                             className={(idx === 0 && colStartClasses[getDay(day)]).toString()}
                         >
-                            <button type="button"
+                            
+                            <button type="button" disabled={past}
                                 onClick={() => {
                                     handleDaySelected(day);
                                     setSelectedDay(day);
                                 }
+                                
                                 }
                                 className={
                                     classNames(
@@ -102,7 +105,7 @@ const ManageAccountCalender = ({ handleDaySelected }) => {
                                         (isEqual(day, selectedDay) || isToday(day)) &&
                                         'font-semibold text-red-500',
                                         isEqual(day, selectedDay) && 'text-white',
-                                        "grid grid-cols-7 items-center justify-center text-center w-8 h-8 text-sm font-semibold mt-3"
+                                        "grid grid-cols-7 items-center justify-center text-center w-8 h-8 text-sm font-semibold mt-3 disabled:bg-gray-300 disabled:cursor-not-allowed"
                                     )
                                 }>
                                 <time dateTime={format(day, 'yyyy-MM-dd')} className="w-8 mx-auto">

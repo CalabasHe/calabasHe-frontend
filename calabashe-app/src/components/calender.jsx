@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isFuture, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
+import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isFuture, isPast, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
 import { useEffect, useState } from "react";
 import Appointment_popup from "./appointment_popup.jsx";
 import { createTimeSlot, getTimeSlots } from "../api/bookings.js";
@@ -8,6 +8,7 @@ const Calender = ({ popUpDetails }) => {
     const today = startOfToday();
     const [showPopUp, setShowPopUp] = useState(false);
     const [results, setResults] = useState(null);
+    const email = localStorage.getItem("email");
 
 
     const [selectedDay, setSelectedDay] = useState(today);
@@ -52,6 +53,7 @@ const Calender = ({ popUpDetails }) => {
         setSelectedDay(selectedDay);
         setShowPopUp(true);
     };
+
     useEffect(() => {
         showTimeSlots()
     }, []);
@@ -59,15 +61,21 @@ const Calender = ({ popUpDetails }) => {
 
     useEffect(() => {
         if (results && Array.isArray(results)) {
-            console.log(results);
+            
             const days = results.map((day) => {
-                const date = new Date(
-                    parseInt(day.year),
-                    parseInt(day.month) - 1,
-                    parseInt(day.day_of_month)
-                );
-                    return date
+                // const date = new Date(
+                //     parseInt(day.year),
+                //     parseInt(day.month) - 1,
+                //     parseInt(day.day_of_month),
+                    
+                // );
+                const current = parse(`${day.year}-${day.month}-${day.day_of_month} ${day.start_time}`, 'yyyy-M-d HH:mm:ss', new Date())
+
+                const now = new Date();
+                 if(current > now)
+                    return current
             });
+
             if (selectedDay) {
                 const isSelected = days.some(day => isSameDay(day, selectedDay));
                 setMeetingDays(days);
@@ -140,6 +148,7 @@ const Calender = ({ popUpDetails }) => {
                                         !isEqual(day, selectedDay) &&
                                         isToday(day) &&
                                         'text-red-500',
+                                        isToday(day) && 'text-red-700 bg-gray-200' ,
                                         !isEqual(day, selectedDay) &&
                                         !isToday(day) &&
                                         isSameMonth(day, firstDayCurrentMonth) &&

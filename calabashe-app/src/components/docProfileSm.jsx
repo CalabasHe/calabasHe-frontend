@@ -302,7 +302,7 @@ const DocProfileSm = ({ doctor = [] }) => {
             }
           </section>
           <div className="order-3">
-          {doctor.email &&  <Calender popUpDetails={popUpDetails}/>}
+           <Calender popUpDetails={popUpDetails}/>
           </div>
         </section>
       </main>

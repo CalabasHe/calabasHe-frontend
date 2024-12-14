@@ -320,7 +320,7 @@ const DocProfileMd = ({ doctor = [] }) => {
                 </ul>
               </section>
             </div>
-           {doctor.email &&  <Calender popUpDetails={popUpDetails}/>}
+          <Calender popUpDetails={popUpDetails}/>
           </section>
         </section>
       </main>

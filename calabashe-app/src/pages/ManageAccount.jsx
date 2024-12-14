@@ -161,7 +161,7 @@ const ManageAccount = () => {
                                 </select>
                             </div>
                         </div>
-                        <SelectableTimes handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime}/>
+                        <SelectableTimes selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime}/>
                     </div>
                 </div>
             </div>
