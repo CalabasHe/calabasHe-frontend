@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isPast, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
 import { useEffect, useState } from "react";
-import { createTimeSlot, getTimeSlots } from "../api/bookings.js";
+
 
 const ManageAccountCalender = ({ handleDaySelected }) => {
     const today = startOfToday();

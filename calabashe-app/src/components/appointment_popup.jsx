@@ -16,8 +16,10 @@ const Appointment_popup = ({ results, showPopUp, handlePopUp, popUpDetails, dayS
 
   const handleBookingSelected = async (day) => {
     try {
+      toast.loading("Booking")
       await bookDoctor({ doctor: popUpDetails.id, booking_date: format(day, 'yyy-M-d'), booking_time: format(day, 'HH:mm') });
       handlePopUp(false);
+      toast.success("Appointment has been booked");
     } catch (err) {
       if (err.status === 401) {
         toast.error("Please login to book");

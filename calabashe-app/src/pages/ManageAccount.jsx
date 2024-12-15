@@ -11,7 +11,7 @@ import { addMinutes, parse, format, startOfToday, subMinutes } from 'date-fns';
 import { toast } from "sonner";
 import { createTimeSlot } from "../api/bookings.js";
 import SelectableTimes from './../components/SelectableTimes';
-import { generateTimeIntervals } from '../utils/timeUtils.jsx';
+import { generateFutureTimeIntervals } from '../utils/timeUtils.jsx';
 
 
 const ManageAccount = () => {
@@ -23,11 +23,18 @@ const ManageAccount = () => {
     const [selectedDay, setSelectedDay] = useState(today);
 
     const [selectedInterval, setSelectedInterval] = useState(30);
-    const [startTime, setStartTime] = useState(generateTimeIntervals('06:00', selectedInterval));
+    const [startTime, setStartTime] = useState(generateFutureTimeIntervals('06:00', selectedInterval,'17:00', selectedDay));
     const [selectedStartTime, setSelectedStartTime] = useState('09:00');
-    const [selectedEndTime, setSelectedEndTime] = useState('17:00');
+    const [selectedEndTime, setSelectedEndTime] = useState('00:00'); // FIXME: change this later
     const selectableIntervals = ["30", "60", "90", "120"];
     
+
+    useEffect(() => {
+        setStartTime(generateFutureTimeIntervals('08:00', selectedInterval,'23:59', selectedDay));
+    }, [selectedDay]);
+
+    
+
     const handleSelectedTime = (time) => {
         setSelectedTime(time);
     }
@@ -43,7 +50,6 @@ const ManageAccount = () => {
     }
 
     const handleDaySelected = (day) => {
-        console.log("hello");
         setSelectedDay(day);
     }
 
@@ -59,7 +65,7 @@ const ManageAccount = () => {
         const endTime = format(addMinutes(tempTime, selectedInterval), 'HH:mm');
 
         try {
-            await createTimeSlot({month, year, day_of_month, doctor_email, start_time: selectedTime, end_time:endTime, is_available: true});
+            await createTimeSlot({month, year, day_of_month, doctor_email, start_time: selectedTime, end_time:endTime, is_available: true, booking_type: ['video']});
             toast.success("Slot created");
         } catch (err) {
             console.log(err);

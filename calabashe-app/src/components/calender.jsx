@@ -2,7 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isFuture, isPast, isSameDay, isSameMonth, isToday, parse, startOfToday } from "date-fns";
 import { useEffect, useState } from "react";
 import Appointment_popup from "./appointment_popup.jsx";
-import { createTimeSlot, getTimeSlots } from "../api/bookings.js";
+import { getTimeSlots } from "../api/bookings.js";
 
 const Calender = ({ popUpDetails }) => {
     const today = startOfToday();

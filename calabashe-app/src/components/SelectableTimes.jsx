@@ -1,6 +1,7 @@
-import { generateFutureTimeIntervals, generateTimeIntervals } from "../utils/timeUtils";
+import { generateFutureTimeIntervals, getAvailableTimeSlots } from "../utils/timeUtils";
 import { format, subMinutes, parse } from "date-fns";
 import { useState, useEffect } from "react";
+import {SyncLoader} from "react-spinners";
 
 
 export const SelectableTimes = ({
@@ -11,16 +12,29 @@ export const SelectableTimes = ({
   selectedDay
 }) => {
   const endtimeDate = subMinutes(parse(endTime, 'HH:mm', new Date()), timeInterval);
-  const [timeRanges, setTimeRange] = useState(generateTimeIntervals(startTime, timeInterval,format(endtimeDate, 'HH:mm') ));
+  const [timeRanges, setTimeRange] = useState(generateFutureTimeIntervals(startTime, timeInterval,format(endtimeDate, 'HH:mm'), selectedDay));
   const [isSelected, setIsSelected] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    const times = generateTimeIntervals(startTime, timeInterval, format(endtimeDate, 'HH:mm'));
-    setTimeRange(times);
-  }, [startTime, timeInterval, endTime]);
+    const fetchAvailableTimes = async () => {
+      setIsLoading(true);
+      const times = await getAvailableTimeSlots(startTime, timeInterval, format(endtimeDate, 'HH:mm'), selectedDay);
+      setTimeRange(times);
+      setIsLoading(false);
+    };
+  
+    fetchAvailableTimes();
+  }, [startTime, timeInterval, endTime, selectedDay]);
 
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-max mt-10">
+        <SyncLoader color="#66e01c" />
+      </div>
+    )
+  }
  
-  return <div className="h-max max-h-[300px] mt-4 w-[94%]  mx-auto grid grid-cols-3 md:grid-cols-5 items-center place-content-center gap-7">
+  return <div className="h-max mt-4 w-[94%]  mx-auto grid grid-cols-3 md:grid-cols-5 items-center place-content-center gap-7 overflow-y-scroll scrollbar-thin">
     {timeRanges.map(time => {
       return <button key={time} onClick={() => {
         handleSelectedTime(time);
@@ -31,5 +45,8 @@ export const SelectableTimes = ({
     })}
   </div>;
 };
+
+
+
 
 export default SelectableTimes;

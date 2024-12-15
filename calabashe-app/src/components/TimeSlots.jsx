@@ -24,7 +24,7 @@ const TimeSlots = ({ results, daySelected, handleBookingSelected }) => {
       end: addDays(daySelectedStart, timeRange)
     });
 
-    if (isInInterval) {
+    if (isInInterval && result.is_available) {
       if (byMonth.hasOwnProperty(idx.toString())) {
         byMonth[idx.toString()].push(startDate);
       } else {
