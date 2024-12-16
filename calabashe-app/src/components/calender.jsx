@@ -42,7 +42,7 @@ const Calender = ({ popUpDetails }) => {
     const showTimeSlots = async () => {
             try {
                 const results = await getTimeSlots(popUpDetails.email);
-                setResults(results.results)
+                setResults(results.results);
             } catch (error) {
                 console.error('Caught error when awaiting:', error);
             }
@@ -58,6 +58,10 @@ const Calender = ({ popUpDetails }) => {
         showTimeSlots()
     }, []);
 
+    useEffect(() => {
+        showTimeSlots()
+    }, [selectedDay]);
+
 
     useEffect(() => {
         if (results && Array.isArray(results)) {
@@ -70,7 +74,6 @@ const Calender = ({ popUpDetails }) => {
                     
                 // );
                 const current = parse(`${day.year}-${day.month}-${day.day_of_month} ${day.start_time}`, 'yyyy-M-d HH:mm:ss', new Date())
-
                 const now = new Date();
                  if(current > now)
                     return current

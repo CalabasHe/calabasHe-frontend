@@ -22,7 +22,6 @@ export const SelectableTimes = ({
       setTimeRange(times);
       setIsLoading(false);
     };
-  
     fetchAvailableTimes();
   }, [startTime, timeInterval, endTime, selectedDay]);
 

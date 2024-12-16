@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
 import { CgClose } from "react-icons/cg";
 import StarRating from "./ratingStars.jsx";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import TimeSlots from "./TimeSlots.jsx";
 import { bookDoctor } from "../api/bookings.js";
@@ -20,12 +20,16 @@ const Appointment_popup = ({ results, showPopUp, handlePopUp, popUpDetails, dayS
       await bookDoctor({ doctor: popUpDetails.id, booking_date: format(day, 'yyy-M-d'), booking_time: format(day, 'HH:mm') });
       handlePopUp(false);
       toast.success("Appointment has been booked");
+
     } catch (err) {
       if (err.status === 401) {
         toast.error("Please login to book");
       } else {
         toast.error("An error occurred while booking");
       }
+    }
+    finally {
+      toast.dismiss();
     }
   }
 
@@ -39,6 +43,7 @@ const Appointment_popup = ({ results, showPopUp, handlePopUp, popUpDetails, dayS
       document.body.style.overflow = "";
     };
   }, [showPopUp]);
+
 
   return (
     showPopUp &&

@@ -1,4 +1,4 @@
-import {  } from './../components/SelectableTimes';
+import { } from './../components/SelectableTimes';
 import { useAuth } from "../hooks/useAuth";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { createTimeSlot } from "../api/bookings.js";
 import SelectableTimes from './../components/SelectableTimes';
 import { generateFutureTimeIntervals } from '../utils/timeUtils.jsx';
+import Checkboxes from '../components/multipleCheckbox.jsx';
 
 
 const ManageAccount = () => {
@@ -23,18 +24,27 @@ const ManageAccount = () => {
     const [selectedDay, setSelectedDay] = useState(today);
 
     const [selectedInterval, setSelectedInterval] = useState(30);
-    const [startTime, setStartTime] = useState(generateFutureTimeIntervals('06:00', selectedInterval,'17:00', selectedDay));
+    const [startTime, setStartTime] = useState(generateFutureTimeIntervals('06:00', selectedInterval, '17:00', selectedDay));
     const [selectedStartTime, setSelectedStartTime] = useState('09:00');
     const [selectedEndTime, setSelectedEndTime] = useState('00:00'); // FIXME: change this later
     const selectableIntervals = ["30", "60", "90", "120"];
-    
 
+    const [selectedTypes, setSelectedTypes] = useState([]);
+    const options = [
+        { value: "video_call", name: "Video" },
+        { value: "voice", name: "Voice Call" },
+        { value: "in_person", name: "In Person" }];
+
+
+
+        
     useEffect(() => {
-        setStartTime(generateFutureTimeIntervals('08:00', selectedInterval,'23:59', selectedDay));
+        setStartTime(generateFutureTimeIntervals('08:00', selectedInterval, '23:59', selectedDay));
     }, [selectedDay]);
 
-    
-
+    const handleSelectedTypes = (selectedOptions) => {
+        setSelectedTypes(selectedOptions);
+    }
     const handleSelectedTime = (time) => {
         setSelectedTime(time);
     }
@@ -63,9 +73,10 @@ const ManageAccount = () => {
         const day_of_month = parseInt(format(selectedDay, 'd'), 10);
         const tempTime = parse(selectedTime, 'HH:mm', new Date());
         const endTime = format(addMinutes(tempTime, selectedInterval), 'HH:mm');
+        setSelectedDay(today); // to force a reload
 
         try {
-            await createTimeSlot({month, year, day_of_month, doctor_email, start_time: selectedTime, end_time:endTime, is_available: true, booking_type: ['video']});
+            await createTimeSlot({ month, year, day_of_month, doctor_email, start_time: selectedTime, end_time: endTime, is_available: true, booking_type: selectedTypes });
             toast.success("Slot created");
         } catch (err) {
             console.log(err);
@@ -126,7 +137,7 @@ const ManageAccount = () => {
                                     ))}
                                 </select>
                             </div>
-                            
+
                             {/**End time */}
                             <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
                                 <label htmlFor="end-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
@@ -138,7 +149,7 @@ const ManageAccount = () => {
                                     onChange={(e) => setSelectedEndTime(e.target.value)}
                                     className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                 >
-                                    
+
                                     {startTime.map((time) => (
                                         <option key={time} value={time}>
                                             {time}
@@ -158,7 +169,7 @@ const ManageAccount = () => {
                                     onChange={(e) => setSelectedInterval(e.target.value)}
                                     className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                 >
-                                   
+
                                     {selectableIntervals.map((interval) => (
                                         <option key={interval} value={interval}>
                                             {interval} mins
@@ -167,7 +178,10 @@ const ManageAccount = () => {
                                 </select>
                             </div>
                         </div>
-                        <SelectableTimes selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime}/>
+                        <div>
+                            <Checkboxes options={options} onChange={handleSelectedTypes} />
+                        </div>
+                        <SelectableTimes selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime} />
                     </div>
                 </div>
             </div>

@@ -6,7 +6,6 @@ import { getCookie } from "../utils/cookies";
 const MAIN_URL = 'https://calabashe-api.onrender.com/api/bookings'
 export const createTimeSlot = async ({month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type}) => {
     const createUrl = MAIN_URL + '/timeslots/';
-    console.log({month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type});
     try {
         const response = await axios.post(createUrl, {month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type});
         return response;

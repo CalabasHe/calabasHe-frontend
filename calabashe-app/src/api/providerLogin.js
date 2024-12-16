@@ -39,7 +39,7 @@ export async function forgotDoctorPassword({ email }) {
         const response = await axios.post(url, { email })
         return response.data
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         if (axios.isAxiosError(error)) {
             throw error;
         }
