@@ -2,14 +2,17 @@ import {CallControls, CallingState, SpeakerLayout, StreamTheme, useCallStateHook
 import ClipLoader from "react-spinners/ClipLoader";
 import '@stream-io/video-react-sdk/dist/css/styles.css';
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const VideoCall = () => {
   const {useCallCallingState} = useCallStateHooks();
   const callingState = useCallCallingState();
 
-  if (callingState === CallingState.JOINED) {
-    toast.dismiss();
-  }
+  useEffect(() => {
+    if (callingState === CallingState.JOINED) {
+      toast.dismiss();
+    }
+  }, [callingState]);
   if (callingState === CallingState.LEFT) {
     return (
       <div className="text-center text-2xl">
@@ -17,6 +20,7 @@ const VideoCall = () => {
       </div>
     )
   }
+
   return (
       <StreamTheme>
         <SpeakerLayout participantsBarPosition='bottom' />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { StreamCall, StreamVideo, StreamVideoClient } from "@stream-io/video-react-sdk";
 import VideoCall from "../components/VideoCall.jsx";
@@ -8,7 +8,6 @@ import { getCookie } from "../utils/cookies.jsx";
 import { getUserId } from "../utils/getUserId.jsx";
 import callImage from '../assets/images/vidoe_call.png'
 import { useParams } from "react-router-dom";
-
 const API_URL = 'https://calabashe-api.onrender.com/api/bookings/create-token/';
 
 const VideoCallPage = () => {
@@ -18,12 +17,11 @@ const VideoCallPage = () => {
 
   const email = localStorage.getItem("email");
 
-  const [call, setCall] = useState();
+  const [call, setCall] = useState(null);
   const [userId, setUserId] = useState(getUserId());
   const [callId, setCallId] = useState(id);
   const apiKey = "5p5srr7vwkd3";
-
-  let client;
+  const clientRef = useRef();
 
 
   const name = userType === "doctor"?("Dr "+ sessionStorage.getItem("userName") ): sessionStorage.getItem("userName");
@@ -31,6 +29,8 @@ const VideoCallPage = () => {
     id: userId,
     name: name,
   }
+
+  
 
   const handleJoinCall = async () => {
     try {
@@ -51,26 +51,34 @@ const VideoCallPage = () => {
         );
       }
       const token = response.data.token;
-      const client = new StreamVideoClient({ apiKey, user, token });
-      await client.connectUser({ id: userId }, token);
+      if (!clientRef.current) {
+        clientRef.current = StreamVideoClient.getOrCreateInstance({ apiKey, user, token });
+        await clientRef.current.connectUser({ id: userId }, token);
+      }
 
-      const newCall = client.call('default', callId);
-      await newCall.join({ create: true });
+      const newCall = clientRef.current.call('default', callId);
+      
+
+      const role = userType === "doctor"? "host":"call-member"; //Role switches otherwise
+      await newCall.getOrCreate({members: [{ user_id: userId, role: role }],});
       setCall(newCall);
+      await newCall.join();
     } catch (e) {
-      // console.log(e);
+      console.log(e);
       toast.error("Failed to join call");
     } finally {
       toast.dismiss();
     }
   }
+
+
   return (
     <div className="bg-red-50 h-screen flex flex-col min-h-screen">
       <Header />
       <div className="pt-20 md:pt-32 lg:pt-16 flex items-center justify-center md:h-[90vh] w-full">
         {call ?
           (
-            <StreamVideo client={client}>
+            <StreamVideo client={clientRef.current}>
               <StreamCall call={call}>
                 <VideoCall />
               </StreamCall>
