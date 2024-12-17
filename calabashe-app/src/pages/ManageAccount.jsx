@@ -79,7 +79,7 @@ const ManageAccount = () => {
             await createTimeSlot({ month, year, day_of_month, doctor_email, start_time: selectedTime, end_time: endTime, is_available: true, booking_type: selectedTypes });
             toast.success("Slot created");
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             toast.error("An error occurred")
         }
     }

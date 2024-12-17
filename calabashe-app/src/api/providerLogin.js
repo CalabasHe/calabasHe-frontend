@@ -6,7 +6,7 @@ export async function loginDoctor({ email, password }) {
     const url = baseUrl + `/login/`
     try {
         const result = await axios.post(url, { email, password });
-        console.log(result);
+        // console.log(result);
         return result;
     } catch (error) {
         if (error.response && error.response.data) {
@@ -39,7 +39,7 @@ export async function forgotDoctorPassword({ email }) {
         const response = await axios.post(url, { email })
         return response.data
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         if (axios.isAxiosError(error)) {
             throw error;
         }

@@ -38,7 +38,7 @@ export const logIn = async ({ email, password }) => {
     return response.data;
   }catch (error) {
     if (error.status === 400) {
-      throw new Error("User does not exist")
+      throw new Error("Invalid Credentials")
     }
     else if (error.response && error.response.data) {
       throw error.response.data;
