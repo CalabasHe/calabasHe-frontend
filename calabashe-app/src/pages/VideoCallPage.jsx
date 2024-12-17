@@ -13,16 +13,20 @@ const API_URL = 'https://calabashe-api.onrender.com/api/bookings/create-token/';
 
 const VideoCallPage = () => {
   const { id } = useParams();
+  const access = getCookie("accessToken");
+  const userType = localStorage.getItem("userType");
+
+  const email = localStorage.getItem("email");
+
   const [call, setCall] = useState();
   const [userId, setUserId] = useState(getUserId());
   const [callId, setCallId] = useState(id);
   const apiKey = "5p5srr7vwkd3";
 
   let client;
-  const access = getCookie("accessToken");
-  const userType = localStorage.getItem("userType");
-  const email = localStorage.getItem("email");
-  const name = userType === "doctor"?"Dr "+ sessionStorage.getItem("userName") : sessionStorage.getItem("userName") ;
+
+
+  const name = userType === "doctor"?("Dr "+ sessionStorage.getItem("userName") ): sessionStorage.getItem("userName");
   const user = {
     id: userId,
     name: name,
@@ -56,6 +60,8 @@ const VideoCallPage = () => {
     } catch (e) {
       // console.log(e);
       toast.error("Failed to join call");
+    } finally {
+      toast.dismiss();
     }
   }
   return (

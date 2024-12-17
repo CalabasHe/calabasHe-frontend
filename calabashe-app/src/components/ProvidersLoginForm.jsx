@@ -44,9 +44,9 @@ const ProviderLoginForm = () => {
     return toast.promise(
         async () => {
           const response = await loginDoctor({email, password});
-          login(response.access, response.refresh);
+          login(response.data.access, response.data.refresh);
           modifyUserType("doctor", response.data.profile_image, response.data.last_name, response.data.email, response.data.reviews);
-          sessionStorage.setItem("userName", `${response.data.last_name} ${response.data.last_name}`)
+          sessionStorage.setItem("userName", `${response.data.last_name}`)
           const destination = fullState?.from || "/";
           navigate(destination, {state: fullState});
           return "Sign in successful";
@@ -143,7 +143,6 @@ const ProviderLoginForm = () => {
                 fill="#04DA8D"/>
           </svg>
         </div>
-        <div className="sticky bottom-0"></div>
       </main>
   )
 }

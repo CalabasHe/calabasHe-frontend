@@ -6,7 +6,7 @@ export async function loginDoctor({ email, password }) {
     const url = baseUrl + `/login/`
     try {
         const result = await axios.post(url, { email, password });
-
+        console.log(result);
         return result;
     } catch (error) {
         if (error.response && error.response.data) {

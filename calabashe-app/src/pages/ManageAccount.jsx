@@ -86,9 +86,9 @@ const ManageAccount = () => {
     return (
         <div className="z-50 bg-red-50 overflow-hidden relative w-full max-h-none min-h-screen flex flex-col flex-1 items-center justify-center pt-16">
             <Header />
-            <div className="w-full flex flex-1 flex-col items-center justify-center">
+            <main className="w-full flex flex-1 flex-col items-center justify-center">
                 <ResetPassword showPopUp={showPopUp} handlePopUp={handlePopUp} />
-                <main className="flex items-center md:items-start flex-col md:flex-row w-[80%] my-8 container  max-h-[450px] rounded-lg border border-black p-5 pl-8">
+                <div className="flex items-center md:items-start flex-col md:flex-row w-[80%] my-8 container min-h-max rounded-lg border border-black p-5 pl-8">
                     <div className="w-full md:w-1/3 md:ml-16">
                         <div className="max-h-[300px] w-[85%] md:w-[95%] mx-auto aspect-square">
                             <img
@@ -109,7 +109,7 @@ const ManageAccount = () => {
                         </div>
                         <button onClick={handleLogout} className="mt-3 text-base md:text-xl">Sign Out</button>
                     </div>
-                </main>
+                </div>
                 {/** AVAILABILITY */}
                 <div className="w-[85%] md:w-full lg:w-[80%] md:mx-auto border border-black min-h-[400px] mb-5 rounded-lg flex items-center flex-col md:flex-row">
                     <div className="w-full mx-auto md:w-[45%] p-3 flex flex-col gap-4">
@@ -184,7 +184,7 @@ const ManageAccount = () => {
                         <SelectableTimes selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime} />
                     </div>
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );
