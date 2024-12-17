@@ -1,0 +1,24 @@
+@import url("@stream-io/video-react-sdk/dist/css/styles.css");
+/*
+  //BUTTON STATES (end call, audio soruce, video soruce etc
+  
+    --str-video__button-default-base: #67e037 !important;; // this one controls their actual colors
+  --str-video__button-default-hover;
+  --str-video__button-default-pressed;
+  --str-video__button-default-active;
+  --str-video__button-default-disabled
+  .str-video__call-controls  -> controls the entire buttons background
+   --str-video__icon-default -> controls the icons colors
+   (--str-video__button-primary-base -> controls the upper buttons for audio and video input
+   --str-video__base-color6 -> controls the pop up menu backgrounds
+   --str-video__primary-color -> controls the audio visualizer icon
+   --str-video__background-color4 -> controls the background color of the pariticipnat at the bottom of the video
+
+
+*/
+.str-video {
+
+  --str-video__base-color6: #67e037
+  /*Background colors*/
+}
+

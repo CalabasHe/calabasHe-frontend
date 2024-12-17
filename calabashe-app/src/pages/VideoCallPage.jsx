@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { StreamCall, StreamVideo, StreamVideoClient } from "@stream-io/video-react-sdk";
+import { StreamCall, StreamTheme, StreamVideo, StreamVideoClient } from "@stream-io/video-react-sdk";
 import VideoCall from "../components/VideoCall.jsx";
 import Header from "../components/Header.jsx";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { getCookie } from "../utils/cookies.jsx";
 import { getUserId } from "../utils/getUserId.jsx";
 import callImage from '../assets/images/vidoe_call.png'
 import { useParams } from "react-router-dom";
+
 const API_URL = 'https://calabashe-api.onrender.com/api/bookings/create-token/';
 
 const VideoCallPage = () => {
@@ -24,13 +25,13 @@ const VideoCallPage = () => {
   const clientRef = useRef();
 
 
-  const name = userType === "doctor"?("Dr "+ sessionStorage.getItem("userName") ): sessionStorage.getItem("userName");
+  const name = userType === "doctor" ? ("Dr " + sessionStorage.getItem("userName")) : sessionStorage.getItem("userName");
   const user = {
     id: userId,
     name: name,
   }
 
-  
+
 
   const handleJoinCall = async () => {
     try {
@@ -57,10 +58,10 @@ const VideoCallPage = () => {
       }
 
       const newCall = clientRef.current.call('default', callId);
-      
 
-      const role = userType === "doctor"? "admin":"call-member"; //Role switches otherwise
-      await newCall.getOrCreate({members: [{ user_id: userId, role: role }],});
+
+      const role = userType === "doctor" ? "admin" : "user"; //Role switches otherwise
+      await newCall.getOrCreate({ members: [{ user_id: userId, role: role }], });
       setCall(newCall);
       await newCall.join();
     } catch (e) {
@@ -80,7 +81,7 @@ const VideoCallPage = () => {
           (
             <StreamVideo client={clientRef.current}>
               <StreamCall call={call}>
-                <VideoCall />
+                  <VideoCall />
               </StreamCall>
             </StreamVideo>
           ) :
@@ -95,7 +96,7 @@ const VideoCallPage = () => {
                   <input type='text' placeholder='Enter Call Id' value={callId}
                          onChange={(e) => setCallId(e.target.value)}/> */}
               <div className="w-full md:w-[45%] order-2">
-                <img src={callImage} alt="Video call" aria-hidden className="w-full "/>
+                <img src={callImage} alt="Video call" aria-hidden className="w-full " />
               </div>
               <div className="w-full md:w-[60%] flex gap-4 flex-col order-1 items-center md:items-start text-center md:text-start">
                 <h1 className="text-4xl md:text-5xl font-extrabold">Join instant video consultation</h1>

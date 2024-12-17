@@ -1,12 +1,14 @@
-import {CallControls, CallingState, SpeakerLayout, StreamTheme, useCallStateHooks} from "@stream-io/video-react-sdk";
+import { CallControls, CallingState, SpeakerLayout, StreamTheme, useCallStateHooks } from "@stream-io/video-react-sdk";
 import ClipLoader from "react-spinners/ClipLoader";
-import '@stream-io/video-react-sdk/dist/css/styles.css';
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import "../stylesheets/video.css";
+
 
 const VideoCall = () => {
-  const {useCallCallingState} = useCallStateHooks();
+  const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     if (callingState === CallingState.JOINED) {
@@ -22,10 +24,11 @@ const VideoCall = () => {
   }
 
   return (
-      <StreamTheme>
-        <SpeakerLayout participantsBarPosition='bottom' />
-        <CallControls />
-      </StreamTheme>
+    <StreamTheme className="str-video">
+      <SpeakerLayout participantsBarPosition='bottom' />
+      <CallControls />
+    </StreamTheme>
+
   )
 }
 export default VideoCall;
