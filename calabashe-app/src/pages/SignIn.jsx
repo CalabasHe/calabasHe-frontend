@@ -53,6 +53,7 @@ const SignIn = () => {
       async () => {
         const response = await logIn({ email, password });
         login(response.access, response.refresh);
+        sessionStorage.setItem("userName",response.user.username)
         const destination = fullState?.from || "/";
         navigate(destination, { state: fullState });
         return "Sign in successful";
@@ -64,7 +65,7 @@ const SignIn = () => {
           return "Welcome Back!";
         },
         error: (error) => {
-          let errorMessage = "An unexpected error occurred";
+          let errorMessage = error.message;
           if (error.non_field_errors) {
             if (error.non_field_errors[0].includes("No account")) {
               errorMessage = "Account doesn't exist";

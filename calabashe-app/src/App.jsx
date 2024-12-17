@@ -70,7 +70,7 @@ function App() {
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />
               <Route path="/secondary_form" element={<SecondaryForms/>} />
-              <Route path="/video_call" element={<VideoCallPage/>}/>
+              <Route path="/video_call/:id" element={<VideoCallPage/>}/>
               <Route path="*" element={<NoResult/>} />
 
             </Routes>

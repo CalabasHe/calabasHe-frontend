@@ -37,9 +37,14 @@ export const logIn = async ({ email, password }) => {
     });
     return response.data;
   }catch (error) {
-    if (error.response && error.response.data) {
+    if (error.status === 400) {
+      throw new Error("User does not exist")
+    }
+    else if (error.response && error.response.data) {
       throw error.response.data;
-    } else {
+    } 
+
+    else {
       throw new Error('An unexpected error occurred');
     }
   }
@@ -52,7 +57,7 @@ export const verifyCode = async ({ email, verification_code }) => {
       email,
       verification_code,
     });
-    return response.data.tokens;
+    return response.data;
   }catch (error) {
     if (error.response && error.response.data) {
       throw error.response.data;

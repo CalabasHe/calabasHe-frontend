@@ -31,7 +31,7 @@ const ManageAccount = () => {
 
     const [selectedTypes, setSelectedTypes] = useState([]);
     const options = [
-        { value: "video_call", name: "Video" },
+        { value: "video", name: "Video" },
         { value: "voice", name: "Voice Call" },
         { value: "in_person", name: "In Person" }];
 
