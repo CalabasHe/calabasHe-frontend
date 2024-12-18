@@ -2,6 +2,7 @@ import { } from './../components/SelectableTimes';
 import { useAuth } from "../hooks/useAuth";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BookedAppointments from '../components/bookedAppointments.jsx';
 import banner_image from '../assets/icons/Lady-With-Laptop.svg'
 import { useNavigate } from "react-router-dom";
 import ResetPassword from "../components/ResetPassword.jsx";
@@ -183,6 +184,10 @@ const ManageAccount = () => {
                         </div>
                         <SelectableTimes selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime} />
                     </div>
+                </div>
+                <div className='w-[85%] md:w-full lg:w-[80%] mb-4 rounded-xl h-[400px] overflow-y-scroll scrollbar-thin '>
+                    <h1 className='text-2xl font-semibold text-center mb-4 underline'>Your Booked Appoitments</h1>
+                    <BookedAppointments/>
                 </div>
             </main>
             <Footer />
