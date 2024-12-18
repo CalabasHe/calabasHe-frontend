@@ -1,5 +1,6 @@
-import mainImage from '../assets/images/about_us_header.png'
-
+import mainImage from '../assets/images/about_us_header.png';
+import naviagting from '../assets/images/naviagting_healthcare.png';
+import at_calabashe from '../assets/images/at_calabashe.png'
 const AboutSection = () => {
     return (
         <div className="pt-12 md:py-14 md:pt-16 flex items-center justify-center flex-col text-center gap-12">
@@ -15,7 +16,7 @@ const AboutSection = () => {
             <div className='leading-loose'>
                 <div className='bg-orange-200 flex flex-col w-full md:flex-row px-12 py-20 gap-7 md:gap-5 justify-center items-center min-w-[500px] md:text-start'>
                     <div className='w-full md:w-[50%]'>
-                        <img src={mainImage} alt="At Calabashe" className='w-[90%] md:w-[70%] mx-auto' />
+                        <img src={at_calabashe} alt="About Calabashe"  className='w-[90%] md:w-[70%] mx-auto' />
                     </div>
                     <div className='w-[90%] md:w-[50%] self-start pt-5 mx-auto'>
                         <h1 className='text-5xl md:text-6xl font-semibold mb-2 '>At Calabashe</h1>
@@ -28,7 +29,7 @@ const AboutSection = () => {
                 </div>
                 <div className='flex flex-col w-full md:flex-row px-12 py-20 gap-7 md:gap-5 justify-center items-center min-w-[500px] md:text-start'>
                     <div className='w-full md:w-[50%] order-1 md:order-2'>
-                        <img src={mainImage} alt="At Calabashe" className='w-[90%] md:w-[70%] mx-auto' />
+                        <img src={naviagting} alt="naviagting" aria-hidden className='w-[90%] md:w-[70%] mx-auto' />
                     </div>
                     <div className='w-[90%] md:w-[50%] self-start pt-5 mx-auto order-2 md:order-1'>
                         <h1 className='text-5xl md:text-6xl font-semibold mb-2 flex gap-2 flex-col'><span>Navigating</span> <span>healthcare</span></h1>
