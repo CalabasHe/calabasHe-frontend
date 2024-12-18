@@ -22,7 +22,6 @@ const VideoCallPage = () => {
   const [userId, setUserId] = useState(getUserId());
   const [callId, setCallId] = useState(id);
   const apiKey = import.meta.env.VITE_API_KEY || process.env.VITE_API_KEY;
-  console.log(apiKey)
   const clientRef = useRef();
 
 
