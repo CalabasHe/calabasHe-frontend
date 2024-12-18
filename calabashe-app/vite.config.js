@@ -4,4 +4,7 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [react(), svgr()],
+  define: {
+    'import.meta.env.VITE_API_KEY': JSON.stringify(process.env.VITE_API_KEY)
+  }
 });
