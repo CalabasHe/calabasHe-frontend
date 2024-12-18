@@ -21,7 +21,7 @@ const VideoCallPage = () => {
   const [call, setCall] = useState(null);
   const [userId, setUserId] = useState(getUserId());
   const [callId, setCallId] = useState(id);
-  const apiKey = "5p5srr7vwkd3";
+  const apiKey = import.meta.env.VITE_API_KEY;
   const clientRef = useRef();
 
 
@@ -30,7 +30,6 @@ const VideoCallPage = () => {
     id: userId,
     name: name,
   }
-
 
 
   const handleJoinCall = async () => {

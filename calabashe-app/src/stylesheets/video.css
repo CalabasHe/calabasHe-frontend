@@ -9,16 +9,16 @@
   --str-video__button-default-disabled
   .str-video__call-controls  -> controls the entire buttons background
    --str-video__icon-default -> controls the icons colors
-   (--str-video__button-primary-base -> controls the upper buttons for audio and video input
+   (--str-video__button-primary-base -> controls the background and entire buttons upper buttons for audio and video input
    --str-video__base-color6 -> controls the pop up menu backgrounds
    --str-video__primary-color -> controls the audio visualizer icon
    --str-video__background-color4 -> controls the background color of the pariticipnat at the bottom of the video
-
+   --str-video__button-primary-base -> controls pop up icons bg
+   --str-video__button-primary-base
+   
 
 */
 .str-video {
-
-  --str-video__base-color6: #67e037
-  /*Background colors*/
+  color: white;
 }
 
