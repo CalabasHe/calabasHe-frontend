@@ -20,46 +20,83 @@
 */
 /* General Styling */
 .str-video__container {
-  @apply relative h-screen w-full overflow-hidden;
+  @apply relative w-full overflow-hidden px-4 lg:px-8;
 }
 
-/* Style the video container */
 .str-video {
   @apply text-white;
 }
 
-/* Style the controls container */
 .str-video__call-controls {
   @apply flex gap-2 items-center px-4;
 }
 
-/* Style individual control buttons */
 .str-video__button {
   @apply rounded-full p-3 transition-colors hover:bg-gray-800;
 }
 
-/* Active state for buttons */
 .str-video__button--active {
   @apply bg-blue-600 hover:bg-blue-700;
 }
 
-/* Style participant tiles */
 .str-video__participant {
   @apply rounded-lg overflow-hidden border border-gray-800;
 }
 
-/* Style participant information */
 .str-video__participant-details {
   @apply bg-gray-900/80 backdrop-blur-sm;
 }
 
-/* Style participant name */
 .str-video__participant-name {
   @apply text-sm font-medium;
 }
 
-/* Ensure video fills container */
 .str-video__video {
   @apply object-cover w-full h-full;
 }
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .str-video__participant {
+    @apply rounded-xl;
+  }
+}
+
+@media (min-width: 1024px) {
+  .str-video__container {
+    @apply h-[calc(100vh-180px)];
+  }
+
+  .str-video__participant {
+    @apply rounded-2xl;
+  }
+
+  .str-video__speaker-layout {
+    @apply gap-6;
+  }
+
+  .str-video__speaker-layout .str-video__participant--dominant {
+    @apply min-h-[60vh];
+  }
+
+  .str-video__participant-name {
+    @apply text-base;
+  }
+
+  .str-video__button {
+    @apply p-4;
+  }
+}
+
+@media (min-width: 1280px) {
+  .str-video__container {
+    @apply h-[calc(100vh-200px)];
+  }
+
+  .str-video__speaker-layout .str-video__participant--dominant {
+    @apply min-h-[70vh];
+  }
+}
+
+
 
