@@ -11,8 +11,12 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^1.0.6",
+    "@stream-io/video-react-sdk": "^1.8.3",
     "axios": "^1.7.7",
     "calabashe-app": "file:",
+    "date-fns": "^2.30.0",
     "framer-motion": "^11.3.24",
     "fuse.js": "^7.0.0",
     "fuzzysort": "^3.1.0",
@@ -45,5 +49,6 @@
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1",
     "vite-plugin-svgr": "^4.2.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

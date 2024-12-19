@@ -2,7 +2,8 @@ import { useState } from "react";
 import Header from "../components/Header";
 import { forgotPassword, resetPassword } from "../api/authApi";
 import { toast } from "sonner";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { forgotDoctorPassword, resetDoctorPassword } from "../api/providerLogin";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -16,6 +17,10 @@ const ForgotPassword = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const navigate = useNavigate();
   const [codeDigits, setCodeDigits] = useState(Array(6).fill(''));
+
+  const location = useLocation();
+
+  const userType = localStorage.getItem("userType");
 
   const handleCodeChange = (e, index) => {
     const value = e.target.value;
@@ -38,27 +43,7 @@ const ForgotPassword = () => {
     }
   };
 
-  const validatePassword = (password) => {
-    const minLength = /.{8,}/;
-    const uppercase = /[A-Z]/;
-    const lowercase = /[a-z]/;
-    const symbol = /[!@#$%^&*(),.?":{}|<>]/;
 
-    if (!minLength.test(password)) {
-      return "Password must be at least 8 characters long.";
-    }
-    if (!uppercase.test(password)) {
-      return "Password must contain at least one uppercase letter.";
-    }
-    if (!lowercase.test(password)) {
-      return "Password must contain at least one lowercase letter.";
-    }
-    if (!symbol.test(password)) {
-      return "Password must contain at least one symbol.";
-    }
-
-    return "";
-  };
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
@@ -85,13 +70,13 @@ const ForgotPassword = () => {
     setDisableForm(true);
 
     try {
-      const response = await forgotPassword({ email });
+      const response = userType === "doctor"? await forgotDoctorPassword({ email }): await forgotPassword({email});
       setToken(response.token);
       setIsHidden(false);
       setDisableForm(false);
       toast.success('A six-digit code has been sent to your email');
-    } catch(error) {  
-        toast.error(error.response.data[0].split("'")[1] || 'An unexpected error occured');
+    } catch(error) {
+      toast.error(error.response.data[0].split("'")[1] || 'An unexpected error occurred');
         setDisableForm(false);
     }
   };
@@ -104,11 +89,10 @@ const ForgotPassword = () => {
       setDisableForm(true);
       if (!passwordError && !confirmPasswordError && password === confirmPassword) {
         try {
-          const response = await resetPassword({ token, code, password });
+          const response = userType === "doctor"? await resetDoctorPassword(({ token, code, password })):await resetPassword({ token, code, password });
           navigate("/");
           toast.success("Password reset successful!");
         } catch (error) {
-          console.log(error)
           let errorMessage = "An unexpected error occurred";
           if (error && error.data) {
             const errorDetail = error.data;

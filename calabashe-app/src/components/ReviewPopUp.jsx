@@ -1,12 +1,11 @@
 import { CgClose } from "react-icons/cg";
 import Stars from "./Star";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import ClipLoader from "react-spinners/ClipLoader";
 import { verifyGuestIdentity } from "../api/anonReviews";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
 
 const ReviewPopUp = ({ showPopUp, hidePopUp, submitGuestReview, syncReviews }) => {
 	const [isLoading, setIsLoading] = useState(false);

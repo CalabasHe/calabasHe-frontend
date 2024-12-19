@@ -20,11 +20,10 @@ import ServiceProviders from "./pages/ServiceProviders";
 import { SpecialtyProvider } from "./context/specialtyContext";
 import SecondaryForms from "./pages/SecondaryForm";
 import About from "./pages/AboutUs";
-// import ReactGA from "react-ga4";
-// import { useEffect } from "react";
-// import {initGA, logPageView} from "./utils/analytics.jsx";
-
-
+import ProvidersLogin from "./pages/ProvidersLogin";
+import ManageAccount from "./pages/ManageAccount";
+import PrivateRoutes from "./components/privateRoutes.jsx";
+import VideoCallPage from "./pages/VideoCallPage.jsx";
 
 function App() {
   const location = useLocation();
@@ -53,6 +52,9 @@ function App() {
         <BannerVisibilityProvider>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
+              <Route element={<PrivateRoutes />}>
+                <Route path="/manage_account" element={<ManageAccount />} />
+              </Route>
               <Route index element={<Home />} />
               <Route path="/review/:slug" element={<Review />} />
               <Route path="/facilities" element={<Facilities />} />
@@ -66,7 +68,8 @@ function App() {
                 path="/services/:subservices/:providers"
                 element={<ServiceProviders />}
               />
-              <Route path="/about" element={<About />} />
+               <Route path="/providers_login"element={<ProvidersLogin/>}/>
+              <Route path="/about" element={<About/>}/>
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors/:slug" element={<DocProfile />} />
               <Route path="/sign_up" element={<SignUp />} />
@@ -75,8 +78,10 @@ function App() {
               <Route path="/verification" element={<VerifyUser />} />
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />
-              <Route path="/secondary_form" element={<SecondaryForms />} />
-              <Route path="*" element={<NoResult />} />
+              <Route path="/secondary_form" element={<SecondaryForms/>} />
+              <Route path="/video_call/:id" element={<VideoCallPage/>}/>
+              <Route path="*" element={<NoResult/>} />
+
             </Routes>
           </AnimatePresence>
         </BannerVisibilityProvider>

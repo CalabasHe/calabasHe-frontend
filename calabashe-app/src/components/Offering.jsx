@@ -16,7 +16,7 @@ const Offering = () => {
                     style={{ backgroundImage: `url(${consultation})` }}
                 >
                     <div className="px-5 p-0.5 md:p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">
-                        <h3 className="font-semibold md:text-xl">Instant video consultation</h3>
+                        <h3 className="font-semibold md:text-xl">Instant Video Consultation</h3>
                         <p className='text-[0.7rem] sm:text-base mt-1 md:mt-0  md:text-sm'>Connect within 60s</p>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ const Offering = () => {
                 >
                     <div className="h-[32%] md:h-[30%] absolute md:inset-x-0 bottom-0 p-0.5 md:p-4 bg-white rounded-b-2xl w-full">
                         <div className="max-w-[90%] mx-auto flex flex-col h-full">
-                            <h3 className="font-semibold md:text-xl">Find doctors near you</h3>
+                            <h3 className="font-semibold md:text-xl">Find Doctors Near You</h3>
                             <p className='text-[0.7rem]  sm:text-base mt-1 md:mt-1 md:text-sm'>Confirmed appointment</p>
                         </div>
                     </div>

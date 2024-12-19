@@ -1,0 +1,119 @@
+/* @import url("@stream-io/video-react-sdk/dist/css/styles.css"); */
+/*
+  //BUTTON STATES (end call, audio soruce, video soruce etc
+  
+    --str-video__button-default-base: #67e037 !important;; // this one controls their actual colors
+  --str-video__button-default-hover;
+  --str-video__button-default-pressed;
+  --str-video__button-default-active;
+  --str-video__button-default-disabled
+  .str-video__call-controls  -> controls the entire buttons background
+   --str-video__icon-default -> controls the icons colors
+   (--str-video__button-primary-base -> controls the background and entire buttons upper buttons for audio and video input
+   --str-video__base-color6 -> controls the pop up menu backgrounds
+   --str-video__primary-color -> controls the audio visualizer icon
+   --str-video__background-color4 -> controls the background color of the pariticipnat at the bottom of the video
+   --str-video__button-primary-base -> controls pop up icons bg
+   --str-video__button-primary-base
+   
+
+*/
+/* General Styling */
+@import url("@stream-io/video-react-sdk/dist/css/styles.css");
+
+/* General Styling */
+@import url("@stream-io/video-react-sdk/dist/css/styles.css");
+
+/* General Styling */
+.str-video__container {
+  @apply relative w-full h-screen overflow-hidden;
+}
+
+.str-video {
+  @apply text-white;
+}
+
+.str-video__call-controls {
+  @apply flex gap-2 items-center px-4;
+}
+
+.str-video__button {
+  @apply rounded-full p-3 transition-colors hover:bg-gray-700;
+}
+
+.str-video__button--active {
+  @apply bg-red-600 hover:bg-red-700;
+}
+
+.str-video__participant {
+  @apply rounded-lg overflow-hidden border border-gray-700;
+}
+
+.str-video__participant-details {
+  @apply bg-gray-900/80 backdrop-blur-sm;
+}
+
+.str-video__participant-name {
+  @apply text-sm font-medium;
+}
+
+.str-video__video {
+  @apply object-cover w-full h-full;
+}
+
+/* Speaker Layout Styles */
+.str-video__speaker-layout {
+  @apply h-full;
+}
+
+.str-video__speaker-layout .str-video__participant--dominant {
+  @apply absolute inset-0 z-0;
+}
+
+.str-video__speaker-layout .str-video__participants-bar {
+  @apply absolute bottom-0 left-0 right-0 h-32 z-10 flex justify-center items-end pb-4;
+}
+
+.str-video__speaker-layout .str-video__participants-bar .str-video__participant {
+  @apply w-40 h-32 mx-1 rounded-lg overflow-hidden border-2 border-gray-700 transition-all duration-300 ease-in-out;
+}
+
+/* Grid Layout Styles */
+.str-video__grid-layout {
+  @apply h-full !important;
+  min-height: calc(100vh - 200px) !important;
+}
+
+.str-video__grid-layout .str-video__participant {
+  @apply aspect-video;
+  min-height: 240px;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 640px) {
+  .str-video__speaker-layout .str-video__participants-bar {
+    @apply h-40;
+  }
+
+  .str-video__speaker-layout .str-video__participants-bar .str-video__participant {
+    @apply w-48 h-40;
+  }
+
+  .str-video__grid-layout .str-video__participant {
+    min-height: 280px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .str-video__speaker-layout .str-video__participants-bar {
+    @apply h-48;
+  }
+
+  .str-video__speaker-layout .str-video__participants-bar .str-video__participant {
+    @apply w-56 h-48;
+  }
+
+  .str-video__grid-layout .str-video__participant {
+    min-height: 320px;
+  }
+}

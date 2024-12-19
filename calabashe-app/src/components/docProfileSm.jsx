@@ -6,22 +6,28 @@ import formatDate from "../utils/dateConversion";
 import { toast } from "sonner";
 import HandleAdjective from "../utils/handleRatingAdjective";
 import { useState } from "react";
+import Calender from "./calender";
 
 // eslint-disable-next-line react/prop-types
 const DocProfileSm = ({ doctor = [] }) => {
   const go = useNavigate();
- const [sliceNum, setSliceNum] = useState(10);
- const [moreDescription, setMoreDescription] = useState(false);
-
- const handleMoreDescription = () => {
-   setMoreDescription(!moreDescription);
- }
+  const [sliceNum, setSliceNum] = useState(10);
 
   // const handleLinkClick = () => {
   //   if (!isLoggedIn) {
   //     toast.info("Sign in to leave a review");
   //   }
   // };
+
+  const [popUpDetails] = useState({
+    id: doctor.id,
+    image: doctor.image,
+    name: `Dr. ${doctor.lastName}`,
+    rating: doctor.rating,
+    totalReviews: doctor.totalReviews,
+    email: doctor.email,
+  });
+
 
   const writeAReview = (lastName, slug, id) => {
     const state = {
@@ -41,22 +47,21 @@ const DocProfileSm = ({ doctor = [] }) => {
         <div className="w-full flex flex-col gap-8">
           <section className="w-full px-2 pt-12 pb-6 flex gap-6  items-center bg-white border-b">
             <div className="relative size-24 rounded-full bg-gray-300/40 flex items-center justify-center">
-            {
-            doctor.image ?
-            <img className='object-cover text-xs text-center w-full h-full rounded-[inherit]' src={doctor.image} alt={`image of doctor ${doctor.lastName}`}/>
-            :
-            <svg
-            className="size-12 fill-gray-700"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-          >
-            <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
-          </svg>
-          }
+              {
+                doctor.image ?
+                  <img className='object-cover text-xs text-center w-full h-full rounded-[inherit]' src={doctor.image} alt={`image of doctor ${doctor.lastName}`} />
+                  :
+                  <svg
+                    className="size-12 fill-gray-700"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                  >
+                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
+                  </svg>
+              }
               <svg
-                className={` ${
-                  doctor.verified ? "flex" : "hidden"
-                } absolute size-6 top-2 right-0 fill-current text-[#205CD4]`}
+                className={` ${doctor.verified ? "flex" : "hidden"
+                  } absolute size-6 top-2 right-0 fill-current text-[#205CD4]`}
                 xmlns="http://www.w3.org/2000/svg"
                 id="Layer_1"
                 data-name="Layer 1"
@@ -96,9 +101,8 @@ const DocProfileSm = ({ doctor = [] }) => {
             <Link
               to="/initial_form"
               state={{ message: [doctor.firstName, doctor.lastName] }}
-              className={`${
-                !doctor.verified ? "flex" : "hidden"
-              }  w-full px-[7%] py-3 flex items-center justify-between border-[#205CD4] border rounded-md`}
+              className={`${!doctor.verified ? "flex" : "hidden"
+                }  w-full px-[7%] py-3 flex items-center justify-between border-[#205CD4] border rounded-md`}
             >
               <div className="text-sm space-y-1">
                 <div className="flex font-semibold items-center gap-2">
@@ -202,27 +206,31 @@ const DocProfileSm = ({ doctor = [] }) => {
                 No reviews yet
               </p>
             ) : (
-              <p className="text-sm md:text-base border-b border-[#D0D0D0] pb-4">
-                All reviews have been left by actual patients.
-              </p>
-            )}
-            <div className="flex flex-col gap-4 md:gap-8 h-[300px] overflow-auto scrollbar-thin">
-              {doctor.reviews.slice(0, 10).map((review) => (
-                <div
-                  key={review.id}
-                  className="w-full border bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
-                >
-                  <div className="flex justify-between items-center ">
-                    <StarRating rating={review.rating} />
-                    <p className="text-xs text-[#333333] opacity-50">
-                      {formatDate(review.created_at.split("T")[0])}
-                    </p>
-                  </div>
+              <>
+                <p className="text-sm md:text-base border-b border-[#D0D0D0] pb-4">
+                  All reviews have been left by actual patients.
+                </p>
+                <div className="flex flex-col gap-4 md:gap-8 h-[300px] overflow-auto scrollbar-thin">
+                  {doctor.reviews.slice(0, 10).map((review) => (
+                    <div
+                      key={review.id}
+                      className="w-full border bg-white px-4 py-6 flex flex-col gap-4 rounded-lg "
+                    >
+                      <div className="flex justify-between items-center ">
+                        <StarRating rating={review.rating} />
+                        <p className="text-xs text-[#333333] opacity-50">
+                          {formatDate(review.created_at.split("T")[0])}
+                        </p>
+                      </div>
 
-                  <p className="text-sm ">{review.description}</p>
+                      <p className="text-sm ">{review.description}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+
+            )}
+
           </section>
 
           {/* About Section */}
@@ -282,64 +290,31 @@ const DocProfileSm = ({ doctor = [] }) => {
               </section>
 
             </div>
-              {
-              doctor.conditionsAndTreatments.length > 0 &&(
-              <section className="w-full space-y-3 border-t border-b px-2 py-5 my-4">
-                <div className="flex items-center gap-1">
-                  <svg className="size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.06641 12H3.60938L12 20.3906L18.8906 13.5H21.0117L12 22.5117L1.86328 12.3867C1.58984 12.1133 1.34766 11.8203 1.13672 11.5078C0.925781 11.1953 0.742188 10.8594 0.585938 10.5H3.43359L6.75 7.19531L12 12.4336L15.75 8.69531L17.5664 10.5H21.7266C21.9766 10.1016 22.168 9.67969 22.3008 9.23438C22.4336 8.78906 22.5 8.33203 22.5 7.86328C22.5 7.18359 22.375 6.55078 22.125 5.96484C21.875 5.37891 21.5273 4.87109 21.082 4.44141C20.6367 4.01172 20.1211 3.67188 19.5352 3.42188C18.9492 3.17188 18.3125 3.04688 17.625 3.04688C16.9688 3.04688 16.3867 3.14844 15.8789 3.35156C15.3711 3.55469 14.9023 3.82813 14.4727 4.17188C14.043 4.51563 13.6328 4.89453 13.2422 5.30859C12.8516 5.72266 12.4375 6.15625 12 6.60938C11.5781 6.1875 11.168 5.76172 10.7695 5.33203C10.3711 4.90234 9.95703 4.51563 9.52734 4.17188C9.09766 3.82813 8.625 3.54688 8.10938 3.32813C7.59375 3.10938 7.01562 3 6.375 3C5.70312 3 5.07422 3.125 4.48828 3.375C3.90234 3.625 3.38672 3.97266 2.94141 4.41797C2.49609 4.86328 2.14844 5.37891 1.89844 5.96484C1.64844 6.55078 1.51953 7.18359 1.51172 7.86328C1.51172 8.23047 1.55469 8.60938 1.64062 9H0.105469C0.0664062 8.8125 0.0429688 8.625 0.0351562 8.4375C0.0273438 8.25 0.0195312 8.0625 0.0117188 7.875C0.0117188 6.99219 0.175781 6.16406 0.503906 5.39063C0.832031 4.61719 1.28516 3.94141 1.86328 3.36328C2.44141 2.78516 3.11719 2.33203 3.89062 2.00391C4.66406 1.67578 5.49219 1.50781 6.375 1.5C7.02344 1.5 7.60156 1.57422 8.10938 1.72266C8.61719 1.87109 9.08594 2.07422 9.51562 2.33203C9.94531 2.58984 10.3594 2.90625 10.7578 3.28125C11.1562 3.65625 11.5703 4.05859 12 4.48828C12.4297 4.05078 12.8398 3.64844 13.2305 3.28125C13.6211 2.91406 14.0352 2.60156 14.4727 2.34375C14.9102 2.08594 15.3828 1.87891 15.8906 1.72266C16.3984 1.56641 16.9766 1.49219 17.625 1.5C18.5 1.5 19.3242 1.66406 20.0977 1.99219C20.8711 2.32031 21.543 2.77344 22.1133 3.35156C22.6836 3.92969 23.1367 4.60156 23.4727 5.36719C23.8086 6.13281 23.9766 6.95703 23.9766 7.83984C23.9766 8.59766 23.8438 9.33203 23.5781 10.043C23.3125 10.7539 22.9336 11.4062 22.4414 12H16.9336L15.75 10.8047L12 14.5664L6.75 9.30469L4.06641 12Z" fill="black"/>
-                  </svg>
-                  <p className="text-sm font-semibold">ALL CONDITIONS AND TREATMENTS</p>
-                </div>
-                <div className="w-full flex flex-col text-xs gap-2">
-                 {doctor.conditionsAndTreatments.slice(0,sliceNum).map((cAndT)=>(
-                    <p className="line-clamp-1" key={cAndT.id}>
-                      {cAndT.name}
-                    </p>
-                 ))}
+            {
+              doctor.conditionsAndTreatments.length > 0 && (
+                <section className="w-full space-y-3 border-t border-b px-2 py-5 my-4">
+                  <div className="flex items-center gap-1">
+                    <svg className="size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.06641 12H3.60938L12 20.3906L18.8906 13.5H21.0117L12 22.5117L1.86328 12.3867C1.58984 12.1133 1.34766 11.8203 1.13672 11.5078C0.925781 11.1953 0.742188 10.8594 0.585938 10.5H3.43359L6.75 7.19531L12 12.4336L15.75 8.69531L17.5664 10.5H21.7266C21.9766 10.1016 22.168 9.67969 22.3008 9.23438C22.4336 8.78906 22.5 8.33203 22.5 7.86328C22.5 7.18359 22.375 6.55078 22.125 5.96484C21.875 5.37891 21.5273 4.87109 21.082 4.44141C20.6367 4.01172 20.1211 3.67188 19.5352 3.42188C18.9492 3.17188 18.3125 3.04688 17.625 3.04688C16.9688 3.04688 16.3867 3.14844 15.8789 3.35156C15.3711 3.55469 14.9023 3.82813 14.4727 4.17188C14.043 4.51563 13.6328 4.89453 13.2422 5.30859C12.8516 5.72266 12.4375 6.15625 12 6.60938C11.5781 6.1875 11.168 5.76172 10.7695 5.33203C10.3711 4.90234 9.95703 4.51563 9.52734 4.17188C9.09766 3.82813 8.625 3.54688 8.10938 3.32813C7.59375 3.10938 7.01562 3 6.375 3C5.70312 3 5.07422 3.125 4.48828 3.375C3.90234 3.625 3.38672 3.97266 2.94141 4.41797C2.49609 4.86328 2.14844 5.37891 1.89844 5.96484C1.64844 6.55078 1.51953 7.18359 1.51172 7.86328C1.51172 8.23047 1.55469 8.60938 1.64062 9H0.105469C0.0664062 8.8125 0.0429688 8.625 0.0351562 8.4375C0.0273438 8.25 0.0195312 8.0625 0.0117188 7.875C0.0117188 6.99219 0.175781 6.16406 0.503906 5.39063C0.832031 4.61719 1.28516 3.94141 1.86328 3.36328C2.44141 2.78516 3.11719 2.33203 3.89062 2.00391C4.66406 1.67578 5.49219 1.50781 6.375 1.5C7.02344 1.5 7.60156 1.57422 8.10938 1.72266C8.61719 1.87109 9.08594 2.07422 9.51562 2.33203C9.94531 2.58984 10.3594 2.90625 10.7578 3.28125C11.1562 3.65625 11.5703 4.05859 12 4.48828C12.4297 4.05078 12.8398 3.64844 13.2305 3.28125C13.6211 2.91406 14.0352 2.60156 14.4727 2.34375C14.9102 2.08594 15.3828 1.87891 15.8906 1.72266C16.3984 1.56641 16.9766 1.49219 17.625 1.5C18.5 1.5 19.3242 1.66406 20.0977 1.99219C20.8711 2.32031 21.543 2.77344 22.1133 3.35156C22.6836 3.92969 23.1367 4.60156 23.4727 5.36719C23.8086 6.13281 23.9766 6.95703 23.9766 7.83984C23.9766 8.59766 23.8438 9.33203 23.5781 10.043C23.3125 10.7539 22.9336 11.4062 22.4414 12H16.9336L15.75 10.8047L12 14.5664L6.75 9.30469L4.06641 12Z" fill="black" />
+                    </svg>
+                    <p className="text-sm font-semibold">ALL CONDITIONS AND TREATMENTS</p>
+                  </div>
+                  <div className="w-full flex flex-col text-xs gap-2">
+                    {doctor.conditionsAndTreatments.slice(0, sliceNum).map((cAndT) => (
+                      <p className="line-clamp-1" key={cAndT.id}>
+                        {cAndT.name}
+                      </p>
+                    ))}
 
-                </div>
-                <button onClick={() => showMore()} className={`${doctor.conditionsAndTreatments.length < sliceNum ? 'hidden' : ''} text-xs underline`}>Show more</button>
-              </section>
+                  </div>
+                  <button onClick={() => showMore()} className={`${doctor.conditionsAndTreatments.length < sliceNum ? 'hidden' : ''} text-xs underline`}>Show more</button>
+                </section>
               )
             }
           </section>
-
-            <div className="bg-white order-3  flex flex-col gap-4 lg:gap-6 pt-8 lg:pt-12  pb-4 lg:pb-6 px-4 lg:px-8 border rounded-xl">
-              <div className="space-y-3 lg:space-y-4">
-                <h3 className="text-xl lg:2xl font-bold">
-                  Share your experience
-                </h3>
-                <p className="text-sm lg:text-base">
-                  We value your feedback and look forward to hearing about your
-                  experiences with our services. Your insights help us improve
-                  and provide the best care possible.
-                </p>
-              </div>
-              <button
-                onClick={() =>
-                  writeAReview(doctor.lastName, doctor.slug, doctor.id)
-                }
-                className="w-full hover:scale-[1.01] duration-100 mt-4 flex items-center justify-center gap-2 text-lg font-bold bg-[#FEE330] px-2 py-3 rounded-md"
-                aria-label={`Leave a review for Dr. ${doctor.slug}`}
-              >
-                <p className="text-center text-lg lg:text-xl font-bold">
-                  Leave a Review
-                </p>
-                <svg
-                  width="25"
-                  height="26"
-                  viewBox="0 0 30 31"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M27 0.968994H3C1.35 0.968994 0 2.31899 0 3.96899V30.969L6 24.969H27C28.65 24.969 30 23.619 30 21.969V3.96899C30 2.31899 28.65 0.968994 27 0.968994ZM6 18.969V15.264L16.32 4.94399C16.62 4.64399 17.085 4.64399 17.385 4.94399L20.04 7.59899C20.34 7.89899 20.34 8.36399 20.04 8.66399L9.705 18.969H6ZM22.5 18.969H12.75L15.75 15.969H22.5C23.325 15.969 24 16.644 24 17.469C24 18.294 23.325 18.969 22.5 18.969Z"
-                    fill="black"
-                  />
-                </svg>
-              </button>
-            </div>
+          <div className="order-3">
+           <Calender popUpDetails={popUpDetails}/>
+          </div>
         </section>
       </main>
     </>

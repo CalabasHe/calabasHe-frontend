@@ -5,6 +5,7 @@ import DoctorCard from "./doctorCardsm";
 import DoctorCardMd from "./doctorCardmd";
 import DoctorSearchBar from "./DoctorSearchBar";
 import { DoctorsSearch } from "../api/search";
+import { Toaster,toast } from 'sonner';
 
 const AllDoctorList = () => {
   const [doctors, setDoctors] = useState([]);
@@ -71,12 +72,14 @@ const AllDoctorList = () => {
         }));
         setDoctors(doctorDetails);
       } else {
-        console.log("No results found");
+        // console.log();
+        toast.error("No results found")
       }
     } catch (error) {
       console.error("Error fetching data:", error);
       setError(error.message);
     } finally {
+      toast.dismiss()
       setIsLoading(false);
     }
   };
