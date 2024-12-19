@@ -45,7 +45,6 @@ const BannerSearch = () => {
     setShowResults(false);
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearch = useCallback(
     debounce((value) => {
       setDebouncedSearchParam(value);
@@ -192,6 +191,7 @@ const BannerSearch = () => {
           autoComplete="off"
           onKeyDown={handleKeyDown}
         />
+
         <button
           id="banner_search_button"
           onClick={handleSearchClick}
@@ -201,6 +201,7 @@ const BannerSearch = () => {
         </button>
       </form>
 
+      {/* Results Dropdown (show on input) */}
       {showResults && (
         <div
           ref={resultsRef}
@@ -272,6 +273,7 @@ const BannerSearch = () => {
                 </div>
               )}
 
+              {/* Show facilities */}
               {results.filter((result) => !result.specialty).length > 0 && (
                 <div className="space-y-2 pt-4">
                   <p className="px-4 text-lg text-slate-600 font-medium">Facilities</p>
@@ -309,6 +311,7 @@ const BannerSearch = () => {
             </>
           )}
 
+          {/* Show all results button */}
           {results.length > 4 && (
             <div onClick={handleShowResults} className="w-[full] cursor-pointer mx-4 py-3 rounded-xl text-white text-center bg-[#0070FF]">
               Show all results <span className="ml-2">&rarr;</span>

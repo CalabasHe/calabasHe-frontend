@@ -11,6 +11,7 @@ import TopSearched from "../components/topSearched";
 import WhyUs from "../components/WhyUs";
 
 const Home = () => {
+  
   return (
     <div className="bg-red-50">
 

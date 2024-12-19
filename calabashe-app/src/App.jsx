@@ -28,8 +28,17 @@ import VideoCallPage from "./pages/VideoCallPage.jsx";
 function App() {
   const location = useLocation();
 
+  // useEffect(() => {
+  //   initGA()
+  // }, []);
+  //
+  // useEffect(() => {
+  //  logPageView()
+  // }, [location]);
+
+
   const NoResult = () => {
-    return(
+    return (
       <div className="w-full h-screen flex flex-col lg:text-lg gap-2 items-center justify-center">
         <h2>Nothing to see here 😶‍🌫️😶‍🌫️</h2>
         <Link className="text-emerald-500 font-semibold hover:underline" to={'/'}>&lt;&lt; Go home</Link>
@@ -65,7 +74,7 @@ function App() {
               <Route path="/doctors/:slug" element={<DocProfile />} />
               <Route path="/sign_up" element={<SignUp />} />
               <Route path="/sign_in" element={<SignIn />} />
-              <Route path="/forgot_password" element={<ForgotPassword/>} />
+              <Route path="/forgot_password" element={<ForgotPassword />} />
               <Route path="/verification" element={<VerifyUser />} />
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />

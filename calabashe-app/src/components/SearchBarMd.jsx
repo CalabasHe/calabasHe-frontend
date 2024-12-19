@@ -137,8 +137,8 @@ const SearchBarMd = () => {
           : "rounded-3xl lg:rounded-[999999px]"
       } bg-white/20 px-3 lg:px-5`}
     >
-      <input 
-        className="w-[90%] bg-transparent border-none rounded-[inherit] text-sm lg:text-base placeholder:text-[#828282] placeholder:font-[500] placeholder:text-xs outline-none py-2 pl-1" 
+      <input
+        className="w-[90%] bg-transparent border-none rounded-[inherit] text-sm lg:text-base placeholder:text-[#828282] placeholder:font-[500] placeholder:text-xs outline-none py-2 pl-1"
         id="headerSearchBar"
         type="text"
         name="searchBar"

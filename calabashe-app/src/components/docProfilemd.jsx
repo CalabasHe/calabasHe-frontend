@@ -15,6 +15,11 @@ const DocProfileMd = ({ doctor = [] }) => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate()
   const [sliceNum, setSliceNum] = useState(18);
+  const [moreDescription, setMoreDescription] = useState(false);
+
+  const handleMoreDescription = () => {
+    setMoreDescription(!moreDescription);
+  }
 
   const [popUpDetails] = useState({
     id: doctor.id,
@@ -94,9 +99,8 @@ const DocProfileMd = ({ doctor = [] }) => {
           <Link
             to="/initial_form"
             state={{ message: [doctor.firstName, doctor.lastName] }}
-            className={`${
-              !doctor.verified ? "flex" : "hidden"
-            } border ml-5 lg:ml-12 -translate-y-8 w-fit gap-2 lg:gap-6 items-center md:text-xs px-5 py-2 font-semibold rounded-md border-[#205CD4]`}
+            className={`${!doctor.verified ? "flex" : "hidden"
+              } border ml-5 lg:ml-12 -translate-y-8 w-fit gap-2 lg:gap-6 items-center md:text-xs px-5 py-2 font-semibold rounded-md border-[#205CD4]`}
           >
             <div className="space-y-1">
               <div className="flex items-center gap-4">
@@ -155,14 +159,14 @@ const DocProfileMd = ({ doctor = [] }) => {
                 </Link>
               </div>
               <Link
-                  to={`/review/${doctor.slug}`}
-                  onClick={() => handleLinkClick(rating)}
-                  state={{
-                    message: [doctor.lastName, "doctor", doctor.id],
-                    from: `/review/${doctor.slug}`,
-                  }}
-                  className="text-xs lg:text-sm font-[600] text-[#205CD4]"
-                >
+                to={`/review/${doctor.slug}`}
+                onClick={() => handleLinkClick(rating)}
+                state={{
+                  message: [doctor.lastName, "doctor", doctor.id],
+                  from: `/review/${doctor.slug}`,
+                }}
+                className="text-xs lg:text-sm font-[600] text-[#205CD4]"
+              >
                 <Stars rating={rating} onRatingChange={handleRatingChange} />
               </Link>
             </div>
@@ -235,11 +239,10 @@ const DocProfileMd = ({ doctor = [] }) => {
                 </div>
                 <button
                   onClick={() => showMore()}
-                  className={`${
-                    doctor.conditionsAndTreatments.length < sliceNum
+                  className={`${doctor.conditionsAndTreatments.length < sliceNum
                       ? "hidden"
                       : ""
-                  } text-sm underline`}
+                    } text-sm underline`}
                 >
                   Show more
                 </button>
@@ -275,25 +278,31 @@ const DocProfileMd = ({ doctor = [] }) => {
                 <h3 className="text-lg lg:text-xl font-[800] ">
                   About Dr. {doctor.firstName}{" "}
                 </h3>
-                <div className="text-sm lg:text-base leading-relaxed">
-                  {(doctor.about.length > 0)? 
-                  (
-                    doctor.about
-                  ):
-                  (
-                   <p>
-                     Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
-                    medical doctor practicing General Medicine.
-                    <br />
-                    In Ghana, General Practitioners (GPs) provide primary
-                    healthcare, handling a wide range of conditions and referring
-                    patients to specialists when needed. GPs complete six years of
-                    medical school and a two-year housemanship, gaining practical
-                    experience before receiving full licensing from the Medical
-                    and Dental Council of Ghana.
-                   </p>
-                  )}
+                <div className='text-sm lg:text-base leading-relaxed'>
+                  {(doctor.about.length > 0) ?
+                    (
+                      <div>
+                        <p className={`${moreDescription ? "h-72 overflow-hidden transition-all" : "h-max"}`}>
+                          {doctor.about}
+                        </p>
+                        <button onClick={handleMoreDescription} className="text-blue-600">{moreDescription ? 'show more' : 'show less'}</button>
+                      </div>
+                    ) :
+                    (
+                      <p>
+                        Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
+                        medical doctor practicing General Medicine.
+                        <br />
+                        In Ghana, General Practitioners (GPs) provide primary
+                        healthcare, handling a wide range of conditions and referring
+                        patients to specialists when needed. GPs complete six years of
+                        medical school and a two-year housemanship, gaining practical
+                        experience before receiving full licensing from the Medical
+                        and Dental Council of Ghana.
+                      </p>
+                    )}
                 </div>
+               
               </section>
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">

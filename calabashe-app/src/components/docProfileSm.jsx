@@ -240,7 +240,17 @@ const DocProfileSm = ({ doctor = [] }) => {
                 <h3 className="text-base font-[800] ">
                   About Dr. {doctor.firstName.split(" ")[0]}{" "}
                 </h3>
-                <p className="text-xs max-w-[90%] leading-loose ">
+                {(doctor.about.length > 0)? 
+                (
+                  <div className="text-xs max-w-[90%] leading-loose">
+                  <p className={`${moreDescription ? "h-72 overflow-hidden transition-all" : "h-max"}`}>
+                    {doctor.about}
+                  </p>
+                  <button onClick={handleMoreDescription} className="text-blue-600">{moreDescription ? 'show more' : 'show less'}</button>
+                </div>
+                ):
+                (
+                  <p className="text-xs max-w-[90%] leading-loose ">
                   Dr. {doctor.firstName + " " + doctor.lastName} is a licensed
                   medical doctor practicing General Medicine.
                   <br />
@@ -251,6 +261,7 @@ const DocProfileSm = ({ doctor = [] }) => {
                   experience before receiving full licensing from the Medical
                   and Dental Council of Ghana.
                 </p>
+                )}
               </section>
 
               <section className="w-full space-y-4 pt-8 lg:pt-12">
