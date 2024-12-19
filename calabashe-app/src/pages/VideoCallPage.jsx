@@ -25,11 +25,12 @@ const VideoCallPage = () => {
   const clientRef = useRef();
 
 
-  const name = userType === "doctor" ? ("Dr " + sessionStorage.getItem("userName")) : sessionStorage.getItem("userName");
+  const name = userType === "doctor" ? ("Dr " + localStorage.getItem("userName")) : localStorage.getItem("userName");
   const user = {
     id: userId,
     name: name,
   }
+  console.log(user);
 
 
   const handleJoinCall = async () => {

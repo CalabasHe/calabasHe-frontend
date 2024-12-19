@@ -46,7 +46,8 @@ const ProviderLoginForm = () => {
           const response = await loginDoctor({email, password});
           login(response.data.access, response.data.refresh);
           modifyUserType("doctor", response.data.profile_image, response.data.last_name, response.data.email, response.data.reviews);
-          sessionStorage.setItem("userName", `${response.data.last_name}`)
+          console.log(response);
+          localStorage.setItem("userName", `${response.data.last_name}`)
           const destination = fullState?.from || "/";
           navigate(destination, {state: fullState});
           return "Sign in successful";

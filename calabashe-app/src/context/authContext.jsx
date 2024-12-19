@@ -50,7 +50,7 @@ export const AuthProvider = ({children}) => {
     localStorage.removeItem('email');
     localStorage.removeItem('lastName');
     localStorage.removeItem("myReviewsCount");
-    sessionStorage.removeItem("userName");
+    localStorage.removeItem("userName");
     setUserType(null);
   };
 

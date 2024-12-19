@@ -53,7 +53,8 @@ const SignIn = () => {
       async () => {
         const response = await logIn({ email, password });
         login(response.access, response.refresh);
-        sessionStorage.setItem("userName",response.user.username)
+        console.log(response);
+        localStorage.setItem("userName",response.user.username)
         const destination = fullState?.from || "/";
         navigate(destination, { state: fullState });
         return "Sign in successful";
