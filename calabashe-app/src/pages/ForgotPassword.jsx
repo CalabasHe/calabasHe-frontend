@@ -20,7 +20,7 @@ const ForgotPassword = () => {
 
   const location = useLocation();
 
-  const userType = location.state.type;
+  const userType = localStorage.getItem("userType");
 
   const handleCodeChange = (e, index) => {
     const value = e.target.value;
