@@ -102,10 +102,10 @@ const VideoCallPage = () => {
                 </svg>
 
               </div>
-              <div className="w-full md:w-[45%] order-2 z-40">
+              <div className="w-full md:w-[45%] order-2 z-30">
                 <img src={callImage} alt="Video call" aria-hidden className="w-full " />
               </div>
-              <div className="z-40 w-full md:w-[60%] flex gap-4 flex-col order-1 items-center md:items-start text-center md:text-start">
+              <div className="z-30 w-full md:w-[60%] flex gap-4 flex-col order-1 items-center md:items-start text-center md:text-start">
                 <h1 className="text-4xl md:text-5xl font-extrabold">Join instant video consultation</h1>
                 <p className="w-full md:w-[80%] leading-tight">Connect Instantly with Doctors for Personalized Video Consultations Anytime, Anywhere</p>
 
