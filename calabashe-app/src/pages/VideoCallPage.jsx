@@ -74,11 +74,11 @@ const VideoCallPage = () => {
 
 
   return (
-    <div className="relative overflow-x-hidden md:overflow-hidden bg-red-50 h-screen flex flex-col min-h-screen">
+    <div className={`relative overflow-x-hidden md:overflow-hidden  h-screen flex flex-col min-h-screen ${call? "bg-gray-500": "bg-red-50"} `}>
       {<Header />}
       <div className={`${call ? 'h-[90vh]' : 'pt-20 md:pt-32 lg:pt-16'} flex items-center justify-center ${!call && 'md:h-[90vh]'} w-full`}>
         {call ? (
-          <div className="h-screen w-full mt-12">
+          <div className="h-screen w-full mt-24">
             <StreamVideo client={clientRef.current}>
               <StreamCall call={call}>
                 <VideoCall />
