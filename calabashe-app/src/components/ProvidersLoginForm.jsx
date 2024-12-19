@@ -36,7 +36,7 @@ const ProviderLoginForm = () => {
     if (error && error.length > 0) {
       toast.error(error);
       setIsDisabled(false);
-      setError([]);
+      setError(null);
       return;
     }
     return toast.promise(
