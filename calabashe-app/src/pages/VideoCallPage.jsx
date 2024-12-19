@@ -30,7 +30,6 @@ const VideoCallPage = () => {
     id: userId,
     name: name,
   }
-  console.log(user);
 
 
   const handleJoinCall = async () => {
