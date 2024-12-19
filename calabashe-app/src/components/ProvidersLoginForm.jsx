@@ -33,7 +33,7 @@ const ProviderLoginForm = () => {
   const handleSubmit = async (e) => {
     setIsDisabled(true);
     e.preventDefault();
-    if (error.length > 0) {
+    if (error && error.length > 0) {
       toast.error(error);
       setIsDisabled(false);
       setError([]);
