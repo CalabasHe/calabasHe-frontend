@@ -1,5 +1,4 @@
-import { CallControls, CallingState, SpeakerLayout, StreamTheme, useCallStateHooks } from "@stream-io/video-react-sdk";
-import ClipLoader from "react-spinners/ClipLoader";
+import { CallControls, CallingState, StreamTheme, useCallStateHooks, PaginatedGridLayout } from "@stream-io/video-react-sdk";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import "../stylesheets/video.css";
@@ -25,7 +24,7 @@ const VideoCall = () => {
 
   return (
     <StreamTheme className="str-video">
-      <SpeakerLayout participantsBarPosition='bottom' />
+      <PaginatedGridLayout participantsPerPage={6} />
       <CallControls />
     </StreamTheme>
 
