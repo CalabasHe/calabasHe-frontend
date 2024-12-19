@@ -18,7 +18,48 @@
    
 
 */
-.str-video {
-  color: white;
-  width:60%;
+/* General Styling */
+.str-video__container {
+  @apply relative h-screen w-full overflow-hidden;
 }
+
+/* Style the video container */
+.str-video {
+  @apply text-white;
+}
+
+/* Style the controls container */
+.str-video__call-controls {
+  @apply flex gap-2 items-center px-4;
+}
+
+/* Style individual control buttons */
+.str-video__button {
+  @apply rounded-full p-3 transition-colors hover:bg-gray-800;
+}
+
+/* Active state for buttons */
+.str-video__button--active {
+  @apply bg-blue-600 hover:bg-blue-700;
+}
+
+/* Style participant tiles */
+.str-video__participant {
+  @apply rounded-lg overflow-hidden border border-gray-800;
+}
+
+/* Style participant information */
+.str-video__participant-details {
+  @apply bg-gray-900/80 backdrop-blur-sm;
+}
+
+/* Style participant name */
+.str-video__participant-name {
+  @apply text-sm font-medium;
+}
+
+/* Ensure video fills container */
+.str-video__video {
+  @apply object-cover w-full h-full;
+}
+
