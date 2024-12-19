@@ -59,31 +59,12 @@ const VideoCallPage = () => {
       const newCall = clientRef.current.call('default', callId);
 
 
-      const role = userType === "doctor" ? "admin" : "user";
-      await newCall.getOrCreate({
-        members: [{
-          user_id: userId,
-          role: role,
-          custom: {
-            video: true,
-            audio: true,
-            screenShare: true
-          }
-        }],
-        settings: {
-          video: {
-            enabled: true,
-            camera_facing: 'front',
-          },
-          audio: {
-            enabled: true,
-          }
-        }
-      });
+      // const role = userType === "doctor" ? "admin" : "user"; //Role switches otherwise
+      await newCall.getOrCreate({ members: [{ user_id: userId}], });
       setCall(newCall);
       await newCall.join();
     } catch (e) {
-
+      
       toast.error("Failed to join call");
     } finally {
       toast.dismiss();
@@ -92,7 +73,7 @@ const VideoCallPage = () => {
 
 
   return (
-    <div className={`relative overflow-x-hidden md:overflow-hidden  h-screen flex flex-col min-h-screen ${call ? "bg-gray-500" : "bg-red-50"} `}>
+    <div className={`relative overflow-x-hidden md:overflow-hidden  h-screen flex flex-col min-h-screen ${call? "bg-gray-500": "bg-red-50"} `}>
       {<Header />}
       <div className={`${call ? 'h-[90vh]' : 'pt-20 md:pt-32 lg:pt-16'} flex items-center justify-center ${!call && 'md:h-[90vh]'} w-full`}>
         {call ? (
