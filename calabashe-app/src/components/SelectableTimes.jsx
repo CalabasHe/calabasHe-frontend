@@ -9,12 +9,14 @@ export const SelectableTimes = ({
   timeInterval,
   startTime,
   endTime,
-  selectedDay
+  selectedDay,
+  slotEvent
 }) => {
   const endtimeDate = subMinutes(parse(endTime, 'HH:mm', new Date()), timeInterval);
   const [timeRanges, setTimeRange] = useState(generateFutureTimeIntervals(startTime, timeInterval,format(endtimeDate, 'HH:mm'), selectedDay));
   const [isSelected, setIsSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  
   useEffect(() => {
     const fetchAvailableTimes = async () => {
       setIsLoading(true);
@@ -23,7 +25,7 @@ export const SelectableTimes = ({
       setIsLoading(false);
     };
     fetchAvailableTimes();
-  }, [startTime, timeInterval, endTime, selectedDay]);
+  }, [startTime, timeInterval, endTime, selectedDay,slotEvent]);
 
   if (isLoading) {
     return (
@@ -36,8 +38,8 @@ export const SelectableTimes = ({
   return <div className="h-max mt-4 w-[94%]  mx-auto grid grid-cols-3 md:grid-cols-5 items-center place-content-center gap-7 overflow-y-scroll scrollbar-thin">
     {timeRanges.map(time => {
       return <button key={time} onClick={() => {
-        handleSelectedTime(time);
         setIsSelected(time);
+        handleSelectedTime(time);
       }} className={`border border-black text-center ${isSelected === time ? 'bg-green-600' : ''}`}>
         {time}
       </button>;

@@ -76,7 +76,6 @@ const ForgotPassword = () => {
       setDisableForm(false);
       toast.success('A six-digit code has been sent to your email');
     } catch(error) {
-      console.log(error.response);
       toast.error(error.response.data[0].split("'")[1] || 'An unexpected error occurred');
         setDisableForm(false);
     }
@@ -94,7 +93,6 @@ const ForgotPassword = () => {
           navigate("/");
           toast.success("Password reset successful!");
         } catch (error) {
-          console.log(error)
           let errorMessage = "An unexpected error occurred";
           if (error && error.data) {
             const errorDetail = error.data;

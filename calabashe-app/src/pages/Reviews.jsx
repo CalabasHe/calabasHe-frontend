@@ -61,7 +61,6 @@ const Review = () => {
 
   const updateLocalStorage = (newReviews) => {
     const limitedReviews = newReviews.slice(0, MAX_REVIEWS);
-    console.log(localStorage.getItem("reviews"));
     localStorage.setItem("reviews", JSON.stringify(limitedReviews));
 
   };

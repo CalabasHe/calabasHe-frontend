@@ -14,10 +14,10 @@ import { toast } from "sonner";
 // eslint-disable-next-line react/prop-types
 const Appointment_popup = ({ results, showPopUp, handlePopUp, popUpDetails, daySelected }) => {
 
-  const handleBookingSelected = async (day) => {
+  const handleBookingSelected = async (day, booking_type) => {
     try {
       toast.loading("Booking")
-      await bookDoctor({ doctor: popUpDetails.id, booking_date: format(day, 'yyy-M-d'), booking_time: format(day, 'HH:mm') });
+      await bookDoctor({ doctor: popUpDetails.id, booking_date: format(day, 'yyy-M-d'), booking_time: format(day, 'HH:mm'), booking_type});
       handlePopUp(false);
       toast.success("Appointment has been booked");
 

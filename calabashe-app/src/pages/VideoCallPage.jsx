@@ -64,7 +64,7 @@ const VideoCallPage = () => {
       setCall(newCall);
       await newCall.join();
     } catch (e) {
-      console.log(e);
+      
       toast.error("Failed to join call");
     } finally {
       toast.dismiss();

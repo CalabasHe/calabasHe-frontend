@@ -41,8 +41,8 @@ const Calender = ({ popUpDetails }) => {
 
     const showTimeSlots = async () => {
             try {
-                const results = await getTimeSlots(popUpDetails.email);
-                setResults(results.results);
+                const results = await getTimeSlots(popUpDetails.email, popUpDetails.id);
+                setResults(results);
             } catch (error) {
                 console.error('Caught error when awaiting:', error);
             }
@@ -101,7 +101,7 @@ const Calender = ({ popUpDetails }) => {
             </div>
             <div className="flex gap-2 items-center">
                 <span className="h-3 w-3 rounded-full bg-green-800"></span>
-                <p className="text-sm">Selected Day</p>
+                <p className="text-sm">Current day</p>
             </div>
             {/* Calender start */}
             <div className="mt-5">

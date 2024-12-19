@@ -10,7 +10,11 @@ export async function loginDoctor({ email, password }) {
         return result;
     } catch (error) {
         if (error.response && error.response.data) {
-            throw error.response.data;
+            if (error.status === 400) {
+                throw new Error("Invalid Login Credentials")
+            } else {
+                throw new Error("An error occurred.Try again later");
+            }
         } else {
             throw new Error('An unexpected error occurred');
         }

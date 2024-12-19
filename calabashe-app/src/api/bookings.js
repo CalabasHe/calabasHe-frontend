@@ -1,13 +1,14 @@
 import axios from "axios";
-import { conforms } from "lodash";
 import { getCookie } from "../utils/cookies";
+import { getUserId } from "../utils/getUserId";
 
 //Accessible by doctors only
 const MAIN_URL = 'https://calabashe-api.onrender.com/api/bookings'
-export const createTimeSlot = async ({month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type}) => {
+export const createTimeSlot = async ({ month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type }) => {
     const createUrl = MAIN_URL + '/timeslots/';
+    const doctor_id = getUserId();
     try {
-        const response = await axios.post(createUrl, {month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type});
+        const response = await axios.post(createUrl, { doctor_id, month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type });
         return response;
     } catch (err) {
         // console.log(err);
@@ -15,10 +16,14 @@ export const createTimeSlot = async ({month, year, day_of_month, doctor_email, s
     }
 }
 
-export const getTimeSlots = async (email) => {
-    const getUrl = MAIN_URL + `/timeslots?doctor_email=${email}`;
+
+export const getTimeSlots = async (email, id = getUserId()) => {
+    const getUrl = `${MAIN_URL}/timeslots/doctor-timeslots/`;
     try {
-        const response = await axios.get(getUrl);
+        const response = await axios.post(getUrl, {
+            doctor_email: email,
+            doctor_id: id
+        });
         return response.data
     } catch (err) {
         // console.log(err);
@@ -26,15 +31,17 @@ export const getTimeSlots = async (email) => {
     }
 }
 
-export const bookDoctor = async({doctor, booking_type="video", booking_date, booking_time}) => {
+export const bookDoctor = async ({ doctor, booking_type, booking_date, booking_time }) => {
     const bookUrl = `${MAIN_URL}/`;
     const access = getCookie("accessToken");
     try {
-        const response = await axios.post(bookUrl, 
-            {doctor, booking_type, booking_date, booking_time},
-            {headers: {
-                Authorization: `Bearer ${access}`
-            }}
+        const response = await axios.post(bookUrl,
+            { doctor, booking_type, booking_date, booking_time },
+            {
+                headers: {
+                    Authorization: `Bearer ${access}`
+                }
+            }
         );
         return response;
     } catch (err) {
@@ -42,12 +49,12 @@ export const bookDoctor = async({doctor, booking_type="video", booking_date, boo
     }
 }
 
-
 export const getDoctorBookings = async (doctor_email) => {
-    const bookUrl = MAIN_URL + `?doctor_email=${doctor_email}`;
+    const bookUrl = `${MAIN_URL}/doctor-bookings/`;
+    const id = getUserId();
     try {
-        const response = await axios.post(bookUrl);
-        return response.data.results
+        const response = await axios.post(bookUrl,{ doctor_email: doctor_email, doctor_id: id});
+        return response.data;
     } catch (error) {
         throw error;
     }

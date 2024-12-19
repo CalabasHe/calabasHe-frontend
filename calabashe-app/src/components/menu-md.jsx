@@ -45,7 +45,7 @@ const MdScreenMenu = () => {
               <div className="relative" ref={dropdownRef}>
                 <button onClick={toggleDropDown}>Sign in</button>
                 {isOpen &&
-                  <div className="absolute -right-2 top-8 w-80 h-48 flex flex-col gap-4 bg-white text-md text-zinc-700 px-8 p-4 rounded-lg">
+                  <div className="absolute  -right-2 top-8 w-80 h-48 flex flex-col gap-4 bg-white text-md text-zinc-700 px-8 p-4 rounded-lg">
                     <Link to={"/sign_in"} className="border-b-2 border-gray-200 px-2 py-1 hover:cursor-pointer decoration-slate-500">
                       <h3 className="text-base mb-2">Patients</h3>
                       <p className="text-sm pt-1 pb-3 hover:underline">Log in</p>

@@ -58,14 +58,15 @@ const ProviderLoginForm = () => {
             return "Welcome Back!";
           },
           error: (error) => {
-            const errorMessage = error.errors.error[0];
+            toast.error(error.message)
             modifyUserType(null, "", "");
-            setError(errorMessage);
-            return errorMessage;
+            setError(error.message);
+            return error.message;
           },
           finally: () => {
             setIsDisabled(false);
             setButtonText("Sign In");
+            toast.dismiss()
           },
         }
     );

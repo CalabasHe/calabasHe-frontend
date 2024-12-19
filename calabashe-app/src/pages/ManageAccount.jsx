@@ -23,6 +23,7 @@ const ManageAccount = () => {
     const today = startOfToday();
     const [selectedTime, setSelectedTime] = useState();
     const [selectedDay, setSelectedDay] = useState(today);
+    const [slotEvent, setSlotEvent] = useState(null); //use to trigger selectable times reload
 
     const [selectedInterval, setSelectedInterval] = useState(30);
     const [startTime, setStartTime] = useState(generateFutureTimeIntervals('06:00', selectedInterval, '17:00', selectedDay));
@@ -74,14 +75,15 @@ const ManageAccount = () => {
         const day_of_month = parseInt(format(selectedDay, 'd'), 10);
         const tempTime = parse(selectedTime, 'HH:mm', new Date());
         const endTime = format(addMinutes(tempTime, selectedInterval), 'HH:mm');
-        setSelectedDay(today); // to force a reload
-
+        setSlotEvent(true);//to force a reload
         try {
+            toast.loading("Creating time slot");
             await createTimeSlot({ month, year, day_of_month, doctor_email, start_time: selectedTime, end_time: endTime, is_available: true, booking_type: selectedTypes });
             toast.success("Slot created");
         } catch (err) {
-            // console.log(err);
             toast.error("An error occurred")
+        } finally {
+            toast.dismiss();
         }
     }
     return (
@@ -182,7 +184,7 @@ const ManageAccount = () => {
                         <div>
                             <Checkboxes options={options} onChange={handleSelectedTypes} />
                         </div>
-                        <SelectableTimes selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime} />
+                        <SelectableTimes slotEvent={slotEvent} selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime} />
                     </div>
                 </div>
                 <div className='w-[85%] md:w-full lg:w-[80%] mb-4 rounded-xl h-[400px] overflow-y-scroll scrollbar-thin '>

@@ -37,7 +37,8 @@ export async function getAllBookings() {
 export async function parseTimeSlots(day) {
     const email = localStorage.getItem("email")
     try {
-        const meetings =( await getTimeSlots(email)).results;
+        const meetings =await getTimeSlots(email);
+ 
         const endTimes = [];
         const meetingDates = [];
         meetings.map(meeting => {
@@ -60,17 +61,14 @@ export async function getAvailableTimeSlots(initial = '09:00', timeInterval = 30
     const availableIntervals = [];
 
     const {meetingDates, endTimes} = await parseTimeSlots(day);
-    
     while (startTime <= endTime) {
         const isBooked = meetingDates.some((meetingDate, index) => 
             isSameMinute(startTime, meetingDate) || 
             (isAfter(startTime, meetingDate) && isBefore(startTime, endTimes[index]))
         );
-
         if (!isPast(startTime) && !isBooked) {
             availableIntervals.push(format(startTime, 'HH:mm'));
         }
-       
         startTime = addMinutes(startTime, timeInterval);
     }
     return availableIntervals;
