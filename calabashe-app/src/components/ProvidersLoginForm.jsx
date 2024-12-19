@@ -24,8 +24,6 @@ const ProviderLoginForm = () => {
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    const err = validatePassword(e.target.value);
-    setError(err);
   }
 
   const handleEmail = (e) => {
