@@ -19,9 +19,12 @@ const VideoCall = () => {
 
   useEffect(() => {
     if (callingState === CallingState.JOINED) {
-      toast.dismiss()
+      const call = clientRef.current?.activeCall;
+      if (call) {
+        call.camera.enableVideo();
+      }
     }
-  }, [callingState])
+  }, [callingState]);
 
   if (callingState === CallingState.LEFT) {
     return (
