@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDoctorBookings } from "../api/bookings";
 import { ClipLoader } from "react-spinners";
-import { format, addHours } from 'date-fns'
+import { format, addHours, isPast } from 'date-fns'
 import { IoIosVideocam } from "react-icons/io";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -56,7 +56,7 @@ const BookedAppointments = () => {
                             return (
                                 <div key={index} className="grid grid-cols-[auto_1fr_1fr_1fr_1fr] gap-4 items-center p-4 border-t border-gray-100">
                                     <div className="flex items-center justify-center">
-                                        <span className="w-5 h-5 text-white border rounded-full" />
+                                        <span className={`w-5 h-5 border rounded-full ${isPast(endTime)? "bg-red-500": "bg-green-800"}`} />
                                     </div>
                                     <div className="text-gray-700 ml-5">{data.patient_name}</div>
                                     <div className="text-gray-700">{format(startTime, 'd MMM, yy HH:mm E')}</div>

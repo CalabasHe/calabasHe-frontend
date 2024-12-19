@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 import ResetPassword from "../components/ResetPassword.jsx";
 import { useEffect, useState } from "react";
 import ManageAccountCalender from "../components/manageAccountCalender.jsx";
-import { addMinutes, parse, format, startOfToday, subMinutes } from 'date-fns';
+import { addMinutes, parse, format, startOfToday } from 'date-fns';
 import { toast } from "sonner";
 import { createTimeSlot } from "../api/bookings.js";
 import SelectableTimes from './../components/SelectableTimes';
 import { generateFutureTimeIntervals } from '../utils/timeUtils.jsx';
 import Checkboxes from '../components/multipleCheckbox.jsx';
+import { getAvailableTimeSlots } from '../utils/timeUtils.jsx';
 
 
 const ManageAccount = () => {
@@ -23,12 +24,12 @@ const ManageAccount = () => {
     const today = startOfToday();
     const [selectedTime, setSelectedTime] = useState();
     const [selectedDay, setSelectedDay] = useState(today);
-    const [slotEvent, setSlotEvent] = useState(null); //use to trigger selectable times reload
+    const [slotEvent, setSlotEvent] = useState(0); //use to trigger selectable times reload
 
     const [selectedInterval, setSelectedInterval] = useState(30);
     const [startTime, setStartTime] = useState(generateFutureTimeIntervals('06:00', selectedInterval, '17:00', selectedDay));
     const [selectedStartTime, setSelectedStartTime] = useState('09:00');
-    const [selectedEndTime, setSelectedEndTime] = useState('00:00'); // FIXME: change this later
+    const [selectedEndTime, setSelectedEndTime] = useState('23:59'); // FIXME: change this later
     const selectableIntervals = ["30", "60", "90", "120"];
 
     const [selectedTypes, setSelectedTypes] = useState([]);
@@ -39,7 +40,7 @@ const ManageAccount = () => {
 
 
 
-        
+
     useEffect(() => {
         setStartTime(generateFutureTimeIntervals('08:00', selectedInterval, '23:59', selectedDay));
     }, [selectedDay]);
@@ -65,9 +66,35 @@ const ManageAccount = () => {
         setSelectedDay(day);
     }
 
+    const [availableTimes, setAvailableTimes] = useState([]);
+    const [isLoadingTimes, setIsLoadingTimes] = useState(false);
+
+    const fetchAvailableTimes = async () => {
+        setIsLoadingTimes(true);
+        try {
+            const times = await getAvailableTimeSlots(
+                selectedStartTime,
+                selectedInterval,
+                selectedEndTime,
+                selectedDay
+            );
+            setAvailableTimes(times);
+        } catch (error) {
+            toast.error("Failed to fetch available times");
+        } finally {
+            setIsLoadingTimes(false);
+        }
+    };
+
+    // Fetch times when these values change
+    useEffect(() => {
+        fetchAvailableTimes();
+    }, [selectedStartTime, selectedInterval, selectedEndTime, selectedDay]);
+
     const handleMarkAvailable = async () => {
         if (!selectedTime) {
             toast.error("Please select a time")
+            return;
         }
         const doctor_email = localStorage.getItem("email");
         const month = parseInt(format(selectedDay, 'L'), 10);
@@ -75,17 +102,29 @@ const ManageAccount = () => {
         const day_of_month = parseInt(format(selectedDay, 'd'), 10);
         const tempTime = parse(selectedTime, 'HH:mm', new Date());
         const endTime = format(addMinutes(tempTime, selectedInterval), 'HH:mm');
-        setSlotEvent(true);//to force a reload
+
         try {
             toast.loading("Creating time slot");
-            await createTimeSlot({ month, year, day_of_month, doctor_email, start_time: selectedTime, end_time: endTime, is_available: true, booking_type: selectedTypes });
+            await createTimeSlot({
+                month,
+                year,
+                day_of_month,
+                doctor_email,
+                start_time: selectedTime,
+                end_time: endTime,
+                is_available: true,
+                booking_type: selectedTypes
+            });
             toast.success("Slot created");
+            // Immediately fetch updated times after creating a slot
+            await fetchAvailableTimes();
         } catch (err) {
             toast.error("An error occurred")
         } finally {
             toast.dismiss();
         }
     }
+
     return (
         <div className="z-50 bg-red-50 overflow-hidden relative w-full max-h-none min-h-screen flex flex-col flex-1 items-center justify-center pt-16">
             <Header />
@@ -184,12 +223,20 @@ const ManageAccount = () => {
                         <div>
                             <Checkboxes options={options} onChange={handleSelectedTypes} />
                         </div>
-                        <SelectableTimes slotEvent={slotEvent} selectedDay={selectedDay} handleSelectedTime={handleSelectedTime} timeInterval={selectedInterval} startTime={selectedStartTime} endTime={selectedEndTime} />
+                        <SelectableTimes
+                            selectedDay={selectedDay}
+                            handleSelectedTime={handleSelectedTime}
+                            timeInterval={selectedInterval}
+                            startTime={selectedStartTime}
+                            endTime={selectedEndTime}
+                            availableTimes={availableTimes}
+                            isLoading={isLoadingTimes}
+                        />
                     </div>
                 </div>
                 <div className='w-[85%] md:w-full lg:w-[80%] mb-4 rounded-xl h-[400px] overflow-y-scroll scrollbar-thin '>
                     <h1 className='text-2xl font-semibold text-center mb-4 underline'>Your Booked Appoitments</h1>
-                    <BookedAppointments/>
+                    <BookedAppointments />
                 </div>
             </main>
             <Footer />

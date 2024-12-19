@@ -64,7 +64,8 @@ const ProviderLoginForm = () => {
           finally: () => {
             setIsDisabled(false);
             setButtonText("Sign In");
-            toast.dismiss()
+            toast.dismiss();
+            setError(null);
           },
         }
     );
