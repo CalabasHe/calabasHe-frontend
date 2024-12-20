@@ -59,8 +59,8 @@ const VideoCallPage = () => {
       const newCall = clientRef.current.call('default', callId);
 
 
-      // const role = userType === "doctor" ? "admin" : "user"; //Role switches otherwise
-      await newCall.getOrCreate({ members: [{ user_id: userId}], });
+      const role = userType === "doctor" ? "admin" : "user"; //Role switches otherwise
+      await newCall.getOrCreate({ members: [{ user_id: userId}], role: role});
       setCall(newCall);
       await newCall.join();
     } catch (e) {
