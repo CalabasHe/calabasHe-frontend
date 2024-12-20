@@ -1,7 +1,7 @@
 /* @import url("@stream-io/video-react-sdk/dist/css/styles.css"); */
 /*
   //BUTTON STATES (end call, audio soruce, video soruce etc
-  
+
     --str-video__button-default-base: #67e037 !important;; // this one controls their actual colors
   --str-video__button-default-hover;
   --str-video__button-default-pressed;
@@ -15,102 +15,85 @@
    --str-video__background-color4 -> controls the background color of the pariticipnat at the bottom of the video
    --str-video__button-primary-base -> controls pop up icons bg
    --str-video__button-primary-base
-   
+
 
 */
 /* General Styling */
-@import url("@stream-io/video-react-sdk/dist/css/styles.css");
-
-/* General Styling */
-.str-video__container {
-  @apply relative w-full h-screen overflow-hidden;
-}
-
+/* Base styles */
 .str-video {
-  @apply text-white;
+  color: white;
 }
 
+.stream-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+
+.stream-grid {
+  /*  display: flex;*/
+  /*flex: 1;*/
+  width: 100%;
+
+}
+
+.participant-card {
+    all: unset;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Modern way to handle aspect ratio */
+
+  border-radius: 0.5rem;
+  overflow: hidden;
+  max-height: 100%; /* Prevents overflow */
+}
+
+.participant-view {
+    all: unset;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.call-controls {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  margin-inline: auto;
+}
 .str-video__call-controls {
-  @apply flex gap-2 items-center px-4;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 200px;
 }
 
-.str-video__button {
-  @apply rounded-full p-3 transition-colors hover:bg-gray-700;
+.str-video__composite-button__button {
+  width: 80%;
 }
 
-.str-video__button--active {
-  @apply bg-red-600 hover:bg-red-700;
-}
-
-.str-video__participant {
-  @apply rounded-lg overflow-hidden border border-gray-700;
-}
-
-.str-video__participant-details {
-  @apply bg-gray-900/80 backdrop-blur-sm;
-}
-
-.str-video__participant-name {
-  @apply text-sm font-medium;
-}
-
-.str-video__video {
-  @apply object-cover w-full h-full;
-}
-
-/* Speaker Layout Styles */
-.str-video__speaker-layout {
-  @apply h-full;
-}
-
-.str-video__speaker-layout .str-video__participant--dominant {
-  @apply absolute inset-0 z-0;
-}
-
-.str-video__speaker-layout .str-video__participants-bar {
-  @apply absolute bottom-0 left-0 right-0 h-32 z-10 flex justify-center items-end pb-4;
-}
-
-.str-video__speaker-layout .str-video__participants-bar .str-video__participant {
-  @apply w-40 h-32 mx-1 rounded-lg overflow-hidden border-2 border-gray-700 transition-all duration-300 ease-in-out;
-}
-
-/* Grid Layout Styles */
-.str-video__grid-layout {
-  @apply h-full !important;
-  min-height: calc(100vh - 200px) !important;
-}
-
-.str-video__grid-layout .str-video__participant {
-  @apply aspect-video;
-  min-height: 240px;
-}
-
-/* Responsive Adjustments */
-@media (min-width: 640px) {
-  .str-video__speaker-layout .str-video__participants-bar {
-    @apply h-40;
+/* Media queries */
+@media (max-width: 768px) {
+  .stream-container {
+    padding: 0.5rem;
   }
 
-  .str-video__speaker-layout .str-video__participants-bar .str-video__participant {
-    @apply w-48 h-40;
+  .participant-card {
+    border-radius: 0.25rem;
   }
 
-  .str-video__grid-layout .str-video__participant {
-    min-height: 280px;
+  .call-controls {
+    margin-top: 0.5rem;
   }
 }
 
-@media (min-width: 1024px) {
-  .str-video__speaker-layout .str-video__participants-bar {
-    @apply h-48;
-  }
-
-  .str-video__speaker-layout .str-video__participants-bar .str-video__participant {
-    @apply w-56 h-48;
-  }
-
-  .str-video__grid-layout .str-video__participant {
-    min-height: 320px;
+@media (max-width: 480px) {
+  .participant-card {
+    aspect-ratio: 4 / 3; /* Adjust aspect ratio for smaller screens */
   }
 }
