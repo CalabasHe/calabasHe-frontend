@@ -46,12 +46,15 @@
 
 }
 
-/* .participant-card {
+.participant-card {
+  all: unset;
   position: relative;
-  aspect-ratio: 16
- } / 9; /* Modern way to handle aspect ratio 
-
-*/
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Modern way to handle aspect ratio */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  max-height: 100%; /* Prevents overflow */
+}
 
 .participant-view {
     all: unset;
