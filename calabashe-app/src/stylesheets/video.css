@@ -22,7 +22,14 @@
 /* Base styles */
 .str-video {
   color: white;
+  --str-video__primary-color: rgb(4 218 141);
+  /* --str-video__participant-status-placeholder-bg: ; */
+  --str-video__participant-status-placeholder-text: black;
+  /* --str-video__base-color6: */
 }
+/* .str-video__participant-status-placeholder {
+  background-color: white;
+} */
 
 .stream-container {
   display: flex;
@@ -39,16 +46,11 @@
 
 }
 
-.participant-card {
-    all: unset;
+/* .participant-card {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9; /* Modern way to handle aspect ratio */
+  aspect-ratio: 16
+ } / 9; /* Modern way to handle aspect ratio 
 
-  border-radius: 0.5rem;
-  overflow: hidden;
-  max-height: 100%; /* Prevents overflow */
-}
 
 .participant-view {
     all: unset;
