@@ -51,6 +51,7 @@
   aspect-ratio: 16
  } / 9; /* Modern way to handle aspect ratio 
 
+*/
 
 .participant-view {
     all: unset;
