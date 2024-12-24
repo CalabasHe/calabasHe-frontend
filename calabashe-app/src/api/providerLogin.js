@@ -1,4 +1,6 @@
 import axios from "axios"
+import {generateToken} from "./bookings.js";
+import {getUserId} from "../utils/getUserId.jsx";
 
 const baseUrl = "https://calabashe-api.onrender.com/api/doctors"
 
@@ -26,11 +28,15 @@ export async function changeDoctorPassword({ email, old_password, new_password, 
     const url = baseUrl + `/change-password/`;
     // eslint-disable-next-line no-useless-catch
     try {
-        const result = await axios.post(url, { email, old_password, new_password, confirm_password });
+        const token = generateToken();
+        const doctor_id = getUserId();
+        const result = await axios.post(url, { email, old_password, new_password, confirm_password, token, doctor_id });
+        console.log(result);
         return result.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            throw error.response.data;
+        if (error.response && error.response.data && error.status !== 500) {
+            const first = Object.keys(error.response.data)[0];
+            throw error.response.data[first][0];
         } else {
             throw new Error('An unexpected error occurred');
         }

@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie } from "../utils/cookies";
 import { getUserId } from "../utils/getUserId";
 
-function generateToken() {
+export function generateToken() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let baseToken = '';
     

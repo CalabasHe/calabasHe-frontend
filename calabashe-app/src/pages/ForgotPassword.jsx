@@ -4,6 +4,7 @@ import { forgotPassword, resetPassword } from "../api/authApi";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { forgotDoctorPassword, resetDoctorPassword } from "../api/providerLogin";
+import {validatePassword} from "../utils/validatePassword.jsx";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -48,7 +49,6 @@ const ForgotPassword = () => {
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-
     const errorMessage = validatePassword(value);
     setPasswordError(errorMessage);
   };
@@ -68,7 +68,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDisableForm(true);
-
+    toast.loading("Processing ...")
     try {
       const response = userType === "doctor"? await forgotDoctorPassword({ email }): await forgotPassword({email});
       setToken(response.token);
@@ -78,13 +78,15 @@ const ForgotPassword = () => {
     } catch(error) {
       toast.error(error.response.data[0].split("'")[1] || 'An unexpected error occurred');
         setDisableForm(false);
+    } finally {
+      toast.dismiss()
     }
   };
 
   const handleReset = async (e) => {
     e.preventDefault();
     const code = codeDigits.join('');
-
+    toast.loading("Submitting")
     if (code.length === 6) {
       setDisableForm(true);
       if (!passwordError && !confirmPasswordError && password === confirmPassword) {
@@ -105,6 +107,7 @@ const ForgotPassword = () => {
           toast.error(errorMessage);
         } finally {
           setDisableForm(false);
+          toast.dismiss()
         }
       } else {
         toast.error("Please correct the errors before submitting.");
