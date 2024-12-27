@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginDoctor } from "../api/providerLogin";
 import { toast } from "sonner";
 import { useAuth } from "../hooks/useAuth";
-import { validatePassword } from "../utils/validatePassword.jsx";
+// import { validatePassword } from "../utils/validatePassword.jsx";
 const ProviderLoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -157,7 +157,7 @@ const ProviderLoginForm = () => {
             {buttonText}
           </button>
 
-          <Link className="text-center" to={"/forgot_password"} state={{ type: "doctor" }}>
+          <Link className="text-center" to={"/forgot_password"} state={{ userType: "doctor" }}>
             Forgot Password?
           </Link>
         </form>

@@ -36,13 +36,13 @@ export const logIn = async ({ email, password }) => {
       password,
     });
     return response.data;
-  }catch (error) {
+  } catch (error) {
     if (error.status === 400) {
       throw new Error("Invalid Credentials")
     }
     else if (error.response && error.response.data) {
       throw error.response.data;
-    } 
+    }
 
     else {
       throw new Error('An unexpected error occurred');
@@ -58,7 +58,7 @@ export const verifyCode = async ({ email, verification_code }) => {
       verification_code,
     });
     return response.data;
-  }catch (error) {
+  } catch (error) {
     if (error.response && error.response.data) {
       throw error.response.data;
     } else {
@@ -91,7 +91,7 @@ export const accountClaims = async ({ first_name, last_name, phone, specialty, f
       form_email
     });
     return response.data;
-  }catch (error) {
+  } catch (error) {
     if (error.response && error.response.data) {
       throw error.response.data;
     } else {
@@ -109,7 +109,7 @@ export const forgotPassword = async ({ email }) => {
     });
     // console.log(response.data)
     return response.data;
-  }catch (error) {
+  } catch (error) {
     if (axios.isAxiosError(error)) {
       throw error;
     }
@@ -126,7 +126,7 @@ export const resetPassword = async ({ token, code, password }) => {
     });
     // console.log(response.data)
     return response.data;
-  }catch (error) {
+  } catch (error) {
     if (error.response && error.response.data) {
       throw error.response;
     } else {
