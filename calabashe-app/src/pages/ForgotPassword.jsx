@@ -4,7 +4,7 @@ import { forgotPassword, resetPassword } from "../api/authApi";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { forgotDoctorPassword, resetDoctorPassword } from "../api/providerLogin";
-import {validatePassword} from "../utils/validatePassword.jsx";
+import { validatePassword } from "../utils/validatePassword.jsx";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -18,6 +18,11 @@ const ForgotPassword = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const navigate = useNavigate();
   const [codeDigits, setCodeDigits] = useState(Array(6).fill(''));
+
+  const [passwordHidden, setPasswordHidden] = useState({
+    new_password: false,
+    confirm_password: false
+  });
 
   const location = useLocation();
 
@@ -70,14 +75,14 @@ const ForgotPassword = () => {
     setDisableForm(true);
     toast.loading("Processing ...")
     try {
-      const response = userType === "doctor"? await forgotDoctorPassword({ email }): await forgotPassword({email});
+      const response = userType === "doctor" ? await forgotDoctorPassword({ email }) : await forgotPassword({ email });
       setToken(response.token);
       setIsHidden(false);
       setDisableForm(false);
       toast.success('A six-digit code has been sent to your email');
-    } catch(error) {
-      toast.error(error.response.data[0].split("'")[1] || 'An unexpected error occurred');
-        setDisableForm(false);
+    } catch (error) {
+      toast.success('A six-digit code has been sent to your email');
+      setDisableForm(false);
     } finally {
       toast.dismiss()
     }
@@ -91,7 +96,7 @@ const ForgotPassword = () => {
       setDisableForm(true);
       if (!passwordError && !confirmPasswordError && password === confirmPassword) {
         try {
-          const response = userType === "doctor"? await resetDoctorPassword(({ token, code, password })):await resetPassword({ token, code, password });
+          const response = userType === "doctor" ? await resetDoctorPassword(({ token, code, password })) : await resetPassword({ token, code, password });
           navigate("/");
           toast.success("Password reset successful!");
         } catch (error) {
@@ -156,29 +161,77 @@ const ForgotPassword = () => {
             <div className="w-full flex flex-col gap-6">
               <div className=" order-2 flex flex-col gap-1">
                 <label htmlFor="new_password" className="text-sm md:text-base">New password</label>
+                <div className="relative flex">
                 <input
                   onChange={handlePasswordChange}
-                  className="shadow-md px-2 bg-inherit md:py-2 border-black border-1 py-1 rounded-md focus:outline-none"
+                  className=" w-full shadow-md px-2 bg-inherit md:py-2 border-black border-1 py-1 rounded-md focus:outline-none"
                   value={password}
-                  type="password"
+                  type={`${passwordHidden.new_password ? "text" : "password"}`}
                   id="new_password"
                   placeholder="enter new password"
                   required
                 />
+                                  <button
+                    className={` ${passwordHidden.new_password ? "fill-green-600" : "fill-red-500"
+                      } cursor-pointer w-10 h-[100%] absolute right-1 flex items-center justify-center`}
+                    id="confirm_passwordVisibility"
+                    tabIndex="-1"
+                    aria-label="Toggle New Password Visibility"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPasswordHidden({ ...passwordHidden, new_password: !passwordHidden.new_password })
+                    }}
+                  >
+                    <svg
+                      id="showpassword-icon"
+                      className="w-6 h-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 576 512"
+                    >
+                      <path
+                        d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z" />
+                      `
+                    </svg>
+                  </button>
+                </div>
                 {passwordError && <p className="text-red-500">{passwordError}</p>}
               </div>
 
               <div className="order-3 flex flex-col gap-1">
                 <label className="text-sm md:text-base" htmlFor="confirm_password"> Confirm password</label>
-                <input
-                  onChange={handleConfirmPasswordChange}
-                  className="shadow-md px-2 bg-inherit md:py-2 border-black border-1 py-1 rounded-md focus:outline-none"
-                  value={confirmPassword}
-                  type="password"
-                  placeholder="confirm password"
-                  required
-                  id="confirm_password"
-                />
+                <div className="relative flex">
+                  <input
+                    onChange={handleConfirmPasswordChange}
+                    className="w-full shadow-md px-2 bg-inherit md:py-2 border-black border-1 py-1 rounded-md focus:outline-none"
+                    value={confirmPassword}
+                    type={`${passwordHidden.confirm_password ? "text" : "password"}`}
+                    placeholder="confirm password"
+                    required
+                    id="confirm_password"
+                  />
+                  <button
+                    className={` ${passwordHidden.confirm_password ? "fill-green-600" : "fill-red-500"
+                      } cursor-pointer w-10 h-[100%] absolute right-1 flex items-center justify-center`}
+                    id="confirm_passwordVisibility"
+                    tabIndex="-1"
+                    aria-label="Toggle Confrim Password Visibility"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPasswordHidden({ ...passwordHidden, confirm_password: !passwordHidden.confirm_password })
+                    }}
+                  >
+                    <svg
+                      id="showpassword-icon"
+                      className="w-6 h-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 576 512"
+                    >
+                      <path
+                        d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z" />
+                      `
+                    </svg>
+                  </button>
+                </div>
                 {confirmPasswordError && <p className="text-red-500">{confirmPasswordError}</p>}
               </div>
 

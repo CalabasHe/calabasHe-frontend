@@ -57,7 +57,6 @@ export async function forgotDoctorPassword({ email }) {
 
 export async function resetDoctorPassword({ token, code, password }) {
     const url = baseUrl + '/reset-password/';
-
     try {
         const result = await axios.post(url, { token, code, password });
         return result.data;
