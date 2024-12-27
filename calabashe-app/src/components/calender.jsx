@@ -16,6 +16,7 @@ const Calender = ({ popUpDetails }) => {
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
     const [meetingDays, setMeetingDays] = useState([]);
 
+    // console.log(popUpDetails);
     const handlePopUp = (val = false) => {
         setShowPopUp(val);
     }
@@ -55,11 +56,11 @@ const Calender = ({ popUpDetails }) => {
     };
 
     useEffect(() => {
-        showTimeSlots()
+        popUpDetails.verified && showTimeSlots()
     }, []);
 
     useEffect(() => {
-        showTimeSlots()
+        popUpDetails.verified && showTimeSlots()
     }, [selectedDay]);
 
 
