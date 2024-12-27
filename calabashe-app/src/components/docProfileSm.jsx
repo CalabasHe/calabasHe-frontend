@@ -12,12 +12,16 @@ import Calender from "./calender";
 const DocProfileSm = ({ doctor = [] }) => {
   const go = useNavigate();
   const [sliceNum, setSliceNum] = useState(10);
-
+  const [moreDescription, setMoreDescription] = useState(false);
   // const handleLinkClick = () => {
   //   if (!isLoggedIn) {
   //     toast.info("Sign in to leave a review");
   //   }
   // };
+
+  const handleMoreDescription = () => {
+    setMoreDescription(!moreDescription);
+  }
 
   const [popUpDetails] = useState({
     id: doctor.id,
@@ -26,6 +30,7 @@ const DocProfileSm = ({ doctor = [] }) => {
     rating: doctor.rating,
     totalReviews: doctor.totalReviews,
     email: doctor.email,
+    verified: doctor.verified
   });
 
 
@@ -243,10 +248,10 @@ const DocProfileSm = ({ doctor = [] }) => {
                 {(doctor.about.length > 0)? 
                 (
                   <div className="text-xs max-w-[90%] leading-loose">
-                  <p className={`${moreDescription ? "h-72 overflow-hidden transition-all" : "h-max"}`}>
+                  <p className={`${moreDescription ? "h-max " : "h-72 overflow-hidden transition-all"}`}>
                     {doctor.about}
                   </p>
-                  <button onClick={handleMoreDescription} className="text-blue-600">{moreDescription ? 'show more' : 'show less'}</button>
+                  <button onClick={handleMoreDescription} className="text-blue-600">{moreDescription ? 'show less' : ' show more'}</button>
                 </div>
                 ):
                 (

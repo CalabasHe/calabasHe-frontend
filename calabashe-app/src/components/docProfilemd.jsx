@@ -28,6 +28,7 @@ const DocProfileMd = ({ doctor = [] }) => {
     rating: doctor.rating,
     totalReviews: doctor.totalReviews,
     email: doctor.email,
+    verified: doctor.verified
   });
 
   const handleLinkClick = (newRating) => {
@@ -282,10 +283,10 @@ const DocProfileMd = ({ doctor = [] }) => {
                   {(doctor.about.length > 0) ?
                     (
                       <div>
-                        <p className={`${moreDescription ? "h-72 overflow-hidden transition-all" : "h-max"}`}>
+                        <p className={`${moreDescription ? "h-max" : "h-72 overflow-hidden transition-all"}`}>
                           {doctor.about}
                         </p>
-                        <button onClick={handleMoreDescription} className="text-blue-600">{moreDescription ? 'show more' : 'show less'}</button>
+                        <button onClick={handleMoreDescription} className="text-blue-600">{moreDescription ? 'show less' : 'show more'}</button>
                       </div>
                     ) :
                     (

@@ -73,7 +73,7 @@ const VideoCallPage = () => {
 
 
   return (
-    <div className={`relative overflow-x-hidden md:overflow-hidden  h-screen flex flex-col min-h-screen ${call? "bg-gray-500": "bg-red-50"} `}>
+    <div className={`relative overflow-x-hidden md:overflow-hidden  h-screen flex flex-col min-h-screen bg-red-50`}>
       {<Header />}
       <div className={`${call ? 'h-[90vh]' : 'pt-20 md:pt-32 lg:pt-16'} flex items-center justify-center ${!call && 'md:h-[90vh]'} w-full`}>
         {call ? (
