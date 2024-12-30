@@ -22,7 +22,7 @@ import SecondaryForms from "./pages/SecondaryForm";
 import About from "./pages/AboutUs";
 import ProvidersLogin from "./pages/ProvidersLogin";
 import ManageAccount from "./pages/ManageAccount";
-import PrivateRoutes from "./components/privateRoutes.jsx";
+import PrivateRoutes from "./components/protectedRoutes.jsx";
 import VideoCallPage from "./pages/VideoCallPage.jsx";
 
 function App() {
@@ -54,6 +54,7 @@ function App() {
             <Routes location={location} key={location.pathname}>
               <Route element={<PrivateRoutes />}>
                 <Route path="/manage_account" element={<ManageAccount />} />
+                <Route path="/video_call/:id" element={<VideoCallPage/>}/>
               </Route>
               <Route index element={<Home />} />
               <Route path="/review/:slug" element={<Review />} />
@@ -79,7 +80,7 @@ function App() {
               <Route path="/results" element={<SearchResultsPage />} />
               <Route path="/initial_form" element={<AccountClaim />} />
               <Route path="/secondary_form" element={<SecondaryForms/>} />
-              <Route path="/video_call/:id" element={<VideoCallPage/>}/>
+              
               <Route path="*" element={<NoResult/>} />
 
             </Routes>
