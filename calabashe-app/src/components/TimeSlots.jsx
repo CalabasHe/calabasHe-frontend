@@ -21,7 +21,7 @@ const TimeSlots = ({ results, daySelected, handleBookingSelected }) => {
   }
 
   results.map(result => {
-    const startDate = new Date(`${result.year}-${result.month}-${result.day_of_month}T${result.start_time}`);
+    const startDate = new Date(`${result.year}-${result.month.toString().padStart(2, '0')}-${result.day_of_month.toString().padStart(2, '0')}T${result.start_time}`);
     const idx = format(startDate, 'd');
     const startDateStart = startOfDay(startDate);
     const daySelectedStart = startOfDay(daySelected);

@@ -119,6 +119,7 @@ const ManageAccount = () => {
             // Immediately fetch updated times after creating a slot
             await fetchAvailableTimes();
         } catch (err) {
+            console.log(err)
             toast.error("An error occurred")
         } finally {
             toast.dismiss();
