@@ -74,3 +74,13 @@ export const getDoctorBookings = async (doctor_email) => {
         throw error;
     }
 }
+
+export const getAvailableDoctors = async () => {
+    const url = MAIN_URL + '/available-doctors/';
+    try {
+        const response = await axios.get(url);
+        return response.data.results
+    } catch (err) {
+        throw err;
+    }
+}

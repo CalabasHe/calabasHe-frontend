@@ -37,20 +37,20 @@ export async function getAllBookings() {
 export async function parseTimeSlots(day) {
     const email = localStorage.getItem("email")
     try {
-        const meetings =await getTimeSlots(email);
- 
+        const meetings = await getTimeSlots(email);
         const endTimes = [];
         const meetingDates = [];
         meetings.map(meeting => {
-                const dateString = `${meeting.year}-${meeting.month}-${meeting.day_of_month}${meeting.start_time}`;
-                const endDateString = `${meeting.year}-${meeting.month}-${meeting.day_of_month}${meeting.end_time}`;
-                const tempDate = parse(dateString, 'yyyy-M-dHH:mm:ss', day)
-                const endTempDate = parse(endDateString, 'yyyy-M-dHH:mm:ss', day)
+                const dateString = `${meeting.year}-${meeting.month}-${meeting.day_of_month} ${meeting.start_time}`;
+                const endDateString = `${meeting.year}-${meeting.month}-${meeting.day_of_month} ${meeting.end_time}`;
+                const tempDate = parse(dateString, 'yyyy-M-d HH:mm:ss', day);
+                const endTempDate = parse(endDateString, 'yyyy-M-d HH:mm:ss', day);
                 meetingDates.push(tempDate);
                 endTimes.push(endTempDate);
         })
         return {meetingDates, endTimes};
      } catch (err) {
+        console.log(err)
         throw err;
      }
 }
@@ -61,6 +61,7 @@ export async function getAvailableTimeSlots(initial = '09:00', timeInterval = 30
     const availableIntervals = [];
 
     const {meetingDates, endTimes} = await parseTimeSlots(day);
+
     while (startTime <= endTime) {
         
         const isBooked = meetingDates.some((meetingDate, index) => 
