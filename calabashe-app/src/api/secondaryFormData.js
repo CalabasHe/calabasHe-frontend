@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = 'https://calabashe-api.onrender.com/api'
+const api = 'https://api.calabashe.com/api'
 
 export const fetchConditions = async () => {
   try {

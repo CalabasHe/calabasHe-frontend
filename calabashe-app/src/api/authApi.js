@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const SIGNUP_URL = 'https://calabashe-api.onrender.com/api/auth/signup/';
-const VERIFY_URL = 'https://calabashe-api.onrender.com/api/auth/verify-code/';
-const FORGOT_PASSWORD_URL = 'https://calabashe-api.onrender.com/api/auth/forget-password/';
-const RESET_PASSWORD_URL = 'https://calabashe-api.onrender.com/api/auth/reset-password/';
-const LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/login/';
-const CLAIMS_URL = 'https://calabashe-api.onrender.com/api/forms/';
-const GOOGLE_LOGIN_URL = 'https://calabashe-api.onrender.com/api/auth/google/';
+const SIGNUP_URL = 'https://api.calabashe.com/api/auth/signup/';
+const VERIFY_URL = 'https://api.calabashe.com/api/auth/verify-code/';
+const FORGOT_PASSWORD_URL = 'https://api.calabashe.com/api/auth/forget-password/';
+const RESET_PASSWORD_URL = 'https://api.calabashe.com/api/auth/reset-password/';
+const LOGIN_URL = 'https://api.calabashe.com/api/auth/login/';
+const CLAIMS_URL = 'https://api.calabashe.com/api/forms/';
+const GOOGLE_LOGIN_URL = 'https://api.calabashe.com/api/auth/google/';
 
 
 export const signUp = async ({ email, username, password, password2 }) => {

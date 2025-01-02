@@ -8,10 +8,10 @@ let facilitiesCache = JSON.parse(localStorage.getItem('facilitiesCache')) || {};
 let servicesCache = JSON.parse(localStorage.getItem('servicesCache')) || {};
 let doctorsNamesCache = JSON.parse(localStorage.getItem('doctorsNamesCache')) || {};
 
-let conditionsNextPage = localStorage.getItem('conditionsNextPage') || 'https://calabashe-api.onrender.com/api/conditions/';
-let facilityNextPage = localStorage.getItem('facilityNextPage') || 'https://calabashe-api.onrender.com/api/facilities';
-let servicesNextPage = localStorage.getItem('servicesNextPage') || 'https://calabashe-api.onrender.com/api/services';
-let doctorsNamesNextPage = localStorage.getItem('doctorsNamesNextPage') || 'https://calabashe-api.onrender.com/api/doctors/names';
+let conditionsNextPage = localStorage.getItem('conditionsNextPage') || 'https://api.calabashe.com/api/conditions/';
+let facilityNextPage = localStorage.getItem('facilityNextPage') || 'https://api.calabashe.com/api/facilities';
+let servicesNextPage = localStorage.getItem('servicesNextPage') || 'https://api.calabashe.com/api/services';
+let doctorsNamesNextPage = localStorage.getItem('doctorsNamesNextPage') || 'https://api.calabashe.com/api/doctors/names';
 
 //not paginated
 let specialtiesFetched = Boolean(Object.keys(specialtiesCache).length);
@@ -141,7 +141,7 @@ const fetchSpecialties = async () => {
     if (specialtiesFetched) return;
 
     try {
-        const response = await fetch('https://calabashe-api.onrender.com/api/specialties/');
+        const response = await fetch('https://api.calabashe.com/api/specialties/');
         const data = await response.json();
     
         data.results.forEach(item => {

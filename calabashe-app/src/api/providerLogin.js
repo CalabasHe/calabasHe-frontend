@@ -2,7 +2,7 @@ import axios from "axios"
 import {generateToken} from "./bookings.js";
 import {getUserId} from "../utils/getUserId.jsx";
 
-const baseUrl = "https://calabashe-api.onrender.com/api/doctors"
+const baseUrl = "https://api.calabashe.com/api/doctors"
 
 export async function loginDoctor({ email, password }) {
     const url = baseUrl + `/login/`
