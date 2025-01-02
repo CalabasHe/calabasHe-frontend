@@ -17,7 +17,7 @@ export function generateToken() {
 }
 
 //Accessible by doctors only
-const MAIN_URL = 'https://calabashe-api.onrender.com/api/bookings'
+const MAIN_URL = 'https://api.calabashe.com/api/bookings'
 export const createTimeSlot = async ({ month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type }) => {
 
     const createUrl = MAIN_URL + '/timeslots/';

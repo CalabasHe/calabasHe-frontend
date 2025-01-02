@@ -9,7 +9,7 @@ import { getUserId } from "../utils/getUserId.jsx";
 import callImage from '../assets/images/vidoe_call.png'
 import { useParams } from "react-router-dom";
 
-const API_URL = 'https://calabashe-api.onrender.com/api/bookings/create-token/';
+const API_URL = 'https://api.calabashe.com/api/bookings/create-token/';
 
 const VideoCallPage = () => {
   const { id } = useParams();

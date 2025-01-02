@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = "https://calabashe-api.onrender.com/api/"
+const baseUrl = "https://api.calabashe.com"
 export const guestReviews = async (reviewDetails) => {
     try {
         const response = await axios.post(

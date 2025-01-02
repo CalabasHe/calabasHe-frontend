@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchDoctorBySlug = async (slug) => {
   try {
-    const response = await axios.get(`https://calabashe-api.onrender.com/api/doctors/${slug}/`);
+    const response = await axios.get(`https://api.calabashe.com/api/doctors/${slug}/`);
 ;    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -14,7 +14,7 @@ export const fetchDoctorBySlug = async (slug) => {
 
 export const fetchFacilityBySlug = async (slug) => {
   try {
-    const response = await axios.get(`https://calabashe-api.onrender.com/api/facilities/${slug}/`);
+    const response = await axios.get(`https://api.calabashe.com/api/facilities/${slug}/`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

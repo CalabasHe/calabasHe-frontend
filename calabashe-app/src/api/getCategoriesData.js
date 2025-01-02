@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-axios.defaults.baseURL = 'https://calabashe-api.onrender.com';
+axios.defaults.baseURL = 'https://api.calabashe.com';
 
 axios.interceptors.request.use(
   (config) => {
@@ -105,7 +105,6 @@ export const fetchCurrentReviews = async () => {
 export const fetchServiceCategories = async (category = '/categories') => {
   try {
     const response = await axios.get(`/api/services${category}`);
-    (response.data)
     return response.data
   } catch (error) {
     throw new Error('Error fetching categories:', error);

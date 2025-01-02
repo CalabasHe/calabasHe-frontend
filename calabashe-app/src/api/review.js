@@ -1,7 +1,7 @@
 import { getCookie } from '../utils/cookies';
 
-const CREATE_DOCTOR_REVIEW = 'https://calabashe-api.onrender.com/api/reviews/doctor-reviews/';
-const CREATE_FACILITY_REVIEW = `https://calabashe-api.onrender.com/api/reviews/facility-reviews/`;
+const CREATE_DOCTOR_REVIEW = 'https://api.calabashe.com/api/reviews/doctor-reviews/';
+const CREATE_FACILITY_REVIEW = `https://api.calabashe.com/api/reviews/facility-reviews/`;
 
 const getAccessToken = () => {
   return getCookie('accessToken');
