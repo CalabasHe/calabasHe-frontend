@@ -13,7 +13,7 @@ const Offering = () => {
     const [showPopUp, setShowPopUp] = useState();
     const handlePopUp = () => {
         setShowPopUp(false);
-        document.querySelector("body").style.overflow='hidden'
+        document.querySelector("body").style.overflow='auto'
     }
 
     return (

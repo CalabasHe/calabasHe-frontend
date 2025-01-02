@@ -14,9 +14,9 @@ const AvailableDoctors = ({ showPopUp, handlePopUp }) => {
         getAvailableOnes();
     }, [showPopUp]);
 
-    useEffect(() => {
-        console.log(results)
-    }, [results]);
+    // useEffect(() => {
+    //     console.log(results)
+    // }, [results]);
     return (
         <AnimatePresence>
             {showPopUp && (
