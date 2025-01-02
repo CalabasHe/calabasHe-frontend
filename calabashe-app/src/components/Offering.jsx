@@ -1,24 +1,39 @@
 
+import { Link } from 'react-router-dom';
 import consultation from '../assets/images/consult.png'
 import near_you from '../assets/images/near_you.png'
 import surgery from '../assets/images/surgeries.png'
+import AvailableDoctors from './availableDoctors';
+import { useState } from 'react';
 
 
 
 
 const Offering = () => {
+    const [showPopUp, setShowPopUp] = useState();
+    const handlePopUp = () => {
+        setShowPopUp(false);
+        document.querySelector("body").style.overflow='hidden'
+    }
+
     return (
         <div className="mb-5 w-full">
             <h1 className="text-3xl font-semibold mb-10 text-center">Our Offering</h1>
             <div className="flex flex-row md:flex-row mx-auto w-full justify-center gap-4 md:gap-10">
                 <div
-                     className='shadow-md rounded-2xl flex-col  md:mx-0  w-[45%]  md:w-[28%] min-h-[250px] lg:w-[20%] bg-contain bg-no-repeat relative bg-[#98CBD6] bg-center'
+                    className='shadow-md rounded-2xl flex-col  md:mx-0  w-[45%]  md:w-[28%] min-h-[250px] lg:w-[20%] bg-contain bg-no-repeat relative bg-[#98CBD6] bg-center'
                     style={{ backgroundImage: `url(${consultation})` }}
                 >
-                    <div className="px-5 p-0.5 md:p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">
+                    <button
+                        onClick={() => {
+                            setShowPopUp(true);
+                            document.querySelector("body").style.overflow='hidden'
+                        }}
+                        className="text-start cursor-pointer px-5 p-0.5 md:p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">
                         <h3 className="font-semibold md:text-xl">Instant Video Consultation</h3>
                         <p className='text-[0.7rem] sm:text-base mt-1 md:mt-0  md:text-sm'>Connect within 60s</p>
-                    </div>
+                    </button>
+                    <AvailableDoctors showPopUp={showPopUp} handlePopUp={handlePopUp} />
                 </div>
 
                 <div
@@ -42,7 +57,6 @@ const Offering = () => {
                         <p className='text-sm'>Safe and trusted surgery centers</p>
                     </div>
                 </div>
-
             </div>
         </div>
     );
