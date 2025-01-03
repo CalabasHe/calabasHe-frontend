@@ -23,7 +23,6 @@ const SignIn = () => {
   const location = useLocation();
   const [fullState, setFullState] = useState(location.state || {});
   const from = location.state?.from?.pathname || '/';
-  console.log(from);
   useEffect(() => {
     if (location.state) {
       setFullState(location.state);
