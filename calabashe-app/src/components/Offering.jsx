@@ -30,7 +30,7 @@ const Offering = () => {
                             document.querySelector("body").style.overflow='hidden'
                         }}
                         className="text-start cursor-pointer px-5 p-0.5 md:p-4 w-full absolute bg-white bottom-0 h-[32%] md:h-[30%] rounded-b-2xl">
-                        <h3 className="font-semibold md:text-xl">Instant Video Consultation</h3>
+                        <h3 className="font-semibold text-sm md:text-base lg:text-xl">Instant Video Consultation</h3>
                         <p className='text-[0.7rem] sm:text-base mt-1 md:mt-0  md:text-sm'>Connect within 60s</p>
                     </button>
                     <AvailableDoctors showPopUp={showPopUp} handlePopUp={handlePopUp} />
@@ -41,8 +41,8 @@ const Offering = () => {
                     style={{ backgroundImage: `url(${near_you})` }}
                 >
                     <div className="h-[32%] md:h-[30%] absolute md:inset-x-0 bottom-0 p-0.5 md:p-4 bg-white rounded-b-2xl w-full">
-                        <div className="max-w-[90%] mx-auto flex flex-col h-full">
-                            <h3 className="font-semibold md:text-xl">Find Doctors Near You</h3>
+                        <div className="max-w-[90%] mx-auto flex flex-col h-full mt-2 md:mt-0">
+                            <h3 className="font-semibold text-sm md:text-base lg:text-xl">Find Doctors <span className='block w-full md:inline'>Near You</span></h3>
                             <p className='text-[0.7rem]  sm:text-base mt-1 md:mt-1 md:text-sm'>Confirmed appointment</p>
                         </div>
                     </div>

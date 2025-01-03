@@ -70,7 +70,7 @@ const TopSearched = () => {
                         onClick={() => handleSpecialtySearch(specialty.name, specialty.slug)}
                         className='flex items-center justify-center flex-col border-[0.5px] bg-green-200 w-full mx-auto gap-3 p-5 md:gap-5 cursor-pointer rounded-lg border-emerald-800'
                     >
-                        <div className='w-[85%] md:w-[70%]'>
+                        <div className='w-[55%] md:w-[70%]'>
                             <img 
                                 src={specialty.image} 
                                 alt={specialty.name || "Specialty image"} 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getCookie } from "../utils/cookies";
 import { getUserId } from "../utils/getUserId";
+import { parseAvailableTimes } from "../utils/timeUtils";
 
 export function generateToken() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -76,10 +77,11 @@ export const getDoctorBookings = async (doctor_email) => {
 }
 
 export const getAvailableDoctors = async () => {
-    const url = MAIN_URL + '/available-doctors/';
+    const url = MAIN_URL + '/available-doctors';
     try {
         const response = await axios.get(url);
-        return response.data.results
+        // console.log(response);
+        return parseAvailableTimes(response.data);
     } catch (err) {
         throw err;
     }
