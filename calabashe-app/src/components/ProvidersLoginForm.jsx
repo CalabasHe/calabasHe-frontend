@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginDoctor } from "../api/providerLogin";
+import { doctorsAuth } from "../api/providerLogin";
 import { toast } from "sonner";
 import { useAuth } from "../hooks/useAuth";
 // import { validatePassword } from "../utils/validatePassword.jsx";
@@ -43,7 +43,7 @@ const ProviderLoginForm = () => {
     }
     return toast.promise(
       async () => {
-        const response = await loginDoctor({ email, password });
+        const response = await doctorsAuth.login({ email, password });
         login(response.data.access, response.data.refresh);
         modifyUserType("doctor", response.data.profile_image, response.data.last_name, response.data.email, response.data.reviews);
         localStorage.setItem("userName", `${response.data.last_name}`)

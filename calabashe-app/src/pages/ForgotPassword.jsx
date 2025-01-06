@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { forgotPassword, resetPassword } from "../api/authApi";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { forgotDoctorPassword, resetDoctorPassword } from "../api/providerLogin";
+import { doctorsAuth } from "../api/providerLogin";
 import { validatePassword } from "../utils/validatePassword.jsx";
 
 const ForgotPassword = () => {
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
     setDisableForm(true);
     toast.loading("Processing ...")
     try {
-      const response = userType === "doctor" ? await forgotDoctorPassword({ email }) : await forgotPassword({ email });
+      const response = userType === "doctor" ? await doctorsAuth.forgotPassword({ email }) : await forgotPassword({ email });
       setToken(response.token);
       setIsHidden(false);
       setDisableForm(false);
@@ -96,7 +96,7 @@ const ForgotPassword = () => {
       setDisableForm(true);
       if (!passwordError && !confirmPasswordError && password === confirmPassword) {
         try {
-          const response = userType === "doctor" ? await resetDoctorPassword(({ token, code, password })) : await resetPassword({ token, code, password });
+          const response = userType === "doctor" ? await doctorsAuth.resetPassword(({ token, code, password })) : await resetPassword({ token, code, password });
           navigate("/");
           toast.success("Password reset successful!");
         } catch (error) {

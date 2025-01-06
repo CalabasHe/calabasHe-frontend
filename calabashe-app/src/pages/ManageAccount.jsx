@@ -59,7 +59,7 @@ const ManageAccount = () => {
     const navigate = useNavigate();
     const handleLogout = () => {
         logout();
-        navigate("/");
+        navigate("/sign_in");
     }
 
     const handleDaySelected = (day) => {

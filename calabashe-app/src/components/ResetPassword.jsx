@@ -1,6 +1,6 @@
 import { CgClose } from "react-icons/cg";
 import { useState} from "react";
-import { changeDoctorPassword } from "../api/providerLogin.js";
+import { doctorsAuth } from "../api/providerLogin.js";
 import { toast } from "sonner";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { validatePassword } from "../utils/validatePassword.jsx";
@@ -57,7 +57,7 @@ const ResetPassword = ({ showPopUp, handlePopUp }) => {
     if (Newpassword === confirmPassword) {
       try {
         const email = localStorage.getItem('email');
-        await changeDoctorPassword({ email, old_password: oldPassword, new_password: Newpassword, confirm_password: confirmPassword });
+        await doctorsAuth.changePassword({ email, old_password: oldPassword, new_password: Newpassword, confirm_password: confirmPassword });
         toast.success("Password reset successful!");
         handlePopUp(false);
         setOldPassword("");
