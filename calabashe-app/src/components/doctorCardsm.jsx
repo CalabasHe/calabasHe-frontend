@@ -59,16 +59,16 @@ const DoctorCard = ({ doctor }) => {
                     <path d="M12.5 2.1573C7 2.1573 2.5 6.6573 2.5 12.1573C2.5 17.6573 7 22.1573 12.5 22.1573C18 22.1573 22.5 17.6573 22.5 12.1573C22.5 6.6573 18 2.1573 12.5 2.1573ZM10.5 17.1573L5.5 12.1573L6.91 10.7473L10.5 14.3273L18.09 6.7373L19.5 8.1573L10.5 17.1573Z" fill="black"/>
                   </svg>
                 </span>
-                <span className='truncate text-nowrap'>{doctor.specialty}</span>
+                <span className='truncate text-nowrap'>{doctor.specialtyTag}</span>
               </p>
               {doctor.recommendedFor[0] &&
                 <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-sm:max-w-[50%] truncate'>
-                  {doctor.recommendedFor[0]?.name}
+                  {doctor.recommendedFor[0]}
                 </p>
               }
               {doctor.recommendedFor[1] &&
                 <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl max-sm:max-w-[70%] truncate'>
-                  {doctor.recommendedFor[1]?.name}
+                  {doctor.recommendedFor[1]}
                 </p>
               }
               {doctor.recommendedFor.length > 3 &&

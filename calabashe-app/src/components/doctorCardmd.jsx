@@ -71,17 +71,19 @@ const DoctorCardMd = ({ doctor }) => {
             </span>
             {doctor.specialty}
           </p>
-          <div className='flex flex-grow truncate  gap-2'>
+          <div className='flex flex-grow truncate gap-2'>
             {
               doctor.recommendedFor[0] &&
-              <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[0]?.name}</p>
+              <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[0]}</p>
             }
             {
               doctor.recommendedFor[1] &&
-              <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl  max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[1]?.name}</p>
+              <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl  max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[1]}</p>
             }
+
             {
               doctor.recommendedFor.length > 3 &&
+
               <p className='bg-[#FF9EA0] px-2 py-1.5 rounded-3xl'> +{doctor.recommendedFor.length - 2}</p>
             }
           </div>
@@ -89,10 +91,10 @@ const DoctorCardMd = ({ doctor }) => {
        </div>
        {doctor.reviewCount >  0 ? (
         <div className=' text-[#5C6B88] font-normal'>
-          <p className='line-clamp-1'>{doctor.reviews[0].description}</p>
+          <p className='line-clamp-1'>{doctor.reviews.description}</p>
           <div className=' flex items-center gap-3 text-[.5rem]'>
             <p>
-              {formatDate(doctor.reviews[0].created_at)}
+              {formatDate(doctor.reviews.created_at)}
             </p>
             <div className='flex items-center gap-0.5'>
               <svg className='size-2.5' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

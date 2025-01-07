@@ -237,6 +237,13 @@ const SignIn = () => {
                 >
                   Don&apos;t have an account? Sign Up
                 </Link>
+                <Link
+                  className="w-[fit-content] self-center text-sm font-medium  lg:text-base text-center text-blue-500 hover:underline"
+                  to="/providers_login"
+                  state={{ message: fullState.message, from: fullState.from }}
+                >
+                  Are you a provider? Sign In
+                </Link>
               </div>
             </form>
           </div>
