@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { forgotPassword, resetPassword } from "../api/authApi";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { doctorsAuth } from "../api/providerLogin";
+import { doctorsAuth, facilitiesAuth } from "../api/providerLogin";
 import { validatePassword } from "../utils/validatePassword.jsx";
 
 const ForgotPassword = () => {
@@ -69,13 +69,37 @@ const ForgotPassword = () => {
     }
   };
 
+  const handleForgotPassword = async (userType, email) => {
+    console.log(email);
+    switch (userType) {
+      case "doctor":
+        return await doctorsAuth.forgotPassword({ email });
+      case "facility":
+        return await facilitiesAuth.forgotPassword({ email });
+      default:
+        return await forgotPassword({ email })
+    }
+  };
+
+  const handleResetPassword = async (userType, { token, code, password }) => {
+    switch (userType) {
+      case "doctor":
+        return await doctorsAuth.resetPassword({ token, code, password });
+      case "facility":
+        return await facilitiesAuth.resetPassword({ token, code, password });
+      default:
+        return await resetPassword({ token, code, password })
+    }
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDisableForm(true);
     toast.loading("Processing ...")
+    
     try {
-      const response = userType === "doctor" ? await doctorsAuth.forgotPassword({ email }) : await forgotPassword({ email });
+      const response = await handleForgotPassword(userType, email);
       setToken(response.token);
       setIsHidden(false);
       setDisableForm(false);
@@ -83,6 +107,7 @@ const ForgotPassword = () => {
     } catch (error) {
       toast.success('A six-digit code has been sent to your email');
       setDisableForm(false);
+      toast.dismiss();
     } finally {
       toast.dismiss()
     }
@@ -96,7 +121,7 @@ const ForgotPassword = () => {
       setDisableForm(true);
       if (!passwordError && !confirmPasswordError && password === confirmPassword) {
         try {
-          const response = userType === "doctor" ? await doctorsAuth.resetPassword(({ token, code, password })) : await resetPassword({ token, code, password });
+          const response = await handleResetPassword(userType, {token, code, password});
           navigate("/");
           toast.success("Password reset successful!");
         } catch (error) {
@@ -162,19 +187,19 @@ const ForgotPassword = () => {
               <div className=" order-2 flex flex-col gap-1">
                 <label htmlFor="new_password" className="text-sm md:text-base">New password</label>
                 <div className="relative flex">
-                <input
-                  onChange={handlePasswordChange}
-                  className=" w-full shadow-md px-2 bg-inherit md:py-2 border-black border-1 py-1 rounded-md focus:outline-none"
-                  value={password}
-                  type={`${passwordHidden.new_password ? "text" : "password"}`}
-                  id="new_password"
-                  placeholder="enter new password"
-                  required
-                />
-                                  <button
+                  <input
+                    onChange={handlePasswordChange}
+                    className=" w-full shadow-md px-2 bg-inherit md:py-2 border-black border-1 py-1 rounded-md focus:outline-none"
+                    value={password}
+                    type={`${passwordHidden.new_password ? "text" : "password"}`}
+                    id="new_password"
+                    placeholder="enter new password"
+                    required
+                  />
+                  <button
                     className={` ${passwordHidden.new_password ? "fill-green-600" : "fill-red-500"
                       } cursor-pointer w-10 h-[100%] absolute right-1 flex items-center justify-center`}
-                    id="confirm_passwordVisibility"
+                    id="newpasswordVisibility"
                     tabIndex="-1"
                     aria-label="Toggle New Password Visibility"
                     onClick={(e) => {
@@ -212,7 +237,7 @@ const ForgotPassword = () => {
                   <button
                     className={` ${passwordHidden.confirm_password ? "fill-green-600" : "fill-red-500"
                       } cursor-pointer w-10 h-[100%] absolute right-1 flex items-center justify-center`}
-                    id="confirm_passwordVisibility"
+                    id="confirm_passwordVisibility "
                     tabIndex="-1"
                     aria-label="Toggle Confrim Password Visibility"
                     onClick={(e) => {

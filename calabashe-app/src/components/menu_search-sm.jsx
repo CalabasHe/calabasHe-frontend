@@ -64,7 +64,7 @@ const Menu = () => {
         <ul>
           {isLoggedIn ?
             <>
-              {userType ?
+              {userType === 'doctor' ?
                <Link to={"/manage_account"} className='px-4'>Profile</Link> :
                 <>
                   <span aria-label="logout" className='px-4' onClick={logout}> Logout</span>

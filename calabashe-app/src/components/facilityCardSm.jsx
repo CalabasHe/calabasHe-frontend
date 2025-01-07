@@ -57,7 +57,7 @@ const FacilityCardSm = ({ facility }) => {
                  {facility.type} 
                 </span> 
               </p>
-              {facility.services[0] &&
+              {/* {facility.services[0] &&
                 <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-sm:max-w-[50%] truncate'>
                   {facility.services[0]?.name}
                 </p>
@@ -71,7 +71,7 @@ const FacilityCardSm = ({ facility }) => {
                 <p className='bg-[#FF9EA0] px-2 py-1.5 rounded-3xl'>
                   +{facility.services.length - 2}
                 </p>
-              }
+              } */}
             </div>
           </div>
         </section>

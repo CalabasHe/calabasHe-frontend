@@ -67,7 +67,7 @@ const FacilityCardMd = ({ facility }) => {
             </span>
             {facility.type}
           </p>
-          {
+          {/* {
             facility.services[0] &&
             <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{facility.services[0]?.name}</p>
           }
@@ -78,15 +78,16 @@ const FacilityCardMd = ({ facility }) => {
           {
             facility.services.length > 3 &&
             <p className='bg-[#FF9EA0] px-2 py-1.5 rounded-3xl'> +{facility.services.length - 2}</p>
-          }
+          } */}
         </div>
        </div>
+       {console.log(facility)}
        {facility.reviewCount >  0 ? (
         <div className=' text-[#5C6B88] font-normal'>
-          <p className='line-clamp-1'>{facility.reviews[0].description}</p>
+          <p className='line-clamp-1'>{facility.reviews.description}</p>
           <div className=' flex items-center gap-3 text-[.5rem]'>
             <p>
-              {formatDate(facility.reviews[0].created_at)}
+              {formatDate(facility.reviews.created_at)}
             </p>
             <div className='flex items-center gap-0.5'>
               <svg className='size-2.5' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

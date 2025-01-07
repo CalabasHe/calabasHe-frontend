@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { doctorsAuth } from "../api/providerLogin";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { doctorsAuth, facilitiesAuth } from "../api/providerLogin";
 import { toast } from "sonner";
 import { useAuth } from "../hooks/useAuth";
 // import { validatePassword } from "../utils/validatePassword.jsx";
@@ -15,7 +15,12 @@ const ProviderLoginForm = () => {
   const navigate = useNavigate();
   const [fullState, setFullState] = useState(location.state || {});
   const [hidePassword, setHidePassword] = useState(false);
+  const myLocation = useLocation();
+  const [userType, setUserType] = useState(myLocation.state.userType || "doctor");
 
+  useEffect(() => {
+    setUserType(myLocation.state.userType || "doctor")
+  }, [myLocation.state.userType])
 
   useEffect(() => {
     if (location.state) {
@@ -32,6 +37,17 @@ const ProviderLoginForm = () => {
     setEmail(e.target.value);
   }
 
+  const handleLogin = async (userType, { email, password }) => {
+    switch (userType) {
+      case "doctor":
+        return await doctorsAuth.login({ email, password });
+      case "facility":
+        return await facilitiesAuth.login({ email, password });
+      default:
+        throw new Error("Invalid user type");
+    }
+  };
+
   const handleSubmit = async (e) => {
     setIsDisabled(true);
     e.preventDefault();
@@ -43,10 +59,10 @@ const ProviderLoginForm = () => {
     }
     return toast.promise(
       async () => {
-        const response = await doctorsAuth.login({ email, password });
+        const response = await handleLogin(userType, {email, password});
         login(response.data.access, response.data.refresh);
-        modifyUserType("doctor", response.data.profile_image, response.data.last_name, response.data.email, response.data.reviews);
-        localStorage.setItem("userName", `${response.data.last_name}`)
+        modifyUserType(userType, response.data.profile_image, response.data.last_name, response.data.email, response.data.reviews);
+        userType === 'doctor' && localStorage.setItem("userName", `${response.data.last_name}`)
         const destination = fullState?.from || "/";
         navigate(destination, { state: fullState });
         return "Sign in successful";
@@ -91,7 +107,7 @@ const ProviderLoginForm = () => {
 
       </div>
       <div className="w-[90%] mx-auto md:w-full max-w-[360px] lg:max-w-[400px]">
-        <h2 className="pb-3 text-xl">To Login , enter your credentials</h2>
+        <h2 className="pb-3 text-xl">Enter your {userType} login credentials</h2>
         <form
           className="relative z-20 pt-4 pr-4 pl-0 pb-14 lg:pb-10 w-full flex flex-col gap-6 rounded-lg"
           onSubmit={handleSubmit}
@@ -157,7 +173,7 @@ const ProviderLoginForm = () => {
             {buttonText}
           </button>
 
-          <Link className="text-center" to={"/forgot_password"} state={{ userType: "doctor" }}>
+          <Link className="text-center" to={"/forgot_password"} state={{ userType }}>
             Forgot Password?
           </Link>
         </form>
