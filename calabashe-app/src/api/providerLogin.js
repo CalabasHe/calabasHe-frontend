@@ -30,13 +30,11 @@ export const createAuthService = (type) => {
 
   return {
     async login({ email, password }) {
-        console.log(config.baseUrl)
-        console.log(email, password)
       try {
         const result = await axios.post(`${config.baseUrl}/login/`, { email, password });
         return result;
       } catch (error) {
-        console.log(error);
+        
         handleError(error);
       }
     },
@@ -61,13 +59,13 @@ export const createAuthService = (type) => {
     },
 
     async forgotPassword({ email }) {
-      console.log(email)
+      
       try {
         const response = await axios.post(`${config.baseUrl}/forgot-password/`,
            { email: email });
         return response.data;
       } catch (error) {
-        console.log(error);
+        
         if (axios.isAxiosError(error)) throw error;
         throw new Error("An unexpected error occurred");
       }
