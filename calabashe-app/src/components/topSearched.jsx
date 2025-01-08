@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { getSpecialties } from '../api/getSpecialties';
-
+import { useState } from 'react';
 import primary_care from '../assets/icons/primary_care.svg';
 import dentist from '../assets/icons/dentistry.svg';
 import ob_gyn from '../assets/icons/ob-gyn.svg';
 import dermatologist from '../assets/icons/dermatologists.svg';
 import psychiatry from '../assets/icons/psychiatrist.svg';
 import eye_doctor from '../assets/icons/eye-doctor.svg';
+import { toast } from 'sonner';
 
 const SPECIALTIES = [
     { name: "Primary Care", image: primary_care, slug: "medical-practitioner" },
@@ -21,11 +22,12 @@ const SPECIALTIES = [
 
 const TopSearched = () => {
     const navigate = useNavigate();
-
+    const [disabled, setDisabled] = useState(false);
     const handleSpecialtySearch = async (name, slug) => {
         try {
+            toast.loading("Getting results");
+            setDisabled(true);
             const searchResults = await getSpecialties(slug);
-            
             const formattedResults = searchResults?.length 
                 ? searchResults.map(result => ({
                     id: result.id,
@@ -53,8 +55,9 @@ const TopSearched = () => {
                 },
             });
             window.scrollTo(0, 0);
+            toast.dismiss()
         } catch (error) {
-            console.error("Error fetching specialties:", error);
+            toast.error("Specialties could not be fetched")
         }
     };
 
@@ -65,7 +68,8 @@ const TopSearched = () => {
             </h1>
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 md:gap-4 w-[70%] md:w-[80%] mx-auto'>
                 {SPECIALTIES.map((specialty, idx) => (
-                    <div  
+                    <button  
+                        disabled={disabled}
                         key={idx}
                         onClick={() => handleSpecialtySearch(specialty.name, specialty.slug)}
                         className='flex items-center justify-center flex-col border-[0.5px] bg-green-200 w-full mx-auto gap-3 p-5 md:gap-5 cursor-pointer rounded-lg border-emerald-800'
@@ -78,7 +82,7 @@ const TopSearched = () => {
                             />
                         </div>
                         <p className='text-sm md:text-md text-center'>{specialty.name}</p>
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>
