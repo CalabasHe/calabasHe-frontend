@@ -65,7 +65,7 @@ const FacilityCard = () => {
         setError("No results found");
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
       setError(error.message);
     } finally {
       setIsLoading(false);
