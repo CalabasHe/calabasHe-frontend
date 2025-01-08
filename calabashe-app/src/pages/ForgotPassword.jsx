@@ -70,7 +70,6 @@ const ForgotPassword = () => {
   };
 
   const handleForgotPassword = async (userType, email) => {
-    console.log(email);
     switch (userType) {
       case "doctor":
         return await doctorsAuth.forgotPassword({ email });

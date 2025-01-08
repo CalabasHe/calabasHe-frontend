@@ -81,7 +81,6 @@ const FacilityCardMd = ({ facility }) => {
           } */}
         </div>
        </div>
-       {console.log(facility)}
        {facility.reviewCount >  0 ? (
         <div className=' text-[#5C6B88] font-normal'>
           <p className='line-clamp-1'>{facility.reviews.description}</p>

@@ -50,7 +50,6 @@ export async function parseTimeSlots(day) {
         })
         return {meetingDates, endTimes};
      } catch (err) {
-        console.log(err)
         throw err;
      }
 }
