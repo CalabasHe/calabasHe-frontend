@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import '../stylesheets/menu.css';
 import { useAuth } from '../hooks/useAuth';
 import SearchBarSm from './searchBarSm';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
 
 const Menu = () => {
   const { isLoggedIn, logout, userType } = useAuth();
   const [isChecked, setIsChecked] = useState(false);
-  const [display, setDisplay] = useState('hidden')
+  const [display, setDisplay] = useState('hidden');
+  const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const checkboxRef = useRef(null);
 
@@ -65,15 +68,38 @@ const Menu = () => {
           {isLoggedIn ?
             <>
               {userType === 'doctor' ?
-               <Link to={"/manage_account"} className='px-4'>Profile</Link> :
+                <Link to={"/manage_account"} className='px-4'>Profile</Link> :
                 <>
                   <span aria-label="logout" className='px-4' onClick={logout}> Logout</span>
                 </>}
             </> :
-            <>
-              <Link to='/sign_in' className='w-full px-4' onClick={handleLinkClick}>Sign In for Patients</Link>
-              <Link className='w-full px-4' to="/providers_login">Sign in for Providers</Link>
-            </>
+            <div>
+              <button className='w-full px-4 flex items-center gap-4'
+                onClick={() => { setShowMenu(!showMenu) }}
+              >
+                <p>Sign In</p>
+                {showMenu ?
+                  <ChevronDownIcon className="ml-2 h-4 w-4" />
+                  :
+                  <ChevronUpIcon className="ml-2 h-4 w-4" />
+
+                }
+              </button>
+              <AnimatePresence>
+                {showMenu &&
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Link to='/sign_in' className='w-full px-5 block mt-2 mb-2' onClick={handleLinkClick}>For Patients</Link>
+                    <Link className="w-full px-5 block mt-2 mb-2" to={"/providers_login"}  onClick={handleLinkClick} state={{ userType: "doctor" }}>For Doctors</Link>
+                    <Link className="w-full px-5 block mt-2 mb-2" to={"/providers_login"}  onClick={handleLinkClick} state={{ userType: "facility" }}>For Facilities</Link>
+                  </motion.div>
+                }
+              </AnimatePresence>
+            </div>
           }
           <Link className='px-4' to="/facilities" onClick={handleLinkClick} id="hospital-link">
             <span>Facilities</span>

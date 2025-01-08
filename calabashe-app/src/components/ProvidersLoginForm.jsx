@@ -16,11 +16,15 @@ const ProviderLoginForm = () => {
   const [fullState, setFullState] = useState(location.state || {});
   const [hidePassword, setHidePassword] = useState(false);
   const myLocation = useLocation();
-  const [userType, setUserType] = useState(myLocation.state.userType || "doctor");
+  const [userType, setUserType] = useState(() => {
+    return myLocation?.state?.userType || "doctor";
+  });
 
   useEffect(() => {
-    setUserType(myLocation.state.userType || "doctor")
-  }, [myLocation.state.userType])
+    if (myLocation?.state) {
+      setUserType(myLocation.state.userType || "doctor");
+    }
+  }, [myLocation?.state?.userType]);
 
   useEffect(() => {
     if (location.state) {
