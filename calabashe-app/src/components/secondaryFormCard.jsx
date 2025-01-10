@@ -39,7 +39,7 @@ const SecondaryFormCard = () => {
   const years = Array.from(
       {length: currentYear - 1950 + 1},
       (_, i) => 1950 + i
-  );
+  ); 
   const navigate = useNavigate();
 
   const [dropdownOptions, setDropdownOptions] = useState({
@@ -507,7 +507,7 @@ const SecondaryFormCard = () => {
             </div>
           </section>
 
-          <section className="flex flex-col gap-1 max-h-[300px]">
+          {/* <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
               9. Upload a professional photo for your Calabashe profile?
             </label>
@@ -540,12 +540,12 @@ const SecondaryFormCard = () => {
               </label>
             </span>
             </div>
-          </section>
-          {renderDropdown("languages", "10. What languages do you speak?")}
+          </section> */}
+          {renderDropdown("languages", "9. What languages do you speak?")}
 
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              11. Are you affiliated with any professional medical associations?
+              10. Are you affiliated with any professional medical associations?
             </label>
             <div className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
             <span className="flex items-center gap-2">
@@ -589,12 +589,12 @@ const SecondaryFormCard = () => {
 
           {renderDropdown(
               "education",
-              "12. What is your highest level of medical education?"
+              "11. What is your highest level of medical education?"
           )}
 
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              13. Have you received any special awards or recognitions in your
+              12. Have you received any special awards or recognitions in your
               field?
             </label>
             <div className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
@@ -632,16 +632,16 @@ const SecondaryFormCard = () => {
 
           {renderDropdown(
               "consultationFee",
-              "14. What is your consultation fee range?"
+              "13. What is your consultation fee range?"
           )}
           {renderDropdown(
               "services",
-              "15. Do you offer any special services or programs (e.g., wellness programs, preventive care)?"
+              "14. Do you offer any special services or programs (e.g., wellness programs, preventive care)?"
           )}
 
           <section className="flex flex-col gap-1 max-h-[300px]">
             <label className="text-sm md:text-base cursor-default">
-              16. Do you have experience with international patients or
+              15. Do you have experience with international patients or
               expatriates?
             </label>
             <div className="w-full text-xs border flex px-8 md divide-x py-2 gap-5 items-center border-black">
@@ -684,7 +684,7 @@ const SecondaryFormCard = () => {
           </section>
           {renderDropdown(
               "workingDays",
-              "17. What are your typical working available days?"
+              "16. What are your typical working available days?"
           )}
 
           {renderDropdown(
