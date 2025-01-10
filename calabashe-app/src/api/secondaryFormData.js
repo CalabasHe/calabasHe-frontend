@@ -84,13 +84,17 @@ const mapFormDataToApiFormat = (formData) => {
 
 export const handleFormSubmit = async (formData) => {
   const url = `${api}/secondary-forms/`;
-  console.log("Form Submitted");
-  console.log(formData);
+  
   try {
-    const response = axios.post(url, formData);
+    const response = await axios.post(url, formData);
     return response;
   } catch (err) {
-    console.log(err);
+
+    if (err.status == 400) {
+      throw new Error("Secondary Form with this form email already exists.")
+    } else {
+      throw new Error("Form could not be submitted. Please contact support")
+    }
   }
 }
 

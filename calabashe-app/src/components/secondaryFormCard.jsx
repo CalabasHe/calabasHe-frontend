@@ -4,6 +4,7 @@ import {FaPaperclip} from "react-icons/fa";
 import {handleFormSubmit} from "../api/secondaryFormData";
 import {toast} from "sonner";
 import {validateFormData} from "../utils/validateSecondary.jsx";
+import {useNavigate} from "react-router-dom";
 
 const SecondaryFormCard = () => {
   const [currentYear] = useState(new Date().getFullYear());
@@ -35,11 +36,11 @@ const SecondaryFormCard = () => {
   const [errors, setErrors] = useState({});
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRefs = useRef({});
-
   const years = Array.from(
       {length: currentYear - 1950 + 1},
       (_, i) => 1950 + i
   );
+  const navigate = useNavigate();
 
   const [dropdownOptions, setDropdownOptions] = useState({
     certificationYear: years,
@@ -248,7 +249,7 @@ const SecondaryFormCard = () => {
 
     if (!validation.isValid) {
       setErrors(validation.errors)
-      return
+      return;
     }
     const apiFormattedData = mapFormDataToApiFormat(formData);
     try {
@@ -280,9 +281,10 @@ const SecondaryFormCard = () => {
         workingHours: new Set(),
         workingDays: new Set()
       });
+      navigate("/")
     } catch (err) {
-      toast.error("Form could not be submitted");
-      console.log(err);
+      const errMessage = err.message;
+      toast.error(errMessage);
     } finally {
       toast.dismiss();
     }
