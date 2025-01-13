@@ -14,12 +14,9 @@ const decodeJwt = (token) => {
 // Function to fetch the refresh token and get user ID
 export const getUserId = () => {
   try {
-    const token = getCookie('refreshToken');
-    // console.log('Token from cookie:', token); 
-
+    const token = getCookie('accessToken');
     if (token) {
       const userId = decodeJwt(token);
-      // console.log('User ID:', userId);
       return userId;
     } else {
       // console.log('No refresh token found');

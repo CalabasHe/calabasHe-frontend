@@ -35,7 +35,7 @@ const MdScreenMenu = () => {
         <li className="md-link"> {
           isLoggedIn ?
             <>
-              {userType === 'doctor' ?
+              {(userType === 'doctor' || userType==='facility')?
                 <Link to={"/manage_account"} className='pr-4'>Profile</Link> :
                 <>
                   <span aria-label="logout" className='px-4' onClick={logout}> Logout</span>
