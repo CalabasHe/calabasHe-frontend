@@ -1,6 +1,6 @@
 import { CgClose } from "react-icons/cg";
 import { useState} from "react";
-import { doctorsAuth } from "../api/providerLogin.js";
+import { doctorsAuth, facilitiesAuth } from "../api/providerLogin.js";
 import { toast } from "sonner";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { validatePassword } from "../utils/validatePassword.jsx";
@@ -57,16 +57,24 @@ const ResetPassword = ({ showPopUp, handlePopUp }) => {
     if (Newpassword === confirmPassword) {
       try {
         const email = localStorage.getItem('email');
-        await doctorsAuth.changePassword({ email, old_password: oldPassword, new_password: Newpassword, confirm_password: confirmPassword });
+        const userType = localStorage.getItem('userType');
+        if (userType === 'doctor') {
+          await doctorsAuth.changePassword({ email, old_password: oldPassword, new_password: Newpassword, confirm_password: confirmPassword });
+        } else if (userType === 'facility') {
+          await facilitiesAuth.changePassword({ email, old_password: oldPassword, new_password: Newpassword, confirm_password: confirmPassword })
+        } else {
+          return;
+        }
         toast.success("Password reset successful!");
         handlePopUp(false);
         setOldPassword("");
         setConfirmPassword("");
         setNewPassword("");
       } catch (error) {
-        setError(error);
-        toast.error(error);
-        return error;
+        console.log(error.message)
+        setError(error.message);
+        toast.error(error.message);
+        return error.message;
       } finally {
         setDisabledForm(false);
         toast.dismiss();

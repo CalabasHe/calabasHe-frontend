@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const SecondaryFormCard = () => {
   const [currentYear] = useState(new Date().getFullYear());
   const [hasSpecialty, setHasSpecialty] = useState("No");
+  const [disabled, setDisabled] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -259,6 +260,7 @@ const SecondaryFormCard = () => {
     const apiFormattedData = mapFormDataToApiFormat(formData);
     try {
       toast.loading("Submitting");
+      setDisabled(true)
       await handleFormSubmit(apiFormattedData);
       toast.success("Form Submitted");
       // Reset form data
@@ -310,6 +312,7 @@ const SecondaryFormCard = () => {
       </h2>
 
       <form className="flex flex-col w-full md:w-[80vw] md:max-w-[800px] gap-6 lg:gap-5 select-none">
+        <fieldset disabled={disabled}>
         <section className="flex flex-col gap-1">
           <label
             htmlFor="fullName"
@@ -798,6 +801,8 @@ const SecondaryFormCard = () => {
             Submit
           </button>
         </div>
+        </fieldset>
+      
       </form>
     </div>
   );

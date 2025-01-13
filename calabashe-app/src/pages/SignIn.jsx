@@ -9,7 +9,7 @@ import docs1 from "../assets/images/healthworkers_form.webp";
 import docs1png from "../assets/images/healthworkers_form.png";
 
 const SignIn = () => {
-  const { login } = useAuth();
+  const { login, modifyUserType } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -53,7 +53,8 @@ const SignIn = () => {
       async () => {
         const response = await logIn({ email, password });
         login(response.access, response.refresh);
-        localStorage.setItem("userName",response.user.username)
+        localStorage.setItem("userName",response.user.username);
+        modifyUserType("patient", "", response.user.name, response.user.email, []);
         const destination = fullState?.from || "/";
         navigate(destination, { state: fullState });
         return "Sign in successful";

@@ -20,6 +20,7 @@ export const signUp = async ({ email, username, password, password2 }) => {
     // console.log(response.data)
     return response.data;
   } catch (error) {
+    console.log(error);
     if (error.response && error.response.data) {
       throw error.response.data;
     } else {
@@ -110,6 +111,7 @@ export const forgotPassword = async ({ email }) => {
     // console.log(response.data)
     return response.data;
   } catch (error) {
+    console.log(error);
     if (axios.isAxiosError(error)) {
       throw error;
     }

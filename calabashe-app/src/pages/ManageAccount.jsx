@@ -21,6 +21,7 @@ const ManageAccount = () => {
     const { logout, userProfile } = useAuth();
     const [showPopUp, setShowPopUp] = useState(false);
     const lastName = localStorage.getItem("lastName");
+    const userType = localStorage.getItem("userType");
     const today = startOfToday();
     const [selectedTime, setSelectedTime] = useState();
     const [selectedDay, setSelectedDay] = useState(today);
@@ -37,9 +38,6 @@ const ManageAccount = () => {
         { value: "video", name: "Video" },
         { value: "voice", name: "Voice Call" },
         { value: "in_person", name: "In Person" }];
-
-
-
 
     useEffect(() => {
         setStartTime(generateFutureTimeIntervals('08:00', selectedInterval, '23:59', selectedDay));
@@ -88,7 +86,9 @@ const ManageAccount = () => {
 
     // Fetch times when these values change
     useEffect(() => {
-        fetchAvailableTimes();
+        if (userType === "doctor") {
+            fetchAvailableTimes();
+        }
     }, [selectedStartTime, selectedInterval, selectedEndTime, selectedDay]);
 
     const handleMarkAvailable = async () => {
@@ -119,7 +119,7 @@ const ManageAccount = () => {
             // Immediately fetch updated times after creating a slot
             await fetchAvailableTimes();
         } catch (err) {
-           
+
             toast.error("An error occurred")
         } finally {
             toast.dismiss();
@@ -141,7 +141,10 @@ const ManageAccount = () => {
                             />
                         </div>
                         <div className="mx-auto w-[85%] md:w-[90%] mt-4">
-                            <h2 className="text-2xl md:text-4xl font-bold mb-1">Dr {lastName}</h2>
+                        {userType === "doctor"?  
+                        <h2 className="text-2xl md:text-4xl font-bold mb-1">Dr {lastName}</h2>
+                        : <h2 className="text-xl md:text-3xl font-bold mb-1">Your Profile</h2>
+                        }
                             <p>Reviews {reviews}</p>
                         </div>
                     </div>
@@ -154,91 +157,94 @@ const ManageAccount = () => {
                     </div>
                 </div>
                 {/** AVAILABILITY */}
-                <div className="w-[85%] md:w-full lg:w-[80%] md:mx-auto border border-black min-h-[400px] mb-5 rounded-lg flex items-center flex-col md:flex-row">
-                    <div className="w-full mx-auto md:w-[45%] p-3 flex flex-col gap-4">
-                        <ManageAccountCalender selectedDay={selectedDay} handleDaySelected={handleDaySelected} />
-                        <button className="bg-custom-yellow font-extrabold  text-center p-2 rounded-lg w-[85%] mx-auto"
-                            onClick={handleMarkAvailable}
-                        >Mark available</button>
-                    </div>
-                    <div className="w-[85%] md:mx-auto mt-4 mb:mt-0 md:w-1/2 justify-self-start p-3">
-                        <div className="flex md:items-center justify-center w-full gap-3">
-                            <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
-                                <label htmlFor="start-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
-                                    Starting time
-                                </label>
-                                <select
-                                    id="start-select"
-                                    value={selectedStartTime}
-                                    onChange={(e) => setSelectedStartTime(e.target.value)}
-                                    className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                >
-                                    {startTime.map((time) => (
-                                        <option key={time} value={time}>
-                                            {time}
-                                        </option>
-                                    ))}
-                                </select>
+                {userType === "doctor" &&
+                    <>
+                        <div className="w-[85%] md:w-full lg:w-[80%] md:mx-auto border border-black min-h-[400px] mb-5 rounded-lg flex items-center flex-col md:flex-row">
+                            <div className="w-full mx-auto md:w-[45%] p-3 flex flex-col gap-4">
+                                <ManageAccountCalender selectedDay={selectedDay} handleDaySelected={handleDaySelected} />
+                                <button className="bg-custom-yellow font-extrabold  text-center p-2 rounded-lg w-[85%] mx-auto"
+                                    onClick={handleMarkAvailable}
+                                >Mark available</button>
                             </div>
+                            <div className="w-[85%] md:mx-auto mt-4 mb:mt-0 md:w-1/2 justify-self-start p-3">
+                                <div className="flex md:items-center justify-center w-full gap-3">
+                                    <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
+                                        <label htmlFor="start-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
+                                            Starting time
+                                        </label>
+                                        <select
+                                            id="start-select"
+                                            value={selectedStartTime}
+                                            onChange={(e) => setSelectedStartTime(e.target.value)}
+                                            className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                        >
+                                            {startTime.map((time) => (
+                                                <option key={time} value={time}>
+                                                    {time}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
 
-                            {/**End time */}
-                            <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
-                                <label htmlFor="end-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
-                                    Ending time
-                                </label>
-                                <select
-                                    id="end-select"
-                                    value={selectedEndTime}
-                                    onChange={(e) => setSelectedEndTime(e.target.value)}
-                                    className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                >
+                                    {/**End time */}
+                                    <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
+                                        <label htmlFor="end-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
+                                            Ending time
+                                        </label>
+                                        <select
+                                            id="end-select"
+                                            value={selectedEndTime}
+                                            onChange={(e) => setSelectedEndTime(e.target.value)}
+                                            className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                        >
 
-                                    {startTime.map((time) => (
-                                        <option key={time} value={time}>
-                                            {time}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                                            {startTime.map((time) => (
+                                                <option key={time} value={time}>
+                                                    {time}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
 
-                            {/** Intervals */}
-                            <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
-                                <label htmlFor="interval-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
-                                    Interval
-                                </label>
-                                <select
-                                    id="interval-select"
-                                    value={selectedInterval}
-                                    onChange={(e) => setSelectedInterval(e.target.value)}
-                                    className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                >
+                                    {/** Intervals */}
+                                    <div className="w-[30%] scrollbar-thin flex flex-col justify-between">
+                                        <label htmlFor="interval-select" className="block md:text-base text-sm font-semibold text-gray-700 mb-2">
+                                            Interval
+                                        </label>
+                                        <select
+                                            id="interval-select"
+                                            value={selectedInterval}
+                                            onChange={(e) => setSelectedInterval(e.target.value)}
+                                            className="w-full text-sm md:text-base px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                        >
 
-                                    {selectableIntervals.map((interval) => (
-                                        <option key={interval} value={interval}>
-                                            {interval} mins
-                                        </option>
-                                    ))}
-                                </select>
+                                            {selectableIntervals.map((interval) => (
+                                                <option key={interval} value={interval}>
+                                                    {interval} mins
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <Checkboxes options={options} onChange={handleSelectedTypes} />
+                                </div>
+                                <SelectableTimes
+                                    selectedDay={selectedDay}
+                                    handleSelectedTime={handleSelectedTime}
+                                    timeInterval={selectedInterval}
+                                    startTime={selectedStartTime}
+                                    endTime={selectedEndTime}
+                                    availableTimes={availableTimes}
+                                    isLoading={isLoadingTimes}
+                                />
                             </div>
                         </div>
-                        <div>
-                            <Checkboxes options={options} onChange={handleSelectedTypes} />
+                        <div className='w-[85%] md:w-full lg:w-[80%] mb-4 rounded-xl h-[400px] overflow-y-scroll scrollbar-thin '>
+                            <h1 className='text-2xl font-semibold text-center mb-4 underline'>Your Booked Appoitments</h1>
+                            <BookedAppointments />
                         </div>
-                        <SelectableTimes
-                            selectedDay={selectedDay}
-                            handleSelectedTime={handleSelectedTime}
-                            timeInterval={selectedInterval}
-                            startTime={selectedStartTime}
-                            endTime={selectedEndTime}
-                            availableTimes={availableTimes}
-                            isLoading={isLoadingTimes}
-                        />
-                    </div>
-                </div>
-                <div className='w-[85%] md:w-full lg:w-[80%] mb-4 rounded-xl h-[400px] overflow-y-scroll scrollbar-thin '>
-                    <h1 className='text-2xl font-semibold text-center mb-4 underline'>Your Booked Appoitments</h1>
-                    <BookedAppointments />
-                </div>
+                    </>}
             </main>
             <Footer />
         </div>

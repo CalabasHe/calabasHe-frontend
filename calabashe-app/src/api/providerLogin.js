@@ -16,7 +16,7 @@ const API_CONFIG = {
 const handleError = (error) => {
   if (error.response?.data) {
     if (error.status === 400) {
-      throw new Error("Invalid Login Credentials");
+      throw new Error("Invalid Credentials");
     }
     const firstError = Object.keys(error.response.data)[0];
     throw new Error(error.response.data[firstError]?.[0] || "An error occurred");
@@ -34,7 +34,6 @@ export const createAuthService = (type) => {
         const result = await axios.post(`${config.baseUrl}/login/`, { email, password });
         return result;
       } catch (error) {
-        
         handleError(error);
       }
     },
