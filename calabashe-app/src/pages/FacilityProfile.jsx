@@ -23,7 +23,6 @@ const FacilityProfile = () => {
             go('/facilities');
             return;
           }
-        // console.log('API Response:', data);
         const FacilityDetails = {
           id: data.id,
           name: data.name,
@@ -42,7 +41,6 @@ const FacilityProfile = () => {
           reviews: data.reviews,
           totalReviews: data.total_reviews,
         };
-        // console.log('Processed facility details:', FacilityDetails);
         setFacility(FacilityDetails);
       } catch (err) {
         if (err.response?.status === 404) {
