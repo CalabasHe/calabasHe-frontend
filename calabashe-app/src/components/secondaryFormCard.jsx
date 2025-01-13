@@ -294,6 +294,7 @@ const SecondaryFormCard = () => {
       toast.error(errMessage);
     } finally {
       toast.dismiss();
+      setErrors({})
     }
   };
 
@@ -796,7 +797,7 @@ const SecondaryFormCard = () => {
               handleSubmit();
             }}
             type="submit"
-            className="bg-black text-white px-8 py-2 rounded-md hover:bg-gray-800 transition-colors"
+            className="bg-black text-white px-8 py-2 rounded-md hover:bg-gray-800 transition-colors disabled:cursor-not-allowed"
           >
             Submit
           </button>
