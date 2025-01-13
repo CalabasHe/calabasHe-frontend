@@ -14,8 +14,12 @@ export const fetchDoctorBySlug = async (slug) => {
 
 export const fetchFacilityBySlug = async (slug) => {
   try {
-    const response = await axios.get(`https://api.calabashe.com/api/facilities/${slug}/`);
-    return response.data;
+    const response = await fetch(`https://api.calabashe.com/api/facilities/${slug}/`, {
+      method: 'GET',
+  });
+  const data = await response.json();
+  return data;
+  
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw error;

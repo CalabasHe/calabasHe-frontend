@@ -123,6 +123,7 @@ const FacilityProfileMd = ({ facility = [] }) => {
             <section className="w-full ">
               <div className="w-full flex flex-col gap-2 ">
                 {facility.reviews.slice(0, 4).map((review) => (
+                 
                   <div
                     key={review.id}
                     className="w-full bg-white border shadow-md px-4 py-6 flex flex-col gap-4 rounded-lg "
