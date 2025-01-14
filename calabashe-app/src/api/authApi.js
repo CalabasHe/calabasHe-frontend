@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie } from '../utils/cookies';
 
 const SIGNUP_URL = 'https://api.calabashe.com/api/auth/signup/';
 const VERIFY_URL = 'https://api.calabashe.com/api/auth/verify-code/';
@@ -7,6 +8,7 @@ const RESET_PASSWORD_URL = 'https://api.calabashe.com/api/auth/reset-password/';
 const LOGIN_URL = 'https://api.calabashe.com/api/auth/login/';
 const CLAIMS_URL = 'https://api.calabashe.com/api/forms/';
 const GOOGLE_LOGIN_URL = 'https://api.calabashe.com/api/auth/google/';
+const CHANGE_PASSWORD = 'https://api.calabashe.com/api/auth/change-password/'
 
 
 export const signUp = async ({ email, username, password, password2 }) => {
@@ -20,7 +22,6 @@ export const signUp = async ({ email, username, password, password2 }) => {
     // console.log(response.data)
     return response.data;
   } catch (error) {
-    console.log(error);
     if (error.response && error.response.data) {
       throw error.response.data;
     } else {
@@ -111,7 +112,6 @@ export const forgotPassword = async ({ email }) => {
     // console.log(response.data)
     return response.data;
   } catch (error) {
-    console.log(error);
     if (axios.isAxiosError(error)) {
       throw error;
     }
@@ -136,3 +136,28 @@ export const resetPassword = async ({ token, code, password }) => {
     }
   }
 };
+
+export const changePassword = async (old_password, new_password) => {
+  const access = getCookie('accessToken');
+  try {
+    const response = await axios.post(CHANGE_PASSWORD, {
+      new_password: new_password,
+      old_password: old_password
+    }, {
+      headers: {
+        Authorization: `Bearer ${access}`
+      }
+    }
+    )
+    return response.data;
+  } catch (error) {
+    if (error.response?.data) {
+      if (error.status === 400) {
+        throw new Error("Invalid Credentials");
+      }
+      const firstError = Object.keys(error.response.data)[0];
+      throw new Error(error.response.data[firstError]?.[0] || "An error occurred");
+    }
+    throw new Error("An unexpected error occurred");
+  }
+}

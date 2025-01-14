@@ -2,20 +2,28 @@ import { Link } from "react-router-dom";
 import '../stylesheets/menu-lg.css'
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
+import ResetPassword from "./ResetPassword";
 
 const MdScreenMenu = () => {
   const { isLoggedIn, logout, userType } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const [showPopUp, setShowPopUp] = useState(false);
+  // const popRef = useRef(null);
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   }
-
+  const handlePopUp = (value) => {
+    setShowPopUp(value);
+  };
+  
   const handleClickOutside = (e) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsOpen(false);
     }
+    // if (popRef.current && !popRef.current.contains(event.target)) {
+    //   setShowPopUp(false);
+    // }
   }
 
   useEffect(() => {
@@ -27,6 +35,7 @@ const MdScreenMenu = () => {
 
   return (
     <nav>
+      <ResetPassword showPopUp={showPopUp} handlePopUp={handlePopUp}/>
       <ul className="links antialiased hover:cursor-pointer hidden md:flex font-medium gap-2 md:gap-4 lg:gap-6 xl:gap-8 text-sm">
         <li className="md-link"> <Link to='/facilities'>Facilities</Link></li>
         <li className="md-link"> <Link to='/doctors'>Doctors</Link></li>
@@ -35,11 +44,16 @@ const MdScreenMenu = () => {
         <li className="md-link"> {
           isLoggedIn ?
             <>
-              {(userType === 'doctor' || userType==='facility')?
+              {userType === 'doctor' ?
                 <Link to={"/manage_account"} className='pr-4'>Profile</Link> :
-                <>
-                  <span aria-label="logout" className='px-4' onClick={logout}> Logout</span>
-                </>}
+                <div  ref={dropdownRef}>
+                  <button onClick={toggleDropDown}>Profile</button>
+                  {isOpen &&
+                    <div className="absolute  -right-2 top-6 w-80 h-24 flex flex-col gap-2 bg-white text-md text-zinc-700 px-6 p-6 rounded-lg">
+                      <button className='px-4 text-start' onClick={() => setShowPopUp(true)}>Change Password</button>
+                      <Link aria-label="logout" className='px-4' onClick={logout}> Logout</Link>
+                    </div>}
+                </div>}
             </>
             : (
               <div className="relative" ref={dropdownRef}>

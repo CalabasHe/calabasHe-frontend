@@ -1,5 +1,5 @@
 import { Link, Route, Routes, useLocation } from "react-router-dom";
-import { AuthProvider } from "./context/authContext";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Homepage";
 import Review from "./pages/Reviews";

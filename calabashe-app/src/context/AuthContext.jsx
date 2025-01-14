@@ -1,6 +1,6 @@
 // src/context/AuthContext.js
 import {createContext, useState, useEffect} from 'react';
-import {getCookie, setCookie, removeCookie} from '../utils/cookies';
+import {getCookie, setCookie, removeCookie} from '../utils/cookies.jsx';
 import {toast} from 'sonner';
 import reviews from "../pages/Reviews.jsx";
 
@@ -51,6 +51,7 @@ export const AuthProvider = ({children}) => {
     localStorage.removeItem('lastName');
     localStorage.removeItem("myReviewsCount");
     localStorage.removeItem("userName");
+    localStorage.removeItem("userType");
     setUserType(null);
   };
 

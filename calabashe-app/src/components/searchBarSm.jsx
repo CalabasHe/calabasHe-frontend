@@ -262,7 +262,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               value={searchParam}
               onChange={handleInputChange}
               ref={searchRef}
-              id="sm-search"
+              
               className=" rounded-3xl appearance-none flex w-[90%] placeholder:text-xs text-base text-black px-3 py-1 outline-none border-none"
               type="text"
               placeholder="Search for Doctors, Hospitals or Services"

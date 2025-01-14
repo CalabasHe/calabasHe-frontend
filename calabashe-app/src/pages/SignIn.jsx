@@ -9,7 +9,7 @@ import docs1 from "../assets/images/healthworkers_form.webp";
 import docs1png from "../assets/images/healthworkers_form.png";
 
 const SignIn = () => {
-  const { login, modifyUserType } = useAuth();
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -23,6 +23,8 @@ const SignIn = () => {
   const location = useLocation();
   const [fullState, setFullState] = useState(location.state || {});
   const from = location.state?.from?.pathname || '/';
+  const { login, modifyUserType } = useAuth();
+  
   useEffect(() => {
     if (location.state) {
       setFullState(location.state);

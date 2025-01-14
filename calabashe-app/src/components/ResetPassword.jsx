@@ -4,6 +4,7 @@ import { doctorsAuth, facilitiesAuth } from "../api/providerLogin.js";
 import { toast } from "sonner";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { validatePassword } from "../utils/validatePassword.jsx";
+import { changePassword } from "../api/authApi.js";
 // eslint-disable-next-line react/prop-types
 const ResetPassword = ({ showPopUp, handlePopUp }) => {
   const [Newpassword, setNewPassword] = useState("");
@@ -63,7 +64,8 @@ const ResetPassword = ({ showPopUp, handlePopUp }) => {
         } else if (userType === 'facility') {
           await facilitiesAuth.changePassword({ email, old_password: oldPassword, new_password: Newpassword, confirm_password: confirmPassword })
         } else {
-          return;
+          await changePassword(oldPassword, Newpassword)
+          
         }
         toast.success("Password reset successful!");
         handlePopUp(false);
@@ -71,7 +73,6 @@ const ResetPassword = ({ showPopUp, handlePopUp }) => {
         setConfirmPassword("");
         setNewPassword("");
       } catch (error) {
-        console.log(error.message)
         setError(error.message);
         toast.error(error.message);
         return error.message;
@@ -95,15 +96,15 @@ const ResetPassword = ({ showPopUp, handlePopUp }) => {
       <div className="h-[70%] md:h-max  w-[90%] md:w-[40%] border flex flex-col gap-3 p-3 bg-white rounded-md">
 
         <div className="flex items-center justify-between justify-self-start w-full h-[10%] pt-3 pb-2">
-          <h1 className=" text-xl">Reset Password</h1>
-          <button onClick={closeModal}><CgClose /></button>
+          <h1 className="text-xl text-black">Reset Password</h1>
+          <button className="text-black" onClick={closeModal}><CgClose /></button>
         </div>
         <form className="w-[80%] mx-auto flex-col flex items-center justify-between gap-3" onSubmit={handleReset}>
           <div className="w-full flex flex-col gap-2">
-            <label htmlFor="oldpassword" className="self-start cursor-auto ">Old Password</label>
+            <label htmlFor="oldpassword" className="self-start cursor-auto text-black">Old Password</label>
             <div className="relative flex">
             <input
-              className="w-full border rounded px-1 py-2 bg-inherit placeholder:text-sm focus:outline-none"
+              className="w-full border rounded px-1 py-2 bg-inherit placeholder:text-sm focus:outline-none text-black"
               type={`${passwordHidden.old_password ? "text" : "password"}`}
               id="oldpassword"
               placeholder="Enter Old Password"
@@ -138,10 +139,10 @@ const ResetPassword = ({ showPopUp, handlePopUp }) => {
             </div>
           </div>
           <div className="w-full flex flex-col gap-2">
-            <label htmlFor="Newpassword" className="self-start cursor-auto">New Password</label>
+            <label htmlFor="Newpassword" className="self-start cursor-auto text-black">New Password</label>
             <div className="relative flex">
               <input
-                className="w-full border rounded px-1 py-2 bg-inherit placeholder:text-sm focus:outline-none"
+                className="w-full border rounded px-1 py-2 bg-inherit placeholder:text-sm focus:outline-none text-black"
                 type={`${passwordHidden.new_password ? "text" : "password"}`}
                 id="newPassword"
                 placeholder="Enter New Password"
@@ -175,10 +176,10 @@ const ResetPassword = ({ showPopUp, handlePopUp }) => {
             </div>
           </div>
           <div className="w-full flex flex-col gap-2 relative">
-            <label htmlFor="confirmPassword" className="self-start cursor-auto ">Confirm Password</label>
+            <label htmlFor="confirmPassword" className="self-start cursor-auto text-black">Confirm Password</label>
             <div className="relative flex">
               <input
-                className="w-full border rounded px-1 py-2 bg-inherit placeholder:text-sm focus:outline-none"
+                className="w-full border rounded px-1 py-2 bg-inherit placeholder:text-sm focus:outline-none text-black"
                 type={`${passwordHidden.confirm_password ? "text" : "password"}`}
                 id="confirmPassword"
                 placeholder="Confirm Password"
