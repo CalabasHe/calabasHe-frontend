@@ -8,6 +8,7 @@ import '../stylesheets/reviews.css';
 import { FadeInOut } from "./ComponentAnimations";
 
 const MAX_REVIEWS = 30;
+const EXPIRY_TIME = 60 * 1000; 
 
 const ReviewCard = ({ review }) => (
   <div className="hover:scale-105 duration-200 cursor-pointer max-h-[200px] h-fit w-[260px] overflow-hidden select-none rounded-lg bg-white border px-3 md:px-4 py-4">
@@ -43,15 +44,14 @@ const NavigationButton = ({ direction, onClick, disabled }) => (
 );
 
 const RecentReviews = () => {
-  const storedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const storedReviews = JSON.parse(sessionStorage.getItem("reviews")) || [];
   const [reviews, setReviews] = useState(storedReviews);
   const [isLoading, setIsLoading] = useState(storedReviews.length === 0);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const scrollAmount = 1;
   const maxIndex = Math.max(0, Math.ceil(reviews.length / 2) - 3);
-
+  
   const handleScroll = useCallback((direction) => {
     setCurrentIndex(prev => {
       if (direction === 'left') {
@@ -64,30 +64,37 @@ const RecentReviews = () => {
 
   const updateLocalStorage = (newReviews) => {
     const limitedReviews = newReviews.slice(0, MAX_REVIEWS);
-    localStorage.setItem("reviews", JSON.stringify(limitedReviews));
+    sessionStorage.setItem("reviews", JSON.stringify(limitedReviews));
+    localStorage.setItem("lastUpdated", Date.now().toString());
   };
 
-  const fetchReviewsFromAPI = async () => {
+const fetchReviewsFromAPI = async () => {
     try {
       const data = await fetchCurrentReviews();
-      const reviewDetails = (Array.isArray(data) && data.length > 0)
+      const apiReviews = (Array.isArray(data) && data.length > 0)
         ? data.map((review) => ({
           id: review.id,
           rating: review.rating,
           description: review.description,
           subject: review.subject,
           type: review.review_type,
-          date: formatDate(review.created_at.split('T')[0]),
+          date: formatDate(review.created_at.split("T")[0]),
           user: review.user,
           slug: review.subject_slug,
-          facilityType: review?.facility_type_slug
+          facilityType: review?.facility_type_slug,
         }))
         : [];
-      return reviewDetails;
+
+      if (JSON.stringify(apiReviews) !== JSON.stringify(reviews)) {
+        setReviews(apiReviews);
+        updateLocalStorage(apiReviews);
+      }
+      return apiReviews;
     } catch (err) {
       console.error("Error fetching reviews:", err);
       setError("Failed to load reviews.");
-      return [];
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -95,13 +102,14 @@ const RecentReviews = () => {
     const loadReviews = async () => {
       try {
         const apiReviews = await fetchReviewsFromAPI();
-
-        if (JSON.stringify(apiReviews) !== JSON.stringify(reviews)) {
+        const lastUpdated = parseInt(localStorage.getItem("lastUpdated"), 10) || 0;
+        const now = Date.now();
+        if (now - lastUpdated > EXPIRY_TIME) {
           setReviews(apiReviews);
           updateLocalStorage(apiReviews);
+         
         }
       } catch (err) {
-        console.error("Error fetching reviews:", err);
         setError("Failed to load reviews.");
       } finally {
         setIsLoading(false);
@@ -113,7 +121,7 @@ const RecentReviews = () => {
       loadReviews();
     }
 
-    const fetchInterval = setInterval(loadReviews, 120000);
+    const fetchInterval = setInterval(loadReviews, 90000);
     return () => clearInterval(fetchInterval);
   }, []);
 
@@ -145,12 +153,12 @@ const RecentReviews = () => {
     const fetchInterval = setInterval(loadReviews, 120000);
 
     return () => clearInterval(fetchInterval);
-  }, [reviews]); // Add `reviews` as a dependency
+  }, [reviews]); 
 
   // Listen for local storage changes (for cross-tab synchronization)
   useEffect(() => {
     const syncReviews = () => {
-      const localReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      const localReviews = JSON.parse(sessionStorage.getItem("reviews")) || [];
       if (JSON.stringify(localReviews) !== JSON.stringify(reviews)) {
         setReviews(localReviews);
       }
@@ -165,7 +173,7 @@ const RecentReviews = () => {
 
   useEffect(() => {
     const syncReviews = () => {
-      const localReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      const localReviews = JSON.parse(sessionStorage.getItem("reviews")) || [];
       if (JSON.stringify(localReviews) !== JSON.stringify(reviews)) {
         setReviews(localReviews);
       }
