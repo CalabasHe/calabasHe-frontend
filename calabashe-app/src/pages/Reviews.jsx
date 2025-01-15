@@ -61,8 +61,8 @@ const Review = () => {
 
   const updateLocalStorage = (newReviews) => {
     const limitedReviews = newReviews.slice(0, MAX_REVIEWS);
-    localStorage.setItem("reviews", JSON.stringify(limitedReviews));
-
+    sessionStorage.setItem("reviews", JSON.stringify(limitedReviews));
+    localStorage.setItem("lastUpdated", Date.now().toString());
   };
 
   const fetchReviewsFromAPI = async () => {

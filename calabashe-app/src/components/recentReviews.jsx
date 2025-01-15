@@ -44,7 +44,7 @@ const NavigationButton = ({ direction, onClick, disabled }) => (
 );
 
 const RecentReviews = () => {
-  const storedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const storedReviews = JSON.parse(sessionStorage.getItem("reviews")) || [];
   const [reviews, setReviews] = useState(storedReviews);
   const [isLoading, setIsLoading] = useState(storedReviews.length === 0);
   const [error, setError] = useState(null);
@@ -64,7 +64,7 @@ const RecentReviews = () => {
 
   const updateLocalStorage = (newReviews) => {
     const limitedReviews = newReviews.slice(0, MAX_REVIEWS);
-    localStorage.setItem("reviews", JSON.stringify(limitedReviews));
+    sessionStorage.setItem("reviews", JSON.stringify(limitedReviews));
     localStorage.setItem("lastUpdated", Date.now().toString());
   };
 
@@ -158,7 +158,7 @@ const fetchReviewsFromAPI = async () => {
   // Listen for local storage changes (for cross-tab synchronization)
   useEffect(() => {
     const syncReviews = () => {
-      const localReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      const localReviews = JSON.parse(sessionStorage.getItem("reviews")) || [];
       if (JSON.stringify(localReviews) !== JSON.stringify(reviews)) {
         setReviews(localReviews);
       }
@@ -173,7 +173,7 @@ const fetchReviewsFromAPI = async () => {
 
   useEffect(() => {
     const syncReviews = () => {
-      const localReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      const localReviews = JSON.parse(sessionStorage.getItem("reviews")) || [];
       if (JSON.stringify(localReviews) !== JSON.stringify(reviews)) {
         setReviews(localReviews);
       }
