@@ -262,7 +262,7 @@ const SecondaryFormCard = () => {
       toast.loading("Submitting");
       setDisabled(true)
       await handleFormSubmit(apiFormattedData);
-      toast.success("Form Submitted");
+      toast.success("Form submitted. We'll verify your details and get back to you shortly. ");
       // Reset form data
       setFormData({
         firstName: "",
