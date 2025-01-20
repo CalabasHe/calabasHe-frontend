@@ -88,7 +88,7 @@ const SignUp = () => {
           setSuccess("Account created successfully");
           setIsHidden(false);
           setStartTimer(true);
-          toast.info("Please enter the 6 digit code sent to your email");
+          toast.info("Please enter the 6-digit code sent to your email. If you don't see it in your inbox, be sure to check your spam folder.");
           return "Account created successfully!";
         },
         error: (error) => {

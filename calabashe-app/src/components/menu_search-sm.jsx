@@ -142,9 +142,9 @@ const Menu = () => {
             <span>Doctors</span>
           </Link>
           <Link to={"/about"} className="px-4 ">About Us</Link>
-          {/* <Link className='px-4' to="/services" onClick={handleLinkClick} id="doctors-link">
+          <Link className='px-4' to="/services" onClick={handleLinkClick} id="doctors-link">
             <span>Services</span>
-          </Link> */}
+          </Link>
         </ul>
       </aside>
     </nav>
