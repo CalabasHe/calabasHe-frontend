@@ -102,9 +102,9 @@ const ForgotPassword = () => {
       setToken(response.token);
       setIsHidden(false);
       setDisableForm(false);
-      toast.success('A six-digit code has been sent to your email');
+      toast.success('An email with a six-digit code has been sent. Check your inbox and spam.');
     } catch (error) {
-      toast.success('A six-digit code has been sent to your email');
+      toast.success('An email with a six-digit code has been sent. Check your inbox and spam.');
       setDisableForm(false);
       toast.dismiss();
     } finally {
