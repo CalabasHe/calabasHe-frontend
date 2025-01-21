@@ -45,7 +45,7 @@ const MdScreenMenu = () => {
           isLoggedIn ?
             <>
               {userType === 'doctor' ?
-                <Link to={"/manage_account"} className='pr-4'>Profile</Link> :
+                <Link to={"/manage_account"}>Profile</Link> :
                 <div  ref={dropdownRef}>
                   <button onClick={toggleDropDown}>Profile</button>
                   {isOpen &&
