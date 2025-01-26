@@ -50,18 +50,13 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
     firstName: result.first_name,
     lastName: result.last_name,
     rating: result.average_rating && result.average_rating.toFixed(1),
-    specialty: result.specialty?.name,
-    specialtyTag: result.specialty?.tag,
+    specialty: result.specialty_tag,
+    reviewCount: result.total_reviews,
+    type: result.facility_type_name || "doctor",
     image: result.profile_image,
-          logo:result.logo,
-    type: result.facility_type_name,
-    typeSlug: result.facility_type_name?.toLowerCase(),
+    typeSlug: result.facility_type_name?.toLowerCase() || "doctor",
     name: result.name,
     slug: result.slug,
-    category: result.category_name,
-    categorySlug: result.category_slug,
-    reviews: result.reviews,
-    reviewCount: result.total_reviews,
   });
 
   const performSearch = async (searchParam) => {
@@ -113,16 +108,18 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
           const servicesResults = [];
 
           data.forEach((result) => {
+            // console.log(result)
             const resultDetails = mapResultDetails(result)
-            if (result.facility_type) {
+            if (resultDetails.type !== 'doctor') {
               facilitiesResults.push(resultDetails);
-            } else if (result.specialty) {
+            } else if (resultDetails.type === 'doctor') {
               doctorsResults.push(resultDetails);
             } else if (result.category) {
               servicesResults.push(resultDetails);
             }
           });
-
+          // console.log(facilitiesResults);
+          // console.log(doctorsResults)
           setFacilities(facilitiesResults);
           setDoctors(doctorsResults);
           setServices(servicesResults);
@@ -202,8 +199,8 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               </p>
               {type !== 'Services' && (
                 <div className="mt-3">
-                  <p className={`${result.reviews.length === 0 && 'text-xs text-gray-500 italic'} font-semibold`}>
-                    {result.reviews.length > 0 ? result.reviews.length : 'No'} {result.reviews.length < 2 ? 'review' : 'reviews'}
+                  <p className={`${result.reviewCount=== 0 && 'text-xs text-gray-500 italic'} font-semibold`}>
+                    {result.reviewCount > 0 ? result.reviewCount : 'No'} {result.reviewCount < 2 ? 'review' : 'reviews'}
                   </p>
                   {
                     result.rating ? (
@@ -262,7 +259,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
               value={searchParam}
               onChange={handleInputChange}
               ref={searchRef}
-              
+
               className=" rounded-3xl appearance-none flex w-[90%] placeholder:text-xs text-base text-black px-3 py-1 outline-none border-none"
               type="text"
               placeholder="Search for Doctors, Hospitals or Services"

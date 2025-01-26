@@ -18,13 +18,14 @@ const SearchResultsPageLG = () => {
 
   useEffect(() => {
     if (results) {
+      // console.log(results)
       setAllResults(
         results.filter(
           (item) => item.specialty !== undefined || item.type !== undefined
         )
       );
-      setDoctors(results.filter((item) => item.specialty !== undefined));
-      setFacilites(results.filter((item) => item.type !== undefined));
+      setDoctors(results.filter((item) => item.type === "doctor"));
+      setFacilites(results.filter((item) => item.type !== "doctor"));
     }
   }, [results]);
 
