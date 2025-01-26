@@ -68,20 +68,24 @@ const BannerSearch = () => {
           firstName: result.first_name,
           lastName: result.last_name,
           rating: result.average_rating && result.average_rating.toFixed(1),
-          specialty: result.specialty?.name,
-          specialtyTag: result.specialty?.tag,
-          type: result.facility_type_name,
+          specialty: result.specialty_tag,
+          reviewCount: result.total_reviews,
+          type: result.facility_type_name || "doctor",
           image: result.profile_image,
-          logo:result.logo,
-          typeSlug: result.facility_type_name?.toLowerCase(),
+
+          typeSlug: result.facility_type_name?.toLowerCase() || "doctor",
           name: result.name,
           slug: result.slug,
-          category: result.category_name,
-          categorySlug: result.category_slug,
-          reviews: result.reviews,
-          reviewCount: result.total_reviews,
+          // reviews: result.reviews,
+
+          // specialtyTag: result.specialty_tag,
+          // logo: result.logo,
+          // category: result.category_name,
+          // categorySlug: result.category_slug,
+
         }));
         setError('')
+        console.log(resultDetails)
         return resultDetails;
       } else {
         setError("No results found");
@@ -113,8 +117,8 @@ const BannerSearch = () => {
       result.type
         ? `/facilities/${result.typeSlug}s/${result.slug}`
         : result.specialty
-        ? `/doctors/${result.slug}`
-        : `/services/${result.categorySlug}/${result.slug}`
+          ? `/doctors/${result.slug}`
+          : `/services/${result.categorySlug}/${result.slug}`
     );
   }, [navigate]);
 
@@ -134,7 +138,7 @@ const BannerSearch = () => {
     const searchResults = await performSearch(searchParam);
     navigate("/results", { state: { searchParam, results: searchResults } });
   }, [navigate, performSearch, searchParam]);
-  
+
   const handleShowResults = useCallback((e) => {
     e.preventDefault();
     navigate("/results", { state: { searchParam, results } });
@@ -173,11 +177,10 @@ const BannerSearch = () => {
       ref={bannerRef}
     >
       <form onSubmit={handleSearchClick}
-        className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white max-w-[100%] ${
-          showResults
-            ? "rounded-b-none border-b border-gray-200 rounded-t-3xl"
-            : "rounded-3xl lg:rounded-[999999px]"
-        } font-medium border-black p-1`}
+        className={`relative hidden md:flex cursor-auto w-full items-center justify-between  bg-white max-w-[100%] ${showResults
+          ? "rounded-b-none border-b border-gray-200 rounded-t-3xl"
+          : "rounded-3xl lg:rounded-[999999px]"
+          } font-medium border-black p-1`}
       >
         <input
           ref={searchBarRef}
@@ -213,22 +216,22 @@ const BannerSearch = () => {
           {results.length > 0 && (
             <>
 
-{results.filter((result) => result.category).length > 0 && (
+              {results.filter((result) => result.category).length > 0 && (
                 <div className="space-y-2 pb-4 text-black">
                   <p className="px-4 text-lg text-slate-600 font-medium">Services</p>
                   {results
                     .filter((result) => result.category)
-                    .slice(0,4)
+                    .slice(0, 4)
                     .map((result) => (
                       <div
                         onClick={() => handleLinkClick(result)}
                         key={result.id}
                         className="hover:bg-blue-100 text-black cursor-pointer py-3 px-4"
                       >
-                          <p className=" font-bold text-sm lg:text-base truncate">
-                           {result.name}
-                          </p>
-                          
+                        <p className=" font-bold text-sm lg:text-base truncate">
+                          {result.name}
+                        </p>
+
                         <div className="text-xs text-gray-500">
                           <p>{result.category}</p>
                         </div>
@@ -253,11 +256,11 @@ const BannerSearch = () => {
                           <p className="font-bold text-sm lg:text-base truncate">
                             {"Dr. " + result.firstName + " " + result.lastName}
                           </p>
-                      
+
                           <div className="flex gap-1 text-gray-500 items-center">
                             <p className="text-xs">{result.rating}</p>
                             {result.reviewCount > 0 && (
-                                  <StarRating rating={result.rating} search={true} />
+                              <StarRating rating={result.rating} search={true} />
                             )}
                           </div>
                         </div>
@@ -293,7 +296,7 @@ const BannerSearch = () => {
                           <div className="flex gap-1 text-gray-500 items-center">
                             <p className="text-xs">{result.rating}</p>
                             {result.reviewCount > 0 && (
-                                  <StarRating rating={result.rating} search={true} />
+                              <StarRating rating={result.rating} search={true} />
                             )}
                           </div>
                         </div>

@@ -76,7 +76,7 @@ const AllDoctorList = () => {
         toast.error("No results found")
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
       setError(error.message);
     } finally {
       toast.dismiss()
@@ -85,7 +85,6 @@ const AllDoctorList = () => {
   };
 
   useEffect(() => {
-    // console.log(searchPagination)
     if (searchCriteria.search_query !== '' || searchCriteria.location !== '' || searchCriteria.specialty !== '') {
       handleSearchSubmit(
         searchCriteria.search_query,
@@ -165,14 +164,13 @@ const AllDoctorList = () => {
         setPagination(1);
         setSearchPagination(1);
       }
-
       const page = isNewSearch ? 1 : searchPagination;
       setIsLoading(true);
       setFiltering(true);
       setPagination(1);
       setSearchCriteria({ search_query, specialty, location, page });
       const docData = await DoctorsSearch({ search_query, specialty, location, page });
-
+      console.log(docData);
       // Check for pagination availability
       setHasPreviousPage(!!docData.previous);
       setHasNextPage(!!docData.next);
@@ -180,8 +178,6 @@ const AllDoctorList = () => {
       // Validate and process doctor data
       if (Array.isArray(docData?.results) && docData.results.length > 0) {
         // Update URL to reflect the search filters
-
-
         const doctorDetails = docData.results.map((doc) => ({
           id: doc.id,
           firstName: doc.first_name,
