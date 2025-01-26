@@ -85,7 +85,7 @@ const BannerSearch = () => {
 
         }));
         setError('')
-        console.log(resultDetails)
+        // console.log(resultDetails)
         return resultDetails;
       } else {
         setError("No results found");
