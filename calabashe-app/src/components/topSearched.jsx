@@ -33,19 +33,15 @@ const TopSearched = () => {
                     id: result.id,
                     firstName: result.first_name,
                     lastName: result.last_name,
-                    rating: result.average_rating?.toFixed(1),
-                    specialty: result.specialty?.name,
-                    specialtyTag: result.specialty?.tag,
-                    type: result.facility_type_name,
+                    rating: result.average_rating && result.average_rating.toFixed(1),
+                    specialty: result.specialty_tag,
+                    reviewCount: result.total_reviews,
+                    type: result.facility_type_name || "doctor",
                     image: result.profile_image,
-                    logo: result.logo,
-                    typeSlug: result.facility_type_name?.toLowerCase(),
+          
+                    typeSlug: result.facility_type_name?.toLowerCase() || "doctor",
                     name: result.name,
                     slug: result.slug,
-                    category: result.category_name,
-                    categorySlug: result.category_slug,
-                    reviews: result.reviews,
-                    reviewCount: result.total_reviews,
                 }))
                 : [];
             navigate(`/results?search=${name}`, {
