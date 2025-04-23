@@ -304,9 +304,8 @@ const DocProfileMd = ({ doctor = [] }) => {
                   {(doctor.about.length > 0) ?
                     (
                       <div>
-                        <p className={`${moreDescription ? "h-max" : "h-72 overflow-hidden transition-all"}`}>
-                          {doctor.about}
-                        </p>
+                        <div className={` flex gap-2 flex-col ${moreDescription ? "h-max" : "h-72 overflow-hidden transition-all"}`} dangerouslySetInnerHTML={{ __html: doctor.about }}>
+                        </div>
                         <button onClick={handleMoreDescription} className="text-blue-600">{moreDescription ? 'show less' : 'show more'}</button>
                       </div>
                     ) :
