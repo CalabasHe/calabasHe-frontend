@@ -54,7 +54,7 @@ const DocProfileSm = ({ doctor = [] }) => {
             <div className="relative size-24 rounded-full bg-gray-300/40 flex items-center justify-center">
               {
                 doctor.image ?
-                  <img className='object-cover text-xs text-center w-full h-full rounded-[inherit]' src={doctor.image} alt={`image of doctor ${doctor.lastName}`} />
+                  <img className='object-cover text-xs text-center w-full h-full rounded-[inherit]' src={doctor.image} alt={`Dr. ${doctor.lastName}`} />
                   :
                   <svg
                     className="size-12 fill-gray-700"
