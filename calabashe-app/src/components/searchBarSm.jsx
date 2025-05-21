@@ -146,7 +146,7 @@ const SearchBarSm = ({ display, setDisplay, isVisible, onClose }) => {
       }
       abortControllerRef.current = new AbortController();
       searchSomething(term);
-    }, 500),
+    }, 200),
     []
   );
 

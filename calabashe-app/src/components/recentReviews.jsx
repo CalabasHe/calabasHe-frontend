@@ -50,7 +50,7 @@ const RecentReviews = () => {
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollAmount = 1;
-  const maxIndex = Math.max(0, Math.ceil(reviews.length / 2) - 3);
+  const maxIndex = Math.max(0, Math.ceil(reviews.length / 2) - 3) || 0;
   
   const handleScroll = useCallback((direction) => {
     setCurrentIndex(prev => {

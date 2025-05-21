@@ -24,7 +24,7 @@ import ProvidersLogin from "./pages/ProvidersLogin";
 import ManageAccount from "./pages/ManageAccount";
 import PrivateRoutes from "./components/protectedRoutes.jsx";
 import VideoCallPage from "./pages/VideoCallPage.jsx";
-
+import AvailableDoctors from "./pages/AvailableDoctors.jsx";
 function App() {
   const location = useLocation();
 
@@ -69,6 +69,7 @@ function App() {
                 path="/services/:subservices/:providers"
                 element={<ServiceProviders />}
               />
+              <Route path="available-doctors" element={<AvailableDoctors/>} />
                <Route path="/providers_login"element={<ProvidersLogin/>}/>
               <Route path="/about" element={<About/>}/>
               <Route path="/doctors" element={<Doctors />} />

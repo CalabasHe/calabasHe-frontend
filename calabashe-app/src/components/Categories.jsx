@@ -6,13 +6,14 @@ import {
   fetchServices,
   fetchReviewCount,
 } from "../api/getCategoriesData";
+import { getAvailableDoctors } from "../api/bookings";
 import { FadeInRight } from "./ComponentAnimations";
 import AnimateCount from "./AnimateCount";
 
 const CategoryItem = ({ count, label, to, icon }) => (
   <Link
     to={to}
-    className="w-[50%] md:w-[25%] relative lg:hover:-translate-y-1 duration-150 lg:hover:shadow-xl ease-in-out flex items-center px-2 bg-white border border-gray-400 md:border-black rounded-md max-w-[191px] md:max-w-[250px] lg:max-w-[310px] h-[70px] md:h-[90px] lg:h-[110px]"
+    className="w-full relative lg:hover:-translate-y-1 duration-150 lg:hover:shadow-xl ease-in-out flex items-center px-2 bg-white border border-gray-400 md:border-black rounded-md max-w-[191px] md:max-w-[250px] lg:max-w-[310px] h-[70px] md:h-[90px] lg:h-[110px]"
   >
     <div className="flex flex-col gap-[1px]">
       <p className="font-semibold text-sm md:text-base">
@@ -30,6 +31,7 @@ const ExploreCategories = () => {
     reviews: "0",
     facilities: "0",
     services: "0",
+    availableCount: "0"
   });
 
   useEffect(() => {
@@ -42,12 +44,13 @@ const ExploreCategories = () => {
         }
 
         // Fetch the new data from the api
-        const [doctorsCount, facilitiesCount, servicesCount, reviewsCount] =
+        const [doctorsCount, facilitiesCount, servicesCount, reviewsCount, availableCount] =
           await Promise.all([
             fetchDoctors(),
             fetchFacilities(),
             fetchServices(),
             fetchReviewCount(),
+            getAvailableDoctors()
           ]);
 
         const newCounts = {
@@ -55,8 +58,10 @@ const ExploreCategories = () => {
           facilities: facilitiesCount.total_count,
           services: servicesCount.count,
           reviews: reviewsCount,
+          availableCount: availableCount.length
         };
 
+        // console.log(newCounts)
         // Updates the localStorage periodically(every 20 seconds) with new data
         localStorage.setItem("categoryCounts", JSON.stringify(newCounts));
         setCounts(newCounts);
@@ -125,7 +130,23 @@ const ExploreCategories = () => {
       />
     </svg>
   );
-  const servicesIcon = (
+  // const servicesIcon = (
+  //   <svg
+  //     className="absolute hidden lg:block bottom-0 right-0 fill-current text-gray-300"
+  //     width="109"
+  //     height="99"
+  //     viewBox="0 0 109 99"
+  //     fill="none"
+  //     xmlns="http://www.w3.org/2000/svg"
+  //   >
+  //     <path
+  //       opacity="0.4"
+  //       d="M37.6362 140.233H112.636V123.787H37.6362V140.233ZM37.6362 115.564H112.636V99.1188H37.6362V115.564ZM75.1362 85.1402C85.4487 76.9174 94.2768 69.6211 101.621 63.2512C108.964 56.8813 112.636 50.1989 112.636 43.2041C112.636 38.2705 110.605 34.022 106.542 30.4589C102.48 26.8957 97.6362 25.1141 92.0112 25.1141C88.73 25.1141 85.5643 25.6979 82.5143 26.8655C79.4643 28.0331 77.005 29.6421 75.1362 31.6923C73.2612 29.6366 70.7987 28.0277 67.7487 26.8655C64.6987 25.7034 61.5362 25.1195 58.2612 25.1141C52.6362 25.1141 47.7925 26.8957 43.73 30.4589C39.6675 34.022 37.6362 38.2705 37.6362 43.2041C37.6362 50.1935 41.1925 56.7717 48.305 62.9387C55.4175 69.1058 64.3612 76.5063 75.1362 85.1402ZM131.386 164.901H18.8862C13.73 164.901 9.31748 163.292 5.64873 160.074C1.97998 156.856 0.14248 152.983 0.13623 148.455V16.8913C0.13623 12.3688 1.97373 8.49862 5.64873 5.28078C9.32373 2.06294 13.7362 0.451283 18.8862 0.445801H131.386C136.542 0.445801 140.958 2.05746 144.633 5.28078C148.308 8.5041 150.142 12.3743 150.136 16.8913V148.455C150.136 152.978 148.302 156.851 144.633 160.074C140.964 163.297 136.549 164.906 131.386 164.901ZM18.8862 148.455H131.386V16.8913H18.8862V148.455Z"
+  //       fill="#d1d5db"
+  //     />
+  //   </svg>
+  // );
+  const availableIcon = (
     <svg
       className="absolute hidden lg:block bottom-0 right-0 fill-current text-gray-300"
       width="109"
@@ -136,7 +157,7 @@ const ExploreCategories = () => {
     >
       <path
         opacity="0.4"
-        d="M37.6362 140.233H112.636V123.787H37.6362V140.233ZM37.6362 115.564H112.636V99.1188H37.6362V115.564ZM75.1362 85.1402C85.4487 76.9174 94.2768 69.6211 101.621 63.2512C108.964 56.8813 112.636 50.1989 112.636 43.2041C112.636 38.2705 110.605 34.022 106.542 30.4589C102.48 26.8957 97.6362 25.1141 92.0112 25.1141C88.73 25.1141 85.5643 25.6979 82.5143 26.8655C79.4643 28.0331 77.005 29.6421 75.1362 31.6923C73.2612 29.6366 70.7987 28.0277 67.7487 26.8655C64.6987 25.7034 61.5362 25.1195 58.2612 25.1141C52.6362 25.1141 47.7925 26.8957 43.73 30.4589C39.6675 34.022 37.6362 38.2705 37.6362 43.2041C37.6362 50.1935 41.1925 56.7717 48.305 62.9387C55.4175 69.1058 64.3612 76.5063 75.1362 85.1402ZM131.386 164.901H18.8862C13.73 164.901 9.31748 163.292 5.64873 160.074C1.97998 156.856 0.14248 152.983 0.13623 148.455V16.8913C0.13623 12.3688 1.97373 8.49862 5.64873 5.28078C9.32373 2.06294 13.7362 0.451283 18.8862 0.445801H131.386C136.542 0.445801 140.958 2.05746 144.633 5.28078C148.308 8.5041 150.142 12.3743 150.136 16.8913V148.455C150.136 152.978 148.302 156.851 144.633 160.074C140.964 163.297 136.549 164.906 131.386 164.901ZM18.8862 148.455H131.386V16.8913H18.8862V148.455Z"
+        d="M57.8362 73.2525L41.3362 56.7525L50.5862 47.5025L57.8362 54.7525L93.8362 18.7525L103.086 28.0025L57.8362 73.2525ZM18.8862 148.455H131.386V16.8913H18.8862V148.455ZM18.8862 164.901C13.73 164.901 9.31748 163.292 5.64873 160.074C1.97998 156.856 0.14248 152.983 0.13623 148.455V16.8913C0.13623 12.3688 1.97373 8.49862 5.64873 5.28078C9.32373 2.06294 13.7362 0.451283 18.8862 0.445801H131.386C136.542 0.445801 140.958 2.05746 144.633 5.28078C148.308 8.5041 150.142 12.3743 150.136 16.8913V148.455C150.136 152.978 148.302 156.851 144.633 160.074C140.964 163.297 136.549 164.906 131.386 164.901H18.8862Z"
         fill="#d1d5db"
       />
     </svg>
@@ -147,7 +168,7 @@ const ExploreCategories = () => {
       <section className="w-full flex flex-col gap-4 md:gap-6 lg:gap-10 p-2 py-3 lg:py-6 items-center mt-2 lg:mt-4">
         <h2 className="font-bold text-xl md:text-2xl">Explore Categories</h2>
         <div className="w-full max-w-[400px] md:max-w-[800px] lg:max-w-[1200px] mx-auto">
-          <div className="flex items-center justify-center gap-4 lg:gap-6 xl:gap-8 px-2 lg:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-4 lg:gap-6 xl:gap-8 px-2 lg:px-6">
             <CategoryItem
               count={counts.reviews}
               label="Reviews"
@@ -166,12 +187,13 @@ const ExploreCategories = () => {
               to="/facilities"
               icon={facilitiesIcon}
             />
-            {/* <CategoryItem
-              count={counts.services}
-              label="Services"
-              to="/services"
-              icon={servicesIcon}
-            /> */}
+
+            <CategoryItem
+              count={counts.availableCount}
+              label={counts.availableCount == 1? "Available Doctor": "Available Doctors"}
+              to="/available-doctors"
+              icon={availableIcon}
+            />
           </div>
         </div>
       </section>
