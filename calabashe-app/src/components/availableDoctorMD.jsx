@@ -8,12 +8,14 @@ import { format } from "date-fns";
 import { data } from "autoprefixer";
 
 const AvailableDoctorsMd = ({ doctor }) => {
-    console.log(doctor);
+    // console.log(doctor);
     const go = useNavigate();
     const [availableDates, setAvailableDates] = useState([]);
     const toProfile = (slug) => {
         go(`/doctors/${slug}`);
     };
+    const [doctorDetails, setDoctorDetails] = useState()
+
 
     const groupByDate = (dates) => {
         return dates.reduce((acc, curr) => {
@@ -33,7 +35,7 @@ const AvailableDoctorsMd = ({ doctor }) => {
         const dates = doctor.availableTimes.map((timeslot) => {
             const start = new Date(timeslot.start);
             const end = new Date(timeslot.end);
-            console.log(start, end);
+            // console.log(start, end);
 
             // You can shape it however you need
             return { start, end };
@@ -41,6 +43,10 @@ const AvailableDoctorsMd = ({ doctor }) => {
 
         setAvailableDates(dates);
     }, [doctor]);
+
+    // useEffect(() => {
+    //     const getDoctorDetails = 
+    // })
 
     const grouped = groupByDate(availableDates);
     return (
