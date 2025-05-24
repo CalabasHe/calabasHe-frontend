@@ -69,11 +69,12 @@ const AvailableDoctorsContainer = () => {
                     reviews: doc.total_reviews,
                     // reviewCount: doc.reviews_count,
                     verified: doc.is_verified || true,
-                    availableTimes: doc.availableTimes
+                    availableTimes: doc.availableTimes,
+                    slug: doc.name.toLowerCase().replace(" ", "-").trim(),
                     // region: doc.region_name,
                     // experience: doc.years_of_experience
                 }));
-                console.log(doctorDetails)
+                // console.log(doctorDetails)
                 setDoctors(doctorDetails);
             } else {
                 // console.log();
@@ -189,6 +190,7 @@ const AvailableDoctorsContainer = () => {
                     name: doc.name,
                     // rating: doc.average_rating,
                     // specialty: doc.specialty?.name,
+                    slug: doc.name.toLowerCase().replace(" ", "-").trim(),
                     specialtyTag: doc.specialty,
                     image: doc.image,
                     reviews: doc.total_reviews,
