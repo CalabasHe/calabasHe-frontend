@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import axios from "axios";
 import { getCookie } from "../utils/cookies";
 import { getUserId } from "../utils/getUserId";
@@ -23,6 +24,7 @@ export const createTimeSlot = async ({ month, year, day_of_month, doctor_email, 
 
     const createUrl = MAIN_URL + '/timeslots/';
     const doctor_id = getUserId();
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await axios.post(createUrl, { doctor_id, month, year, day_of_month, doctor_email, start_time, end_time, is_available, booking_type, token: generateToken()});
         return response;

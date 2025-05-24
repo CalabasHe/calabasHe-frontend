@@ -85,9 +85,9 @@ export function parseAvailableTimes(data){
     return data.results.reduce((available, doctor) => {
       const availableSlots = doctor.available_slots.filter(slot => {
         const slotTime = new Date(`${now.toDateString()} ${slot.start_time}`);
-        return slotTime >= now && slotTime <= thirtyMinsFromNow;
+        return slotTime >= now;
       });
-
+    //   console.log(availableSlots)
       if (availableSlots.length > 0) {
         available.push({
           id: doctor.id,

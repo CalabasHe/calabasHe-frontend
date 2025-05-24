@@ -40,7 +40,7 @@ const SearchBarMd = () => {
   const debouncedSetSearch = useCallback(
     debounce((value) => {
       setDebouncedSearchParam(value);
-    }, 500),
+    }, 200),
     []
   );
 

@@ -83,6 +83,7 @@ export const fetchServices = async () => {
   }
 };
 
+
 export const fetchReviewCount = async () => {
   try {
     const response = await axios.get(`/api/reviews/combined-reviews/`);

@@ -1,12 +1,12 @@
 import { CgClose } from "react-icons/cg";
-import consultation from '../assets/images/consult.png'
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { bookDoctor, getAvailableDoctors } from "../api/bookings";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
 import { toast } from "sonner";
 import { getCookie } from "../utils/cookies";
 
+// eslint-disable-next-line react/prop-types
 const AvailableDoctors = ({ showPopUp, handlePopUp }) => {
     const [results, setResults] = useState([]);
     const [disabled, setDisabled] = useState(false);
@@ -17,7 +17,6 @@ const AvailableDoctors = ({ showPopUp, handlePopUp }) => {
         }
         getAvailableOnes();
     }, [showPopUp]);
-
     const handleNext = () => {
         if (currentIndex < results.length) {
             setCurrentIndex(currentIndex + 1);
@@ -28,6 +27,7 @@ const AvailableDoctors = ({ showPopUp, handlePopUp }) => {
             setCurrentIndex(currentIndex - 1);
         }
     }
+
     const handleBooking = async (id, booking_type, booking_date) => {
         const access = getCookie("accessToken");
         if (!access) {
@@ -45,7 +45,6 @@ const AvailableDoctors = ({ showPopUp, handlePopUp }) => {
             toast.dismiss()
         }
     }
-
     // useEffect(() => {
     //     console.log(results)
     // }, [results]);
@@ -112,7 +111,7 @@ const AvailableDoctors = ({ showPopUp, handlePopUp }) => {
 
                                                     </div>
                                                     <button
-                                                        disable={disabled.toString()}
+                                                        disabled={disabled}
                                                         className="text-xs font-semibold border shadow-md rounded-lg p-2 md:px-3 md:py-3 self-start"
                                                         onClick={() => {
                                                             handleBooking(results[currentIndex].id, "video", time.start);

@@ -48,7 +48,7 @@ const BannerSearch = () => {
   const debouncedSetSearch = useCallback(
     debounce((value) => {
       setDebouncedSearchParam(value);
-    }, 500),
+    }, 200),
     []
   );
 
