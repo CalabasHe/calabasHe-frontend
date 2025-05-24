@@ -13,7 +13,7 @@ const AvailableDoctors = () => {
               <div className="z-0 absolute top-[120px] sm:top-[165px] h-3 w-[27%] max-w-[116px] sm:max-w-[188px] border-4 sm:border-6 border-black border-t-0 border-l-0 bg-transparent"></div>
               <div className="mt-[65px] sm:mt-[76px]">
                 <h1 className="z-10 relative max-[460px]:mx-[15%] tracking-wider mx-[20px] sm:mx-[100px] sm:translate-y-[10px] text-base sm:text-2xl font-bold">
-                  Medical Doctors <br /> in Ghana
+                  Available Doctors <br /> in Ghana
                 </h1>
               </div>
             </aside>
