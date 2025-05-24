@@ -1,7 +1,7 @@
 const Availability = () => {
     return ( 
         <div>
-            Are you avaiable
+            Are you available?
         </div>
      );
 }

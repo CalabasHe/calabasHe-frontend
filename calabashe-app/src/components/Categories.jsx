@@ -66,7 +66,8 @@ const ExploreCategories = () => {
         localStorage.setItem("categoryCounts", JSON.stringify(newCounts));
         setCounts(newCounts);
       } catch (error) {
-        console.error("Error fetching counts:", error);
+        // throw error;
+        // console.error("Error fetching counts:", error);
       }
     };
 
