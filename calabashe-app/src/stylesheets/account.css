@@ -1,0 +1,67 @@
+input{
+  outline-color: #04da8d;
+  border: 1px solid black;
+}
+
+#google_sign-up{
+  border: 1px solid black;
+}
+
+label{
+  cursor: pointer;
+
+}
+
+#or::before,
+#or::after{
+  content: '';
+  border: 1px solid rgb(87, 87, 87);
+  width: 45% ;
+  position: absolute;
+  top: 50%;
+}
+
+#or::before{
+  left: 0;
+}
+
+#or::after{
+  right: 0;
+}
+
+button:active{
+  scale: 0.98;
+}
+
+/* @media (min-width: 768px) { 
+  .moving-design {
+    position: absolute;
+    border-radius:50%;
+    width: 10vw; 
+    height: 10vw;
+    top: 0;
+    left: 0;
+    animation: moveDesign 5s infinite;
+  }
+ }
+
+@keyframes moveDesign {
+  0% {
+      top: 0;
+      right: 0;
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+  50% {
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, 50%);
+      opacity: 0.8;
+  }
+  100% {
+      top: 70%;
+      left: 100%;
+      transform: translate(-100%, -100%);
+      opacity: 0;
+  }
+} */

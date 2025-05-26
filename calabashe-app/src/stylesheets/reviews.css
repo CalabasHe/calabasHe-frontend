@@ -1,0 +1,68 @@
+.submitButton{
+  transition: transform .3s;
+}
+
+.submitButton:active{
+  scale: .98;
+}
+
+
+
+/* .carousel{
+  animation: slide 30s linear infinite; 
+}
+
+.card{
+  margin: 0 10px;
+}
+
+.carousel:hover{
+  animation-play-state: paused;
+} */
+
+/* .masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 260px);
+  grid-auto-rows: 10px;
+  justify-content: space-between;
+}
+
+.masonry-item {
+  break-inside: avoid;
+}
+
+@supports (grid-template-rows: masonry) {
+  .masonry-grid {
+    grid-template-rows: masonry;
+    grid-auto-rows: auto;
+  }
+  
+  .masonry-item {
+    grid-row-end: auto !important;
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+} */
+
+/* @keyframes slide-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel:nth-child(even) {
+    animation: slide-reverse 30s linear infinite
+  }
+} */
+ 

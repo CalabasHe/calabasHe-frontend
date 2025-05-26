@@ -1,0 +1,110 @@
+/* @import url("@stream-io/video-react-sdk/dist/css/styles.css"); */
+/*
+  //BUTTON STATES (end call, audio soruce, video soruce etc
+
+    --str-video__button-default-base: #67e037 !important;; // this one controls their actual colors
+  --str-video__button-default-hover;
+  --str-video__button-default-pressed;
+  --str-video__button-default-active;
+  --str-video__button-default-disabled
+  .str-video__call-controls  -> controls the entire buttons background
+   --str-video__icon-default -> controls the icons colors
+   (--str-video__button-primary-base -> controls the background and entire buttons upper buttons for audio and video input
+   --str-video__base-color6 -> controls the pop up menu backgrounds
+   --str-video__primary-color -> controls the audio visualizer icon
+   --str-video__background-color4 -> controls the background color of the pariticipnat at the bottom of the video
+   --str-video__button-primary-base -> controls pop up icons bg
+   --str-video__button-primary-base
+
+
+*/
+/* General Styling */
+/* Base styles */
+.str-video {
+  color: white;
+  --str-video__primary-color: rgb(4 218 141);
+  /* --str-video__participant-status-placeholder-bg: ; */
+  --str-video__participant-status-placeholder-text: black;
+  /* --str-video__base-color6: */
+}
+/* .str-video__participant-status-placeholder {
+  background-color: white;
+} */
+
+.stream-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.stream-grid {
+  /*  display: flex;*/
+  flex: 1;
+  width: 100%;
+  margin-top: 0;
+
+}
+
+.participant-card {
+  all: unset;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Modern way to handle aspect ratio */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  max-height: 100%; /* Prevents overflow */
+}
+
+.participant-view {
+    all: unset;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.call-controls {
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  margin-inline: auto;
+}
+.str-video__call-controls {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 200px;
+}
+
+.str-video__composite-button__button {
+  width: 80%;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .stream-container {
+    padding: 0.5rem;
+  }
+
+  .participant-card {
+    border-radius: 0.25rem;
+  }
+
+  .call-controls {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stream-container {
+    width: 100%;
+    height: 90vh;
+  }
+  .participant-card {
+    aspect-ratio: 4 / 3; /* Adjust aspect ratio for smaller screens */
+  }
+}

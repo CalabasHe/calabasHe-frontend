@@ -1,0 +1,27 @@
+.firstNameBubble,
+.lastNameBubble{
+  display: none;
+  width:max-content;
+  top: -30px;
+  padding: 3px 5px;
+  background: white;
+  border-radius: 3px;
+}
+
+.firstNameBubble{
+  left: -10px;
+}
+
+.lastNameBubble{
+  right: -10px;
+}
+
+.firstName-field:hover .firstNameBubble,
+.lastName-field:hover .lastNameBubble{
+  display: block;
+}
+
+.firstName-field:focus .firstNameBubble,
+.lastName-field:focus .lastNameBubble{
+  display: none;
+}

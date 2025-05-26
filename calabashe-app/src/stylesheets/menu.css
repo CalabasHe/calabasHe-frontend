@@ -1,0 +1,119 @@
+::after,
+::before{
+  box-sizing: border-box;
+}
+
+:root{
+  --bar-width: 23px;
+  --bar-height: 2px;
+  --hamburger-gap: 3px;
+  --background: #828282; 
+  --hamburger-margin: 4px;
+  --animation-timing:350ms ease-in-out ;
+  --hamburger-height: calc(var(--bar-height) * 3 + var(--hamburger-gap) * 2);
+  --width-navmenu: 55vw;
+  --max-width-navmenu: 350px
+}
+
+body{
+  margin:0
+}
+
+/* hamburger menu menubutton */
+
+.hamburger-menu{
+  --x-width: calc(var(--hamburger-height) * 1.41421356237);
+  display: flex;
+  flex-direction: column;
+  gap: var(--hamburger-gap);
+  width: max-content;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.hamburger-menu::before,
+.hamburger-menu::after,
+#menubutton{
+  content:"";
+  width: var(--bar-width);
+  height: var(--bar-height);
+  background-color: var(--background);
+  border-radius: 9999px;
+  transition: opacity var(--animation-timing), 
+              width var(--animation-timing),
+              rotate var(--animation-timing),
+              translate var(--animation-timing),
+              background-color var(--animation-timing);
+  transform-origin: left;
+}
+
+#menubutton{
+  appearance: none;
+  pointer-events: none;
+  outline: none;
+  border:  var(--background);
+}
+.hamburger-menu #menubutton:checked{
+  opacity: 0;
+  width: 0;
+}
+
+.hamburger-menu:has(#menubutton:checked)::before {
+  rotate: 45deg;
+  width: var(--x-width);
+  translate: 0 calc(var(--bar-height) / -2);
+}
+.hamburger-menu:has(#menubutton:checked)::after {
+  rotate: -45deg;
+  width: var(--x-width);
+  translate: 0 calc(var(--bar-height) / 2);
+
+}
+
+.hamburger-menu:has(#menubutton:checked)::before,
+.hamburger-menu:has(#menubutton:checked)::after{
+  background-color: white;
+}
+
+#hospitals-link ::after,
+#doctors-link ::after{
+  content: "";
+  width:3px;
+  height: 2px;
+}
+
+/* Navmenu */
+
+.navmenu{
+  background-color: black;
+  width: var(--width-navmenu);
+  max-width: var(--max-width-navmenu);
+  min-width: 110px;
+  height: 100vh;
+  position: absolute;
+  top: 100%;
+  right: 0px;
+  transform: translateX(var(--width-navmenu));
+  transition: transform 300ms ease-in-out;
+}
+
+.navmenu > ul{
+  background-color: black;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  padding: 30% 0 0 0;
+}
+
+
+
+.hamburger-menu:has(#menubutton:checked) + .navmenu{
+  flex-direction: column;
+  background-color: black;
+  transform: translateX(-(var(--width-navmenu)));
+  color: white;
+  margin:0;
+  right: 0px;
+}
+
