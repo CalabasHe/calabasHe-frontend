@@ -244,7 +244,7 @@ const AvailableDoctorsContainer = () => {
             <DoctorSearchBar submitFunc={handleSearchSubmit} resetFunc={handleReset} />
             <ConfirmBooking showPopUp={showPopUp} handlePopUp={() => { setShowPopUP(!showPopUp) }} handleConfirm={() => setIsConfirmed(true)} />
             {doctors.length === 0 ?
-                (<div className="h-[50vh] md:h-[40vh] w-full flex items-center justify-center">
+                (<div className="h-[50vh] md:h-[40vh] w-full flex flex-col items-center justify-center">
                     No Doctor is available
                     <Link to={"/doctors"} className="bold underline text-green-700">Doctors page</Link>
                 </div>) :
