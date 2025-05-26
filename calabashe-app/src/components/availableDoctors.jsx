@@ -99,9 +99,9 @@ const AvailableDoctors = ({ showPopUp, handlePopUp }) => {
                                     </div>
                                     <div className="mt-4 w-[90%] mx-auto">
                                         <p className="text-sm">I'm available from :</p>
-                                        <div className="flex justify-between items-end">
+                                        <div className="flex flex-col h-36 overflow-y-scroll justify-between items-end">
                                             {results[currentIndex].availableTimes.map((time, index) => (
-
+                                                
                                                 <div key={index} className="flex justify-between items-center w-full">
                                                     <div className="flex gap-4 h-max mt-1" key={index}>
                                                         <p className="text-sm bg-green-500 px-2 py-1">{format(time.start, 'HH:mm')}</p>

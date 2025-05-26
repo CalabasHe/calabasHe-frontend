@@ -6,18 +6,21 @@ import { getAvailableTimeSlots } from "../utils/timeUtils";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { data } from "autoprefixer";
+import { fetchDoctorBySlug } from "../api/getProfileData";
+import { IoIosVideocam } from "react-icons/io";
 
-const AvailableDoctorsMd = ({ doctor }) => {
-    // console.log(doctor);
+
+const AvailableDoctorsMd = ({ doctor, handleAppointmentDetails }) => {
     const go = useNavigate();
     const [availableDates, setAvailableDates] = useState([]);
     const toProfile = (slug) => {
         go(`/doctors/${slug}`);
     };
-    const [doctorDetails, setDoctorDetails] = useState()
+    const [doctorDetails, setDoctorDetails] = useState(doctor)
 
 
     const groupByDate = (dates) => {
+        // console.log(dates)
         return dates.reduce((acc, curr) => {
             const dateKey = format(curr.start, 'yyyy-MM-dd');
             if (!acc[dateKey]) {
@@ -30,9 +33,9 @@ const AvailableDoctorsMd = ({ doctor }) => {
 
 
     useEffect(() => {
-        if (!doctor?.availableTimes) return;
+        if (!doctorDetails?.availableTimes) return;
 
-        const dates = doctor.availableTimes.map((timeslot) => {
+        const dates = doctorDetails.availableTimes.map((timeslot) => {
             const start = new Date(timeslot.start);
             const end = new Date(timeslot.end);
             // console.log(start, end);
@@ -40,45 +43,50 @@ const AvailableDoctorsMd = ({ doctor }) => {
             // You can shape it however you need
             return { start, end };
         });
-
         setAvailableDates(dates);
     }, [doctor]);
 
-    // useEffect(() => {
-    //     const getDoctorDetails = 
-    // })
-
     const grouped = groupByDate(availableDates);
+    // console.log(grouped)
     return (
         <div
-            key={doctor.id}
+            key={doctorDetails.id}
             className="max-[819px]:hidden duration-300 border-2 bg-white shadow-md md:h-[240px] lg:h-[280px] max-w-[1100px] rounded-md w-[98%] px-4 lg:px-6 lg:py-1 flex justify-between md:gap-6"
         >
             <section className="min-w-[25%] w-3/4 py-3 px-2 pb-3 flex flex-col justify-between">
                 <div className="flex gap-5">
-                    <div className="min-w-28 lg:min-w-36 size-28 lg:size-36 flex items-center justify-center bg-gray-300 rounded-full">
-                        {doctor.image ? (
-                            <img
-                                className="object-cover w-full h-full rounded-[inherit]"
-                                src={doctor.image}
-                                alt="Doctor profile"
-                            />
-                        ) : (
-                            <svg
-                                className="justify-self-center  md:w-14 lg:w-16 fill-gray-700"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 448 512"
-                            >
-                                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
-                            </svg>
-                        )}
+                    <div className="relative">
+                        <div className="min-w-28 lg:min-w-36 size-28 lg:size-36 flex items-center justify-center bg-gray-300 rounded-full">
+                            {doctorDetails.image ? (
+                                <img
+                                    className="object-cover w-full h-full rounded-[inherit]"
+                                    src={doctorDetails.image || "/placeholder.svg"}
+                                    alt="Doctor profile"
+                                />
+                            ) : (
+                                <svg
+                                    className="justify-self-center md:w-14 lg:w-16 fill-gray-700"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 448 512"
+                                >
+                                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
+                                </svg>
+                            )}
+                        </div>
+
+                        {/* Video Icon positioned underneath */}
+                        <div className="absolute bottom-5 right-3 transform -translate-x-1/2">
+                            <div className="bg-green-500 rounded-full p-2 shadow-lg border-2 border-white">
+                                <IoIosVideocam size={10} />
+                            </div>
+                        </div>
                     </div>
                     <div className="flex flex-col gap-2 truncate">
                         <div className="space-y-0.5">
                             <p className="font-bold text-xl lg:text-2xl overflow-hidden text-ellipsis whitespace-nowrap">
-                                Dr. {doctor.name}
+                                Dr. {doctorDetails.name}
                             </p>
-                            <p className="text-xs lg:text-sm">{doctor.specialtyTag}</p>
+                            <p className="text-xs lg:text-sm">{doctorDetails.specialtyTag}</p>
                         </div>
                         <div className="flex items-center gap-5 text-xs font-medium">
                             {/* { doctor.experience && 
@@ -91,32 +99,47 @@ const AvailableDoctorsMd = ({ doctor }) => {
                 <p>{doctor.experience} Yrs experience</p>
             </div>
               } */}
-                            {doctor.verified && (
-                                <div className="flex gap-1 items-center">
-                                    <svg
-                                        className="size-5"
-                                        width="24"
-                                        height="25"
-                                        viewBox="0 0 24 25"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M8 12.5618L11 15.5618L16 8.56177M4 11.8138C4 19.5008 10.918 22.2008 11.887 22.5418C11.9623 22.5684 12.0377 22.5684 12.113 22.5418C13.084 22.2118 20 19.5798 20 11.8148V4.86577C20.0002 4.7764 19.9705 4.68953 19.9156 4.61903C19.8607 4.54852 19.7837 4.49844 19.697 4.47677L12.097 2.57377C12.0333 2.55785 11.9667 2.55785 11.903 2.57377L4.303 4.47677C4.2163 4.49844 4.13935 4.54852 4.08443 4.61903C4.02952 4.68953 3.99979 4.7764 4 4.86577V11.8138Z"
-                                            stroke="black"
-                                            strokeWidth="1.5"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                    <p>Verified</p>
-                                </div>
-                            )}
+
                         </div>
+                        {doctorDetails.verified && (
+                            <div className="flex gap-1 items-center">
+                                <svg
+                                    className="size-5"
+                                    width="24"
+                                    height="25"
+                                    viewBox="0 0 24 25"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M8 12.5618L11 15.5618L16 8.56177M4 11.8138C4 19.5008 10.918 22.2008 11.887 22.5418C11.9623 22.5684 12.0377 22.5684 12.113 22.5418C13.084 22.2118 20 19.5798 20 11.8148V4.86577C20.0002 4.7764 19.9705 4.68953 19.9156 4.61903C19.8607 4.54852 19.7837 4.49844 19.697 4.47677L12.097 2.57377C12.0333 2.55785 11.9667 2.55785 11.903 2.57377L4.303 4.47677C4.2163 4.49844 4.13935 4.54852 4.08443 4.61903C4.02952 4.68953 3.99979 4.7764 4 4.86577V11.8138Z"
+                                        stroke="black"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
+                                <p>Verified</p>
+                            </div>
+                        )}
+                        {
+                            doctorDetails.reviewCount < 0 ? (
+                                <div className='py-4'>
+                                    <p className='text-base font-medium italic text-center text-slate-400'> No reviews yet</p>
+                                </div>
+                            ) : (
+                                <div className='w-full text-xs font-semibold space-y-3'>
+                                    <p>{doctorDetails.rating.toFixed(1)} RATING</p>
+                                    <StarRating rating={doctorDetails.rating} />
+                                    <p className={`${doctorDetails.reviewCount === 0 && 'text-[#5C6B88] italic'}`}>{doctorDetails.reviewCount === 0 ? 'No' : doctor.reviewCount} Patient {doctor.reviewCount === 1 ? 'Review' : 'Reviews'}</p>
+                                </div>
+                            )
+                        }
                     </div>
+
                 </div>
                 <div className="w-full font-medium space-y-2 text-xs">
-                    <p>{doctor.region}</p>
+                    <p>{doctorDetails.region}</p>
                     <div className="w-full flex items-center gap-2">
                         <p className="text-[#5C6B88] font-normal text-nowrap">
                             Recommended for :
@@ -138,33 +161,30 @@ const AvailableDoctorsMd = ({ doctor }) => {
                                         />
                                     </svg>
                                 </span>
-                                {doctor.specialty}
+                                {doctorDetails.specialty}
                             </p>
                             {/* <div className='flex flex-grow truncate gap-2'>
-            {
-              doctor.recommendedFor[0] &&
-              <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[0]}</p>
-            }
-            {
-              doctor.recommendedFor[1] &&
-              <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl  max-lg:max-w-[70px] truncate'>{doctor.recommendedFor[1]}</p>
-            }
+                                {
+                                    doctorDetails.conditions_and_treatments[0] &&
+                                    <p className='bg-[#FFF29E] px-2 py-1.5 rounded-3xl max-lg:max-w-[70px] truncate'>{doctorDetails.conditions_and_treatments[0]}</p>
+                                }
+                                {
+                                    doctorDetails.conditions_and_treatments[1] &&
+                                    <p className='bg-[#FF9ECD] px-2 py-1.5 rounded-3xl  max-lg:max-w-[70px] truncate'>{doctorDetails.conditions_and_treatments[1]}</p>
+                                }
 
-            {
-              doctor.recommendedFor.length > 3 &&
+                                {
+                                    doctorDetails.conditions_and_treatments.length > 3 &&
 
-              <p className='bg-[#FF9EA0] px-2 py-1.5 rounded-3xl'> +{doctor.recommendedFor.length - 2}</p>
-            }
-          </div> */}
+                                    <p className='bg-[#FF9EA0] px-2 py-1.5 rounded-3xl'> +{doctorDetails.conditions_and_treatments.length - 2}</p>
+                                }
+                            </div> */}
                         </div>
                     </div>
-                    {doctor.reviewCount > 0 ? (
+                    {doctorDetails.reviews.length > 0 ? (
                         <div className=" text-[#5C6B88] font-normal">
-                            {/* <p className='line-clamp-1'>{doctor.reviews.description}</p> */}
+                            <p className='line-clamp-1'>{doctorDetails.reviews.description}</p>
                             <div className=" flex items-center gap-3 text-[.5rem]">
-                                {/* <p>
-              {formatDate(doctor.reviews.created_at)}
-            </p> */}
                                 <div className="flex items-center gap-0.5">
                                     <svg
                                         className="size-2.5"
@@ -192,14 +212,22 @@ const AvailableDoctorsMd = ({ doctor }) => {
                 <div className="p-4">
                     {Object.entries(grouped).map(([dateKey, slots]) => (
                         <div key={dateKey} className="mb-4">
-                            <h4 className="text-sm mb-2 mx-auto text-end">
+                            <h4 className="text-sm mb-2 text-end">
                                 {format(new Date(dateKey), 'E d MMM')}
                             </h4>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2 h-20 overflow-hidden">
                                 {slots.map((slot, index) => (
                                     <button
+                                        onClick={() => {
+                                            handleAppointmentDetails({
+                                                doctor: doctorDetails.id,
+                                                booking_date: format(slot.start, 'yyyy-M-d'),
+                                                booking_time: format(slot.start, 'HH:mm'),
+                                                booking_type: "video"
+                                            })
+                                        }}
                                         key={index}
-                                        className="bg-blue-600 text-white rounded-full px-4 py-2 text-sm hover:bg-blue-700 transition"
+                                        className="bg-blue-600 text-white rounded-full px-4 py-2 text-sm hover:bg-blue-700 transition flex-shrink-0"
                                     >
                                         {format(slot.start, 'hh:mm a')}
                                     </button>
@@ -209,9 +237,9 @@ const AvailableDoctorsMd = ({ doctor }) => {
                     ))}
                 </div>
                 <button
-                    onClick={() => toProfile(doctor.slug)}
+                    onClick={() => toProfile(doctorDetails.slug)}
                     className="bg-[#205CD4] text-center text-lg font-medium py-3.5 lg:py-4 rounded-md text-white w-full"
-                    to={`/doctors/${doctor.slug}`}
+                    to={`/doctors/${doctorDetails.slug}`}
                 >
                     View Profile
                 </button>

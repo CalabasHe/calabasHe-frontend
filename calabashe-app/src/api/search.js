@@ -38,4 +38,11 @@ export const FacilitySearch = async ({facility, service, location, page}) => {
   }
 }
 
+<<<<<<< HEAD
+=======
+export const AvaialbleDoctorsSearch = async(doctors, name, location) => {
+
+}
+
+>>>>>>> temp
 export default SearchData;
