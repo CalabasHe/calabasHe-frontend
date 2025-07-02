@@ -1,30 +1,32 @@
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { AnimatePresence } from "framer-motion";
-import Home from "./pages/Homepage";
-import Review from "./pages/Reviews";
-import Facilities from "./pages/Facilities";
-import Services from "./pages/Services";
-import Doctors from "./pages/Doctors";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
-import VerifyUser from "./pages/Verification";
-import DocProfile from "./pages/DocProfile";
-import FacilityProfile from "./pages/FacilityProfile";
-import { BannerVisibilityProvider } from "./context/BannerVisibilityContext";
-import SearchResultsPage from "./pages/SearchResultsPage";
-import ForgotPassword from "./pages/ForgotPassword";
-import AccountClaim from "./pages/AccountClaim";
-import SubServices from "./pages/SubServices";
-import ServiceProviders from "./pages/ServiceProviders";
-import { SpecialtyProvider } from "./context/specialtyContext";
-import SecondaryForms from "./pages/SecondaryForm";
-import About from "./pages/AboutUs";
-import ProvidersLogin from "./pages/ProvidersLogin";
-import ManageAccount from "./pages/ManageAccount";
+import Home from "./pages/Homepage.jsx";
+import Review from "./pages/Reviews.jsx";
+import Facilities from "./pages/Facilities.jsx";
+import Services from "./pages/Services.jsx";
+import Doctors from "./pages/Doctors.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import SignIn from "./pages/SignIn.jsx";
+import VerifyUser from "./pages/Verification.jsx";
+import DocProfile from "./pages/DocProfile.jsx";
+import FacilityProfile from "./pages/FacilityProfile.jsx";
+import { BannerVisibilityProvider } from "./context/BannerVisibilityContext.jsx";
+import SearchResultsPage from "./pages/SearchResultsPage.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import AccountClaim from "./pages/AccountClaim.jsx";
+import SubServices from "./pages/SubServices.jsx";
+import ServiceProviders from "./pages/ServiceProviders.jsx";
+import { SpecialtyProvider } from "./context/specialtyContext.jsx";
+import SecondaryForms from "./pages/SecondaryForm.jsx";
+import About from "./pages/AboutUs.jsx";
+import ProvidersLogin from "./pages/ProvidersLogin.jsx";
+import ManageAccount from "./pages/ManageAccount.jsx";
 import PrivateRoutes from "./components/protectedRoutes.jsx";
 import VideoCallPage from "./pages/VideoCallPage.jsx";
 import AvailableDoctors from "./pages/AvailableDoctors.jsx";
+import Conditions from "./pages/Conditions.jsx";
+import ConditionDetail from "./pages/ConditionDetail.jsx";
 function App() {
   const location = useLocation();
 
@@ -70,7 +72,9 @@ function App() {
                 element={<ServiceProviders />}
               />
               <Route path="available-doctors" element={<AvailableDoctors/>} />
-               <Route path="/providers_login"element={<ProvidersLogin/>}/>
+              <Route path="/conditions" element={<Conditions />} />
+              <Route path="/conditions/:slug" element={<ConditionDetail />} />
+              <Route path="/providers_login"element={<ProvidersLogin/>}/>
               <Route path="/about" element={<About/>}/>
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors/:slug" element={<DocProfile />} />
