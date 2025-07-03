@@ -226,15 +226,28 @@ const ConditionDetail = () => {
                             try {
                               return (
                                 <div key={doctor.id || Math.random()} className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] transition-colors">
-                                  <img 
-                                    src={doctor.image || "https://via.placeholder.com/60"} 
-                                    alt={doctor.name || "Doctor"} 
-                                    className="w-12 h-12 rounded-full object-cover"
-                                    onError={(e) => {
-                                      console.log("Image load error, using fallback");
-                                      e.target.src = "https://via.placeholder.com/60";
-                                    }}
-                                  />
+                                  {doctor.image ? (
+                                    <img 
+                                      src={doctor.image} 
+                                      alt={doctor.name || "Doctor"} 
+                                      className="w-12 h-12 rounded-full object-cover"
+                                      onError={(e) => {
+                                        console.log("Image load error, using fallback SVG");
+                                        e.target.style.display = 'none';
+                                        e.target.nextSibling.style.display = 'block';
+                                      }}
+                                    />
+                                  ) : (
+                                    <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
+                                      <svg
+                                        className="w-8 h-8 fill-gray-700"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 448 512"
+                                      >
+                                        <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z" />
+                                      </svg>
+                                    </div>
+                                  )}
                                   <div>
                                     <h3 className="font-medium text-gray-800">{doctor.name || "Unknown Doctor"}</h3>
                                     <p className="text-sm text-gray-500">{doctor.specialty || "Medical Specialist"}</p>
@@ -255,9 +268,11 @@ const ConditionDetail = () => {
                       ) : (
                         <p className="text-gray-600">No doctors found for this condition.</p>
                       )}
-                      <button className="w-full mt-4 py-2 px-4 bg-[#04DA8D] text-white font-medium rounded hover:bg-[#03c47e] transition-colors">
-                        View All Specialists
-                      </button>
+                      <div className="mt-8 pt-6 border-t border-gray-200">
+                        <a href="/doctors" className="block text-center w-full py-2 bg-[#04DA8D] hover:bg-[#03C47D] text-white rounded-md">
+                          View All Specialists
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
