@@ -1,12 +1,49 @@
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import axios from "axios";
 
 const Conditions = () => {
   const sectionRefs = useRef({});
+  const [conditionsByLetter, setConditionsByLetter] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log("[Conditions] Component mounted");
+    const fetchConditions = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('https://api.calabashe.com/api/conditions/all/');
+        
+        // Group conditions by first letter
+        const groupedConditions = {};
+        
+        // Initialize with all letters of the alphabet
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').forEach(letter => {
+          groupedConditions[letter] = [];
+        });
+        
+        // Group conditions by their first letter
+        response.data.forEach(condition => {
+          const firstLetter = condition.name.charAt(0).toUpperCase();
+          if (groupedConditions[firstLetter]) {
+            groupedConditions[firstLetter].push({
+              name: condition.name,
+              slug: condition.slug
+            });
+          }
+        });
+        
+        setConditionsByLetter(groupedConditions);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching conditions:', err);
+        setError('Failed to load conditions. Please try again later.');
+        setLoading(false);
+      }
+    };
+    
+    fetchConditions();
   }, []);
 
   const handleScroll = (letter) => {
@@ -33,34 +70,7 @@ const Conditions = () => {
 
   const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-  const conditionsByLetter = {
-    "A": ["Asthma", "Arthritis", "Alzheimer's Disease", "Anemia"],
-    "B": ["Bronchitis", "Back Pain", "Blood Pressure (High)", "Bipolar Disorder"],
-    "C": ["Cancer", "COVID-19", "Cholesterol", "Chronic Fatigue Syndrome"],
-    "D": ["Diabetes", "Depression", "Diarrhea", "Dengue Fever"],
-    "E": ["Eczema", "Epilepsy", "Ear Infection", "Endometriosis"],
-    "F": ["Flu", "Fibromyalgia", "Fever", "Food Poisoning"],
-    "G": ["Gallstones", "Gout", "Glaucoma", "Gastritis"],
-    "H": ["Hypertension", "Heart Disease", "Headache", "HIV/AIDS"],
-    "I": ["Insomnia", "Irritable Bowel Syndrome", "Inflammation", "Infection"],
-    "J": ["Jaundice", "Joint Pain", "Juvenile Arthritis", "Jet Lag"],
-    "K": ["Kidney Disease", "Knee Pain", "Kawasaki Disease"],
-    "L": ["Lupus", "Liver Disease", "Lymphoma", "Leukemia"],
-    "M": ["Migraine", "Multiple Sclerosis", "Malaria", "Measles"],
-    "N": ["Nausea", "Narcolepsy", "Neurological Disorders", "Nutrient Deficiency"],
-    "O": ["Osteoporosis", "Obesity", "Obsessive-Compulsive Disorder", "Osteoarthritis"],
-    "P": ["Pneumonia", "Parkinson's Disease", "Psoriasis", "PTSD"],
-    "Q": ["Q Fever", "Quadriplegia"],
-    "R": ["Rheumatoid Arthritis", "Respiratory Infections", "Rabies", "Rosacea"],
-    "S": ["Stroke", "Schizophrenia", "Sinusitis", "Sleep Apnea"],
-    "T": ["Tuberculosis", "Thyroid Problems", "Tonsillitis", "Tetanus"],
-    "U": ["Ulcers", "Urinary Tract Infection", "Urticaria", "Uveitis"],
-    "V": ["Varicose Veins", "Vertigo", "Vitiligo", "Viral Infections"],
-    "W": ["Weight Loss", "Whooping Cough", "Wilson's Disease"],
-    "X": ["Xerosis", "X-Linked Disorders"],
-    "Y": ["Yellow Fever", "Yeast Infection"],
-    "Z": ["Zika Virus", "Zinc Deficiency"]
-  };
+
 
   return (
     <div className="2xl:container mx-auto 2xl:border-x">
@@ -90,6 +100,18 @@ const Conditions = () => {
             </div>
           </div>
 
+          {/* Loading and error states */}
+          {loading && (
+            <div className="text-center py-12">
+              <p className="text-gray-600">Loading medical conditions...</p>
+            </div>
+          )}
+          {error && (
+            <div className="text-center py-12">
+              <p className="text-red-500">{error}</p>
+            </div>
+          )}
+
           {/* Conditions listed by alphabet */}
           <div className="mt-8">
             {alphabets.map((letter) => {
@@ -109,10 +131,10 @@ const Conditions = () => {
                       {conditionsByLetter[letter].map((condition, index) => (
                         <Link
                           key={index}
-                          to={`/conditions/${condition.toLowerCase().replace(/ /g, '-')}`}
+                          to={`/conditions/${condition.slug}`}
                           className="block p-4 bg-white rounded-lg shadow-sm border hover:border-[#04DA8D] transition-colors cursor-pointer"
                         >
-                          <h3 className="font-medium text-base text-gray-800">{condition}</h3>
+                          <h3 className="font-medium text-base text-gray-800">{condition.name}</h3>
                           <p className="text-sm text-gray-500 mt-1">Learn more about treatments and symptoms</p>
                         </Link>
                       ))}
