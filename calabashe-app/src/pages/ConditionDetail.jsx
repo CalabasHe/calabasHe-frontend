@@ -46,20 +46,25 @@ const ConditionDetail = () => {
           console.log("Doctors in response:", response.data.doctors);
         }
         
+        // The API returns data in a nested structure with results containing the condition details
+        // Extract the condition data from results
+        const conditionData = response.data.results || {};
+        console.log("Condition data extracted:", conditionData);
+        
         // Set the condition information
         setCondition({
-          name: response.data.name,
+          name: conditionData.name || "",
           // Since the API doesn't currently provide these fields,
           // we're using hardcoded data for now
-          description: getDescriptionForCondition(response.data.name),
-          symptoms: getSymptomsForCondition(response.data.name),
-          treatments: getTreatmentsForCondition(response.data.name),
+          description: getDescriptionForCondition(conditionData.name || ""),
+          symptoms: getSymptomsForCondition(conditionData.name || ""),
+          treatments: getTreatmentsForCondition(conditionData.name || ""),
         });
         
         // Set the doctors who treat this condition
-        if (response.data.doctors && response.data.doctors.length > 0) {
-          console.log("Processing doctors:", response.data.doctors);
-          const processedDoctors = response.data.doctors.map(doctor => {
+        if (conditionData.doctors && conditionData.doctors.length > 0) {
+          console.log("Processing doctors:", conditionData.doctors);
+          const processedDoctors = conditionData.doctors.map(doctor => {
             console.log("Processing doctor:", doctor);
             return {
               id: doctor.id,
