@@ -18,11 +18,33 @@ const ConditionDetail = () => {
   });
   const [doctors, setDoctors] = useState([]);
   
+  // Add an effect to monitor doctors state changes
+  useEffect(() => {
+    console.log("Doctors state updated:", doctors);
+  }, [doctors]);
+
   useEffect(() => {
     const fetchConditionDetails = async () => {
       try {
         setLoading(true);
         const response = await axios.get(`https://api.calabashe.com/api/conditions/${slug}/`);
+        
+        console.log("API Response:", response.data);
+        
+        // Check the structure of the response to see where doctors data might be located
+        if (!response.data.doctors) {
+          console.log("Warning: doctors field not found in API response");
+          console.log("Response keys:", Object.keys(response.data));
+          
+          // Check if doctors might be nested under a different field
+          for (const key in response.data) {
+            if (typeof response.data[key] === 'object') {
+              console.log(`Content of ${key}:`, response.data[key]);
+            }
+          }
+        } else {
+          console.log("Doctors in response:", response.data.doctors);
+        }
         
         // Set the condition information
         setCondition({
@@ -36,13 +58,21 @@ const ConditionDetail = () => {
         
         // Set the doctors who treat this condition
         if (response.data.doctors && response.data.doctors.length > 0) {
-          setDoctors(response.data.doctors.map(doctor => ({
-            id: doctor.id,
-            name: doctor.name,
-            specialty: doctor.specialty,
-            image: doctor.image || "https://via.placeholder.com/60", // Fallback image if none provided
-            rating: doctor.rating || 0
-          })));
+          console.log("Processing doctors:", response.data.doctors);
+          const processedDoctors = response.data.doctors.map(doctor => {
+            console.log("Processing doctor:", doctor);
+            return {
+              id: doctor.id,
+              name: doctor.name,
+              specialty: doctor.specialty,
+              image: doctor.image || "https://via.placeholder.com/60", // Fallback image if none provided
+              rating: doctor.rating || 0
+            };
+          });
+          console.log("Setting doctors state to:", processedDoctors);
+          setDoctors(processedDoctors);
+        } else {
+          console.log("No doctors found in API response or doctors array is empty");
         }
         
         setLoading(false);
@@ -184,25 +214,42 @@ const ConditionDetail = () => {
                   <div className="w-full md:w-1/3">
                     <div className="bg-white rounded-lg shadow-sm border p-6 sticky top-24">
                       <h2 className="text-xl font-bold mb-4 text-gray-800">Doctors Who Treat {condition.name}</h2>
-                      <div className="space-y-4">
-                        {doctors.map((doctor) => (
-                          <div key={doctor.id} className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] transition-colors">
-                            <img 
-                              src={doctor.image} 
-                              alt={doctor.name} 
-                              className="w-12 h-12 rounded-full object-cover"
-                            />
-                            <div>
-                              <h3 className="font-medium text-gray-800">{doctor.name}</h3>
-                              <p className="text-sm text-gray-500">{doctor.specialty}</p>
-                              <div className="flex items-center mt-1">
-                                <span className="text-yellow-400">★</span>
-                                <span className="text-sm ml-1">{doctor.rating}</span>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      {console.log("Rendering doctors array:", doctors)}
+                      {doctors && doctors.length > 0 ? (
+                        <div className="space-y-4">
+                          {doctors.map((doctor) => {
+                            try {
+                              return (
+                                <div key={doctor.id || Math.random()} className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] transition-colors">
+                                  <img 
+                                    src={doctor.image || "https://via.placeholder.com/60"} 
+                                    alt={doctor.name || "Doctor"} 
+                                    className="w-12 h-12 rounded-full object-cover"
+                                    onError={(e) => {
+                                      console.log("Image load error, using fallback");
+                                      e.target.src = "https://via.placeholder.com/60";
+                                    }}
+                                  />
+                                  <div>
+                                    <h3 className="font-medium text-gray-800">{doctor.name || "Unknown Doctor"}</h3>
+                                    <p className="text-sm text-gray-500">{doctor.specialty || "Medical Specialist"}</p>
+                                    <div className="flex items-center mt-1">
+                                      <span className="text-yellow-400">★</span>
+                                      <span className="text-sm ml-1">{doctor.rating || "N/A"}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            } catch (err) {
+                              console.error("Error rendering doctor:", err, doctor);
+                              return <div key={Math.random()} className="p-3 border rounded-lg">Error displaying doctor</div>;
+                            }
+                          })}
+                          {console.log("Finished rendering doctors list")}
+                        </div>
+                      ) : (
+                        <p className="text-gray-600">No doctors found for this condition.</p>
+                      )}
                       <button className="w-full mt-4 py-2 px-4 bg-[#04DA8D] text-white font-medium rounded hover:bg-[#03c47e] transition-colors">
                         View All Specialists
                       </button>
