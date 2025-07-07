@@ -178,9 +178,9 @@ const ConditionDetail = () => {
                           {doctors.map((doctor) => {
                             try {
                               return (
-                                <Link 
-                                  to={`/doctors/${doctor.id || doctor.slug || ''}`} 
+                                <div 
                                   key={doctor.id || Math.random()} 
+                                  onClick={() => window.location.href = `/doctors/${doctor.slug}`}
                                   className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] hover:bg-gray-50 transition-colors cursor-pointer w-full text-left"
                                 >
                                   <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
@@ -221,7 +221,7 @@ const ConditionDetail = () => {
                                       <span className="text-sm ml-1">{doctor.rating || "N/A"}</span>
                                     </div>
                                   </div>
-                                </Link>
+                                </div>
                               );
                             } catch (err) {
                               console.error("Error rendering doctor:", err, doctor);
