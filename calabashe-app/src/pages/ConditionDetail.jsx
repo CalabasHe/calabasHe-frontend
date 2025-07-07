@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import AnimatePage from "../components/AnimatePage";
-import { FadeInOut } from "../components/ComponentAnimations";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -157,14 +156,6 @@ const ConditionDetail = () => {
     <div className="2xl:container mx-auto 2xl:border-x">
       <Header />
       <div>
-        <FadeInOut>
-          <div className="z-0 absolute top-[60px] sm:top-[70px] w-[25%] bg-[#04DA8D] h-16 max-w-[110px] sm:max-w-[180px] sm:h-24"></div>
-          <aside className="flex flex-col sm:flex-row items-center sm:items-start">
-            <h1 className="z-10 relative max-[460px]:mx-[15%] tracking-wider mx-[20px] sm:mx-[100px] sm:translate-y-[10px] text-base sm:text-2xl font-bold">
-              {condition.name}
-            </h1>
-          </aside>
-        </FadeInOut>
 
         <AnimatePage>
           <main className="w-full mt-16 md:mt-24 px-4 sm:px-8 md:px-12 pb-8">
@@ -204,12 +195,6 @@ const ConditionDetail = () => {
                       )}
                     </div>
                     
-                    <div className="bg-white rounded-lg shadow-sm border p-6">
-                      <h2 className="text-xl font-bold mb-4 text-gray-800">When to See a Doctor</h2>
-                      <p className="text-gray-700">
-                        If you experience persistent symptoms related to {condition.name}, it&apos;s important to consult with a healthcare professional. Early diagnosis and treatment can help manage symptoms and prevent complications.
-                      </p>
-                    </div>
                   </div>
                   
                   {/* Doctors section */}
