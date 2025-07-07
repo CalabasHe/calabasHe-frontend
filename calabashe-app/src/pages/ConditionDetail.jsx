@@ -185,12 +185,10 @@ const ConditionDetail = () => {
                                 <div 
                                   key={doctor.id || Math.random()} 
                                   onClick={() => {
-                                    // Get doctor identifier, with fallbacks
-                                    const doctorId = doctor.slug || doctor.id || '';
-                                    if (doctorId) {
-                                      window.location.href = `/doctors/${doctorId}`;
+                                    if (doctor.slug) {
+                                      window.location.href = `/doctors/${doctor.slug}`;
                                     } else {
-                                      console.error('No valid ID or slug found for doctor:', doctor);
+                                      console.error('No valid slug found for doctor:', doctor);
                                     }
                                   }}
                                   className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] hover:bg-gray-50 transition-colors cursor-pointer w-full text-left"
