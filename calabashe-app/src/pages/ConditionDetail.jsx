@@ -83,7 +83,6 @@ const ConditionDetail = () => {
           // Use the description from API if available, otherwise fallback to hardcoded
           description: response.data.description || getDescriptionForCondition(conditionData.name || ""),
           richContent: richContent,
-          symptoms: getSymptomsForCondition(conditionData.name || ""),
           treatments: getTreatmentsForCondition(conditionData.name || ""),
         });
         
