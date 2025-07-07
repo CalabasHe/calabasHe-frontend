@@ -154,7 +154,7 @@ const ConditionDetail = () => {
                   {/* Condition details section */}
                   <div className="w-full md:w-2/3">
                     <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                      <h2 className="text-4xl font-semibold mb-8">About {condition.name}</h2>
+                      <h2 className="text-4xl font-semibold mb-8">{condition.name}</h2>
                       {condition.richContent ? (
                         <div 
                           className="text-gray-700 rich-content"
