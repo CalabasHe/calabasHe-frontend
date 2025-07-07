@@ -66,10 +66,10 @@ const ConditionDetail = () => {
           const processedDoctors = conditionData.doctors.map(doctor => {
             return {
               id: doctor.id,
-              slug: doctor.slug || doctor.id, // Use slug if available, fallback to ID
+              slug: doctor.slug,
               name: doctor.name,
               specialty: doctor.specialty,
-              image: doctor.image, // No fallback - we'll handle this in the JSX
+              image: doctor.image,
               rating: doctor.rating || 0
             };
           });
@@ -154,7 +154,7 @@ const ConditionDetail = () => {
                   {/* Condition details section */}
                   <div className="w-full md:w-2/3">
                     <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                      <h2 className="text-xl font-semibold mb-3">About {condition.name}</h2>
+                      <h2 className="text-4xl font-semibold mb-8">About {condition.name}</h2>
                       {condition.richContent ? (
                         <div 
                           className="text-gray-700 rich-content"
