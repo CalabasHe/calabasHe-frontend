@@ -62,9 +62,11 @@ const ConditionDetail = () => {
         
         // Set the doctors who treat this condition
         if (conditionData.doctors && conditionData.doctors.length > 0) {
+          console.log("Sample doctor data:", conditionData.doctors[0]); // Log sample doctor for debugging
           const processedDoctors = conditionData.doctors.map(doctor => {
             return {
               id: doctor.id,
+              slug: doctor.slug || doctor.id, // Use slug if available, fallback to ID
               name: doctor.name,
               specialty: doctor.specialty,
               image: doctor.image, // No fallback - we'll handle this in the JSX
@@ -72,7 +74,9 @@ const ConditionDetail = () => {
             };
           });
           setDoctors(processedDoctors);
+          console.log("Processed doctors:", processedDoctors);
         } else {
+          console.log("No doctors found for this condition");
         }
         
         setLoading(false);
@@ -180,7 +184,15 @@ const ConditionDetail = () => {
                               return (
                                 <div 
                                   key={doctor.id || Math.random()} 
-                                  onClick={() => window.location.href = `/doctors/${doctor.slug}`}
+                                  onClick={() => {
+                                    // Get doctor identifier, with fallbacks
+                                    const doctorId = doctor.slug || doctor.id || '';
+                                    if (doctorId) {
+                                      window.location.href = `/doctors/${doctorId}`;
+                                    } else {
+                                      console.error('No valid ID or slug found for doctor:', doctor);
+                                    }
+                                  }}
                                   className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] hover:bg-gray-50 transition-colors cursor-pointer w-full text-left"
                                 >
                                   <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
