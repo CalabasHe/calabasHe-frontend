@@ -30,11 +30,6 @@ const ConditionDetail = () => {
     richContent: "" // For storing HTML content from the backend
   });
   const [doctors, setDoctors] = useState([]);
-  
-  // Add an effect to monitor doctors state changes
-  useEffect(() => {
-    console.log("Doctors state updated:", doctors);
-  }, [doctors]);
 
   useEffect(() => {
     const fetchConditionDetails = async () => {
@@ -42,36 +37,16 @@ const ConditionDetail = () => {
         setLoading(true);
         const response = await axios.get(`https://api.calabashe.com/api/conditions/${slug}/`);
         
-        console.log("API Response:", response.data);
-        
-        // Check the structure of the response to see where doctors data might be located
-        if (!response.data.doctors) {
-          console.log("Warning: doctors field not found in API response");
-          console.log("Response keys:", Object.keys(response.data));
-          
-          // Check if doctors might be nested under a different field
-          for (const key in response.data) {
-            if (typeof response.data[key] === 'object') {
-              console.log(`Content of ${key}:`, response.data[key]);
-            }
-          }
-        } else {
-          console.log("Doctors in response:", response.data.doctors);
-        }
-        
         // The API returns data in a nested structure with results containing the condition details
         // Extract the condition data from results
         const conditionData = response.data.results || {};
-        console.log("Condition data extracted:", conditionData);
         
         // Get the rich text content from our dedicated endpoint
         let richContent = "";
         try {
           const contentResponse = await axios.get(`https://api.calabashe.com/api/conditions/${slug}/content/`);
           richContent = contentResponse.data.description || "";
-          console.log("Rich content loaded:", richContent.substring(0, 100) + "...");
         } catch (contentErr) {
-          console.log("Could not load rich content, using fallback", contentErr);
           // If the content endpoint fails, we'll use the description from the main response or fallback
           richContent = response.data.description || "";
         }
@@ -87,9 +62,7 @@ const ConditionDetail = () => {
         
         // Set the doctors who treat this condition
         if (conditionData.doctors && conditionData.doctors.length > 0) {
-          console.log("Processing doctors:", conditionData.doctors);
           const processedDoctors = conditionData.doctors.map(doctor => {
-            console.log("Processing doctor:", doctor);
             return {
               id: doctor.id,
               name: doctor.name,
@@ -98,10 +71,8 @@ const ConditionDetail = () => {
               rating: doctor.rating || 0
             };
           });
-          console.log("Setting doctors state to:", processedDoctors);
           setDoctors(processedDoctors);
         } else {
-          console.log("No doctors found in API response or doctors array is empty");
         }
         
         setLoading(false);
@@ -201,13 +172,17 @@ const ConditionDetail = () => {
                   <div className="w-full md:w-1/3">
                     <div className="bg-white rounded-lg shadow-sm border p-6 sticky top-24">
                       <h2 className="text-xl font-bold mb-4 text-gray-800">Doctors Who Treat {condition.name}</h2>
-                      {console.log("Rendering doctors array:", doctors)}
+                      
                       {doctors && doctors.length > 0 ? (
                         <div className="space-y-4">
                           {doctors.map((doctor) => {
                             try {
                               return (
-                                <div key={doctor.id || Math.random()} className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] transition-colors">
+                                <Link 
+                                  to={`/doctors/${doctor.id || doctor.slug || ''}`} 
+                                  key={doctor.id || Math.random()} 
+                                  className="flex items-center gap-3 p-3 border rounded-lg hover:border-[#04DA8D] hover:bg-gray-50 transition-colors cursor-pointer w-full text-left"
+                                >
                                   <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
                                     {doctor.image ? (
                                       <>
@@ -246,14 +221,13 @@ const ConditionDetail = () => {
                                       <span className="text-sm ml-1">{doctor.rating || "N/A"}</span>
                                     </div>
                                   </div>
-                                </div>
+                                </Link>
                               );
                             } catch (err) {
                               console.error("Error rendering doctor:", err, doctor);
                               return <div key={Math.random()} className="p-3 border rounded-lg">Error displaying doctor</div>;
                             }
                           })}
-                          {console.log("Finished rendering doctors list")}
                         </div>
                       ) : (
                         <p className="text-gray-600">No doctors found for this condition.</p>
