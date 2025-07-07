@@ -6,6 +6,18 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DOMPurify from "dompurify"; // For sanitizing HTML content
+import "../stylesheets/rich-content.css"; // Import rich content styles
+
+// Configure DOMPurify to allow YouTube and other video iframes
+DOMPurify.addHook('uponSanitizeElement', (node, data) => {
+  if (data.tagName === 'iframe') {
+    const src = node.getAttribute('src') || '';
+    if (src.match(/^(https?:)?\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com|dailymotion\.com)/i)) {
+      // Allow YouTube, Vimeo, and Dailymotion iframes
+      return node;
+    }
+  }
+});
 
 const ConditionDetail = () => {
   const { slug } = useParams();
@@ -116,32 +128,6 @@ const ConditionDetail = () => {
     return descriptions[name] || "Information about this condition is currently being updated.";
   };
   
-  const getSymptomsForCondition = (name) => {
-    const symptoms = {
-      "Asthma": [
-        "Shortness of breath",
-        "Chest tightness or pain",
-        "Wheezing when exhaling",
-        "Trouble sleeping caused by shortness of breath",
-        "Coughing or wheezing attacks"
-      ],
-      "Diabetes": [
-        "Increased thirst",
-        "Frequent urination",
-        "Extreme hunger",
-        "Unexplained weight loss",
-        "Fatigue",
-        "Blurred vision"
-      ],
-      "Hypertension": [
-        "Most people have no signs or symptoms",
-        "Some people may experience headaches",
-        "Shortness of breath or nosebleeds in severe cases"
-      ]
-    };
-    
-    return symptoms[name] || [];
-  };
   
   const getTreatmentsForCondition = (name) => {
     const treatments = {
@@ -207,27 +193,16 @@ const ConditionDetail = () => {
                       {condition.richContent ? (
                         <div 
                           className="text-gray-700 rich-content"
-                          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(condition.richContent) }}
+                          dangerouslySetInnerHTML={{ 
+                            __html: DOMPurify.sanitize(condition.richContent, {
+                              ADD_TAGS: ['iframe'],
+                              ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'src']
+                            }) 
+                          }}
                         />
                       ) : (
                         <p className="text-gray-700">{condition.description}</p>
                       )}
-                    </div>
-                    
-                    <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-                      <h3 className="text-lg font-semibold mb-3 text-gray-800">Common Symptoms</h3>
-                      <ul className="list-disc pl-5 mb-6 space-y-2 text-gray-700">
-                        {condition.symptoms.map((symptom, index) => (
-                          <li key={index}>{symptom}</li>
-                        ))}
-                      </ul>
-                      
-                      <h3 className="text-lg font-semibold mb-3 text-gray-800">Treatment Options</h3>
-                      <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                        {condition.treatments.map((treatment, index) => (
-                          <li key={index}>{treatment}</li>
-                        ))}
-                      </ul>
                     </div>
                     
                     <div className="bg-white rounded-lg shadow-sm border p-6">
