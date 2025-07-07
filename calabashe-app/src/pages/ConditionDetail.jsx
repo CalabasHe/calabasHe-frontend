@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import DOMPurify from "dompurify"; // For sanitizing HTML content
 
 const ConditionDetail = () => {
   const { slug } = useParams();
@@ -14,7 +15,8 @@ const ConditionDetail = () => {
     name: "",
     description: "Information about this condition is not available.",
     symptoms: [],
-    treatments: []
+    treatments: [],
+    richContent: "" // For storing HTML content from the backend
   });
   const [doctors, setDoctors] = useState([]);
   
@@ -51,12 +53,24 @@ const ConditionDetail = () => {
         const conditionData = response.data.results || {};
         console.log("Condition data extracted:", conditionData);
         
+        // Get the rich text content from our dedicated endpoint
+        let richContent = "";
+        try {
+          const contentResponse = await axios.get(`https://api.calabashe.com/api/conditions/${slug}/content/`);
+          richContent = contentResponse.data.description || "";
+          console.log("Rich content loaded:", richContent.substring(0, 100) + "...");
+        } catch (contentErr) {
+          console.log("Could not load rich content, using fallback", contentErr);
+          // If the content endpoint fails, we'll use the description from the main response or fallback
+          richContent = response.data.description || "";
+        }
+
         // Set the condition information
         setCondition({
           name: conditionData.name || "",
-          // Since the API doesn't currently provide these fields,
-          // we're using hardcoded data for now
-          description: getDescriptionForCondition(conditionData.name || ""),
+          // Use the description from API if available, otherwise fallback to hardcoded
+          description: response.data.description || getDescriptionForCondition(conditionData.name || ""),
+          richContent: richContent,
           symptoms: getSymptomsForCondition(conditionData.name || ""),
           treatments: getTreatmentsForCondition(conditionData.name || ""),
         });
@@ -188,10 +202,19 @@ const ConditionDetail = () => {
                 <div className="flex flex-col md:flex-row gap-8">
                   {/* Condition details section */}
                   <div className="w-full md:w-2/3">
+                    <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                      <h2 className="text-xl font-semibold mb-3">About {condition.name}</h2>
+                      {condition.richContent ? (
+                        <div 
+                          className="text-gray-700 rich-content"
+                          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(condition.richContent) }}
+                        />
+                      ) : (
+                        <p className="text-gray-700">{condition.description}</p>
+                      )}
+                    </div>
+                    
                     <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-                      <h2 className="text-xl font-bold mb-4 text-gray-800">About {condition.name}</h2>
-                      <p className="text-gray-700 mb-6">{condition.description}</p>
-                      
                       <h3 className="text-lg font-semibold mb-3 text-gray-800">Common Symptoms</h3>
                       <ul className="list-disc pl-5 mb-6 space-y-2 text-gray-700">
                         {condition.symptoms.map((symptom, index) => (
