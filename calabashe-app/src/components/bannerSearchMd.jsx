@@ -113,13 +113,18 @@ const BannerSearch = () => {
   }, [debouncedSearchParam, performSearch]);
 
   const handleLinkClick = useCallback((result) => {
-    navigate(
-      result.type
-        ? `/facilities/${result.typeSlug}s/${result.slug}`
-        : result.specialty
-          ? `/doctors/${result.slug}`
-          : `/services/${result.categorySlug}/${result.slug}`
-    );
+    // If it's a doctor (has specialty), route to /doctors/slug
+    if (result.specialty) {
+      navigate(`/doctors/${result.slug}`);
+    } 
+    // If it has a facility type, route to /facilities/typeSlug/slug
+    else if (result.type && result.type !== 'doctor') {
+      navigate(`/facilities/${result.typeSlug}s/${result.slug}`);
+    }
+    // Otherwise assume it's a service
+    else {
+      navigate(`/services/${result.categorySlug}/${result.slug}`);
+    }
   }, [navigate]);
 
   const handleKeyDown = useCallback(async (event) => {
